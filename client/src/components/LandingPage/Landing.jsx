@@ -2,7 +2,7 @@ import React from 'react'
 
 function Landing() {
   return (
-    <div>hello</div>
+    <div>laith</div>
   )
 }
 
