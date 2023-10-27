@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Landing from "./components/LandingPage/Landing";
 import NavbarDashboard from './components/NavbarDashboard/NavbarDashboard';
 import SidebarDash from './components/SidebarDash/SidebarDash';
+import Navbar from "./components/Navbar/navbar";
+import Footer from "./components/Footer/Footer";
 
 const App = () => (
   <div className="App">
