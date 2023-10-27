@@ -1,0 +1,48 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa; 
+}
+
+#footer {
+    background-color: #1D191B; 
+    color: #ffffff; 
+    padding: 2rem 0; 
+    text-align: center; 
+    height: 40rem;
+}
+.logo  {
+    margin-top: 10%; 
+}
+  
+.logo {
+    font-size: 5rem; /* Increase font size for the logo */
+    font-weight: bold; 
+    margin-bottom: 20px;
+}
+  
+.iconso {
+    display: flex; 
+    justify-content: center; 
+}
+
+.icons {
+    display: flex;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin: 0 15px;
+    margin-top: 1%;
+    margin-left: 0%; 
+    
+}
+
+.icons img {
+    width: 5rem; /* Set width for the icon images using rem units */
+    height: 5rem; /* Set height for the icon images using rem units */
+}
+
+.icon:hover {
+    color: #007bff; 
+    cursor: pointer; 
+}
