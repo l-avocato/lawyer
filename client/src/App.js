@@ -6,16 +6,30 @@ import SidebarDash from './components/SidebarDash/SidebarDash';
 import Navbar from "./components/Navbar/navbar";
 import Footer from "./components/Footer/Footer";
 
-const App = () => (
-  <div className="App">
-    <Router>
-      <Routes>
-        <Route path="/navbar" element={<Navbar />} />
-        <Route path="/landing" element={<Landing />} />
-        <Route path="/Footer" element={<Footer />} />
-      </Routes>
-    </Router>
-  </div>
-);
+import AllClient from './components/AllClient/AllClient.jsx';
+
+const App = () => {
+  return (
+    <div className="App">
+      <Router>
+        <Routes>
+          <Route path="/landing" element={<Landing />} />
+
+
+
+
+
+         <Route path="/allClient" element={<AllClient/>} />
+
+         <Route path="/sidebar" element={<SidebarDash />} />
+
+          
+
+
+        </Routes>
+      </Router>
+    </div>
+  );
+}
 
 export default App;
