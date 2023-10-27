@@ -1,9 +1,13 @@
 import React from "react";
 import "./allclient.css";
+import Sidebar from "../SidebarDash/SidebarDash.jsx"
 
 const AllClient = () => {
   return (
+    
     <div className="allPage">
+            <Sidebar></Sidebar>
+
       <div className="firstDiv">
         <p className="titleClient">Client List </p>
         <button className="btnAdd">+New Client </button>
