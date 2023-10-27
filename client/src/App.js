@@ -6,6 +6,8 @@ import Signup from './components/Signin/Signup';
 import NavbarDashboard from './components/NavbarDashboard/NavbarDashboard';
 import SidebarDash from './components/SidebarDash/SidebarDash';
 
+import AllClient from './components/AllClient/AllClient.jsx';
+
 const App = () => {
   return (
     <div className="App">
@@ -14,6 +16,18 @@ const App = () => {
           <Route path="/landing" element={<Landing />} />
           <Route path="/Signin" element={<Signin />} />
           <Route path="/Signup" element={<Signup />} />
+
+
+
+
+
+         <Route path="/allClient" element={<AllClient/>} />
+
+         <Route path="/sidebar" element={<SidebarDash />} />
+
+          
+
+
         </Routes>
       </Router>
     </div>
