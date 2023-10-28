@@ -83,7 +83,7 @@ function Signup() {
                         <option value="1">Male</option>
                         <option value="2">Female</option>
                     </select>
-                    <button type="submit" onClick={handleSiginUp}>Sign Up</button>
+                    <button type="submit" onClick={handleSiginUp} >Sign Up</button>
                 </form>
             </div>
         </div>
