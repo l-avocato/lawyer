@@ -1,0 +1,48 @@
+
+@media (min-width: 600px) {
+    .nav-container {
+        min-height: 64px;
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+}
+@media (min-width: 0px) and (orientation: landscape) {
+    .nav-container {
+        min-height: 48px;
+    }
+}
+.nav-container::before, .nav-container::after {
+    box-sizing: inherit;
+}
+.nav-container div {
+    display: block;
+}
+.nav-contour{
+    box-sizing: border-box;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-flex-wrap: wrap;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    width: 100%;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+.search-input{
+    width: 20%;
+    height: 20%;
+    border: none;
+    outline: none;
+    font-size: 1.2rem;
+    padding: 0 1rem;
+    background-color: transparent;
+    color: #fff;
+}

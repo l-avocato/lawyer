@@ -5,7 +5,11 @@ import React from 'react'
 
 const NavbarDashboard = () => {
   return (
-    <div>NavbarDashboard</div>
+    <div className='nav-container'>
+      <div className='nav-contour'>
+        <input className='search-input'/>
+      </div>
+    </div>
   )
 }
 
