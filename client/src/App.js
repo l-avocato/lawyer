@@ -1,11 +1,10 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Landing from "./components/LandingPage/Landing";
 import ClientDetails from "./components/clientDetails/ClientDetails";
-import NavbarDashboard from './components/NavbarDashboard/NavbarDashboard';
-import SidebarDash from './components/SidebarDash/SidebarDash';
+import NavbarDashboard from "./components/NavbarDashboard/NavbarDashboard";
+import SidebarDash from "./components/SidebarDash/SidebarDash";
 import Footer from "./components/Footer/Footer";
-import AllClient from './components/AllClient/AllClient.jsx';
+import AllClient from "./components/AllClient/AllClient.jsx";
 import Navbar from "./components/Navbar/Navbar.jsx";
 import Landing from "./components/LandingPage/Landing.jsx";
 
@@ -16,21 +15,9 @@ const App = () => {
         <Routes>
           <Route path="/landing" element={<Landing />} />
           <Route path="/nav" element={<Navbar />} />
-         
-
           <Route path="/clientDetails" element={<ClientDetails />} />
-          
-
-
-
-
-         <Route path="/allClient" element={<AllClient/>} />
-
-         <Route path="/sidebar" element={<SidebarDash />} />
-
-          
-
-
+          <Route path="/allClient" element={<AllClient />} />
+          <Route path="/sidebar" element={<SidebarDash />} />
         </Routes>
       </Router>
     </div>

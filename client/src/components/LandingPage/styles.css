@@ -1,3 +1,12 @@
-.welcome {
-    background-color:#28282B;
-}
+.company {
+    width: 80rem;
+    height: 40rem;
+    background-image: url("../../Assets/images/lawyers.png");
+    background-size: cover;
+    background-position: top; 
+    border: 1px solid #b06e6e;
+    z-index: 1; 
+    transform: translate(9%,-70%);
+
+  }
+  
