@@ -35,6 +35,7 @@ function Signup() {
           throw error;
         });
     };
+    
   return (
     <div className="signup-container">
       <div className="signup-content">
