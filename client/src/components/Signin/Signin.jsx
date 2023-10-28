@@ -23,14 +23,14 @@ const Signin = () => {
       <h2>Sign In</h2>
       <form className='form-config'>
         <div className="form-group">
-          <label>Email:</label>
+          <label>Email</label>
           <input type="email" placeholder="Your email" 
            onChange={(e) => {
              setEmail(e.target.value);
            }}/>
         </div>
         <div className="form-group">
-          <label>Password:</label>
+          <label>Password</label>
           <input type="password" placeholder="Your password"
            onChange={(e) => {
             setPassword(e.target.value);
