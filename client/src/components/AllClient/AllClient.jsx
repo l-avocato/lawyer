@@ -1,16 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import "./allclient.css";
-import Sidebar from "../SidebarDash/SidebarDash.jsx"
+import Modal from "../AddClient/AddClient.jsx"
+
+import SidebarDash from "../SidebarDash/SidebarDash.jsx";
 
 const AllClient = () => {
   return (
-    
+    <div className="d-flex">
+      <SidebarDash/>
     <div className="allPage">
-            <Sidebar></Sidebar>
+            
 
       <div className="firstDiv">
         <p className="titleClient">Client List </p>
-        <button className="btnAdd">+New Client </button>
+        <button className="btnAdd" data-bs-toggle="modal" data-bs-target="#staticBackdrop" >+New Client </button>
+        <Modal/>
         <hr />
       </div>
 
@@ -80,6 +84,7 @@ const AllClient = () => {
           </tbody>
         </table>
       </div>
+    </div>
     </div>
   );
 };
