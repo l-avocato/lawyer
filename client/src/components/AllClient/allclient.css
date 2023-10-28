@@ -1,11 +1,12 @@
 
 .btnAdd {
-    background-color: #376FD0;
+    background-color: black ;
+    transition: 0.3s;
     color: aliceblue;
     border-radius: 5px;
     font-size: 20px;
     border: none;
-    height: 45px;
+    height: 50px;
     width: 150px;
     margin-left: 75rem;
     
