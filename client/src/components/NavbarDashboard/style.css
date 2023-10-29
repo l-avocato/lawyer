@@ -1,48 +1,62 @@
 
-@media (min-width: 600px) {
-    .nav-container {
-        min-height: 64px;
-        padding-left: 12px;
-        padding-right: 12px;
-    }
+body, h1, h2, p, ul, li {
+  margin-left: 1.25rem; 
+  padding: 0;
 }
-@media (min-width: 0px) and (orientation: landscape) {
-    .nav-container {
-        min-height: 48px;
-    }
+
+body {
+  font-family: Arial, sans-serif;
+  font-size: 1rem; 
 }
-.nav-container::before, .nav-container::after {
-    box-sizing: inherit;
+
+.navbar {
+  background-color: #c1baba;
+  color: white;
+  padding: 0.9375rem; 
+  display: flex;
+  justify-content: space-between;
 }
-.nav-container div {
-    display: block;
+
+.search-bar input {
+  padding: 0.625rem; 
+  border: none;
+  border-radius: 1.5625rem; 
+  width: 15.625rem;
+  font-size: 1rem;
+  outline: none;
 }
-.nav-contour{
-    box-sizing: border-box;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-flex-wrap: wrap;
-    -webkit-flex-wrap: wrap;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
-    width: 100%;
-    -webkit-flex-direction: row;
-    -ms-flex-direction: row;
-    flex-direction: row;
-    -webkit-align-items: center;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
+
+.dropdown {
+  position: relative;
+  cursor: pointer;
+  margin: 0 0.9375rem; 
 }
-.search-input{
-    width: 20%;
-    height: 20%;
-    border: none;
-    outline: none;
-    font-size: 1.2rem;
-    padding: 0 1rem;
-    background-color: transparent;
-    color: #fff;
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 10rem; 
+  z-index: 1;
+  border-radius: 0.25rem; 
+  box-shadow: 0px 0.5rem 1rem 0px rgba(0, 0, 0, 0.2); 
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 0.75rem 1rem;  
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.logout-btn {
+  cursor: pointer;
 }
