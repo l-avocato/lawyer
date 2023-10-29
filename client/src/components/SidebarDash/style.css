@@ -1,5 +1,12 @@
-.flex {
+.sidebar {
     display: flex;
+    position: fixed !important;
+    left: 0;
+
+  }
+  .elements {
+    position:fixed;
+    left: -5rem;
   }
   
   .sidebar-container {
@@ -9,6 +16,7 @@
     color: #fff;
     padding: 1.25rem;
     position: relative;
+    left: 0;
     transition: width 0.3s ease;
   }
   
