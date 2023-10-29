@@ -1,62 +1,61 @@
 import React, { useState } from 'react';
 import './style.css';
-// import clients from 
+// import clients from  
 const SidebarDash = () => {
-    const [open, setOpen] = useState(true);
-    const Menus = [
-      { title: "Dashboard", src: "Chart_fill" },
-      { title: "Inbox", src: "Chat" },
-      { title: "Accounts", src: "User", gap: true },
-      { title: "Schedule ", src: "Calendar" },
-      { title: "Search", src: "Search" },
-      { title: "Analytics", src: "Chart" },
-      { title: "Files ", src: "Folder", gap: true },
-      { title: "Setting", src: "Setting" },
-    ];
-  return (  
-    <div className="flex">
-  <div className="sidebar-container">
-    <img
-      src="./src/assets/control.png"
-      className={`absolute cursor-pointer -right-3 top-9 w-7 border-dark-purple
-       border-2 rounded-full  ${!open && "rotate-180"}`}
-      onClick={() => setOpen(!open)}
-    />
-    <div className="flex gap-x-4 items-center">
-      <img
-        src="./src/assets/logo.png"
-        className={`cursor-pointer duration-500 ${
-          open && "rotate-[360deg]"
-        }`}
-      />
-      <h1
-        className={`text-white origin-left font-medium text-xl duration-200 ${
-          !open && "scale-0"
-        }`}
-      >
-        Avocato
-      </h1>
+  const [open, setOpen] = useState(true);
+
+  return (
+    <div className="sidebar ">
+      <div className="sidebar-container">
+        <img
+          src="./src/assets/control.png"
+          className={`absolute cursor-pointer -right-3 top-9 w-7 border-dark-purple
+          border-2 rounded-full  ${!open && "rotate-180"}`}
+          onClick={() => setOpen(!open)}
+        />
+        <div className="flex gap-x-4 items-center">
+          <img
+            src="./src/assets/logo.png"
+            className={`cursor-pointer duration-500 ${
+              open && "rotate-[360deg]"
+            }`}
+          />
+          <h1
+            className={`text-white origin-left font-medium text-xl duration-200 ${
+              !open && "scale-0"
+            }`}
+          >
+            Avocato
+          </h1>
+        </div>
+        <div className="elements">
+        <ul className="pt-6">
+          <li className={`flex  rounded-md p-2 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4 mt-2 bg-light-white`}>
+            <img src="./src/assets/Chart_fill.png" />
+            <span className={`${!open && "hidden"} origin-left duration-200`}>
+              Dashboard
+            </span>
+          </li>
+          <li className={`flex  rounded-md p-2 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4 mt-9`}>
+            <img src="./src/assets/Chat.png" />
+            <span className={`${!open && "hidden"} origin-left duration-200`}>
+              Inbox
+            </span>
+          </li>
+          {/* Add more li elements for other menu items with respective routes */}
+          <li className={`flex  rounded-md p-2 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4 mt-9`}>
+            <img src="./src/assets/User.png" />
+            <span className={`${!open && "hidden"} origin-left duration-200`}>
+              Accounts
+            </span>
+          </li>
+          
+        </ul>
+        </div>
+      </div>
     </div>
-    <ul className="pt-6">
-      {Menus.map((Menu, index) => (
-        <li
-          key={index}
-          className={`flex  rounded-md p-2 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4 
-          ${Menu.gap ? "mt-9" : "mt-2"} ${
-            index === 0 && "bg-light-white"
-          } `}
-        >
-          <img src={`./src/assets/${Menu.src}.png`} />
-          <span className={`${!open && "hidden"} origin-left duration-200`}>
-            {Menu.title}
-          </span>
-        </li>
-      ))}
-    </ul>
-  </div>
-  
-</div>
-);
+  );
 };
+
 
 export default SidebarDash;

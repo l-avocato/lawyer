@@ -28,6 +28,8 @@ const App = () => {
          <Route path="/allClient" element={<AllClient/>} />
 
          <Route path="/sidebar" element={<SidebarDash />} />
+         <Route path="/nav" element={<NavbarDashboard />} />
+
 
           
 

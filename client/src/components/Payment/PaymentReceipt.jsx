@@ -38,29 +38,21 @@ const PaymentReceipt = () => {
         </p>
         </div>
         <hr />
-      
-       
-
-        
-
-        
-
-        <h3>Quantity</h3>
-        <p>1</p>
-
-        <h3>Subtotal</h3>
-        <p>$275.00</p>
         <h3>Description</h3>
-        <p>
-          Mira Theme Customization <br />
+        <p className='mira-des'>
+           <br />
           Monthly Subscription <br />
+         
           Additional Service
         </p>
+        <h3 className='quantity'>Quantity</h3>
+        <h3 className='amount'>Amount</h3>
+        <hr />
+        <h3 className='SUB'>Subtotal</h3>
+        <p>$275.00</p>
         
-       
 
-        <h3>Amount</h3>
-        <p>
+        <p className='pay'>
           $150.00 <br />
           $25.00 <br />
           $100.00

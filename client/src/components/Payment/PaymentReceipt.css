@@ -8,6 +8,7 @@
     background-color: #f9f9f9;
     width: 90%;
     height: 5%;
+    margin-top: 2%;
   }
   
   .payment-receipt h2 {
@@ -20,7 +21,14 @@
     font-size: 16px;
     margin-bottom: 20px;
   }
-  
+  .quantity{
+    margin-left: 40%;
+    margin-top: -15%;
+  }
+  .amount{
+    margin-left: 80%;
+    margin-top: -4.9%;
+  }
   .receipt-details {
     margin-top: 20px;
   }
@@ -44,6 +52,7 @@
 }
 .payNo{
     margin-top: -11%;
+    margin-left: 2%;
 }
 .recDetail{
     margin-top: 5%;
@@ -53,3 +62,10 @@
     margin-top: -21%;
 }
   
+.SUB{
+  margin-left: 40%;
+}
+.pay{
+  margin-left: 80%;
+  margin-top: -10%;
+}
