@@ -6,7 +6,6 @@ import Signup from './components/Signin/Signup';
 import ClientDetails from "./components/clientDetails/ClientDetails";
 import NavbarDashboard from './components/NavbarDashboard/NavbarDashboard';
 import SidebarDash from './components/SidebarDash/SidebarDash';
-
 import AllClient from './components/AllClient/AllClient.jsx';
 
 const App = () => {
@@ -27,6 +26,8 @@ const App = () => {
          <Route path="/allClient" element={<AllClient/>} />
 
          <Route path="/sidebar" element={<SidebarDash />} />
+         <Route path="/nav" element={<NavbarDashboard />} />
+
 
           
 
