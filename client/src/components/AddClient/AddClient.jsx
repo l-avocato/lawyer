@@ -1,9 +1,20 @@
-import React, { useState } from "react";
+import React, {  useState } from "react";
 import "./AddClient.css";
 import axios from "axios";
+import {db} from "../../firebaseconfig.js"
 
-const AddClient = () => {
+import {addDoc, collection} from "firebase/firestore";
+
+const AddClient = ({refrech, setRefrech}) => {
   const [papers, setPapers] = useState("");
+  const [fullName, setfullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [cin, setCin]=useState(0);
+  const [PhoneNumber, setPhoneNumber]=useState(0)
+  const [gender,setGender]=useState("male")
+  const userCollectionRef = collection(db, "user")
+
+ 
 
   const handleFile = async (e) => {
     const formData = new FormData();
@@ -14,9 +25,29 @@ const AddClient = () => {
       .then((response) => {
         setPapers(response.data["secure_url"]);
       })
+      
       .catch((error) => {
         throw error;
       });
+  };
+
+  
+
+  const creacteUser = async () => {
+    try {
+      await addDoc(userCollectionRef, {
+        fullName: fullName,
+        email: email,
+        cin: cin,
+        PhoneNumber: PhoneNumber,
+        image : papers,
+        gender:gender
+      }
+      );
+      setRefrech(!refrech)
+    } catch (error) {
+      console.error("Error creating user:", error);
+    }
   };
   return (
     <div>
@@ -57,13 +88,14 @@ const AddClient = () => {
                 class="form-control"
                 id="floatingInput"
                 placeholder="Full Name"
+                onChange={((e)=>{setfullName(e.target.value)})}
               />
               <label for="floatingInput">Full Name</label>
             </div>
             <div class="form-floating">
-              <select class="form-select" id="floatingSelectGrid">
-                <option value="1">Male</option>
-                <option value="2">Female</option>
+              <select class="form-select" id="floatingSelectGrid" onChange={((e)=>{ setGender(e.target.value)})} >
+                <option value="Male" >Male</option>
+                <option value="Female">Female</option>
               </select>
               <label for="floatingSelectGrid">select a gender</label>
             </div>
@@ -73,6 +105,7 @@ const AddClient = () => {
                 class="form-control"
                 id="floatingPassword"
                 placeholder="Email"
+                onChange={((e)=>{setEmail(e.target.value)})}
               />
               <label for="floatingPassword">Adress Email</label>
             </div>
@@ -82,6 +115,7 @@ const AddClient = () => {
                 class="form-control"
                 id="floatingPassword"
                 placeholder="Phone Number"
+                onChange={((e)=>{setPhoneNumber(e.target.value)})}
               />
               <label for="floatingPassword">Phone Number</label>
             </div>
@@ -91,6 +125,7 @@ const AddClient = () => {
                 class="form-control"
                 id="floatingPassword"
                 placeholder="Cin"
+                onChange={((e)=>{setCin(e.target.value)})}
               />
               <label for="floatingPassword">Cin</label>
             </div>
@@ -101,6 +136,7 @@ const AddClient = () => {
                 type="button"
                 id="inputGroupFileAddon04"
                 data-bs-dismiss="modal"
+                onClick={creacteUser}
               >
                 Add New Client
               </button>
