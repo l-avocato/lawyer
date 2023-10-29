@@ -6,7 +6,7 @@ import Signup from './components/Signin/Signup';
 import ClientDetails from "./components/clientDetails/ClientDetails";
 import NavbarDashboard from './components/NavbarDashboard/NavbarDashboard';
 import SidebarDash from './components/SidebarDash/SidebarDash';
-
+import PaymentReceipt from "./components/Payment/PaymentReceipt";
 import AllClient from './components/AllClient/AllClient.jsx';
 
 const App = () => {
@@ -20,6 +20,7 @@ const App = () => {
 
           <Route path="/clientDetails" element={<ClientDetails />} />
           
+          <Route path="/PaymentReceipt" element={<PaymentReceipt/>} />
 
 
 
