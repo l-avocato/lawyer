@@ -5,7 +5,7 @@ const SidebarDash = () => {
   const [open, setOpen] = useState(true);
 
   return (
-    <div className="flex">
+    <div className="sidebar ">
       <div className="sidebar-container">
         <img
           src="./src/assets/control.png"
@@ -28,6 +28,7 @@ const SidebarDash = () => {
             Avocato
           </h1>
         </div>
+        <div className="elements">
         <ul className="pt-6">
           <li className={`flex  rounded-md p-2 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4 mt-2 bg-light-white`}>
             <img src="./src/assets/Chart_fill.png" />
@@ -50,6 +51,7 @@ const SidebarDash = () => {
           </li>
           
         </ul>
+        </div>
       </div>
     </div>
   );
