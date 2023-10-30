@@ -4,6 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import ProfilDetails from "./screens/ProfilDetails";
 import { StatusBar } from "expo-status-bar";
+import HomePage from './screens/HomePage'
 
 //screens
 
@@ -34,6 +35,13 @@ export default function App() {
         />
 
        
+        <Stack.Screen
+          name="HomePage"
+          component={HomePage}
+          options={{
+            headerShown: true,
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

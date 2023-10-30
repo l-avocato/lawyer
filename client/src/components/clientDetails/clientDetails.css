@@ -1,0 +1,11 @@
+/* /* .client-details-container {
+  display: flex; 
+} */
+
+.client-details-content {
+  margin-left: 20rem;
+}
+*/ .profileDetails {
+  display: flex;
+  justify-content: space-between !important;
+}
