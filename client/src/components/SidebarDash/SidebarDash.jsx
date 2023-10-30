@@ -1,62 +1,62 @@
-import React, { useState } from 'react';
-import './style.css';
-// import clients from 
+import React from "react";
+import "./style.css";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+import LocalShippingIcon from "@mui/icons-material/LocalShipping";
+import CreditCardIcon from "@mui/icons-material/CreditCard";
+import StoreIcon from "@mui/icons-material/Store";
+import InsertChartIcon from "@mui/icons-material/InsertChart";
+import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
+import SettingsSystemDaydreamOutlinedIcon from "@mui/icons-material/SettingsSystemDaydreamOutlined";
+import PsychologyOutlinedIcon from "@mui/icons-material/PsychologyOutlined";
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
+import { Link } from "react-router-dom";
+import logo from "../../assets/logo.png"
+
 const SidebarDash = () => {
-    const [open, setOpen] = useState(true);
-    const Menus = [
-      { title: "Dashboard", src: "Chart_fill" },
-      { title: "Inbox", src: "Chat" },
-      { title: "Accounts", src: "User", gap: true },
-      { title: "Schedule ", src: "Calendar" },
-      { title: "Search", src: "Search" },
-      { title: "Analytics", src: "Chart" },
-      { title: "Files ", src: "Folder", gap: true },
-      { title: "Setting", src: "Setting" },
-    ];
-  return (  
-    <div className="flex">
-  <div className="sidebar-container">
-    <img
-      src="./src/assets/control.png"
-      className={`absolute cursor-pointer -right-3 top-9 w-7 border-dark-purple
-       border-2 rounded-full  ${!open && "rotate-180"}`}
-      onClick={() => setOpen(!open)}
-    />
-    <div className="flex gap-x-4 items-center">
-      <img
-        src="./src/assets/logo.png"
-        className={`cursor-pointer duration-500 ${
-          open && "rotate-[360deg]"
-        }`}
-      />
-      <h1
-        className={`text-white origin-left font-medium text-xl duration-200 ${
-          !open && "scale-0"
-        }`}
-      >
-        Avocato
-      </h1>
+  return (
+    <div className="new-sidebar">
+    <div className="top-section">
+        <img className="new-logo" src={logo}/>
     </div>
-    <ul className="pt-6">
-      {Menus.map((Menu, index) => (
-        <li
-          key={index}
-          className={`flex  rounded-md p-2 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4 
-          ${Menu.gap ? "mt-9" : "mt-2"} ${
-            index === 0 && "bg-light-white"
-          } `}
-        >
-          <img src={`./src/assets/${Menu.src}.png`} />
-          <span className={`${!open && "hidden"} origin-left duration-200`}>
-            {Menu.title}
-          </span>
+    <hr className="new-separator" />
+    <div className="center-section">
+      <ul className="new-menu-list">
+          <li>
+            <PersonOutlineIcon className="new-icon" />
+            <span className="side-title">My Clients</span>
+          </li>
+        <li>
+          <InsertChartIcon className="new-icon" />
+          <span className="side-title">Stats</span>
         </li>
-      ))}
-    </ul>
+        <li>
+          <NotificationsNoneIcon className="new-icon" />
+          <span className="side-title">Notifications</span>
+        </li>
+        <li>
+          <SettingsApplicationsIcon className="new-icon" />
+          <span className="side-title">Settings</span>
+        </li>
+        <li>
+          <AccountCircleOutlinedIcon className="new-icon" />
+          <span className="side-title">Profile</span>
+        </li>
+        <li>
+          <PowerSettingsNewIcon className="new-icon" />
+          <span className="side-title">Logout</span>
+        </li>
+      </ul>
+    </div>
+    <div className="new-bottom">
+      <div className="new-color-option"></div>
+      <div className="new-color-option"></div>
+    </div>
   </div>
-  
-</div>
-);
+  );
 };
 
 export default SidebarDash;
