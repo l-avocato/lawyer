@@ -11,17 +11,18 @@ body {
     padding: 2rem 0; 
     text-align: center; 
     height: 40rem;
+    margin-top: 10%;
+    position: relative; /* Add relative positioning */
+    z-index: 2; /* Set a higher z-index for the footer to appear above other elements */
 }
-.logo  {
-    margin-top: 10%; 
-}
-  
+
 .logo {
-    font-size: 5rem; /* Increase font size for the logo */
+    margin-top: 10%; 
+    font-size: 5rem;
     font-weight: bold; 
     margin-bottom: 20px;
 }
-  
+
 .iconso {
     display: flex; 
     justify-content: center; 
@@ -34,7 +35,6 @@ body {
     margin: 0 15px;
     margin-top: 1%;
     margin-left: 0%; 
-    
 }
 
 .icons img {
@@ -45,4 +45,19 @@ body {
 .icon:hover {
     color: #007bff; 
     cursor: pointer; 
+}
+
+.footer-case {
+    width: 85rem;
+    height: 36rem;
+    background-color: #2E2A30;
+    background-size: cover;
+    background-position: top;
+    border: 1px solid #b06e6e;
+    z-index: 1;
+    transform: translate(3%, -70%);
+    border: black;
+    margin-top: -37rem; /* Adjust the negative margin to overlap with the #footer */
+    position: relative; /* Add relative positioning */
+    margin-left: 3%;
 }

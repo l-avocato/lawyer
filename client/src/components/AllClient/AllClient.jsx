@@ -7,7 +7,7 @@ import SidebarDash from "../SidebarDash/SidebarDash.jsx";
 const AllClient = () => {
   return (
     <div className="d-flex">
-      <SidebarDash/>
+      {/* <SidebarDash/> */}
     <div className="allPage">
             
 

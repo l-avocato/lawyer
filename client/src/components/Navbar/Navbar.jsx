@@ -9,7 +9,7 @@ function Navbar() {
     <div id="navBar">
         <div className="topSection">
         <div className="logoContainer">
-            Avocato
+            L'Avocato
         </div>
         <div className="rightSection">
             <div className="navBarLinks">

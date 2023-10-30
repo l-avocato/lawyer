@@ -8,7 +8,8 @@ import SidebarDash from "./components/SidebarDash/SidebarDash";
 import Footer from "./components/Footer/Footer";
 import AllClient from "./components/AllClient/AllClient.jsx";
 import Navbar from "./components/Navbar/Navbar.jsx";
-import Landing from "./components/LandingPage/landing";
+import Landing from "./components/LandingPage/Landing.jsx";
+
 
 
 const App = () => {
