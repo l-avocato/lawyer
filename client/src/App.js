@@ -8,6 +8,7 @@ import SidebarDash from "./components/SidebarDash/SidebarDash";
 import AllClient from "./components/AllClient/AllClient.jsx";
 import Landing from "./components/LandingPage/Landing";
 import Navbar from "./components/Navbar/Navbar";
+import PaymentReceipt from "./components/Payment/PaymentReceipt";
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
           <Route path="/Signin" element={<Signin />} />
           <Route path="/Signup" element={<Signup />} />
           <Route path="/clientDetails" element={<ClientDetails />} />
+          <Route path="/PaymentReceipt" element={<PaymentReceipt />} />
           <Route path="/allClient" element={<AllClient />} />
           <Route path="/sidebar" element={<SidebarDash />} />
           <Route path="/nav" element={<NavbarDashboard />} />
