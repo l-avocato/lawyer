@@ -1,6 +1,9 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { FontAwesome } from 'react-native-vector-icons';
+import { Colors } from '../components/styles';
+
+const { primary } = Colors;
 
 const ProfilDetails = ({ navigation }) => {
   const handleBookAppointment = () => {
@@ -10,6 +13,17 @@ const ProfilDetails = ({ navigation }) => {
   const handleContact = () => {
     // Add logic to initiate contact with the lawyer
   };
+
+  // Example photo gallery images
+  const galleryImages = [
+    require('../Photos/lawyer-or-judge-in-simple-flat-personal-profile-icon-or-symbol-people-concept-illustration-vector.jpg'),
+    require('../Photos/lawyer-or-judge-in-simple-flat-personal-profile-icon-or-symbol-people-concept-illustration-vector.jpg'),
+    require('../Photos/lawyer-or-judge-in-simple-flat-personal-profile-icon-or-symbol-people-concept-illustration-vector.jpg'),
+    require('../Photos/lawyer-or-judge-in-simple-flat-personal-profile-icon-or-symbol-people-concept-illustration-vector.jpg'),
+    require('../Photos/lawyer-or-judge-in-simple-flat-personal-profile-icon-or-symbol-people-concept-illustration-vector.jpg'),
+
+    // Add more image paths here
+  ];
 
   return (
     <View style={styles.container}>
@@ -25,33 +39,44 @@ const ProfilDetails = ({ navigation }) => {
           source={require('../Photos/lawyer-or-judge-in-simple-flat-personal-profile-icon-or-symbol-people-concept-illustration-vector.jpg')}
           style={styles.lawyerPhoto}
         />
-        <Text style={styles.lawyerName}>Lawyer's Name</Text>
-        <Text style={styles.specialty}>Specialty: Family Law</Text>
-        <View style={styles.infoRow}>
-          <FontAwesome name="star" style={styles.icon} />
-          <Text style={styles.infoText}>Average Rating: 4.5</Text>
+
+        <View style={styles.detailsContainer}>
+          <Text style={styles.lawyerName}>Lawyer's Name</Text>
+          <Text style={styles.specialty}>Specialty: Family Law</Text>
+          <View style={styles.infoRow}>
+            <FontAwesome name="star" style={styles.icon} />
+            <Text style={styles.infoText}>Average Rating: 4.5</Text>
+          </View>
+          <View style={styles.infoRow}>
+            <FontAwesome name="dollar" style={styles.icon} />
+            <Text style={styles.infoText}>Price per Hour: $100</Text>
+          </View>
+          <View style={styles.infoRow}>
+            <FontAwesome name="map-marker" style={styles.icon} />
+            <Text style={styles.infoText}>123 Main Street, City, Country</Text>
+          </View>
+          <View style={styles.infoRow}>
+            <FontAwesome name="envelope" style={styles.icon} />
+            <Text style={styles.infoText}>Email: lawyer@example.com</Text>
+          </View>
+          <Text style={styles.about}>About the Lawyer: Lorem ipsum dolor sit amet, consectetur adipiscing elit...</Text>
         </View>
-        <View style={styles.infoRow}>
-          <FontAwesome name="dollar" style={styles.icon} />
-          <Text style={styles.infoText}>Price per Hour: $100</Text>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.button} onPress={handleBookAppointment}>
+            <Text style={styles.buttonText}>Book Appointment</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.button} onPress={handleContact}>
+            <Text style={styles.buttonText}>Contact</Text>
+          </TouchableOpacity>
         </View>
-        <View style={styles.infoRow}>
-          <FontAwesome name="map-marker" style={styles.icon} />
-          <Text style={styles.infoText}>123 Main Street, City, Country</Text>
-        </View>
-        <View style={styles.infoRow}>
-          <FontAwesome name="envelope" style={styles.icon} />
-          <Text style={styles.infoText}>Email: lawyer@example.com</Text>
-        </View>
-        <Text style={styles.about}>About the Lawyer: Lorem ipsum dolor sit amet, consectetur adipiscing elit...</Text>
-        
-        <TouchableOpacity style={styles.button} onPress={handleBookAppointment}>
-          <Text style={styles.buttonText}>Book Appointment</Text>
-        </TouchableOpacity>
-        
-        <TouchableOpacity style={styles.button} onPress={handleContact}>
-          <Text style={styles.buttonText}>Contact</Text>
-        </TouchableOpacity>
+
+        <Text style={styles.galleryTitle}>Lawyer's Photo Gallery</Text>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          {galleryImages.map((image, index) => (
+            <Image key={index} source={image} style={styles.galleryImage} />
+          ))}
+        </ScrollView>
       </View>
     </View>
   );
@@ -60,6 +85,7 @@ const ProfilDetails = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    
   },
   backButton: {
     position: 'absolute',
@@ -69,7 +95,7 @@ const styles = StyleSheet.create({
   },
   backIcon: {
     fontSize: 24,
-    color: 'white', 
+    color: primary,
   },
   backgroundTop: {
     flex: 1,
@@ -77,7 +103,7 @@ const styles = StyleSheet.create({
   },
   backgroundBottom: {
     flex: 3,
-    backgroundColor: '#ffcc00',
+    backgroundColor: 'white',
   },
   content: {
     flex: 1,
@@ -94,16 +120,21 @@ const styles = StyleSheet.create({
     borderRadius: 75,
     marginBottom: 10,
   },
+  detailsContainer: {
+    borderWidth: 1,
+    borderColor: 'blue',
+    padding: 10,
+    borderRadius: 10,
+    backgroundColor: 'white',
+  },
   lawyerName: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 10,
-    color: 'white',
   },
   specialty: {
     fontSize: 18,
     marginBottom: 10,
-    color: 'white',
   },
   infoRow: {
     flexDirection: 'row',
@@ -122,8 +153,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: 'center',
   },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
   button: {
-    backgroundColor: 'blue', 
+    flex: 1,
+    backgroundColor: 'black',
     padding: 10,
     borderRadius: 5,
     margin: 10,
@@ -131,6 +167,18 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     fontSize: 16,
+    textAlign: 'center',
+  },
+  galleryTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginTop: 20,
+    marginBottom: 20
+  },
+  galleryImage: {
+    width: 150,
+    height: 150,
+    marginRight: 10,
   },
 });
 
