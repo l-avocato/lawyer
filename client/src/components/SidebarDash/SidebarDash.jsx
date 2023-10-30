@@ -14,7 +14,7 @@ import PsychologyOutlinedIcon from "@mui/icons-material/PsychologyOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import { Link } from "react-router-dom";
-import logo from "../../Assets/images/logo.png";
+import logo from "../../assets/images/logo.png";
 const SidebarDash = () => {
   return (
     <div className="new-sidebar">
