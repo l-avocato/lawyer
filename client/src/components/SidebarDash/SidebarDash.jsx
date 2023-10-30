@@ -1,61 +1,62 @@
-import React, { useState } from 'react';
-import './style.css';
-// import clients from  
-const SidebarDash = () => {
-  const [open, setOpen] = useState(true);
+import React from "react";
+import "./style.css";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+import LocalShippingIcon from "@mui/icons-material/LocalShipping";
+import CreditCardIcon from "@mui/icons-material/CreditCard";
+import StoreIcon from "@mui/icons-material/Store";
+import InsertChartIcon from "@mui/icons-material/InsertChart";
+import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
+import SettingsSystemDaydreamOutlinedIcon from "@mui/icons-material/SettingsSystemDaydreamOutlined";
+import PsychologyOutlinedIcon from "@mui/icons-material/PsychologyOutlined";
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
+import { Link } from "react-router-dom";
+import logo from "../../assets/logo.png"
 
+const SidebarDash = () => {
   return (
-    <div className="sidebar ">
-      <div className="sidebar-container">
-        <img
-          src="./src/assets/control.png"
-          className={`absolute cursor-pointer -right-3 top-9 w-7 border-dark-purple
-          border-2 rounded-full  ${!open && "rotate-180"}`}
-          onClick={() => setOpen(!open)}
-        />
-        <div className="flex gap-x-4 items-center">
-          <img
-            src="./src/assets/logo.png"
-            className={`cursor-pointer duration-500 ${
-              open && "rotate-[360deg]"
-            }`}
-          />
-          <h1
-            className={`text-white origin-left font-medium text-xl duration-200 ${
-              !open && "scale-0"
-            }`}
-          >
-            Avocato
-          </h1>
-        </div>
-        <div className="elements">
-        <ul className="pt-6">
-          <li className={`flex  rounded-md p-2 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4 mt-2 bg-light-white`}>
-            <img src="./src/assets/Chart_fill.png" />
-            <span className={`${!open && "hidden"} origin-left duration-200`}>
-              Dashboard
-            </span>
-          </li>
-          <li className={`flex  rounded-md p-2 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4 mt-9`}>
-            <img src="./src/assets/Chat.png" />
-            <span className={`${!open && "hidden"} origin-left duration-200`}>
-              Inbox
-            </span>
-          </li>
-          {/* Add more li elements for other menu items with respective routes */}
-          <li className={`flex  rounded-md p-2 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4 mt-9`}>
-            <img src="./src/assets/User.png" />
-            <span className={`${!open && "hidden"} origin-left duration-200`}>
-              Accounts
-            </span>
-          </li>
-          
-        </ul>
-        </div>
-      </div>
+    <div className="new-sidebar">
+    <div className="top-section">
+        <img className="new-logo" src={logo}/>
     </div>
+    <hr className="new-separator" />
+    <div className="center-section">
+      <ul className="new-menu-list">
+          <li>
+            <PersonOutlineIcon className="new-icon" />
+            <span className="side-title">My Clients</span>
+          </li>
+        <li>
+          <InsertChartIcon className="new-icon" />
+          <span className="side-title">Stats</span>
+        </li>
+        <li>
+          <NotificationsNoneIcon className="new-icon" />
+          <span className="side-title">Notifications</span>
+        </li>
+        <li>
+          <SettingsApplicationsIcon className="new-icon" />
+          <span className="side-title">Settings</span>
+        </li>
+        <li>
+          <AccountCircleOutlinedIcon className="new-icon" />
+          <span className="side-title">Profile</span>
+        </li>
+        <li>
+          <PowerSettingsNewIcon className="new-icon" />
+          <span className="side-title">Logout</span>
+        </li>
+      </ul>
+    </div>
+    <div className="new-bottom">
+      <div className="new-color-option"></div>
+      <div className="new-color-option"></div>
+    </div>
+  </div>
   );
 };
-
 
 export default SidebarDash;
