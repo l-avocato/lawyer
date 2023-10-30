@@ -35,7 +35,7 @@ const AllClient = () => {
 
   return (
     <div className="d-flex">
-      <SidebarDash/>
+      {/* <SidebarDash/> */}
       <div className="allPage">
         <div className="firstDiv">
           <p className="titleClient">Client List </p>

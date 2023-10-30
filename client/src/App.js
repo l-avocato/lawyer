@@ -23,7 +23,7 @@ const App = () => {
           <Route path="/PaymentReceipt" element={<PaymentReceipt />} />
           <Route path="/allClient" element={<AllClient />} />
           <Route path="/sidebar" element={<SidebarDash />} />
-          <Route path="/nav" element={<NavbarDashboard />} />
+          <Route path="/navbar" element={<NavbarDashboard />} />
         </Routes>
       </Router>
     </div>
