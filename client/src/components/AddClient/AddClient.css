@@ -1,5 +1,5 @@
 .modal-content {
-    width: 45em;
+    width: 42em;
 }
 .form-floating {
     padding: 0.5rem;
@@ -21,3 +21,6 @@
     color: black;
 }
 
+.modal-dialog {
+    height: 200px;;
+}
