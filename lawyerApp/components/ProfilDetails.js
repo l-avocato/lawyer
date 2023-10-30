@@ -8,7 +8,7 @@ const ProfilDetails = ({navigation}) => {
     <Text>Welcome to the Home Screen!</Text>
     <Button
       title="Go to Another Screen"
-      onPress={() => navigation.navigate('AnotherScreen')}
+      // onPress={() => navigation.navigate('AnotherScreen')}
     />
   </View>
   )

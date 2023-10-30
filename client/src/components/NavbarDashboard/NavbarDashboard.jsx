@@ -1,56 +1,37 @@
-import React, { useState } from 'react';
-import './style.css'
-import msg from "../../assets/chat-left.svg"
-import bell from "../../assets/bell.svg"
-import logout from "../../assets/box-arrow-left.svg"
+import React from "react";
+import "./style.css"; 
+import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
+import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
+import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
+import SideBarDash from "../SidebarDash/SidebarDash"
+import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 
-const Navbar = () => {
-  const [messagesDropdownOpen, setMessagesDropdownOpen] = useState(false);
-  const [notificationsDropdownOpen, setNotificationsDropdownOpen] = useState(false);
-
-  const toggleMessagesDropdown = () => {
-    setMessagesDropdownOpen(!messagesDropdownOpen);
-    // Close notifications dropdown if open
-    setNotificationsDropdownOpen(false);
-  };
-
-  const toggleNotificationsDropdown = () => {
-    setNotificationsDropdownOpen(!notificationsDropdownOpen);
-    // Close messages dropdown if open
-    setMessagesDropdownOpen(false);
-  };
-
+const NavbarDashboard = () => {
   return (
-    <div className="navbar">
-      <div className="search-bar">
-        <input type="text" placeholder="Search..." />
-      </div>
-      <div className="dropdown" onClick={toggleMessagesDropdown}>
-        <img src={msg} alt="" />
-        {messagesDropdownOpen && (
-          <div className="dropdown-content">
-            {/* Message items go here */}
-            <a href="#">Message 1</a>
-            <a href="#">Message 2</a>
-            <a href="#">Message 3</a>
+    <div className="new-navbar"> 
+    <div>
+      <SideBarDash/>
+    </div>
+      <div className="new-wrapper"> 
+        <div className="new-search"> 
+          <input type="text" placeholder="Search..." />
+          <SearchOutlinedIcon />
+        </div>
+        <div className="new-items"> 
+          <div className="new-item"> 
+            <NotificationsNoneOutlinedIcon className="new-icon" /> 
+            <div className="new-counter">1</div> 
           </div>
-        )}
-      </div>
-      <div className="dropdown" onClick={toggleNotificationsDropdown}>
-        <img src={bell} alt="" />
-        {notificationsDropdownOpen && (
-          <div className="dropdown-content">
-            {/* Notification items go here */}
-            <a href="#">Notification 1</a>
-            <a href="#">Notification 2</a>
-            <a href="#">Notification 3</a>
+          <div className="new-item"> 
+            <ChatBubbleOutlineOutlinedIcon className="new-icon" /> 
+            <div className="new-counter">2</div> 
           </div>
-        )}
+          <PowerSettingsNewIcon className="new-icon" />
+          <span className="logout">Logout</span>
+        </div>
       </div>
-      <img src={logout} alt="" />
-      {/* <div className="logout-btn">Logout</div> */}
     </div>
   );
 };
 
-export default Navbar;
+export default NavbarDashboard;
