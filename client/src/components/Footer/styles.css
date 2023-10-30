@@ -1,0 +1,63 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa; 
+}
+
+#footer {
+    background-color: #1D191B; 
+    color: #ffffff; 
+    padding: 2rem 0; 
+    text-align: center; 
+    height: 40rem;
+    margin-top: 10%;
+    position: relative; /* Add relative positioning */
+    z-index: 2; /* Set a higher z-index for the footer to appear above other elements */
+}
+
+.logo {
+    margin-top: 10%; 
+    font-size: 5rem;
+    font-weight: bold; 
+    margin-bottom: 20px;
+}
+
+.iconso {
+    display: flex; 
+    justify-content: center; 
+}
+
+.icons {
+    display: flex;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin: 0 15px;
+    margin-top: 1%;
+    margin-left: 0%; 
+}
+
+.icons img {
+    width: 5rem; /* Set width for the icon images using rem units */
+    height: 5rem; /* Set height for the icon images using rem units */
+}
+
+.icon:hover {
+    color: #007bff; 
+    cursor: pointer; 
+}
+
+.footer-case {
+    width: 85rem;
+    height: 36rem;
+    background-color: #2E2A30;
+    background-size: cover;
+    background-position: top;
+    border: 1px solid #b06e6e;
+    z-index: 1;
+    transform: translate(3%, -70%);
+    border: black;
+    margin-top: -37rem; /* Adjust the negative margin to overlap with the #footer */
+    position: relative; /* Add relative positioning */
+    margin-left: 3%;
+}

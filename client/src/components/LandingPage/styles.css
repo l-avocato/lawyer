@@ -1,3 +1,281 @@
-.body {
-    background-color:#28282B;
+.company {
+  width: 90rem;
+  height: 36rem;
+  background-color: #211b1d;
+  background-size: cover;
+  background-position: top;
+  border: 1px solid #b06e6e;
+  z-index: 1;
+  transform: translate(3%, -70%);
+  border: black;
+  margin-top: -3%;
+}
+
+.law-image {
+  width: 24rem;
+  height: 40rem;
+  background-image: url("../../Assets/images/law.png");
+  background-size: cover;
+  background-position: top;
+  border: 1px solid #b06e6e;
+  z-index: 2;
+  position: absolute;
+  left: 70%;
+  top: 100%;
+  transform: translateX(-50%);
+  border: none;
+}
+.Profile-pic {
+  display: flex;
+  width: 19rem;
+  height: 19rem;
+  background-image: url("../../Assets/images/profile.png");
+  background-size: cover;
+  background-position: top;
+  border: 1px solid #b06e6e;
+  z-index: 1;
+  transform: translate(3%, -70%);
+  margin-left: 22%;
+  margin-top: -5rem;
+  border: none;
+}
+
+.Profile-desc {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 125%;
+  font-family: 'Pacifico', cursive; /* Handwritten font style */
+  margin-left: 1%;
+}
+
+
+
+.grey-background {
+  width: 90rem;
+  height: 40rem;
+  background-image: url("../../Assets/images/grey.png");
+  background-size: cover;
+  background-position: top;
+  border: 1px solid #b06e6e;
+  z-index: 1;
+  transform: translate(3%, -70%);
+  border: none;
+  margin-top: 10%;
+  position: relative;
+  border-top-left-radius: 0px; /* Adjust the value as needed */
+  border-top-right-radius: 10px; /* Adjust the value as needed */
+  transform: skewY(-5deg); /* Adjust the degree of slant as needed */
+  margin-left: 3%;
+}
+.grey-background-two {
+  width: 90rem;
+  height: 40rem;
+  background-image: url("../../Assets/images/grey.png");
+  border-color: red;
+  background-size: cover;
+  background-position: top;
+  border: 1px solid #b06e6e;
+  z-index: 1;
+  transform: translate(3%, -70%) skewY(5deg); /* Apply a skew transformation */
+  border: none;
+  margin-top: 10%;
+  position: relative;
+  border-top-left-radius: 10px; /* Adjust the value as needed */
+  border-top-right-radius: 0; /* Adjust the value as needed */
+  margin-left: 0%;
+  margin-top: 50%;
+}
+
+.big-title {
+  display: flex;
+  justify-content: center;
+  color: white;
+  margin-left: 360%;
+  margin-top: 1%;
+  font-size: 100px; /* You can adjust the font size according to your preference */
+}
+
+.section-one {
+  z-index: 2;
+  margin-right: 0.4%;
+  width: 20rem;
+  height: 30rem;
+  background-color: #211B1D;
+  backdrop-filter: blur(10rem);
+}
+
+.section-two {
+  margin-right: 0.4%;
+  z-index: 2;
+  width: 20rem;
+  height: 30rem;
+  background-color: #211B1D;
+  backdrop-filter: blur(10rem);
+}
+
+.section-three {
+  margin-right: 0.4%;
+  z-index: 2;
+  width: 20rem;
+  height: 30rem;
+  background-color: #211B1D;
+}
+
+.section-fore {
+  margin-right: 0.4%;
+  z-index: 2;
+  width: 20rem;
+  height: 30rem;
+  background-color: #211B1D;
+}
+.section-container {
+  margin-top: -23%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-left: 1.5%;
+}
+
+.btn1 {
+  margin-top: -10%;
+  width: 50%;
+  margin-left: 25%;
+  transition: all 0.4s ease;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.btn1:hover {
+  transform: scale(1.1);
+}
+
+.law-icon1 {
+  width: 10rem;
+  height: 10rem;
+  background-color: url("../../Assets/images/prem.png");
+  background-size: cover;
+  background-position: top;
+  border: 1px solid #b06e6e;
+  z-index: 1;
+  transform: translate(3%, -70%);
+  border: black;
+  background-image: url("../../Assets/images/lawicon.png");
+  margin-top: 71%;
+  margin-left: 24%;
+}
+.law-icon2 {
+  width: 10rem;
+  height: 10rem;
+  background-color: url("../../Assets/images/prem.png");
+  background-size: cover;
+  background-position: top;
+  border: 1px solid #b06e6e;
+  z-index: 1;
+  transform: translate(3%, -70%);
+  border: black;
+  background-image: url("../../Assets/images/mtar.png");
+  margin-top: 71%;
+  margin-left: 24%;
+}
+.law-icon3 {
+  width: 10rem;
+  height: 10rem;
+  background-color: url("../../Assets/images/prem.png");
+  background-size: cover;
+  background-position: top;
+  border: 1px solid #b06e6e;
+  z-index: 1;
+  transform: translate(3%, -70%);
+  border: black;
+  background-image: url("../../Assets/images/buidling.png");
+  margin-top: 71%;
+  margin-left: 24%;
+}
+.law-icon4 {
+  width: 10rem;
+  height: 10rem;
+  background-color: url("../../Assets/images/prem.png");
+  background-size: cover;
+  background-position: top;
+  border: 1px solid #b06e6e;
+  z-index: 1;
+  transform: translate(3%, -70%);
+  border: black;
+  background-image: url("../../Assets/images/labour.png");
+  margin-top: 71%;
+  margin-left: 24%;
+}
+
+.photo {
+  width: 28rem;
+  height: 33rem;
+  background-image: url("../../Assets/images/dev.png");
+  background-size: cover;
+  background-position: top;
+  border: 1px solid #b06e6e;
+  z-index: 2;
+  position: absolute;
+  left: 79%;
+  top:13.1%;
+  transform: translateX(-50%);
+  border: none;
+  margin-top: -2%;
+}
+
+.avocato-logo {
+  width: 9cqw;
+  height: 9rem;
+  background-color: #211B1D;
+  background-image: url("../../Assets/images/Avocato.png");
+  background-size: cover;
+  background-position: top;
+  border: 1px solid #b06e6e;
+  z-index: 2;
+  position: absolute;
+  left: 10%;
+  top: 32%;
+  transform: translateX(-50%);
+  border: none;
+  
+}
+
+.expert-team {
+  font-size: 100px; /* Set the font size to 100 pixels */
+  margin-left: 34%;
+  margin-top: 5%;
+}
+
+.prof1 {
+  width: 23rem;
+  height: 23rem;
+  display: flex;
+  margin-left: 12%;
+  margin-top: 1%;
+  z-index: 2;
+  background-image: url('../../Assets/images/expert2.png');
+}
+
+.prof2 {
+  width: 23rem;
+  height: 23rem;
+  display: flex;
+  margin-left: 60%;
+  margin-top: -16%;
+  z-index: 2;
+  background-image: url('../../Assets/images/expert1.png'); 
+}
+
+.prof1-desc, .prof2-desc {
+  font-family: 'Pacifico', cursive; /* Handwritten font style */
+}
+
+.prof1-desc {
+  margin-top: 108%;
+}
+
+.prof2-desc {
+  margin-top: 110%;
+  margin-left: 13%;
 }
