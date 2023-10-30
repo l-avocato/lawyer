@@ -1,0 +1,84 @@
+/* Navbar styles */
+#navBar {
+  display: flex;
+  flex-direction: column;
+}
+
+.topSection {
+  background-color: #1D191B;
+  padding: 10px 50px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  color: white;
+  height: 80px;
+}
+
+.rightSection {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 50px;
+}
+
+.navBarLinks {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 60px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.navBarLink {
+    color: white;
+    cursor: pointer;
+}
+
+.navBarLink:hover {
+    color: rgba(255, 255, 255, 0.482);
+}
+
+.navBarIcons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.logoContainer {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 30px; 
+}
+
+.facebookIcon {
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-bottom: 3px;
+    cursor: pointer;
+}
+
+.instagramIcon {
+    width: 2.5rem;
+    height: 2.5rem;
+    cursor: pointer;
+}
+
+.linkidinIcon {
+    width: 2.5rem;
+    height: 2.5rem;
+    cursor: pointer;
+}
+
+.bottomSection {
+  height: 30rem;
+  width: 100%;
+  background-color: #2A2528;
+}
+

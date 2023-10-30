@@ -1,0 +1,71 @@
+.payment-receipt {
+    font-family: Arial, sans-serif;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    width: 90%;
+    height: 5%;
+    margin-top: 2%;
+  }
+  
+  .payment-receipt h2 {
+    color: #333;
+    font-size: 24px;
+  }
+  
+  .payment-receipt p {
+    color: #555;
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+  .quantity{
+    margin-left: 40%;
+    margin-top: -15%;
+  }
+  .amount{
+    margin-left: 80%;
+    margin-top: -4.9%;
+  }
+  .receipt-details {
+    margin-top: 20px;
+  }
+  
+  .receipt-details h3 {
+    color: #333;
+    font-size: 20px;
+    margin-bottom: 5px;
+  }
+  
+  .receipt-details p {
+    color: #555;
+    font-size: 16px;
+    margin-bottom: 15px;
+  }
+.dateP{
+    margin-left: 70%;
+    /* margin-bottom: 90%; */
+    margin-top: 1%;
+
+}
+.payNo{
+    margin-top: -11%;
+    margin-left: 2%;
+}
+.recDetail{
+    margin-top: 5%;
+}
+.descriptionn{
+    margin-left: 72%;
+    margin-top: -21%;
+}
+  
+.SUB{
+  margin-left: 40%;
+}
+.pay{
+  margin-left: 80%;
+  margin-top: -10%;
+}
