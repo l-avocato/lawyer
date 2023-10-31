@@ -26,52 +26,47 @@ const ProfilDetails = ({ navigation }) => {
       <View style={styles.block2}>
         <View style={styles.photoLowyer}>
           <View style={styles.blockPhoto}>
-          <Image
+            <Image
               source={require("../Photos/lawyer-or-judge-in-simple-flat-personal-profile-icon-or-symbol-people-concept-illustration-vector.jpg")}
               style={styles.photoo}
             />
-           <View style={{position:'relative',top:110}}>
-            <Text style={styles.nameText}>Lawyer's Name</Text>
-            <Text style={styles.specialtyText}> Immigration Law</Text>
+            <View style={{ position: "relative", top: 110 }}>
+              <Text style={styles.nameText}>Lawyer's Name</Text>
+              <Text style={styles.specialtyText}> Immigration Law</Text>
             </View>
           </View>
         </View>
 
         <View style={styles.blockBlueGhamak}>
           <View style={styles.icons}>
-<View style={{display:'flex',
-    flexDirection:'row',}}>
-            <View style={{display:'flex',
-    flexDirection:'row',}}>
-            <FontAwesome name="star" style={styles.icon} />
-            <Text style={styles.infoText}> 4.5</Text>
-            </View>
+            <View style={{ display: "flex", flexDirection: "row" }}>
+              <View style={{ display: "flex", flexDirection: "row" }}>
+                <FontAwesome name="star" style={styles.icon} />
+                <Text style={styles.infoText}> 4.5</Text>
+              </View>
 
-
-            <View style={{display:'flex',
-    flexDirection:'row',}}>
-            <FontAwesome name="dollar" style={styles.icon} />
-            <Text style={styles.infoText}>$100/H</Text>
+              <View style={{ display: "flex", flexDirection: "row" }}>
+                <FontAwesome name="dollar" style={styles.icon} />
+                <Text style={styles.infoText}>$100/H</Text>
+              </View>
             </View>
+            <View style={{ display: "flex", flexDirection: "row" }}>
+              <FontAwesome name="comment" style={styles.icon} />
+              <Text style={styles.infoText}></Text>
             </View>
-            <View style={{display:'flex',
-    flexDirection:'row',}}>
-            <FontAwesome name="comment" style={styles.icon} />
-            <Text style={styles.infoText}></Text>
-            </View>
-
-
           </View>
-
-
-
         </View>
       </View>
-      <View style={{padding:10}}>
+      <View style={{ padding: 10 }}>
         <Text style={styles.infoTitle}>Lawyer Information</Text>
-        <View style={{display:"flex",flexDirection:"row",justifyContent:'space-between',top:5}}>
-
-
+        <View
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            top: 5,
+          }}
+        >
           <View style={styles.infoBlock}>
             <FontAwesome name="briefcase" style={styles.icon} />
             <Text style={styles.infoText}>Number of Cases: 100</Text>
@@ -82,18 +77,12 @@ const ProfilDetails = ({ navigation }) => {
           </View>
         </View>
 
-
         <Text style={styles.infoText}>
           Additional information about the lawyer goes here...
         </Text>
       </View>
 
-
-
-
-      <View style={{padding:10}} >
-
-
+      <View style={{ padding: 10 }}>
         <Text style={styles.galleryTitle}>Lawyer's Photo Gallery</Text>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           {galleryImages.map((image, index) => (
@@ -119,15 +108,14 @@ const styles = StyleSheet.create({
     marginRight: 10,
     color: "black",
     marginLeft: 10,
-
   },
 
   icons: {
-    display:'flex',
-    flexDirection:'row',
+    display: "flex",
+    flexDirection: "row",
     alignItems: "center",
     marginBottom: 10,
-    justifyContent:'space-between',
+    justifyContent: "space-between",
     marginTop: 35,
   },
   block1: {
@@ -161,24 +149,23 @@ const styles = StyleSheet.create({
     width: 150,
     height: 150,
     borderRadius: 100,
-   position:"absolute",
-   left:20
+    position: "absolute",
+    left: 20,
   },
   blockPhoto: {
     borderRadius: 100,
-   
+
     height: 130,
     position: "absolute",
     bottom: -65,
-    display:"flex",
-    justifyContent:"center"
-   
+    display: "flex",
+    justifyContent: "center",
   },
   galleryTitle: {
     fontSize: 20,
     marginTop: -15,
     color: "#DAA520",
-    fontFamily: "serif",
+    fontFamily: "Roboto",
   },
   galleryImage: {
     width: 130,
@@ -189,39 +176,40 @@ const styles = StyleSheet.create({
   photoLowyer: {
     alignItems: "center",
     display: "flex",
-    justifyContent:'center'
+    justifyContent: "center",
   },
   infoTitle: {
     fontSize: 20,
     marginTop: 20,
     color: "#DAA520",
-    fontFamily: "serif",
+    fontFamily: "Roboto",
   },
   infoContainer: {
-    display:'flex',
+    display: "flex",
     flex3Direction: "row",
-    gap:5,
-  
+    gap: 5,
+
     marginTop: 10,
   },
   infoBlock: {
     // flexDirection: "row",
     alignItems: "center",
-    marginBottom:10
+    marginBottom: 10,
   },
   infoText: {
     fontSize: 16,
+    fontFamily: "normal"
+
   },
   nameText: {
     fontSize: 25,
     fontWeight: "bold",
-    textAlign:"center"
+    textAlign: "center",
   },
   specialtyText: {
     fontSize: 15,
     fontWeight: "500",
-    textAlign:"center"
-
+    textAlign: "center",
   },
   bookButton: {
     backgroundColor: "#DAA520",
