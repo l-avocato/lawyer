@@ -128,7 +128,7 @@ margin-vertical: 5px;
 height: 60px;
 
 ${(props)=>props.google == true &&`
-background-color: ${green};
+background-color: ${red};
 flex-direction: row;
 justify-content: center;
 `}
