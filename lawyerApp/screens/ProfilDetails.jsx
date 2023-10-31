@@ -1,6 +1,11 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { FontAwesome } from 'react-native-vector-icons';
+import { Colors } from '../components/styles';
+import LinearGradient from 'react-native-linear-gradient';
+
+
+const { primary,tertinary } = Colors;
 
 const ProfilDetails = ({ navigation }) => {
   const handleBookAppointment = () => {
@@ -11,6 +16,17 @@ const ProfilDetails = ({ navigation }) => {
     // Add logic to initiate contact with the lawyer
   };
 
+  // Example photo gallery images
+  const galleryImages = [
+    require('../Photos/lawyer-or-judge-in-simple-flat-personal-profile-icon-or-symbol-people-concept-illustration-vector.jpg'),
+    require('../Photos/lawyer-or-judge-in-simple-flat-personal-profile-icon-or-symbol-people-concept-illustration-vector.jpg'),
+    require('../Photos/lawyer-or-judge-in-simple-flat-personal-profile-icon-or-symbol-people-concept-illustration-vector.jpg'),
+    require('../Photos/lawyer-or-judge-in-simple-flat-personal-profile-icon-or-symbol-people-concept-illustration-vector.jpg'),
+    require('../Photos/lawyer-or-judge-in-simple-flat-personal-profile-icon-or-symbol-people-concept-illustration-vector.jpg'),
+
+    // Add more image paths here
+  ];
+
   return (
     <View style={styles.container}>
       {/* Back Arrow Icon */}
@@ -18,40 +34,51 @@ const ProfilDetails = ({ navigation }) => {
         <FontAwesome name="arrow-left" style={styles.backIcon} />
       </TouchableOpacity>
 
-      <View style={styles.backgroundTop} />
+      <View style={styles.backgroundTop}  />
       <View style={styles.backgroundBottom} />
       <View style={styles.content}>
         <Image
           source={require('../Photos/lawyer-or-judge-in-simple-flat-personal-profile-icon-or-symbol-people-concept-illustration-vector.jpg')}
           style={styles.lawyerPhoto}
         />
-        <Text style={styles.lawyerName}>Lawyer's Name</Text>
-        <Text style={styles.specialty}>Specialty: Family Law</Text>
-        <View style={styles.infoRow}>
-          <FontAwesome name="star" style={styles.icon} />
-          <Text style={styles.infoText}>Average Rating: 4.5</Text>
+
+        <View style={styles.detailsContainer}>
+          <Text style={styles.lawyerName}>Lawyer's Name</Text>
+          <Text style={styles.specialty}>Specialty: Family Law</Text>
+          <View style={styles.infoRow}>
+            <FontAwesome name="star" style={styles.icon} />
+            <Text style={styles.infoText}>Average Rating: 4.5</Text>
+          </View>
+          <View style={styles.infoRow}>
+            <FontAwesome name="dollar" style={styles.icon} />
+            <Text style={styles.infoText}>Price per Hour: $100</Text>
+          </View>
+          <View style={styles.infoRow}>
+            <FontAwesome name="map-marker" style={styles.icon} />
+            <Text style={styles.infoText}>123 Main Street, City, Country</Text>
+          </View>
+          <View style={styles.infoRow}>
+            <FontAwesome name="envelope" style={styles.icon} />
+            <Text style={styles.infoText}>Email: lawyer@example.com</Text>
+          </View>
+          <Text style={styles.about}>About the Lawyer: Lorem ipsum dolor sit amet, consectetur adipiscing elit...</Text>
         </View>
-        <View style={styles.infoRow}>
-          <FontAwesome name="dollar" style={styles.icon} />
-          <Text style={styles.infoText}>Price per Hour: $100</Text>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.button} onPress={handleBookAppointment}>
+            <Text style={styles.buttonText}>Book Appointment</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.button} onPress={handleContact}>
+            <Text style={styles.buttonText}>Contact</Text>
+          </TouchableOpacity>
         </View>
-        <View style={styles.infoRow}>
-          <FontAwesome name="map-marker" style={styles.icon} />
-          <Text style={styles.infoText}>123 Main Street, City, Country</Text>
-        </View>
-        <View style={styles.infoRow}>
-          <FontAwesome name="envelope" style={styles.icon} />
-          <Text style={styles.infoText}>Email: lawyer@example.com</Text>
-        </View>
-        <Text style={styles.about}>About the Lawyer: Lorem ipsum dolor sit amet, consectetur adipiscing elit...</Text>
-        
-        <TouchableOpacity style={styles.button} onPress={handleBookAppointment}>
-          <Text style={styles.buttonText}>Book Appointment</Text>
-        </TouchableOpacity>
-        
-        <TouchableOpacity style={styles.button} onPress={handleContact}>
-          <Text style={styles.buttonText}>Contact</Text>
-        </TouchableOpacity>
+
+        <Text style={styles.galleryTitle}>Lawyer's Photo Gallery</Text>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          {galleryImages.map((image, index) => (
+            <Image key={index} source={image} style={styles.galleryImage} />
+          ))}
+        </ScrollView>
       </View>
     </View>
   );
@@ -60,6 +87,8 @@ const ProfilDetails = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    
+    
   },
   backButton: {
     position: 'absolute',
@@ -69,15 +98,15 @@ const styles = StyleSheet.create({
   },
   backIcon: {
     fontSize: 24,
-    color: 'white', 
+    color: primary,
   },
   backgroundTop: {
     flex: 1,
-    backgroundColor: 'black',
+    backgroundColor:"#DAA520",
   },
   backgroundBottom: {
     flex: 3,
-    backgroundColor: '#ffcc00',
+    backgroundColor: '#A9A9A9',
   },
   content: {
     flex: 1,
@@ -89,21 +118,28 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   lawyerPhoto: {
+    marginTop:18,
     width: 150,
     height: 150,
     borderRadius: 75,
     marginBottom: 10,
   },
+  detailsContainer: {
+    borderWidth: 1,
+    borderColor: '#DAA520',
+    padding: 10,
+    borderRadius: 10,
+    backgroundColor: 'white',
+  },
   lawyerName: {
-    fontSize: 24,
+    fontSize: 25,
     fontWeight: 'bold',
     marginBottom: 10,
-    color: 'white',
+    
   },
   specialty: {
     fontSize: 18,
     marginBottom: 10,
-    color: 'white',
   },
   infoRow: {
     flexDirection: 'row',
@@ -113,7 +149,7 @@ const styles = StyleSheet.create({
   icon: {
     fontSize: 20,
     marginRight: 10,
-    color: 'blue',
+    color: '#DAA520',
   },
   infoText: {
     fontSize: 16,
@@ -122,15 +158,36 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: 'center',
   },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+    
+  },
   button: {
-    backgroundColor: 'blue', 
+    flex: 1,
+    backgroundColor: '#DAA520',
     padding: 10,
     borderRadius: 5,
     margin: 10,
+    borderRadius : 10,
   },
   buttonText: {
-    color: 'white',
+    color: 'black',
     fontSize: 16,
+    textAlign: 'center',
+  },
+  galleryTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginTop: 20,
+    marginBottom: 20,
+  
+  },
+  galleryImage: {
+    width: 150,
+    height: 150,
+    marginRight: 10,
+    borderRadius: 20,
   },
 });
 
