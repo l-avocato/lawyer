@@ -25,10 +25,10 @@ export default function App() {
           }}
         />
         <Stack.Screen
-          name="ProfilDetails"
+          name= "Lawyer Details"
           component={ProfilDetails}
           options={{
-            headerShown: false,
+            headerShown: true,
           }}
         />
 
