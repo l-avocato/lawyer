@@ -15,8 +15,11 @@ import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import { Link } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
+<<<<<<< HEAD
+=======
 
 
+>>>>>>> 18142442f5243aee886bce8e93770b9b06225f53
 const SidebarDash = () => {
 
   return (
