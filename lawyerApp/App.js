@@ -19,7 +19,7 @@ export default function App() {
   return (
     <NavigationContainer>
     <Stack.Navigator
-        initialRouteName='Onboarding1'
+        initialRouteName='ProfilDetails'
       >
         <Stack.Screen
           name= "Lawyer Details"
@@ -27,7 +27,7 @@ export default function App() {
           options={{
             headerShown: true,
           }}
-        />
+        /> 
 
         <Stack.Screen
           name="welcome"
