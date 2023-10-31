@@ -1,78 +1,61 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
+import { View, StyleSheet, Image, TouchableOpacity, ScrollView, Text } from 'react-native';
 import { FontAwesome } from 'react-native-vector-icons';
 import { Colors } from '../components/styles';
 import LinearGradient from 'react-native-linear-gradient';
 
 
-const { primary,tertinary } = Colors;
+const { primary, tertinary } = Colors;
 
 const ProfilDetails = ({ navigation }) => {
-  const handleBookAppointment = () => {
-    // Add logic to navigate to the appointment booking screen
-  };
-
-  const handleContact = () => {
-    // Add logic to initiate contact with the lawyer
-  };
-
-  // Example photo gallery images
   const galleryImages = [
     require('../Photos/lawyer-or-judge-in-simple-flat-personal-profile-icon-or-symbol-people-concept-illustration-vector.jpg'),
     require('../Photos/lawyer-or-judge-in-simple-flat-personal-profile-icon-or-symbol-people-concept-illustration-vector.jpg'),
     require('../Photos/lawyer-or-judge-in-simple-flat-personal-profile-icon-or-symbol-people-concept-illustration-vector.jpg'),
-    require('../Photos/lawyer-or-judge-in-simple-flat-personal-profile-icon-or-symbol-people-concept-illustration-vector.jpg'),
-    require('../Photos/lawyer-or-judge-in-simple-flat-personal-profile-icon-or-symbol-people-concept-illustration-vector.jpg'),
+    require('../Photos/lawyer-or-judge-in-simple-flat-personal-profile-icon-or-symbol-people-concept-illustration-vector.jpg')
 
-    // Add more image paths here
+
   ];
 
   return (
-    <View style={styles.container}>
-      {/* Back Arrow Icon */}
-      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-        <FontAwesome name="arrow-left" style={styles.backIcon} />
-      </TouchableOpacity>
-
-      <View style={styles.backgroundTop}  />
-      <View style={styles.backgroundBottom} />
-      <View style={styles.content}>
-        <Image
-          source={require('../Photos/lawyer-or-judge-in-simple-flat-personal-profile-icon-or-symbol-people-concept-illustration-vector.jpg')}
-          style={styles.lawyerPhoto}
-        />
-
-        <View style={styles.detailsContainer}>
-          <Text style={styles.lawyerName}>Lawyer's Name</Text>
-          <Text style={styles.specialty}>Specialty: Family Law</Text>
-          <View style={styles.infoRow}>
+    <View>
+      <View style={styles.block1}>
+        <Text style={styles.lawyersDetails}> Lawyer's Details</Text>
+      </View>
+      <View style={styles.block2}>
+        <View style={styles.photoLowyer}>
+          <View style={styles.blockPhoto}>
+            <Image source={require('../Photos/lawyer-or-judge-in-simple-flat-personal-profile-icon-or-symbol-people-concept-illustration-vector.jpg')} style={styles.photoo} />
+            <Text style={styles.nameText}>Lawyer's Name</Text>
+            <Text style={styles.specialtyText}>Specialty: Immigration Law</Text>
+          </View>
+        </View>
+        <View style={styles.blockBlueGhamak}>
+          <View style={styles.icons}>
             <FontAwesome name="star" style={styles.icon} />
-            <Text style={styles.infoText}>Average Rating: 4.5</Text>
-          </View>
-          <View style={styles.infoRow}>
+            <Text style={styles.infoText}> 4.5</Text>
             <FontAwesome name="dollar" style={styles.icon} />
-            <Text style={styles.infoText}>Price per Hour: $100</Text>
-          </View>
-          <View style={styles.infoRow}>
-            <FontAwesome name="map-marker" style={styles.icon} />
-            <Text style={styles.infoText}>123 Main Street, City, Country</Text>
-          </View>
-          <View style={styles.infoRow}>
+            <Text style={styles.infoText}>Price/Hr: $100</Text>
             <FontAwesome name="envelope" style={styles.icon} />
-            <Text style={styles.infoText}>Email: lawyer@example.com</Text>
+            <Text style={styles.infoText}></Text>
           </View>
-          <Text style={styles.about}>About the Lawyer: Lorem ipsum dolor sit amet, consectetur adipiscing elit...</Text>
         </View>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={handleBookAppointment}>
-            <Text style={styles.buttonText}>Book Appointment</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.button} onPress={handleContact}>
-            <Text style={styles.buttonText}>Contact</Text>
-          </TouchableOpacity>
+      </View>
+      <View>
+        <Text style={styles.infoTitle}>Lawyer Information</Text>
+        <View style={styles.infoContainer}>
+          <View style={styles.infoBlock}>
+            <FontAwesome name="briefcase" style={styles.icon} />
+            <Text style={styles.infoText}> 3.6k:  Cases</Text>
+          </View>
+          <View style={styles.infoBlock}>
+            <FontAwesome name="check-circle" style={styles.icon} />
+            <Text style={styles.infoText}> 97% :Success Rate</Text>
+          </View>
         </View>
-
+        <Text style={styles.infoText}>Additional information about the lawyer goes here...</Text>
+      </View>
+      <View>
         <Text style={styles.galleryTitle}>Lawyer's Photo Gallery</Text>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           {galleryImages.map((image, index) => (
@@ -80,114 +63,126 @@ const ProfilDetails = ({ navigation }) => {
           ))}
         </ScrollView>
       </View>
+      <TouchableOpacity style={styles.bookButton}>
+        <Text style={styles.bookButtonText}>Book Appointment</Text>
+      </TouchableOpacity>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    
-    
-  },
-  backButton: {
-    position: 'absolute',
-    top: 20,
-    left: 20,
-    zIndex: 1,
-  },
-  backIcon: {
-    fontSize: 24,
-    color: primary,
-  },
-  backgroundTop: {
-    flex: 1,
-    backgroundColor:"#DAA520",
-  },
-  backgroundBottom: {
-    flex: 3,
-    backgroundColor: '#A9A9A9',
-  },
-  content: {
-    flex: 1,
+  nameLawyer: {
+    display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 20,
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
-  },
-  lawyerPhoto: {
-    marginTop:18,
-    width: 150,
-    height: 150,
-    borderRadius: 75,
-    marginBottom: 10,
-  },
-  detailsContainer: {
-    borderWidth: 1,
-    borderColor: '#DAA520',
-    padding: 10,
-    borderRadius: 10,
-    backgroundColor: 'white',
-  },
-  lawyerName: {
-    fontSize: 25,
-    fontWeight: 'bold',
-    marginBottom: 10,
-    
-  },
-  specialty: {
-    fontSize: 18,
-    marginBottom: 10,
-  },
-  infoRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 10,
   },
   icon: {
     fontSize: 20,
     marginRight: 10,
+    color: 'black',
+    marginLeft: 10,
+  },
+  
+ 
+  icons: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+    justifyContent: 'space-between',
+    marginTop: 35,
+  },
+  block1: {
+    backgroundColor: '#DAA520',
+    height: 100,
+    width: 500,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  lawyersDetails: {
+    fontSize: 25,
+    marginTop: 40,
+    marginRight: 80,
+  },
+  block2: {
+    backgroundColor: 'greyé',
+    height: 250,
+    width: 370,
+    marginTop: 90,
+    marginLeft: 20,
+    borderRadius: 40,
+  },
+  blockBlueGhamak: {
+    backgroundColor: '#DAA520',
+    height: 90,
+    width: 370,
+    marginTop: 160,
+    borderRadius: 20,
+  },
+  photoo: {
+    width: 140,
+    height: 140,
+    borderRadius: 100,
+  },
+  blockPhoto: {
+    borderRadius: 100,
+    width: 140,
+    height: 140,
+    backgroundColor: 'red',
+    position: 'absolute',
+    bottom: -65,
+  },
+  galleryTitle: {
+    fontSize: 20,
+    marginTop: 10,
     color: '#DAA520',
+  },
+  galleryImage: {
+    width: 120,
+    height: 170,
+    margin: 10,
+    borderRadius: 20,
+  },
+  photoLowyer: {
+    alignItems: 'center',
+    display: 'flex',
+  },
+  infoTitle: {
+    fontSize: 20,
+    marginTop: 20,
+  },
+  infoContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 10,
+  },
+  infoBlock: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   infoText: {
     fontSize: 16,
   },
-  about: {
-    fontSize: 16,
-    textAlign: 'center',
+  nameText: {
+    fontSize: 18,
+    fontWeight: 'bold',
   },
-  buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between'
+  specialtyText: {
+    fontSize: 16,
+  },
+  bookButton: {
+    backgroundColor: '#DAA520', 
+    width: 200,
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+    marginTop: 20,
+    borderRadius: 10,
     
   },
-  button: {
-    flex: 1,
-    backgroundColor: '#DAA520',
-    padding: 10,
-    borderRadius: 5,
-    margin: 10,
-    borderRadius : 10,
-  },
-  buttonText: {
-    color: 'black',
-    fontSize: 16,
-    textAlign: 'center',
-  },
-  galleryTitle: {
+  bookButtonText: {
     fontSize: 20,
-    fontWeight: 'bold',
-    marginTop: 20,
-    marginBottom: 20,
-  
-  },
-  galleryImage: {
-    width: 150,
-    height: 150,
-    marginRight: 10,
-    borderRadius: 20,
+    color: 'black',
   },
 });
 
