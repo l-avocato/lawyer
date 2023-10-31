@@ -17,7 +17,11 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="onBoarding2">
-        <Stack.Screen 
+        <Stack.Screen
+          name="ProfilDetails"
+          component={ProfilDetails}
+          />
+        <Stack.Screen
           name="onBoarding2"
           component={Onboarding2}
           options={{
