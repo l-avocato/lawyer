@@ -4,8 +4,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import ProfilDetails from "./screens/ProfilDetails";
 import { StatusBar } from "expo-status-bar";
-import HomePage from './screens/HomePage';
-import Onboarding2 from './screens/Onboarding2';
+import HomePage from "./screens/HomePage";
+import Onboarding2 from "./screens/Onboarding2";
 //screens
 import Login from "./screens/Login";
 import Signup from "./screens/SignUp";
@@ -13,16 +13,21 @@ import Welcome from "./screens/Welcome";
 import Onboarding1 from "./screens/Onboarding1";
 import Onboarding3 from "./screens/Onboarding3";
 
-
 export default function App() {
   const Stack = createNativeStackNavigator();
   return (
     <NavigationContainer>
-    <Stack.Navigator
-        initialRouteName='ProfilDetails'
-      >
+      <Stack.Navigator initialRouteName="HomePage">
+        <Stack.Screen name="ProfilDetails" component={ProfilDetails} />
         <Stack.Screen
-          name= "Lawyer Details"
+          name="HomePage"
+          component={HomePage}
+          options={{
+            headerShown: true,
+          }}
+        />
+        <Stack.Screen
+          name="Lawyer Details"
           component={ProfilDetails}
           options={{
             headerShown: true,
@@ -58,13 +63,7 @@ export default function App() {
           }}
         />
        
-        <Stack.Screen
-          name="HomePage"
-          component={HomePage}
-          options={{
-            headerShown: true,
-          }}
-        />
+        
       </Stack.Navigator>
     </NavigationContainer>
   );

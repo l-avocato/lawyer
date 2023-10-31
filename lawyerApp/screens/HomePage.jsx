@@ -1,4 +1,3 @@
-
 import React from "react";
 import {
   View,
@@ -20,8 +19,7 @@ const HomePage = ({ navigation }) => {
         <View style={styles.notificationContainer}>
           <TouchableOpacity
             onPress={() => navigation.navigate("Notifications")}
-            style={styles.notificationButton}
-          >
+            style={styles.notificationButton}>
             <MaterialIcons
               name="notifications"
               size={0.05 * width}
@@ -30,8 +28,7 @@ const HomePage = ({ navigation }) => {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => navigation.navigate("Filter")}
-            style={styles.filterButton}
-          >
+            style={styles.filterButton}>
             <MaterialIcons
               name="filter-list"
               size={0.05 * width}
@@ -59,9 +56,10 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "flex-start",
     justifyContent: "flex-start",
-    height: "25%",
+    height: 250,
     backgroundColor: "black",
-    paddingTop: 0.02 * height,
+    padding: 20,
+    top: 5,
   },
   pageText: {
     fontSize: 0.03 * height,
