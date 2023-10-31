@@ -10,20 +10,17 @@ import Onboarding2 from './screens/Onboarding2';
 import Login from "./screens/Login";
 import Signup from "./screens/SignUp";
 import Welcome from "./screens/Welcome";
+import Onboarding1 from "./screens/Onboarding1";
+import Onboarding3 from "./screens/Onboarding3";
 
 
 export default function App() {
   const Stack = createNativeStackNavigator();
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="onBoarding2">
-        <Stack.Screen 
-          name="onBoarding2"
-          component={Onboarding2}
-          options={{
-            headerShown: false,
-          }}
-        />
+    <Stack.Navigator
+        initialRouteName='Onboarding1'
+      >
         <Stack.Screen
           name= "Lawyer Details"
           component={ProfilDetails}
@@ -39,7 +36,27 @@ export default function App() {
             headerShown: false,
           }}
         />
-
+ <Stack.Screen
+          name="Onboarding1"
+          component={Onboarding1}
+          options={{
+            headerShown: false
+          }}
+        />
+          <Stack.Screen
+          name="Onboarding2"
+          component={Onboarding2}
+          options={{
+            headerShown: false
+          }}
+        />
+        <Stack.Screen
+          name="Onboarding3"
+          component={Onboarding3}
+          options={{
+            headerShown: false
+          }}
+        />
        
         <Stack.Screen
           name="HomePage"
