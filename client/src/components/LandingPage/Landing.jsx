@@ -65,11 +65,11 @@ function Landing() {
         </div>
       </div>
       <div className="grey-background-two"></div>
-      {/* <div className="title">
+      <div className="title">
         About Us 
           <div className="desc">
           </div>
-        </div> */}
+        </div>
       <Footer />
     </div>
   );
