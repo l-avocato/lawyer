@@ -2,7 +2,7 @@ import React from "react";
 import "../../components/LandingPage/styles.css";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer.jsx";
-import lewis from "../../assets/images/lewis.png";
+import lewis from "../../Assets/images/lewis.png";
 function Landing() {
   return (
     <div className="big-container">

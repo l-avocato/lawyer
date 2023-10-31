@@ -1,8 +1,8 @@
 import React from "react";
 import "./styles.css";
-import facebook from "../../assets/images/mfaco.png";
-import instagram from "../../assets/images/minsta.png";
-import linkidin from "../../assets/images/linko.png";
+import facebook from "../../Assets/images/mfaco.png";
+import instagram from "../../Assets/images/minsta.png";
+import linkidin from "../../Assets/images/linko.png";
 
 function Navbar() {
   return (

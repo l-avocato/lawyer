@@ -14,7 +14,7 @@
 .law-image {
   width: 24rem;
   height: 40rem;
-  background-image: url("../../assets/images/law.png");
+  background-image: url("../../Assets/images/law.png");
   background-size: cover;
   background-position: top;
   border: 1px solid #b06e6e;
@@ -29,7 +29,7 @@
   display: flex;
   width: 19rem;
   height: 19rem;
-  background-image: url("../../assets/images/profile.png");
+  background-image: url("../../Assets/images/profile.png");
   background-size: cover;
   background-position: top;
   border: 1px solid #b06e6e;
@@ -52,7 +52,7 @@
 .grey-background {
   width: 90rem;
   height: 40rem;
-  background-image: url("../../assets/images/grey.png");
+  background-image: url("../../Assets/images/grey.png");
   background-size: cover;
   background-position: top;
   border: 1px solid #b06e6e;
@@ -69,7 +69,7 @@
 .grey-background-two {
   width: 90rem;
   height: 40rem;
-  background-image: url("../../assets/images/grey.png");
+  background-image: url("../../Assets/images/grey.png");
   border-color: red;
   background-size: cover;
   background-position: top;
@@ -152,56 +152,56 @@
 .law-icon1 {
   width: 10rem;
   height: 10rem;
-  background-color: url("../../assets/images/prem.png");
+  background-color: url("../../Assets/images/prem.png");
   background-size: cover;
   background-position: top;
   border: 1px solid #b06e6e;
   z-index: 1;
   transform: translate(3%, -70%);
   border: black;
-  background-image: url("../../assets/images/lawicon.png");
+  background-image: url("../../Assets/images/lawicon.png");
   margin-top: 71%;
   margin-left: 24%;
 }
 .law-icon2 {
   width: 10rem;
   height: 10rem;
-  background-color: url("../../assets/images/prem.png");
+  background-color: url("../../Assets/images/prem.png");
   background-size: cover;
   background-position: top;
   border: 1px solid #b06e6e;
   z-index: 1;
   transform: translate(3%, -70%);
   border: black;
-  background-image: url("../../assets/images/mtar.png");
+  background-image: url("../../Assets/images/mtar.png");
   margin-top: 71%;
   margin-left: 24%;
 }
 .law-icon3 {
   width: 10rem;
   height: 10rem;
-  background-color: url("../../assets/images/prem.png");
+  background-color: url("../../Assets/images/prem.png");
   background-size: cover;
   background-position: top;
   border: 1px solid #b06e6e;
   z-index: 1;
   transform: translate(3%, -70%);
   border: black;
-  background-image: url("../../assets/images/buidling.png");
+  background-image: url("../../Assets/images/buidling.png");
   margin-top: 71%;
   margin-left: 24%;
 }
 .law-icon4 {
   width: 10rem;
   height: 10rem;
-  background-color: url("../../assets/images/prem.png");
+  background-color: url("../../Assets/images/prem.png");
   background-size: cover;
   background-position: top;
   border: 1px solid #b06e6e;
   z-index: 1;
   transform: translate(3%, -70%);
   border: black;
-  background-image: url("../../assets/images/labour.png");
+  background-image: url("../../Assets/images/labour.png");
   margin-top: 71%;
   margin-left: 24%;
 }
@@ -209,7 +209,7 @@
 .photo {
   width: 28rem;
   height: 33rem;
-  background-image: url("../../assets/images/dev.png");
+  background-image: url("../../Assets/images/dev.png");
   background-size: cover;
   background-position: top;
   border: 1px solid #b06e6e;
@@ -226,7 +226,7 @@
   width: 9cqw;
   height: 9rem;
   background-color: #211B1D;
-  background-image: url("../../assets/images/Avocato.png");
+  background-image: url("../../Assets/images/Avocato.png");
   background-size: cover;
   background-position: top;
   border: 1px solid #b06e6e;
@@ -251,7 +251,7 @@
   margin-left: 12%;
   margin-top: 1%;
   z-index: 2;
-  background-image: url('../../assets/images/expert2.png');
+  background-image: url('../../Assets/images/expert2.png');
 }
 
 .prof2 {
@@ -261,7 +261,7 @@
   margin-left: 60%;
   margin-top: -16%;
   z-index: 2;
-  background-image: url('../../assets/images/expert1.png'); 
+  background-image: url('../../Assets/images/expert1.png'); 
 }
 
 .prof1-desc,
