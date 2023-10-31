@@ -4,7 +4,6 @@ import { FontAwesome } from 'react-native-vector-icons';
 import { Colors } from '../components/styles';
 import LinearGradient from 'react-native-linear-gradient';
 
-
 const { primary, tertinary } = Colors;
 
 const ProfilDetails = ({ navigation }) => {
@@ -35,7 +34,7 @@ const ProfilDetails = ({ navigation }) => {
             <FontAwesome name="star" style={styles.icon} />
             <Text style={styles.infoText}> 4.5</Text>
             <FontAwesome name="dollar" style={styles.icon} />
-            <Text style={styles.infoText}>Price/Hr: $100</Text>
+            <Text style={styles.infoText}>Price/H: $100</Text>
             <FontAwesome name="envelope" style={styles.icon} />
             <Text style={styles.infoText}></Text>
           </View>
@@ -46,11 +45,11 @@ const ProfilDetails = ({ navigation }) => {
         <View style={styles.infoContainer}>
           <View style={styles.infoBlock}>
             <FontAwesome name="briefcase" style={styles.icon} />
-            <Text style={styles.infoText}> 3.6k:  Cases</Text>
+            <Text style={styles.infoText}>Number of Cases: 100</Text>
           </View>
           <View style={styles.infoBlock}>
             <FontAwesome name="check-circle" style={styles.icon} />
-            <Text style={styles.infoText}> 97% :Success Rate</Text>
+            <Text style={styles.infoText}>Success Rate: 85%</Text>
           </View>
         </View>
         <Text style={styles.infoText}>Additional information about the lawyer goes here...</Text>
@@ -104,12 +103,12 @@ const styles = StyleSheet.create({
     marginRight: 80,
   },
   block2: {
-    backgroundColor: 'greyé',
+    backgroundColor: 'grey',
     height: 250,
     width: 370,
     marginTop: 90,
     marginLeft: 20,
-    borderRadius: 40,
+    borderRadius: 30,
   },
   blockBlueGhamak: {
     backgroundColor: '#DAA520',
@@ -119,15 +118,15 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   photoo: {
-    width: 140,
-    height: 140,
+    width: 130,
+    height: 130,
     borderRadius: 100,
   },
   blockPhoto: {
     borderRadius: 100,
-    width: 140,
-    height: 140,
-    backgroundColor: 'red',
+    width: 130,
+    height: 130,
+    // backgroundColor: 'red',
     position: 'absolute',
     bottom: -65,
   },
@@ -135,12 +134,12 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginTop: 10,
     color: '#DAA520',
+    fontFamily: 'serif'
   },
   galleryImage: {
     width: 120,
     height: 170,
     margin: 10,
-    borderRadius: 20,
   },
   photoLowyer: {
     alignItems: 'center',
@@ -149,6 +148,8 @@ const styles = StyleSheet.create({
   infoTitle: {
     fontSize: 20,
     marginTop: 20,
+    color : '#DAA520',
+    fontFamily: 'serif'
   },
   infoContainer: {
     flexDirection: 'row',
