@@ -139,7 +139,7 @@ const showDatePicker = () => {
                             />
                         <MsgBox>...</MsgBox>
                         <StyledButton onPress={handleSubmit}>
-                            <ButtonText>Login</ButtonText>
+                            <ButtonText>Sign up</ButtonText>
                         </StyledButton>
                        <Line/> 
                         <ExtraView>

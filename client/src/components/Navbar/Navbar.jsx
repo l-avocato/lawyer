@@ -1,5 +1,6 @@
 import React from "react";
 import "../../components/Navbar/styles.css";
+import "./styles.css";
 import facebook from "../../assets/images/mfaco.png";
 import instagram from "../../assets/images/minsta.png";
 import linkidin from "../../assets/images/linko.png";
