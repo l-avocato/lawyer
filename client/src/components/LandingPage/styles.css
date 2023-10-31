@@ -45,11 +45,9 @@
   flex-direction: row;
   align-items: center;
   margin-top: 125%;
-  font-family: 'Pacifico', cursive; /* Handwritten font style */
+  font-family: "Pacifico", cursive; 
   margin-left: 1%;
 }
-
-
 
 .grey-background {
   width: 90rem;
@@ -63,9 +61,9 @@
   border: none;
   margin-top: 10%;
   position: relative;
-  border-top-left-radius: 0px; /* Adjust the value as needed */
-  border-top-right-radius: 10px; /* Adjust the value as needed */
-  transform: skewY(-5deg); /* Adjust the degree of slant as needed */
+  border-top-left-radius: 0px; 
+  border-top-right-radius: 10px; 
+  transform: skewY(-5deg); 
   margin-left: 3%;
 }
 .grey-background-two {
@@ -77,12 +75,12 @@
   background-position: top;
   border: 1px solid #b06e6e;
   z-index: 1;
-  transform: translate(3%, -70%) skewY(5deg); /* Apply a skew transformation */
+  transform: translate(3%, -70%) skewY(5deg); 
   border: none;
   margin-top: 10%;
   position: relative;
-  border-top-left-radius: 10px; /* Adjust the value as needed */
-  border-top-right-radius: 0; /* Adjust the value as needed */
+  border-top-left-radius: 10px; 
+  border-top-right-radius: 0; 
   margin-left: 0%;
   margin-top: 50%;
 }
@@ -93,7 +91,7 @@
   color: white;
   margin-left: 360%;
   margin-top: 1%;
-  font-size: 100px; /* You can adjust the font size according to your preference */
+  font-size: 100px; 
 }
 
 .section-one {
@@ -101,7 +99,7 @@
   margin-right: 0.4%;
   width: 20rem;
   height: 30rem;
-  background-color: #211B1D;
+  background-color: #211b1d;
   backdrop-filter: blur(10rem);
 }
 
@@ -110,7 +108,7 @@
   z-index: 2;
   width: 20rem;
   height: 30rem;
-  background-color: #211B1D;
+  background-color: #211b1d;
   backdrop-filter: blur(10rem);
 }
 
@@ -119,7 +117,7 @@
   z-index: 2;
   width: 20rem;
   height: 30rem;
-  background-color: #211B1D;
+  background-color: #211b1d;
 }
 
 .section-fore {
@@ -127,7 +125,7 @@
   z-index: 2;
   width: 20rem;
   height: 30rem;
-  background-color: #211B1D;
+  background-color: #211b1d;
 }
 .section-container {
   margin-top: -23%;
@@ -218,7 +216,7 @@
   z-index: 2;
   position: absolute;
   left: 79%;
-  top:13.1%;
+  top: 13.1%;
   transform: translateX(-50%);
   border: none;
   margin-top: -2%;
@@ -227,7 +225,7 @@
 .avocato-logo {
   width: 9cqw;
   height: 9rem;
-  background-color: #211B1D;
+  background-color: #211b1d;
   background-image: url("../../Assets/images/Avocato.png");
   background-size: cover;
   background-position: top;
@@ -238,11 +236,10 @@
   top: 32%;
   transform: translateX(-50%);
   border: none;
-  
 }
 
 .expert-team {
-  font-size: 100px; /* Set the font size to 100 pixels */
+  font-size: 100px; 
   margin-left: 34%;
   margin-top: 5%;
 }
@@ -254,7 +251,7 @@
   margin-left: 12%;
   margin-top: 1%;
   z-index: 2;
-  background-image: url('../../Assets/images/expert2.png');
+  background-image: url("../../Assets/images/expert2.png");
 }
 
 .prof2 {
@@ -264,11 +261,12 @@
   margin-left: 60%;
   margin-top: -16%;
   z-index: 2;
-  background-image: url('../../Assets/images/expert1.png'); 
+  background-image: url("../../Assets/images/expert1.png");
 }
 
-.prof1-desc, .prof2-desc {
-  font-family: 'Pacifico', cursive; /* Handwritten font style */
+.prof1-desc,
+.prof2-desc {
+  font-family: "Pacifico", cursive;
 }
 
 .prof1-desc {

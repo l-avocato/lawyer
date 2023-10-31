@@ -9,9 +9,7 @@ function Landing() {
       <Navbar />
       <div className="company">
         <div className="avocato-logo">
-        <div className="big-title">
-          L'Avocato
-        </div>
+          <div className="big-title">L'Avocato</div>
         </div>
         <div className="photo"></div>
       </div>
