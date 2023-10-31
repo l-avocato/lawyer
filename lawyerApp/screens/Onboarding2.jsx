@@ -1,76 +1,97 @@
+import { View, Text, Pressable, Image, Dimensions } from 'react-native'
+import React from 'react'
+import Colors from '../components/colors';
 
-import React from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+const { width, height } = Dimensions.get("window");
+import button from '../components/button';
+import Button from '../components/button';
 
-import Onboarding from "react-native-onboarding-swiper";
+const Onboarding2 = ( { navigation } ) =>{
+  
+    
+        return ( 
+            <View style={{ flex : 1,
+                height:height*0.5,
+                width:width*1,
+                justifyContent:"center",
+                backgroundColor:"#DAD3C8",
+                alignItems:"center",
+                gap:80
+                }}>
+                <View style={{alignItems:'center',
+                display:"flex",
+                justifyContent:"center",
+                gap:30
+                }}>
+                
+                    <View>
+                    <Text style={{
+        
+                        display:'flex',
+                        textAlign:'center',
+                        fontSize: 40,
+                        fontWeight: 800,
+                        color: Colors.black,
+        
+                    }}>Find Your Lawyer</Text>
+                                <Text style={{  
+                                    padding:20,
+                                    display:'flex',
+                                    textAlign:'center',
+                                    fontSize: 18,
+                                    fontWeight: 500,
+                                    color: Colors.black,
+    
+                                }}>Expert Legal Assistance, Tailored Just for You</Text>
+                                </View>
+                        
+                        <Image
+                            source={require("../assets/lawyerpen.jpg")}
+                            style={{
+                                height: height*0.35,
+                                width: width*0.7,
+                                borderRadius: 10,
+                            }}
+                        />
+    
+                </View>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '90%' }}>
+
+                <Button
+                  titleStyle={{
+                    color: "#FFFFFF"
+                 }}
+                title="Previous"
+                onPress={() => navigation.navigate("Onboarding1")}
+                style={{
+                    width: width*0.3,
+                    height:height*0.07,
+                    backgroundColor: "#DAD3C8",
+                    borderRadius:40 ,
+                    color: "#000000"
+
+                            }}
+                        />
+                         <Button
+                  titleStyle={{
+                    color: "#FFFFFF"
+                 }}
+                title="Next"
+                filled
+                onPress={() => navigation.navigate("Onboarding3")}
+                style={{
+                    width: width*0.3,
+                    height:height*0.07,
+                    backgroundColor: "#000000",
+                    borderRadius:40 ,
+                    color: "#000000"
+                            }}
+                        />
+     </View>
+            </View>)
 
 
-const Dots = ({ selected }) => {
-    let backgroundColor;
 
-    backgroundColor = selected ? "#000000" : "#7c7c7c";
-
-    return (
-        <View
-            style={{
-                width: 6,
-                height: 6,
-                marginHorizontal: 3,
-                backgroundColor,
-            }}
-        />
-    );
 }
 
-const Skip = ({ ...props }) => (
-    <TouchableOpacity style={{ marginHorizontal: 10 }} {...props}>
-        <Text style={{ fontSize: 16, color: "#7c7c7c" }}>Skip</Text>
-    </TouchableOpacity>
-);
-
-const Next = ({ ...props }) => (
-    <TouchableOpacity style={{ marginHorizontal: 10 }} {...props}>
-        <Text style={{ fontSize: 16, color: "#000000" }}>Next</Text>
-    </TouchableOpacity>
-);
-
-const Done = ({ ...props }) => (
-    <TouchableOpacity style={{ marginHorizontal: 10 }} {...props}>
-        <Text style={{ fontSize: 16, color: "#000000" }}>Done</Text>
-    </TouchableOpacity>
-);
-
- const Onboarding2 = ({ navigation }) => {
-    return (
-        <Onboarding
-            SkipButtonComponent={Skip}
-            NextButtonComponent={Next}
-            DoneButtonComponent={Done}
-            DotComponent={Dots}
-            onSkip={() => navigation.replace("Login")}
-            onDone={() => navigation.navigate("Login")}
-            pages={[
-                {
-                    backgroundColor: "#fff",
-                    image: <Image source={require("../assets/robe.jpg")} />,
-                    title: "Welcome to Avocato",
-                    subtitle: "Your Best Lawyer App",
-                },
-                {
-                    backgroundColor: "#fff",
-                    image: <Image source={require("../assets/avocat.jpg")} />,
-                    title: "Welcome to Avocato",
-                    subtitle: "Your Best Lawyer App",
-                },
-                {
-                    backgroundColor: "#fff",
-                    image: <Image source={require("../assets/robe.jpg")} />,
-                    title: "Welcome to Avocato",
-                    subtitle: "Your Best Lawyer App",
-                },
-            ]}
-        />
-    );
-}
-
-export default Onboarding2;
+export default Onboarding2
