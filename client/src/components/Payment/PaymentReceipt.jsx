@@ -3,8 +3,10 @@ import "./PaymentReceipt.css"
 
 const PaymentReceipt = () => {
   return (
+    
     <div className="payment-receipt">
-      <h2>Hello Anna Walley,</h2>
+      <img src="https://cdn.discordapp.com/attachments/1166413458225508538/1168559628272013392/Design_sans_titre.png?ex=655234f6&is=653fbff6&hm=a3d9acaaa6e5a900253b63c523d1ad3bcafffc3878da0ff1d27234fc73ec3d22&" alt="lavocato" className='img-logo'/>
+      <h2 className='hello'>Hello Anna Walley,</h2>
       <p>This is the receipt for a payment of $268.85 (USD) you made to Mira.</p>
       <div className='dateP'>
         <h3>Payment Date</h3>
@@ -38,7 +40,7 @@ const PaymentReceipt = () => {
         </p>
         </div>
         <hr />
-        <h3>Description</h3>
+        <h3 className='descript'>Description</h3>
         <p className='mira-des'>
            <br />
           Monthly Subscription <br />

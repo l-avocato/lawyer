@@ -5,12 +5,23 @@
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    background-color: #f9f9f9;
+    background-color: #eee3e3;
     width: 90%;
     height: 5%;
-    margin-top: 2%;
+    margin-top: -1%;
   }
-  
+  .hello{
+    margin-left: 2%;
+  }
+  .descript{
+    margin-left: 2%;
+  }
+  .img-logo{
+    width: 20%;
+   height: 200px;
+   margin-left: 40%;
+   margin-top: 1%;
+  }
   .payment-receipt h2 {
     color: #333;
     font-size: 24px;
@@ -22,11 +33,11 @@
     margin-bottom: 20px;
   }
   .quantity{
-    margin-left: 40%;
-    margin-top: -15%;
+    margin-left: 33%;
+    margin-top: -15.7%;
   }
   .amount{
-    margin-left: 80%;
+    margin-left: 70%;
     margin-top: -4.9%;
   }
   .receipt-details {
@@ -47,7 +58,7 @@
 .dateP{
     margin-left: 70%;
     /* margin-bottom: 90%; */
-    margin-top: 1%;
+    margin-top: 7%;
 
 }
 .payNo{
@@ -55,17 +66,18 @@
     margin-left: 2%;
 }
 .recDetail{
-    margin-top: 5%;
+    margin-top: 3%;
+    margin-left: 2%;
 }
 .descriptionn{
-    margin-left: 72%;
+    margin-left: 70%;
     margin-top: -21%;
 }
   
 .SUB{
-  margin-left: 40%;
+  margin-left: 33%;
 }
 .pay{
-  margin-left: 80%;
+  margin-left: 70%;
   margin-top: -10%;
 }

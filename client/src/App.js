@@ -9,12 +9,14 @@ import AllClient from "./components/AllClient/AllClient.jsx";
 import Landing from "./components/LandingPage/Landing";
 import Navbar from "./components/Navbar/Navbar";
 import PaymentReceipt from "./components/Payment/PaymentReceipt";
+import PaymentHistory from "./components/PaymentHistory/PaymentHistory";
 
 const App = () => {
   return (
     <div className="App">
       <Router>
         <Routes>
+         <Route path="/PaymentHistory" element={<PaymentHistory />} />
           <Route path="/landing" element={<Landing />} />
           <Route path="/nav" element={<Navbar />} />
           <Route path="/Signin" element={<Signin />} />
