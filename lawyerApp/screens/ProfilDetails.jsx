@@ -2,8 +2,10 @@ import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { FontAwesome } from 'react-native-vector-icons';
 import { Colors } from '../components/styles';
+import LinearGradient from 'react-native-linear-gradient';
 
-const { primary } = Colors;
+
+const { primary,tertinary } = Colors;
 
 const ProfilDetails = ({ navigation }) => {
   const handleBookAppointment = () => {
@@ -32,7 +34,7 @@ const ProfilDetails = ({ navigation }) => {
         <FontAwesome name="arrow-left" style={styles.backIcon} />
       </TouchableOpacity>
 
-      <View style={styles.backgroundTop} />
+      <View style={styles.backgroundTop}  />
       <View style={styles.backgroundBottom} />
       <View style={styles.content}>
         <Image
@@ -86,6 +88,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     
+    
   },
   backButton: {
     position: 'absolute',
@@ -99,11 +102,11 @@ const styles = StyleSheet.create({
   },
   backgroundTop: {
     flex: 1,
-    backgroundColor: 'black',
+    backgroundColor:"#DAA520",
   },
   backgroundBottom: {
     flex: 3,
-    backgroundColor: 'white',
+    backgroundColor: '#A9A9A9',
   },
   content: {
     flex: 1,
@@ -115,6 +118,7 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   lawyerPhoto: {
+    marginTop:18,
     width: 150,
     height: 150,
     borderRadius: 75,
@@ -122,15 +126,16 @@ const styles = StyleSheet.create({
   },
   detailsContainer: {
     borderWidth: 1,
-    borderColor: 'blue',
+    borderColor: '#DAA520',
     padding: 10,
     borderRadius: 10,
     backgroundColor: 'white',
   },
   lawyerName: {
-    fontSize: 24,
+    fontSize: 25,
     fontWeight: 'bold',
     marginBottom: 10,
+    
   },
   specialty: {
     fontSize: 18,
@@ -144,7 +149,7 @@ const styles = StyleSheet.create({
   icon: {
     fontSize: 20,
     marginRight: 10,
-    color: 'blue',
+    color: '#DAA520',
   },
   infoText: {
     fontSize: 16,
@@ -155,17 +160,19 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-between'
+    
   },
   button: {
     flex: 1,
-    backgroundColor: 'black',
+    backgroundColor: '#DAA520',
     padding: 10,
     borderRadius: 5,
     margin: 10,
+    borderRadius : 10,
   },
   buttonText: {
-    color: 'white',
+    color: 'black',
     fontSize: 16,
     textAlign: 'center',
   },
@@ -173,12 +180,14 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     marginTop: 20,
-    marginBottom: 20
+    marginBottom: 20,
+  
   },
   galleryImage: {
     width: 150,
     height: 150,
     marginRight: 10,
+    borderRadius: 20,
   },
 });
 

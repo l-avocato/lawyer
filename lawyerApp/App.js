@@ -19,10 +19,10 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="ProfilDetails">
         <Stack.Screen
-          name="ProfilDetails"
+          name= "Lawyer Details"
           component={ProfilDetails}
           options={{
-            headerShown: false,
+            headerShown: true,
           }}
         />
 
