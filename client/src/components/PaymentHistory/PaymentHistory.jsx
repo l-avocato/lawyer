@@ -1,6 +1,9 @@
 import React from 'react';
 import './PaymentHistory.css'; 
 import { useNavigate } from 'react-router-dom';
+import SidebarDash from '../SidebarDash/SidebarDash';
+import NavbarDashboard from '../NavbarDashboard/NavbarDashboard';
+
 
 const PaymentHistory = () => {
   const navigate = useNavigate()
@@ -45,9 +48,11 @@ const PaymentHistory = () => {
   const headers = ['Date', 'Client', 'Amount', 'Description'];
 
   return (
-    <div className='ALL-Cd'>
       
+    <div className='ALL-Cd'>
+       
         <div className="payment-history-container">
+        <NavbarDashboard/>
       <h2 className='word-class'>Payment History</h2>
       <table className="payment-history">
         <thead>

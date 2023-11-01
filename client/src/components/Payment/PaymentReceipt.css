@@ -26,6 +26,9 @@
     color: #333;
     font-size: 24px;
   }
+  .mira-des{
+    margin-left: 2%;
+  }
   
   .payment-receipt p {
     color: #555;
@@ -42,6 +45,9 @@
   }
   .receipt-details {
     margin-top: 20px;
+  }
+  .para{
+    margin-left: 2%;
   }
   
   .receipt-details h3 {
