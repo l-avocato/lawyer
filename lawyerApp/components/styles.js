@@ -119,7 +119,7 @@ z-index: 1;
 `;
 
 export const StyledButton = styled.TouchableOpacity`
-padding: 15px;
+padding: 0px;
 background-color: ${brand};
 justify-content: center;
 align-items: center;
