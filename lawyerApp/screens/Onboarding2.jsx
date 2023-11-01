@@ -24,7 +24,17 @@ const Onboarding2 = ( { navigation } ) =>{
                 gap:30
                 }}>
                 
-                    <View>
+                   
+                        
+                        <Image
+                            source={require("../assets/2.png")}
+                            style={{
+                                height: height*0.5,
+                                width: width*0.8,
+                                borderRadius: 10,
+                            }}
+                        />
+     <View>
                     <Text style={{
         
                         display:'flex',
@@ -44,16 +54,6 @@ const Onboarding2 = ( { navigation } ) =>{
     
                                 }}>Expert Legal Assistance, Tailored Just for You</Text>
                                 </View>
-                        
-                        <Image
-                            source={require("../assets/lawyerpen.jpg")}
-                            style={{
-                                height: height*0.35,
-                                width: width*0.7,
-                                borderRadius: 10,
-                            }}
-                        />
-    
                 </View>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '90%' }}>
 
