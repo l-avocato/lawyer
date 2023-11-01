@@ -32,7 +32,7 @@ import {
 const { brand, darkLight, primary } = Colors;
 
 
-const Login = () => {
+const Login = ({ navigation }) => {
 
 const [hidePassword, setHidePassword] = useState(true);
 
@@ -83,7 +83,7 @@ const [hidePassword, setHidePassword] = useState(true);
                         </StyledButton>
                         <ExtraView>
                             <ExtraText>Don't have an account already?</ExtraText>
-                            <TextLink>
+                            <TextLink onPress={() => navigation.navigate('signup')}>
                                 <TextLinkContent>Signup</TextLinkContent>
                             </TextLink>
                         </ExtraView>
