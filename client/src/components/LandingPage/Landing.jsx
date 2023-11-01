@@ -23,6 +23,9 @@ function Landing() {
       <div className="left-section" data-aos="fade-left">
         <h1 className="heading-text">Level up your law firm with Avocato</h1>
       </div>
+      <div className="section-container">
+        {/* Add your other sections here */}
+      </div>
       <Footer />
     </div>
   );

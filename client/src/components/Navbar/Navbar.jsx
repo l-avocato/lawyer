@@ -1,8 +1,8 @@
 import React from "react";
 import "./styles.css";
-import facebook from "../../Assets/images/mfaco.png";
-import instagram from "../../Assets/images/minsta.png";
-import linkidin from "../../Assets/images/linko.png";
+// import facebook from "../../Assets/images/mfaco.png";
+// import instagram from "../../Assets/images/minsta.png";
+// import linkidin from "../../Assets/images/linko.png";
 
 function Navbar() {
   return (
@@ -13,13 +13,13 @@ function Navbar() {
           <div className="navBarLinks"></div>
           <div className="navBarIcons">
             <div className="icon">
-              <img className="facebookIcon" src={facebook} alt="" />
+              {/* <img className="facebookIcon" src={facebook} alt="" /> */}
             </div>
             <div className="icon">
-              <img className="instagramIcon" src={instagram} alt="" />
+              {/* <img className="instagramIcon" src={instagram} alt="" /> */}
             </div>
             <div className="icon">
-              <img className="linkidinIcon" src={linkidin} alt="" />
+              {/* <img className="linkidinIcon" src={linkidin} alt="" /> */}
             </div>
           </div>
         </div>
