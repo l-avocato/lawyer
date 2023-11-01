@@ -1,4 +1,4 @@
-/* Navbar styles */
+
 #navBar {
   display: flex;
   flex-direction: column;
@@ -7,7 +7,7 @@
 
 .topSection {
   background-color: #ffffff;
-  padding: 10px 50px;
+  padding: 12px 50px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -82,4 +82,132 @@
   width: 100%;
   background-color: #2A2528;
 }
+
+/* Variables */
+:root {
+    --background-purple: #EEEEEE;
+    --subtle-white: #f9f9f9;
+    --subtle-grey: #f2f2f2;
+    --masked-grey: #333;
+    --blue: #F03861;
+    --open-sans: 'Open Sans', sans-serif;
+  }
+  
+  /* Reset */
+  *,
+  *:before,
+  *:after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body, html {
+    height: 100%;
+    background-color: var(--background-purple);
+  }
+  
+  /* Page Container */
+  .container {
+    width: 100%;
+    height: 100%;
+  }
+  
+  /* Tutorial Styles */
+  .tutorial {
+    width: 80rem;
+    margin: 5rem auto 0 auto;
+    box-shadow: 0 0.4rem 1.2rem rgba(0, 0, 0, 0.1);
+    background-color: var(--subtle-white);
+    max-width: 80rem;
+  }
+  
+  .slider {
+    width: 100%;
+    height: 30rem;
+    background-color: var(--blue);
+  }
+  
+  .information {
+    width: 100%;
+    padding: 2rem 5rem;
+    margin-bottom: 3rem;
+    font-family: var(--open-sans);
+  }
+  
+  .information h1 {
+    color: var(--masked-grey);
+    font-size: 1.5rem;
+    padding: 0 1rem;
+    border-left: 0.3rem solid var(--blue);
+  }
+  
+  .information h3 {
+    color: darken(var(--subtle-grey), 7%);
+    font-size: 1rem;
+    font-weight: 300;
+    padding: 0 1rem;
+    border-left: 0.3rem solid var(--blue);
+  }
+  
+  .information p {
+    padding: 1rem 0;
+  }
+  
+  /* Dropdown Menu Styles */
+  ul {
+    font-size: 0;
+    list-style-type: none;
+  }
+  
+  ul > li {
+    font-family: var(--open-sans);
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--masked-grey);
+    display: inline-block;
+    padding: 1.5rem;
+    position: relative;
+  }
+  
+  ul > li:hover {
+    cursor: pointer;
+    background-color: var(--subtle-grey);
+  }
+  
+  ul > li:hover > ul {
+    display: block;
+    margin-top: 1.5rem;
+  }
+  
+  ul > li > ul {
+    display: none;
+    position: absolute;
+    width: 20rem;
+    left: 0;
+  }
+  
+  ul > li > ul > li {
+    display: block;
+    background-color: darken(var(--subtle-white), 7%);
+  }
+  
+  ul > li > ul > li > span {
+    float: right;
+    color: var(--subtle-white);
+    background-color: var(--blue);
+    padding: 0.2rem 0.5rem;
+    text-align: center;
+    font-size: 0.8rem;
+    border-radius: 0.3rem;
+  }
+  
+  ul > li > ul > li:hover {
+    background-color: darken(var(--subtle-white), 10%);
+  }
+  
+  ul > li > ul > li:hover > span {
+    background-color: darken(var(--blue), 5%);
+  }
+
 

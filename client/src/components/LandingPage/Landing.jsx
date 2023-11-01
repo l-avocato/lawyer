@@ -1,54 +1,38 @@
 import React, { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import "../../components/LandingPage/styles.css";
+import "./styles.css";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer.jsx";
 import client from "../../Assets/images/client.png";
+import do1 from "../../Assets/images/expert1.png";
+import do2 from "../../Assets/images/expert2.png";
 
 function Landing() {
   useEffect(() => {
     AOS.init({
-      once: true, // Set once: true to trigger animations only once
-      offset: 200, // Adjust the offset value as needed
+      once: true,
+      offset: 200,
     });
   }, []);
 
   return (
     <div className="big-container">
       <Navbar />
-      <div className="right-section" data-aos="fade-right">
-        <img className="client-image" src={client} alt="Client" />
-      </div>
-      <div className="left-section" data-aos="fade-left">
-        <h1 className="heading-text">Level up your law firm with Avocato</h1>
-      </div>
-      <div className="section-container">
-        {/* Add your other sections here */}
-      </div>
-      <Footer />
-    </div>
-  );
-}
-
-export default Landing;
-
-{
-  /* <div className="company">
-        <div className="avocato-logo">
-          <div className="big-title">L'Avocato</div>
+      <div className="yellow-background">
+        <div className="right-section" data-aos="fade-right">
+          <img className="client-image" src={client} alt="Client" />
         </div>
-        <div className="photo"></div>
-      </div>
-      <div className="law-image"></div>
-      <div className="Profile-pic">
-        <div className="Profile-desc">
-          One of the first duties of a lawyer is to engage in a candid and
-          honest conversation with the client about the case, the law, and the
-          possible outcomes.
+        <div className="left-section" data-aos="fade-left">
+          <h1 className="heading-text">Level up your law work with Avocato</h1>
+          <div>
+            <button className="btn2">Discover More</button>
+          </div>
         </div>
       </div>
-      <div className="grey-background"></div>
+      <div className="services">
+        <h1>our services</h1>
+      </div>
       <div className="section-container">
         <div className="section-one">
           <div className="law-icon1"></div>
@@ -75,26 +59,22 @@ export default Landing;
           </div>
         </div>
       </div>
-      <div className="expert-team">expert team</div>
-      <div className="prof1">²
-        <div className="prof1-desc">
-          With a sharp legal mind and a passion for justice, Lawyer 1 is known
-          for their unwavering dedication to clients. Their expertise in
-          criminal law and impeccable courtroom skills make them a formidable
-          advocate for those seeking justice.
+      <div className="team-name">
+        <h1>clients feedback</h1>
+      </div>
+      <div className="picture1">
+        <img className="image1" src={do1}></img>
+        <div className="para1">Justice is not just a goal; it's a way of life. In the pursuit of truth, I stand as a beacon of hope, advocating for fairness and equality. Together, we navigate the complexities of law, ensuring righteousness prevails</div>
+      </div>
+      <div className="picture2">
+        <img className="image2" src={do2}></img>
+        <div className="para2">
+        n the courtroom, I am the voice of the voiceless, a defender of truth and fairness. Every case is a journey, and I walk it with unwavering dedication, seeking justice, one client at a time 
         </div>
       </div>
-      <div className="prof2">
-        <div className="prof2-desc">
-          A compassionate family lawyer, Lawyer 2 s pecializes in resolving
-          intricate disputes with empathy and professionalism. Their vast
-          experience in matrimonial law and commitment to finding peaceful{" "}
-        </div>
-      </div>
-      <div className="grey-background-two"></div>
-      <div className="title">
-        About Us 
-          <div className="desc">
-          </div>
-        </div> */
+      <Footer />
+    </div>
+  );
 }
+
+export default Landing;
