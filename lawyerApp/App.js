@@ -12,6 +12,7 @@ import Signup from "./screens/SignUp";
 import Welcome from "./screens/Welcome";
 import Onboarding1 from "./screens/Onboarding1";
 import Onboarding3 from "./screens/Onboarding3";
+import Appointment from "./screens/Appointment";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -55,29 +56,27 @@ export default function App() {
             headerShown: false,
           }}
         />
- <Stack.Screen
+        <Stack.Screen
           name="Onboarding1"
           component={Onboarding1}
           options={{
-            headerShown: false
+            headerShown: false,
           }}
         />
-          <Stack.Screen
+        <Stack.Screen
           name="Onboarding2"
           component={Onboarding2}
           options={{
-            headerShown: false
+            headerShown: false,
           }}
         />
         <Stack.Screen
           name="Onboarding3"
           component={Onboarding3}
           options={{
-            headerShown: false
+            headerShown: false,
           }}
         />
-       
-        
       </Stack.Navigator>
     </NavigationContainer>
   );
