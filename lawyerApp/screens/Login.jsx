@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import { StatusBar } from 'expo-status-bar';
 //formik
 import { Formik } from "formik";
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, ActivityIndicator } from "react-native";
 //icons
 import { Octicons, Fontisto, Ionicons } from "@expo/vector-icons";
 
@@ -27,14 +27,44 @@ import {
     TextLink,
     TextLinkContent,
 } from "../components/styles";
+import { FIREBASE_AUTH } from "../firebaseConfig";
 
 //colors
 const { brand, darkLight, primary } = Colors;
 
 
 const Login = ({ navigation }) => {
+const [email, setEmail] = useState("");
+const [password, setPassword] = useState("");
+const [loading, setLoading] = useState(false);
 
 const [hidePassword, setHidePassword] = useState(true);
+
+const auth = FIREBASE_AUTH;
+const signIn = async () => {
+    setLoading(true);
+    try {
+        await signInWithEmailAndPassword(auth, email, password);
+        setLoading(false);
+        navigation.navigate("welcome");
+    } catch (error) {
+        alert("Invalid email or password", error.message);
+        setLoading(false);
+    }
+}
+const signUp = async () => {
+    setLoading(true);
+    try {
+        await createUserWithEmailAndPassword(auth, email, password);
+        alert("Account created successfully", "Welcome to Avocato");
+        setLoading(false);
+        navigation.navigate("welcome");
+    } catch (error) {
+        alert("Registration Failed", error.message);
+        setLoading(false);
+    }
+}
+
 
     return (
         <StyledContainer>
@@ -54,7 +84,7 @@ const [hidePassword, setHidePassword] = useState(true);
                             icon="mail"
                             placeholder="please enter your email" 
                             placeholderTextColor={darkLight}
-                            onChangeText={handleChange('email')}
+                            onChangeText={(text)=>setEmail(text)}
                             onBlur={handleBlur('email')}
                             value={values.email}
                             keyboardType="email-address"
@@ -64,7 +94,7 @@ const [hidePassword, setHidePassword] = useState(true);
                             icon="lock"
                             placeholder="* * * * * * * *"
                             placeholderTextColor={darkLight}
-                            onChangeText={handleChange('password')}
+                            onChangeText={(text)=>setPassword(text)}
                             onBlur={handleBlur('password')}
                             value={values.password}
                             secureTextEntry={hidePassword}
@@ -72,6 +102,9 @@ const [hidePassword, setHidePassword] = useState(true);
                             hidePassword={hidePassword}
                             setHidePassword={setHidePassword}
                             />
+                            {loading? <ActivityIndicator size="large" color="000ff" />
+                            :<>
+                            </>}
                         <MsgBox>...</MsgBox>
                         <StyledButton onPress={handleSubmit}>
                             <ButtonText>Login</ButtonText>
