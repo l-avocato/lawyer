@@ -22,7 +22,7 @@ const ProfilDetails = ({ navigation }) => {
   ];
 
   return (
-    <View>
+    <View style={styles.body}>
       <View style={styles.block2}>
         <View style={styles.photoLowyer}>
           <View style={styles.blockPhoto}>
@@ -98,6 +98,10 @@ const ProfilDetails = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  body : {
+  backgroundColor : "#f5f5dc",
+  height : 800
+  },
   nameLawyer: {
     display: "flex",
     alignItems: "center",
@@ -131,18 +135,18 @@ const styles = StyleSheet.create({
     marginRight: 80,
   },
   block2: {
-    backgroundColor: "grey",
+    backgroundColor: '#ecd540',
     height: 250,
     width: 370,
     marginTop: 90,
     marginLeft: 20,
-    borderRadius: 30,
+    borderRadius: 40,
   },
   blockBlueGhamak: {
-    backgroundColor: "#DAA520",
-    height: 90,
+    backgroundColor: "#A9A9A9",
+    height: 80,
     width: 370,
-    marginTop: 160,
+    marginTop: 170,
     borderRadius: 20,
   },
   photoo: {
@@ -164,7 +168,7 @@ const styles = StyleSheet.create({
   galleryTitle: {
     fontSize: 20,
     marginTop: -15,
-    color: "#DAA520",
+    color: "#cca01d",
     fontFamily: "Roboto",
   },
   galleryImage: {
@@ -181,7 +185,7 @@ const styles = StyleSheet.create({
   infoTitle: {
     fontSize: 20,
     marginTop: 20,
-    color: "#DAA520",
+    color: "#cca01d",
     fontFamily: "Roboto",
   },
   infoContainer: {
@@ -212,7 +216,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   bookButton: {
-    backgroundColor: "#DAA520",
+    backgroundColor: "#ecd540",
     width: 390,
     height: 50,
     justifyContent: "center",
