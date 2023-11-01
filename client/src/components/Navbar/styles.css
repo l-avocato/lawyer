@@ -2,10 +2,11 @@
 #navBar {
   display: flex;
   flex-direction: column;
+  border-color: #2A2528;
 }
 
 .topSection {
-  background-color: #1D191B;
+  background-color: #ffffff;
   padding: 10px 50px;
   display: flex;
   flex-direction: row;

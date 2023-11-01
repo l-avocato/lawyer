@@ -1,13 +1,37 @@
-import React from "react";
+import React, { useEffect } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
 import "../../components/LandingPage/styles.css";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer.jsx";
-import lewis from "../../Assets/images/lewis.png";
+import client from "../../Assets/images/client.png";
+
 function Landing() {
+  useEffect(() => {
+    AOS.init({
+      once: true, // Set once: true to trigger animations only once
+      offset: 200, // Adjust the offset value as needed
+    });
+  }, []);
+
   return (
     <div className="big-container">
       <Navbar />
-      <div className="company">
+      <div className="right-section" data-aos="fade-right">
+        <img className="client-image" src={client} alt="Client" />
+      </div>
+      <div className="left-section" data-aos="fade-left">
+        <h1 className="heading-text">Level up your law firm with Avocato</h1>
+      </div>
+      <Footer />
+    </div>
+  );
+}
+
+export default Landing;
+
+{
+  /* <div className="company">
         <div className="avocato-logo">
           <div className="big-title">L'Avocato</div>
         </div>
@@ -49,7 +73,7 @@ function Landing() {
         </div>
       </div>
       <div className="expert-team">expert team</div>
-      <div className="prof1">
+      <div className="prof1">²
         <div className="prof1-desc">
           With a sharp legal mind and a passion for justice, Lawyer 1 is known
           for their unwavering dedication to clients. Their expertise in
@@ -69,10 +93,5 @@ function Landing() {
         About Us 
           <div className="desc">
           </div>
-        </div>
-      <Footer />
-    </div>
-  );
+        </div> */
 }
-
-export default Landing;

@@ -8,8 +8,8 @@ import image from "../../Assets/images/sol.png"
 function Footer() {
   return (
     <div id = "footer">
-      <div className="footer-case">
-        </div>
+      {/* <div className="footer-case">
+        </div> */}
         <div className="logo container logo ">
        L'Avocato
         </div>
