@@ -1,3 +1,11 @@
+import React from "react"
+import "../../components/Footer/styles.css"
+import facebook from "../../assets/images/mfaco.png";
+import instagram from "../../assets/images/minsta.png";
+import linkidin from "../../assets/images/linko.png";
+import image from "../../assets/images/sol.png"
+
+
 import React from "react";
 import "./styles.css"; 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
