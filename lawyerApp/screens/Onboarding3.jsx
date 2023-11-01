@@ -23,7 +23,17 @@ const Onboarding3 = ( { navigation } ) =>{
             gap:30
             }}>
             
-                <View>
+               
+                        
+                        <Image
+                            source={require("../assets/3.png")}
+                            style={{
+                                height: height*0.5,
+                                width: width*0.7,
+                                borderRadius: 10,
+                            }}
+                        />
+     <View>
                 <Text style={{
     
                     display:'flex',
@@ -43,16 +53,6 @@ const Onboarding3 = ( { navigation } ) =>{
     
                                 }}>Track Your Case, Chat with Your Lawyer, and Receive Updates in Real-Time</Text>
                                 </View>
-                        
-                        <Image
-                            source={require("../assets/lawyerpen.jpg")}
-                            style={{
-                                height: height*0.25,
-                                width: width*0.7,
-                                borderRadius: 10,
-                            }}
-                        />
-    
                 </View>
                 <Button
                   titleStyle={{
@@ -60,7 +60,7 @@ const Onboarding3 = ( { navigation } ) =>{
                  }}
                 title="Start"
                 filled
-                onPress={() => navigation.navigate("welcome")}
+                onPress={() => navigation.navigate("login")}
                 style={{
                                 width: width*0.721,
                                 backgroundColor: "#000000",

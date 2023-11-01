@@ -25,7 +25,17 @@ const Onboarding1 = ( { navigation } ) =>{
         gap:30
         }}>
         
-            <View>
+         
+                    
+                    <Image
+                        source={require("../assets/1.png")}
+                        style={{
+                            height: height*0.5,
+                            width: width*1,
+                            borderRadius: 10,
+                        }}
+                    />
+                       <View>
             <Text style={{
 
                 display:'flex',
@@ -45,15 +55,6 @@ const Onboarding1 = ( { navigation } ) =>{
 
                             }}> Your Personalized Legal Solution</Text>
                             </View>
-                    
-                    <Image
-                        source={require("../assets/lawyerr.jpg")}
-                        style={{
-                            height: height*0.35,
-                            width: width*0.7,
-                            borderRadius: 10,
-                        }}
-                    />
 
             </View>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '90%' }}>
@@ -63,7 +64,7 @@ const Onboarding1 = ( { navigation } ) =>{
                 color: Colors.black
              }}
             title="Skip"
-            onPress={() => navigation.navigate("welcome")}
+            onPress={() => navigation.navigate("login")}
             style={{
                             width: width*0.3,
                             height:height*0.07,
@@ -76,7 +77,7 @@ const Onboarding1 = ( { navigation } ) =>{
               titleStyle={{
                 color: Colors.white
              }}
-            title="Continue"
+            title="Next"
             filled
             onPress={() => navigation.navigate("Onboarding2")}
             style={{
