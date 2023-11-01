@@ -33,7 +33,7 @@ const { brand, darkLight, primary } = Colors;
 //DateTimePicker
 import DateTimePicker from "@react-native-community/datetimepicker";
 
-const Signup = () => {
+const Signup = ({ navigation }) => {
 
 const [hidePassword, setHidePassword] = useState(true);
 const [show, setShow] = useState(false);
@@ -144,7 +144,7 @@ const showDatePicker = () => {
                        <Line/> 
                         <ExtraView>
                             <ExtraText>Already have an account?</ExtraText>
-                            <TextLink>
+                            <TextLink onPress={() => navigation.navigate('login')}>
                                 <TextLinkContent>Login</TextLinkContent>
                             </TextLink>
                         </ExtraView>

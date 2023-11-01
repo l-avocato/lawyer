@@ -17,9 +17,15 @@ export default function App() {
   const Stack = createNativeStackNavigator();
   return (
     <NavigationContainer>
-    <Stack.Navigator
-        initialRouteName='ProfilDetails'
-      >
+      <Stack.Navigator initialRouteName="HomePage">
+        <Stack.Screen name="ProfilDetails" component={ProfilDetails} />
+        <Stack.Screen
+          name="HomePage"
+          component={HomePage}
+          options={{
+            headerShown: true,
+          }}
+        />
         <Stack.Screen
           name="Lawyer Details"
           component={ProfilDetails}
@@ -31,6 +37,20 @@ export default function App() {
         <Stack.Screen
           name="welcome"
           component={Welcome}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="login"
+          component={Login}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="signup"
+          component={Signup}
           options={{
             headerShown: false,
           }}
@@ -57,13 +77,7 @@ export default function App() {
           }}
         />
        
-        <Stack.Screen
-          name="HomePage"
-          component={HomePage}
-          options={{
-            headerShown: true,
-          }}
-        />
+        
       </Stack.Navigator>
     </NavigationContainer>
   );
