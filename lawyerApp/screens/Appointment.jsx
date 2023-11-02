@@ -15,14 +15,22 @@ const Appointment = () => {
       backgroundColor: '#ecd540',
       borderRadius: 10,
     },
+    highlighted: {
+      backgroundColor: 'red', 
+      borderRadius: 10,
+    },
   };
 
   const dayPressHandler = date => {
     setSelectedDate(date);
+
+    console.log("Selected Date:", date);
   };
 
   const timePressHandler = time => {
     setSelectedTime(time);
+
+    console.log("Selected Time:", time);
   };
 
   const markedDates = {
@@ -36,6 +44,8 @@ const Appointment = () => {
   return (
     <View>
       <View>
+      </View>
+      <View>
         <Calendar
           style={{ borderRadius: 10, margin: 30, marginTop: 60 }}
           minDate={minDate}
@@ -45,7 +55,10 @@ const Appointment = () => {
             selectedDayBorderRadius: customStyles.selected.borderRadius,
           }}
           onDayPress={dayPressHandler}
-          markedDates={markedDates}
+          markedDates={{
+            ...markedDates,
+            [selectedDate]: { selected: true, customStyles: customStyles.highlighted },
+          }}
         />
       </View>
       <View style={styles.headerContainer}>
@@ -112,7 +125,6 @@ const styles = StyleSheet.create({
   bookButtonText: {
     fontSize: 20,
     color: "black",
-   
   },
 });
 
