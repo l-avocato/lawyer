@@ -1,4 +1,4 @@
-import React from "react"
+// import React from "react"
 import "../../components/Footer/styles.css"
 import facebook from "../../assets/images/mfaco.png";
 import instagram from "../../assets/images/minsta.png";
