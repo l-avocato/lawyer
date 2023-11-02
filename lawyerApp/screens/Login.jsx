@@ -5,6 +5,7 @@ import { Formik } from "formik";
 import { View, Text, TextInput, TouchableOpacity, ActivityIndicator } from "react-native";
 //icons
 import { Octicons, Fontisto, Ionicons } from "@expo/vector-icons";
+import { FIREBASE_AUTH } from "../firebaseConfig";
 
 import {
     StyledContainer,
@@ -27,7 +28,7 @@ import {
     TextLink,
     TextLinkContent,
 } from "../components/styles";
-import { FIREBASE_AUTH } from "../firebaseConfig";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 //colors
 const { brand, darkLight, primary } = Colors;
@@ -52,18 +53,7 @@ const signIn = async () => {
         setLoading(false);
     }
 }
-const signUp = async () => {
-    setLoading(true);
-    try {
-        await createUserWithEmailAndPassword(auth, email, password);
-        alert("Account created successfully", "Welcome to Avocato");
-        setLoading(false);
-        navigation.navigate("welcome");
-    } catch (error) {
-        alert("Registration Failed", error.message);
-        setLoading(false);
-    }
-}
+
 
 
     return (
@@ -86,7 +76,7 @@ const signUp = async () => {
                             placeholderTextColor={darkLight}
                             onChangeText={(text)=>setEmail(text)}
                             onBlur={handleBlur('email')}
-                            value={values.email}
+                            // value={values.email}
                             keyboardType="email-address"
                             />
                         <MyTextInput
@@ -96,7 +86,7 @@ const signUp = async () => {
                             placeholderTextColor={darkLight}
                             onChangeText={(text)=>setPassword(text)}
                             onBlur={handleBlur('password')}
-                            value={values.password}
+                            // value={values.password}
                             secureTextEntry={hidePassword}
                             isPassword={true}
                             hidePassword={hidePassword}
@@ -106,8 +96,8 @@ const signUp = async () => {
                             :<>
                             </>}
                         <MsgBox>...</MsgBox>
-                        <StyledButton onPress={handleSubmit}>
-                            <ButtonText>Login</ButtonText>
+                        <StyledButton onPress={signIn}>
+                            <ButtonText >Login</ButtonText>
                         </StyledButton>
                        <Line/> 
                         <StyledButton google={true} onPress={handleSubmit}>
