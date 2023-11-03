@@ -19,6 +19,7 @@ import Notifications from "./screens/Notifications";
 import ResetPassword from "./screens/ResetPassword";
 import HelpCenter from "./screens/HelpCenter";
 import PrivacyPolicy from "./screens/PrivacyPolicy";
+import NavTab from "./screens/NavTab";
 import LawyerProfile from "./screens/LawyerProfile";
 
 
@@ -26,11 +27,18 @@ export default function App() {
   const Stack = createNativeStackNavigator();
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName = "LawyerProfile"
-                 component={LawyerProfile}
-                 options={{headerShown: true}}
+      <Stack.Navigator initialRouteName = "HomePage" 
+                 component={HomePage}
+                 options={{headerShown: false}}
 
       >
+        <Stack.Screen
+          name="NavTab"
+          component={NavTab}
+          options={{
+            headerShown: true,
+          }}
+        />
         <Stack.Screen
           name="LawyerProfile"
           component={LawyerProfile}
@@ -38,7 +46,6 @@ export default function App() {
             headerShown: true,
           }}
         />
-
         <Stack.Screen
           name="Appintment"
           component={Appointment}
@@ -52,7 +59,7 @@ export default function App() {
           name="HomePage"
           component={HomePage}
           options={{
-            headerShown: true,
+            headerShown: false,
           }}
         />
         <Stack.Screen
