@@ -1,4 +1,4 @@
-import React from "react"
+// import React from "react"
 import "../../components/Footer/styles.css"
 import facebook from "../../assets/images/mfaco.png";
 import instagram from "../../assets/images/minsta.png";
@@ -6,7 +6,6 @@ import linkidin from "../../assets/images/linko.png";
 import image from "../../assets/images/sol.png"
 
 
-import React from "react";
 import "./styles.css"; 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook, faTwitter, faGithub, faInstagram } from "@fortawesome/free-brands-svg-icons";
@@ -20,18 +19,11 @@ function Footer() {
             <div className="row">
               <div className="col-6">
                 <ul className="list-unstyled">
-                  <li><a href="">Product</a></li>
-                  <li><a href="">Benefits</a></li>
-                  <li><a href="">Partners</a></li>
-                  <li><a href="">Team</a></li>
                 </ul>
               </div>
               <div className="col-6">
                 <ul className="list-unstyled">
-                  <li><a href="">Documentation</a></li>
-                  <li><a href="">Support</a></li>
-                  <li><a href="">Legal Terms</a></li>
-                  <li><a href="">About</a></li>
+          
                 </ul>
               </div>
             </div>

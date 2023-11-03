@@ -19,12 +19,34 @@ import Notifications from "./screens/Notifications";
 import ResetPassword from "./screens/ResetPassword";
 import HelpCenter from "./screens/HelpCenter";
 import PrivacyPolicy from "./screens/PrivacyPolicy";
+import LawyerProfile from "./screens/LawyerProfile";
+
 
 export default function App() {
   const Stack = createNativeStackNavigator();
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="settings">
+      <Stack.Navigator initialRouteName = "LawyerProfile"
+                 component={LawyerProfile}
+                 options={{headerShown: true}}
+
+      >
+        <Stack.Screen
+          name="LawyerProfile"
+          component={LawyerProfile}
+          options={{
+            headerShown: true,
+          }}
+        />
+
+        <Stack.Screen
+          name="Appintment"
+          component={Appointment}
+          options={{
+            headerShown: true,
+          }}
+        />
+        
 
         <Stack.Screen
           name="HomePage"

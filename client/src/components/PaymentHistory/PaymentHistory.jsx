@@ -130,7 +130,7 @@ const PaymentHistory = () => {
     </div>
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: "11rem", marginLeft: "15rem" }}>
 
-        <Box sx={{ height: 400, width: '80%', marginLeft: "15rem" }}>
+        <Box sx={{ height: 400, width: '110%', marginLeft: "15rem" }}>
           <DataGrid
             rows={ rows}
             columns={ columns}
