@@ -4,9 +4,9 @@ import "aos/dist/aos.css";
 import "./styles.css";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer.jsx";
-import client from "../../Assets/images/client.png";
-import do1 from "../../Assets/images/expert1.png";
-import do2 from "../../Assets/images/expert2.png";
+import client from "../../assets/images/client.png";
+import do1 from "../../assets/images/expert1.png";
+import do2 from "../../assets/images/expert2.png";
 
 function Landing() {
   useEffect(() => {

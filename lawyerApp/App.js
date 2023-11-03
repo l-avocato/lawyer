@@ -14,6 +14,8 @@ import Onboarding1 from "./screens/Onboarding1";
 import Onboarding3 from "./screens/Onboarding3";
 import Appointment from "./screens/Appointment";
 import NavTab from "./screens/NavTab";
+import LawyerProfile from "./screens/LawyerProfile";
+
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -32,12 +34,20 @@ export default function App() {
           }}
         />
         <Stack.Screen
+          name="LawyerProfile"
+          component={LawyerProfile}
+          options={{
+            headerShown: true,
+          }}
+        />
+        <Stack.Screen
           name="Appintment"
           component={Appointment}
           options={{
             headerShown: true,
           }}
         />
+        
 
         <Stack.Screen
           name="HomePage"

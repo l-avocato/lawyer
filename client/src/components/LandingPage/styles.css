@@ -102,56 +102,56 @@
 .law-icon1 {
   width: 10rem;
   height: 10rem;
-  background-color: url("../../Assets/images/prem.png");
+  background-color: url("../../assets/images/prem.png");
   background-size: cover;
   background-position: top;
   border: 1px solid #b06e6e;
   z-index: 1;
   transform: translate(3%, -70%);
   border: black;
-  background-image: url("../../Assets/images/lawicon.png");
+  background-image: url("../../assets/images/lawicon.png");
   margin-top: 71%;
   margin-left: 24%;
 }
 .law-icon2 {
   width: 10rem;
   height: 10rem;
-  background-color: url("../../Assets/images/prem.png");
+  background-color: url("../../assets/images/prem.png");
   background-size: cover;
   background-position: top;
   border: 1px solid #b06e6e;
   z-index: 1;
   transform: translate(3%, -70%);
   border: black;
-  background-image: url("../../Assets/images/mtar.png");
+  background-image: url("../../assets/images/mtar.png");
   margin-top: 71%;
   margin-left: 24%;
 }
 .law-icon3 {
   width: 10rem;
   height: 10rem;
-  background-color: url("../../Assets/images/prem.png");
+  background-color: url("../../assets/images/prem.png");
   background-size: cover;
   background-position: top;
   border: 1px solid #b06e6e;
   z-index: 1;
   transform: translate(3%, -70%);
   border: black;
-  background-image: url("../../Assets/images/buidling.png");
+  background-image: url("../../assets/images/buidling.png");
   margin-top: 71%;
   margin-left: 24%;
 }
 .law-icon4 {
   width: 10rem;
   height: 10rem;
-  background-color: url("../../Assets/images/prem.png");
+  background-color: url("../../assets/images/prem.png");
   background-size: cover;
   background-position: top;
   border: 1px solid #b06e6e;
   z-index: 1;
   transform: translate(3%, -70%);
   border: black;
-  background-image: url("../../Assets/images/labour.png");
+  background-image: url("../../assets/images/labour.png");
   margin-top: 71%;
   margin-left: 24%;
 }

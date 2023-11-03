@@ -5,7 +5,7 @@ import { Formik } from "formik";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 //icons
 import { Octicons, Fontisto, Ionicons } from "@expo/vector-icons";
-
+import { FIREBASE_AUTH } from "../firebaseConfig";
 import {
     StyledContainer,
     InnerContainer,
@@ -32,13 +32,17 @@ import {
 const { brand, darkLight, primary } = Colors;
 //DateTimePicker
 import DateTimePicker from "@react-native-community/datetimepicker";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 const Signup = ({ navigation }) => {
+const [email, setEmail] = useState("");
+const [password, setPassword] = useState("");
+const [loading, setLoading] = useState(false);
 
 const [hidePassword, setHidePassword] = useState(true);
 const [show, setShow] = useState(false);
 const [date, setDate] = useState(new Date(2000, 0, 1));
-
+const auth = FIREBASE_AUTH;
 //Actual date of birth to be sent
 const [dob, setDob] = useState();
 
@@ -47,6 +51,19 @@ const onChange = (event, selectedDate) => {
     setShow(false);
     setDate(currentDate);
     setDob(currentDate);
+}
+
+const signUp = async () => {
+    setLoading(true);
+    try {
+        await createUserWithEmailAndPassword(auth, email, password);
+        alert("Account created successfully", "Welcome to Avocato");
+        setLoading(false);
+        navigation.navigate("login");
+    } catch (error) {
+        alert( error.message);
+        setLoading(false);
+    }
 }
 
 const showDatePicker = () => {
@@ -93,9 +110,9 @@ const showDatePicker = () => {
                             icon="mail"
                             placeholder="please enter your email" 
                             placeholderTextColor={darkLight}
-                            onChangeText={handleChange('email')}
+                            onChangeText={(text)=>setEmail(text)}
                             onBlur={handleBlur('email')}
-                            value={values.email}
+                            // value={values.email}
                             keyboardType="email-address"
                             />
                         <MyTextInput
@@ -116,9 +133,8 @@ const showDatePicker = () => {
                             icon="lock"
                             placeholder="* * * * * * * *"
                             placeholderTextColor={darkLight}
-                            onChangeText={handleChange('password')}
-                            onBlur={handleBlur('password')}
-                            value={values.password}
+                            onChangeText={(text)=>setPassword(text)}                            onBlur={handleBlur('password')}
+                            // value={values.password}
                             secureTextEntry={hidePassword}
                             isPassword={true}
                             hidePassword={hidePassword}
@@ -138,7 +154,7 @@ const showDatePicker = () => {
                             setHidePassword={setHidePassword}
                             />
                         <MsgBox>...</MsgBox>
-                        <StyledButton onPress={handleSubmit}>
+                        <StyledButton onPress={signUp}>
                             <ButtonText>Sign up</ButtonText>
                         </StyledButton>
                        <Line/> 
