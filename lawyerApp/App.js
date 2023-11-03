@@ -13,16 +13,25 @@ import Welcome from "./screens/Welcome";
 import Onboarding1 from "./screens/Onboarding1";
 import Onboarding3 from "./screens/Onboarding3";
 import Appointment from "./screens/Appointment";
+import ReviewSummary from "./screens/ReviewSummary";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName = "Appointment"
-                 component={Appointment}
+      <Stack.Navigator initialRouteName = "ReviewSummary"
+                 component={ReviewSummary}
                  options={{headerShown: true}}
 
       >
+         <Stack.Screen
+          name="ReviewSummary"
+          component={ReviewSummary}
+          options={{
+            headerShown: true,
+          }}
+        />
+
         <Stack.Screen
           name="Appintment"
           component={Appointment}
