@@ -19,9 +19,7 @@ const LawyerProfile = ({ navigation }) => {
   const renderTabBar = (props) => (
     
       <TabBar
-      tabBarOptions={{
-        style: { backgroundColor: 'black' }
-        }}
+      style={{backgroundColor:'black'}}
       {...props}
     
       indicatorStyle={{ backgroundColor: 'gold' }} 
