@@ -88,44 +88,7 @@ function Signup() {
             </div>
         </div>
     );
-    
-  return (
-    <div className="signup-container">
-      <div className="signup-content">
-        <h1>Get started</h1>
-        <form className='form-2'>
-          <input type="text" placeholder="Full Name" />
-          <input type="email" placeholder="Email" 
-            onChange={(e) => {
-                setEmail(e.target.value);
-              }}/>
-          <input type="password" placeholder="Password" 
-                 onChange={(e) => {
-                    setPassword(e.target.value);
-                  }}/>
-                   <select name="" id="">
-        <option value="Male">Male</option>
-        <option value="Female">Female</option>
-      </select>
-      <input
-        type="file"
-        onChange={(e) => {
-          handleFile(e);
-        }}
-      />
-      <p>{papers}</p>
-      <input
-        type="number"
-        placeholder="phone Number"
-        onChange={(e) => {
-          setPhoneNumber(e.target.value);
-        }}
-      />
-          <button type="submit" onClick={handleSiginUp}>Sign Up</button>
-        </form>
-      </div>
-    </div>
-  );
+
 }
 
 export default Signup;

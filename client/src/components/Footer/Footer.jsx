@@ -6,7 +6,6 @@ import linkidin from "../../assets/images/linko.png";
 import image from "../../assets/images/sol.png"
 
 
-import React from "react";
 import "./styles.css"; 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook, faTwitter, faGithub, faInstagram } from "@fortawesome/free-brands-svg-icons";

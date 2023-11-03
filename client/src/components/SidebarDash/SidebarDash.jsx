@@ -15,15 +15,8 @@ import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import { Link } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
-// <<<<<<< HEAD
-// =======
-// <<<<<<< HEAD
-// =======
+import ModalSetting from "../ModalSetting/ModalSetting";
 
-
-// >>>>>>> 18142442f5243aee886bce8e93770b9b06225f53
-// >>>>>>> ebe8662ca6671d9eac129cf14cef4e3e6aa6b603
-import logo from "../../Assets/images/logo.png";
 
 
 const SidebarDash = () => {
@@ -50,8 +43,11 @@ const SidebarDash = () => {
           </li>
           <li>
             <SettingsApplicationsIcon className="new-icon" />
-            <span className="side-title">Settings</span>
+            <span className="side-title" data-toggle="modal" data-target="#exampleModal">Settings</span>
+            <ModalSetting/>
           </li>
+
+
           <li>
             <AccountCircleOutlinedIcon className="new-icon" />
             <span className="side-title">Profile</span>
