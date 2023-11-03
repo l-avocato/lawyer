@@ -11,6 +11,9 @@
   "dependencies": {
     "@expo/vector-icons": "^13.0.0",
     "@expo/webpack-config": "^19.0.0",
+    "@mui/icons-material": "^5.14.16",
+    "@mui/material": "^5.14.16",
+    "@mui/x-data-grid": "^6.17.0",
     "@react-native-community/datetimepicker": "7.2.0",
     "@react-navigation/bottom-tabs": "^6.5.11",
     "@react-navigation/native": "^6.1.9",
@@ -26,14 +29,17 @@
     "react-native-calendar-events": "^2.2.0",
     "react-native-calendars": "^1.1302.0",
     "react-native-datepicker": "^1.7.2",
+    "react-native-elements": "^3.4.3",
+    "react-native-image-picker": "^7.0.2",
     "react-native-linear-gradient": "^2.8.3",
+    "react-native-modal": "^13.0.1",
     "react-native-onboarding-swiper": "^1.2.0",
+    "react-native-safe-area-context": "4.6.3",
+    "react-native-screens": "~3.22.0",
     "react-native-vector-icons": "^10.0.1",
     "react-native-web": "~0.19.6",
     "react-navigation": "^5.0.0",
-    "styled-components": "^6.1.0",
-    "react-native-screens": "~3.22.0",
-    "react-native-safe-area-context": "4.6.3"
+    "styled-components": "^6.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
