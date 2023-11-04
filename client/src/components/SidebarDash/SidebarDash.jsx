@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./style.css";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
@@ -14,19 +14,15 @@ import PsychologyOutlinedIcon from "@mui/icons-material/PsychologyOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import { Link } from "react-router-dom";
-// import logo from "../../assets/images/logo.png";
-// <<<<<<< HEAD
-// =======
-// <<<<<<< HEAD
-// =======
-
-
-// >>>>>>> 18142442f5243aee886bce8e93770b9b06225f53
-// >>>>>>> ebe8662ca6671d9eac129cf14cef4e3e6aa6b603
 import logo from "../../assets/images/logo.png";
-
+import ModalSetting from "../ModalSetting/ModalSetting";
 
 const SidebarDash = () => {
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+
+  const toggleSettings = () => {
+    setIsSettingsOpen(!isSettingsOpen);
+  };
 
   return (
     <div className="new-sidebar">
@@ -48,10 +44,24 @@ const SidebarDash = () => {
             <NotificationsNoneIcon className="new-icon" />
             <span className="side-title">Notifications</span>
           </li>
-          <li>
+          <li onClick={toggleSettings}>
             <SettingsApplicationsIcon className="new-icon" />
             <span className="side-title">Settings</span>
           </li>
+          {isSettingsOpen && (
+            <ul className="settings-dropdown">
+              <li>
+              <SettingsApplicationsIcon className="new-icon" />
+
+                <Link to="../SettingProfil">Edit Profile</Link>
+              </li>
+              <li>
+              <SettingsApplicationsIcon className="new-icon" />
+
+                <Link to="../SettingSecurity">Edit Security</Link>
+              </li>
+            </ul>
+          )}
           <li>
             <AccountCircleOutlinedIcon className="new-icon" />
             <span className="side-title">Profile</span>
