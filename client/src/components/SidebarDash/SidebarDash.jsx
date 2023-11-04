@@ -15,7 +15,6 @@ import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import { Link } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
-import ModalSetting from "../ModalSetting/ModalSetting";
 
 const SidebarDash = () => {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -51,14 +50,24 @@ const SidebarDash = () => {
           {isSettingsOpen && (
             <ul className="settings-dropdown">
               <li>
-              <SettingsApplicationsIcon className="new-icon" />
+                <SettingsApplicationsIcon className="new-icon" />
 
-                <Link to="../SettingProfil">Edit Profile</Link>
+                <Link
+                  to="../SettingProfil"
+                  style={{ textDecoration: "none", color: "white" }}
+                >
+                  Edit Profile
+                </Link>
               </li>
               <li>
-              <SettingsApplicationsIcon className="new-icon" />
+                <SettingsApplicationsIcon className="new-icon" />
 
-                <Link to="../SettingSecurity">Edit Security</Link>
+                <Link
+                  to="../SettingSecurity"
+                  style={{ textDecoration: "none", color: "white" }}
+                >
+                  Edit Security
+                </Link>
               </li>
             </ul>
           )}

@@ -3,6 +3,7 @@ import axios from "axios";
 import NavbarDashboard from "../NavbarDashboard/NavbarDashboard";
 import { db } from "../../firebaseconfig";
 import { updateDoc, doc } from "firebase/firestore";
+import SidebarDash from "../SidebarDash/SidebarDash";
 
 const Settings = () => {
   const [papers, setPapers] = useState("");
@@ -39,6 +40,9 @@ const Settings = () => {
   return (
     <div>
       <NavbarDashboard />
+  
+      
+
       <div style={{ flex: 1 }}>
         <form
           style={{
@@ -49,7 +53,7 @@ const Settings = () => {
             marginLeft: "35rem",
             gap: "0.5rem",
             marginBottom: "2rem",
-            border: "0.3rem solid #ccc",
+            border: "0.1rem solid #ccc",
             borderRadius: "8px",
           }}
         >

@@ -49,13 +49,7 @@ export default function App() {
         />
         
 
-        <Stack.Screen
-          name="HomePage"
-          component={HomePage}
-          options={{
-            headerShown: false,
-          }}
-        />
+       
         <Stack.Screen
           name="Lawyer Details"
           component={ProfilDetails}
@@ -63,6 +57,14 @@ export default function App() {
             headerShown: true,
           }}
         /> 
+        
+         <Stack.Screen
+          name="HomePage"
+          component={HomePage}
+          options={{
+            headerShown: false,
+          }}
+        />
 
         <Stack.Screen
           name="welcome"
