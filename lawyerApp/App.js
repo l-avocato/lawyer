@@ -13,7 +13,7 @@ import Welcome from "./screens/Welcome";
 import Onboarding1 from "./screens/Onboarding1";
 import Onboarding3 from "./screens/Onboarding3";
 import Appointment from "./screens/Appointment";
-import Settings from "./screens/Settings";
+import Settings from "./screens/Settings.jsx";
 import EditProfile from "./screens/EditProfile";
 import Notifications from "./screens/Notifications";
 import ResetPassword from "./screens/ResetPassword";
@@ -21,7 +21,6 @@ import HelpCenter from "./screens/HelpCenter";
 import PrivacyPolicy from "./screens/PrivacyPolicy";
 import NavTab from "./screens/NavTab";
 import LawyerProfile from "./screens/LawyerProfile";
-
 
 export default function App() {
   const Stack = createNativeStackNavigator();
