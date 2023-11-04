@@ -41,30 +41,74 @@ const LawyerProfile = ({ navigation }) => {
 
   const renderScene = SceneMap({
     first: () => ( 
-    <ScrollView>
-    <TouchableOpacity onPress={handleProfilePress}>
+  //   <ScrollView>
+  //   <TouchableOpacity onPress={handleProfilePress}>
       
         
-      <View style={{ margin: 10, padding: 10, borderWidth: 1, marginTop: 10, borderRadius: 10 }}>
+  //     <View style={{ margin: 10, padding: 10, borderWidth: 1, marginTop: 10, borderRadius: 10 }}>
 
-        {Profiles.map(e => {
-          return (<View style={{ marginBottom: 50 }}><Text style={{ marginLeft: 110 }} >{e.name}<Icon name="message" size={30} color="black" style={styles.icon} /></Text>
-            <Text style={{ marginLeft: 110 }} >{e.specialization}</Text>
-            <Image
-              source={e.image}
-              style={{ width: 100, height: 100, borderRadius: 50, marginTop: -40 }}
-            />
-            <View style={{ borderBottomWidth: 50, width: 90, borderRadius: 40, marginLeft: 40, borderColor: 'gold' }} >
-              <Text style={{ marginTop: 20, marginLeft: 5 }}>See Details</Text>
-            </View>
-          </View>)
-        })}
+  //       {Profiles.map(e => {
+  //         return (<View style={{ marginBottom: 50 }}><Text style={{ marginLeft: 110 }} >{e.name}<Icon name="message" size={30} color="black" style={styles.icon} /></Text>
+  //           <Text style={{ marginLeft: 110 }} >{e.specialization}</Text>
+  //           <Image
+  //             source={e.image}
+  //             style={{ width: 100, height: 100, borderRadius: 50, marginTop: -40 }}
+  //           />
+  //           <View style={{ borderBottomWidth: 50, width: 90, borderRadius: 40, marginLeft: 40, borderColor: 'gold' }} >
+  //             <Text style={{ marginTop: 20, marginLeft: 5 }}>See Details</Text>
+  //           </View>
+  //         </View>)
+  //       })}
 
 
 
+  //     </View>
+  //   </TouchableOpacity>
+  // </ScrollView>
+//   <ScrollView>
+//   {Profiles.map((e, index) => (
+//     <TouchableOpacity key={index} onPress={handleProfilePress}>
+//       <View style={{ margin: 10, padding: 10, borderWidth: 1, marginTop: 10, borderRadius: 10 }}>
+//         <View>
+//         <Icon name="message" size={30} color="black" style={styles.icon}  />
+        
+//         </View>
+//         <View style={{marginTop:-35}}>
+//         <Text style={{ marginLeft: 110 }}>{e.name}</Text>
+//         <Text style={{ marginLeft: 110 }}>{e.specialization}</Text>
+//         <Image source={e.image} style={{ width: 100, height: 100, borderRadius: 50, marginTop: -60 }} />
+//         </View>
+//         <View style={{ borderBottomWidth: 1, borderBottomColor: 'black', marginVertical: 10 }} />
+//         <View style={{ borderBottomWidth: 50, width: 90, borderRadius: 40, marginLeft: 130, borderColor: 'gold', marginBottom:-2 }}>
+//           <Text style={{ marginTop: 20, marginLeft: 5 }}>See Details</Text>
+//         </View>
+//       </View>
+//     </TouchableOpacity>
+//   ))}
+// </ScrollView>
+<ScrollView>
+{Profiles.map((e, index) => (
+  <TouchableOpacity key={index} onPress={handleProfilePress}>
+    <View style={{ margin: 10, padding: 10, borderWidth: 1, marginTop: 10, borderRadius: 10 }}>
+      <View>
+        <Icon name="message" size={30} color="black" style={styles.icon} />
       </View>
-    </TouchableOpacity>
-  </ScrollView>
+      <View style={{ marginTop: -35 }}>
+        <Text style={{ marginLeft: 110 }}>{e.name}</Text>
+        <Text style={{ marginLeft: 110 }}>{e.specialization}</Text>
+        <Image source={e.image} style={{ width: 100, height: 100, borderRadius: 17, marginTop: -60 }} />
+      </View>
+      <View style={{ borderBottomWidth: 1, borderBottomColor: 'black', marginVertical: 10 }} />
+      <TouchableOpacity  style={{ backgroundColor: 'black', borderRadius: 40, width: 120, marginLeft: 40, marginTop: -1, padding: 10 }}>
+        <Text style={{ color: 'white', textAlign: 'center' }}>See Details</Text>
+      </TouchableOpacity>
+      <TouchableOpacity  style={{ backgroundColor: 'black', borderRadius: 40, width: 120, marginLeft: 180, marginTop: -39.9, padding: 10 }}>
+        <Text style={{ color: 'white', textAlign: 'center' }}>Cancel</Text>
+      </TouchableOpacity>
+    </View>
+  </TouchableOpacity>
+))}
+</ScrollView>
     ),
     second:Completed,
     third : Canceled
@@ -89,7 +133,8 @@ const LawyerProfile = ({ navigation }) => {
 };
 const styles = StyleSheet.create({
   icon: {
-    marginLeft: 10, 
+    marginLeft:310,
+    marginTop:20
   },
 })
 
