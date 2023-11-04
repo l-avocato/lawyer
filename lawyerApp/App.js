@@ -13,6 +13,12 @@ import Welcome from "./screens/Welcome";
 import Onboarding1 from "./screens/Onboarding1";
 import Onboarding3 from "./screens/Onboarding3";
 import Appointment from "./screens/Appointment";
+import Settings from "./screens/Settings";
+import EditProfile from "./screens/EditProfile";
+import Notifications from "./screens/Notifications";
+import ResetPassword from "./screens/ResetPassword";
+import HelpCenter from "./screens/HelpCenter";
+import PrivacyPolicy from "./screens/PrivacyPolicy";
 import NavTab from "./screens/NavTab";
 import LawyerProfile from "./screens/LawyerProfile";
 
@@ -21,8 +27,8 @@ export default function App() {
   const Stack = createNativeStackNavigator();
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName = "HomePage" 
-                 component={HomePage}
+      <Stack.Navigator initialRouteName = "settings" 
+                 component={Settings}
                  options={{headerShown: false}}
 
       >
@@ -67,6 +73,48 @@ export default function App() {
         <Stack.Screen
           name="welcome"
           component={Welcome}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="settings"
+          component={Settings}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="editProfile"
+          component={EditProfile}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="notifications"
+          component={Notifications}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="resetPassword"
+          component={ResetPassword}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="helpCenter"
+          component={HelpCenter}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="privacyPolicy"
+          component={PrivacyPolicy}
           options={{
             headerShown: false,
           }}
