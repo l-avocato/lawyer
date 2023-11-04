@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { View, Text, Image, TouchableOpacity, Button ,ImageBackground} from 'react-native';
+import { View, Text, Image, TouchableOpacity, Button ,ImageBackground,StyleSheet} from 'react-native';
 import { ListItem } from 'react-native-elements';
 import Modal from 'react-native-modal';
 import { Line } from '../components/styles';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import ImagePicker from 'react-native-image-picker';
 import { launchImageLibrary } from 'react-native-image-picker';
+import NavTab from './NavTab';
 
 
 const Settings = ({ navigation }) => {
@@ -118,15 +119,33 @@ const Settings = ({ navigation }) => {
       marginLeft: 10,
       marginTop: 20,
     }}
-    onPress={() => navigation.navigate('Logout')}
+    onPress={() => navigation.navigate('logout')}
   >
     <Text  style={{ color: 'white',fontWeight:'500', fontSize:'20',marginTop:5 }}>Yes. Logout</Text>
   </TouchableOpacity>
 </View>
         </View>
       </Modal>
+      <View style={styles.navTabContainer}><NavTab/></View>
+      
     </View>
   );
 };
 
+
+
+const styles = StyleSheet.create({
+  navTabContainer: {
+    flex: 1, // Use flex to push the NavTab to the bottom
+    top:120,// Align the NavTab to the bottom of the container
+    height:0,
+  },
+  navTab: {
+    position: 'absolute',
+    width: '100%',
+  }
+});
+
 export default Settings;
+
+
