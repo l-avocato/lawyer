@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigation } from '@react-navigation/native';
 import {
   View,
   Text,
@@ -9,6 +10,7 @@ import {
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 
 const NavTab = () => {
+  const navigation = useNavigation();
   const [selectedTab, setSelectedTab] = useState("Home");
 
   return (
@@ -18,7 +20,7 @@ const NavTab = () => {
           style={
             selectedTab === "Home" ? styles.tabBarItemActive : styles.tabBarItem
           }
-          onPress={() => setSelectedTab("Home")}
+          onPress={() => navigation.navigate("Home")}
         >
           <Ionicons name="home" size={24} color="black" />
         </TouchableOpacity>
@@ -26,7 +28,7 @@ const NavTab = () => {
           style={
             selectedTab === "Profile" ? styles.tabBarItemActive : styles.tabBarItem
           }
-          onPress={() => setSelectedTab("Profile")}
+          onPress={() => navigation.navigate("settings")}
         >
           <Ionicons name="person" size={24} color="black" />
         </TouchableOpacity>
