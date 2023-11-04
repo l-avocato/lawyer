@@ -10,7 +10,8 @@ import Navbar from "./components/Navbar/Navbar";
 import PaymentReceipt from "./components/Payment/PaymentReceipt";
 import PaymentHistory from "./components/PaymentHistory/PaymentHistory";
 import Landing from "./components/LandingPage/Landing";
-
+import SettingSecurity from "./components/SettingSecurity/SettingSecurity.jsx";
+import SettingProfil from "./components/SettingProfil/Settings.jsx"
 const App = () => {
   return (
     <div className="App">
@@ -26,6 +27,11 @@ const App = () => {
           <Route path="/allClient" element={<AllClient />} />
           <Route path="/sidebar" element={<SidebarDash />} />
           <Route path="/navbar" element={<NavbarDashboard />} />
+          <Route path="/settingSecurity" element={<SettingSecurity/>} />
+          <Route path="/settingProfil" element={<SettingProfil/>} />
+
+
+
         </Routes>
       </Router>
     </div>
