@@ -6,6 +6,7 @@ import { View, Text, TextInput, TouchableOpacity, ActivityIndicator } from "reac
 //icons
 import { Octicons, Fontisto, Ionicons } from "@expo/vector-icons";
 import { FIREBASE_AUTH } from "../firebaseConfig";
+import { useNavigation } from '@react-navigation/native';
 
 import {
     StyledContainer,
@@ -34,20 +35,19 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 const { brand, darkLight, primary } = Colors;
 
 
-const Login = ({ navigation }) => {
+const Login = () => {
 const [email, setEmail] = useState("");
 const [password, setPassword] = useState("");
 const [loading, setLoading] = useState(false);
-
 const [hidePassword, setHidePassword] = useState(true);
-
+const navigation = useNavigation();
 const auth = FIREBASE_AUTH;
 const signIn = async () => {
     setLoading(true);
     try {
-        await signInWithEmailAndPassword(auth, email, password);
+        const res = await signInWithEmailAndPassword(auth, email, password);
         setLoading(false);
-        navigation.navigate("welcome");
+        navigation.navigate("Home");
     } catch (error) {
         alert("Invalid email or password", error.message);
         setLoading(false);
