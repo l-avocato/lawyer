@@ -26,8 +26,9 @@ export default function App() {
   const Stack = createNativeStackNavigator();
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName = "settings" 
-                 component={Settings}
+      <Stack.Navigator initialRouteName = "LawyerProfile" 
+                 component={LawyerProfile}
+     
                  options={{headerShown: false}}
 
       >
