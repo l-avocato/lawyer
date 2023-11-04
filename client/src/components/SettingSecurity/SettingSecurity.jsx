@@ -2,12 +2,18 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import NavbarDashboard from "../NavbarDashboard/NavbarDashboard";
+import { db } from "../../firebaseconfig";
+import { doc, updateDoc } from "firebase/firestore";
 
 const SettingSecurity = () => {
   const [oldPasswordVisible, setOldPasswordVisible] = useState(false);
   const [newPasswordVisible, setNewPasswordVisible] = useState(false);
   const [confirmedPasswordVisible, setConfirmedPasswordVisible] = useState(false);
-    useState(false);
+
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmedPassword, setConfirmedPassword] = useState("");
+  const [alertMessage, setAlertMessage] = useState(""); // State variable for alert message
 
   const togglePasswordVisibility = (field) => {
     switch (field) {
@@ -25,6 +31,25 @@ const SettingSecurity = () => {
     }
   };
 
+  const lawyersCollectionRef = doc(db, "lawyers", "EIKiyaY44S1xWenxPxVh");
+
+  const updatePassword = async () => {
+    if (newPassword !== confirmedPassword) {
+      setAlertMessage("New password and confirmed password do not match.");
+      return;
+    }
+    
+    try {
+      await updateDoc(lawyersCollectionRef, {
+        password: newPassword,
+      });
+      setAlertMessage("Password updated successfully!");
+    } catch (error) {
+      console.error("Error updating password", error);
+      setAlertMessage("An error occurred while updating the password.");
+    }
+  };
+
   return (
     <div>
       <NavbarDashboard />
@@ -33,7 +58,6 @@ const SettingSecurity = () => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          
         }}
       >
         <form
@@ -45,7 +69,11 @@ const SettingSecurity = () => {
             border: "1px solid #ccc",
             borderRadius: "8px",
             padding: "3rem",
-            marginLeft: "6rem",
+            marginLeft: "20rem",
+          }}
+          onSubmit={(e) => {
+            e.preventDefault();
+            updatePassword();
           }}
         >
           <p
@@ -70,6 +98,9 @@ const SettingSecurity = () => {
               id="form6Example1"
               className="form-control"
               style={{ fontSize: "18px" }}
+              onChange={(e) => {
+                setOldPassword(e.target.value);
+              }}
             />
             <FontAwesomeIcon
               icon={oldPasswordVisible ? faEye : faEyeSlash}
@@ -93,6 +124,9 @@ const SettingSecurity = () => {
               id="form6Example2"
               className="form-control"
               style={{ fontSize: "18px" }}
+              onChange={(e) => {
+                setNewPassword(e.target.value);
+              }}
             />
             <FontAwesomeIcon
               icon={newPasswordVisible ? faEye : faEyeSlash}
@@ -115,7 +149,11 @@ const SettingSecurity = () => {
               placeholder="Confirmed Password"
               id="form6Example3"
               className="form-control"
+            
               style={{ fontSize: "18px" }}
+              onChange={(e) => {
+                setConfirmedPassword(e.target.value);
+              }}
             />
             <FontAwesomeIcon
               icon={confirmedPasswordVisible ? faEye : faEyeSlash}
@@ -131,6 +169,11 @@ const SettingSecurity = () => {
             />
           </div>
 
+          {/* Alert */}
+          {alertMessage && (
+            <div className="alert alert-danger">{alertMessage}</div>
+          )}
+
           <button
             type="submit"
             style={{
@@ -138,6 +181,7 @@ const SettingSecurity = () => {
               color: "black",
               fontSize: "1.3rem",
             }}
+          
           >
             Update Password
           </button>

@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
 import NavbarDashboard from "../NavbarDashboard/NavbarDashboard";
-import { db } from "../../firebaseconfig.js";
-import { } from "firebase/firestore";
+import { db } from "../../firebaseconfig";
+import { updateDoc, doc } from "firebase/firestore";
 
 const Settings = () => {
   const [papers, setPapers] = useState("");
-  const  [fullName, setFullName]= useState("");
-  const [adress, setAdress]= useState("");
+  const [fullName, setFullName] = useState("");
+  const [adress, setAdress] = useState("");
 
   const handleFile = async (e) => {
     const formData = new FormData();
@@ -23,9 +23,18 @@ const Settings = () => {
       });
   };
 
-  const handleUpdate = ()=>{
-    
-  }
+  const lawyersCollectionRef = doc(db, "lawyers", "EIKiyaY44S1xWenxPxVh");
+  const updateLawyerData = async () => {
+    try {
+      await updateDoc(lawyersCollectionRef, {
+        fullName: fullName,
+        adress: adress,
+        image: papers,
+      });
+    } catch (error) {
+      console.log("Error updating lawyer", error);
+    }
+  };
 
   return (
     <div>
@@ -37,7 +46,7 @@ const Settings = () => {
             display: "flex",
             flexDirection: "column",
             padding: "3rem",
-            marginLeft: "25rem",
+            marginLeft: "35rem",
             gap: "0.5rem",
             marginBottom: "2rem",
             border: "0.3rem solid #ccc",
@@ -80,7 +89,9 @@ const Settings = () => {
               id="form6Example3"
               className="form-control"
               style={{ fontSize: "18px" }}
-              onChange={(e)=>{setFullName(e.target.value)}}
+              onChange={(e) => {
+                setFullName(e.target.value);
+              }}
             />
             <label className="form-label" htmlFor="form6Example3">
               Full Name
@@ -93,7 +104,9 @@ const Settings = () => {
               id="form6Example3"
               className="form-control"
               style={{ fontSize: "18px" }}
-              onChange={(e)=>{setAdress(e.target.value)}}
+              onChange={(e) => {
+                setAdress(e.target.value);
+              }}
             />
             <label className="form-label" htmlFor="form6Example3">
               Address
@@ -107,10 +120,15 @@ const Settings = () => {
               color: "black",
               fontSize: "1.3rem",
             }}
+            onClick={(e) => {
+              e.preventDefault();
+              updateLawyerData();
+            }}
           >
             Update
           </button>
         </form>
+       
       </div>
     </div>
   );

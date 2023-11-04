@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./style.css";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
@@ -17,9 +17,12 @@ import { Link } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
 import ModalSetting from "../ModalSetting/ModalSetting";
 
-
-
 const SidebarDash = () => {
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+
+  const toggleSettings = () => {
+    setIsSettingsOpen(!isSettingsOpen);
+  };
 
   return (
     <div className="new-sidebar">
@@ -41,13 +44,24 @@ const SidebarDash = () => {
             <NotificationsNoneIcon className="new-icon" />
             <span className="side-title">Notifications</span>
           </li>
-          <li>
+          <li onClick={toggleSettings}>
             <SettingsApplicationsIcon className="new-icon" />
-            <span className="side-title" data-toggle="modal" data-target="#exampleModal">Settings</span>
-            <ModalSetting/>
+            <span className="side-title">Settings</span>
           </li>
+          {isSettingsOpen && (
+            <ul className="settings-dropdown">
+              <li>
+              <SettingsApplicationsIcon className="new-icon" />
 
+                <Link to="../SettingProfil">Edit Profile</Link>
+              </li>
+              <li>
+              <SettingsApplicationsIcon className="new-icon" />
 
+                <Link to="../SettingSecurity">Edit Security</Link>
+              </li>
+            </ul>
+          )}
           <li>
             <AccountCircleOutlinedIcon className="new-icon" />
             <span className="side-title">Profile</span>
