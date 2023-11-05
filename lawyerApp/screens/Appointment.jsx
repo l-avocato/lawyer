@@ -3,16 +3,16 @@ import { Calendar } from "react-native-calendars";
 
 import { View, StyleSheet, Image, TouchableOpacity, ScrollView, Text, SafeAreaView, Button } from "react-native";
 
-const Appointment = () => {
+const Appointment = ({navigation ,route}) => {
   const minDate = "2023-01-01";
   const maxDate = "2024-12-31";
-
+  const {item}=route.params;
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
 
   const customStyles = {
     selected: {
-      backgroundColor: '#ecd540',
+      backgroundColor: '#D5B278',
       borderRadius: 10,
     },
     highlighted: {
@@ -78,7 +78,8 @@ const Appointment = () => {
           </TouchableOpacity>
         ))}
       </ScrollView>
-      <TouchableOpacity style={styles.bookButton}>
+      <TouchableOpacity style={styles.bookButton}
+      onPress={()=>{navigation.navigate("reviewSummary",{item,selectedDate,selectedTime})}}>
         <Text style={styles.bookButtonText}>Set Appointment</Text>
       </TouchableOpacity>
     </View>
@@ -113,7 +114,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   bookButton: {
-    backgroundColor: "#ecd540",
+    backgroundColor: "#D5B278",
     width: 390,
     height: 50,
     justifyContent: "center",
