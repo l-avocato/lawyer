@@ -13,6 +13,7 @@ import Welcome from "./screens/Welcome";
 import Onboarding1 from "./screens/Onboarding1";
 import Onboarding3 from "./screens/Onboarding3";
 import Appointment from "./screens/Appointment";
+import ReviewSummary from "./screens/ReviewSummary";
 import Settings from "./screens/Settings";
 import EditProfile from "./screens/EditProfile";
 import Notifications from "./screens/Notifications";
