@@ -1,5 +1,7 @@
 import React, {useState} from "react";
 import { StatusBar } from 'expo-status-bar';
+import {FIREBASE_DB} from "../firebaseConfig";
+import { addDoc, collection } from "firebase/firestore";
 //formik
 import { Formik } from "formik";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
@@ -37,14 +39,18 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 const Signup = ({ navigation }) => {
 const [email, setEmail] = useState("");
 const [password, setPassword] = useState("");
+const [phoneNumber, setPhoneNumber] = useState(0);
+const [confirmPassword, setConfirmPassword] = useState("");
+const [fullName, setFullName] = useState("");   
 const [loading, setLoading] = useState(false);
 
 const [hidePassword, setHidePassword] = useState(true);
 const [show, setShow] = useState(false);
 const [date, setDate] = useState(new Date(2000, 0, 1));
 const auth = FIREBASE_AUTH;
+const db = FIREBASE_DB;
 //Actual date of birth to be sent
-const [dob, setDob] = useState();
+// const [dob, setDob] = useState();
 
 const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -53,22 +59,35 @@ const onChange = (event, selectedDate) => {
     setDob(currentDate);
 }
 
-const signUp = async () => {
-    setLoading(true);
-    try {
-        await createUserWithEmailAndPassword(auth, email, password);
-        alert("Account created successfully", "Welcome to Avocato");
-        setLoading(false);
-        navigation.navigate("login");
-    } catch (error) {
-        alert( error.message);
-        setLoading(false);
-    }
-}
+const userCollectionRef = collection(db, "user");
+console.log("usercollection",userCollectionRef);
 
-const showDatePicker = () => {
-    setShow(true);
-}
+
+const signUp = async () => {
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((res) => {
+        addDoc(userCollectionRef, {
+          localId: res.user.uid,
+          fullName: fullName,
+          email: email,
+          password: res.user.reloadUserInfo.passwordHash  ,
+          phoneNumber: phoneNumber,
+        })
+          .then((res) => {
+            alert("User added successfully");
+            console.log(res);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+      navigation.navigate("login");
+};
+
+
 
 
     return (
@@ -77,20 +96,6 @@ const showDatePicker = () => {
             <InnerContainer>
                 <PageTitle>Avocato</PageTitle>
                 <SubTitle>Create an account</SubTitle>
-                {show && (
-                    <DateTimePicker
-                        testID="dateTimePicker"
-                        value={date}
-                        mode="date"
-                        is24Hour={true}
-                        display="default"
-                        onChange={onChange}
-                        style={{
-                            backgroundColor: "#fff",
-                        }}
-                    />
-                
-                )}
                 <Formik
                     initialValues={{fullName:"", email: "",dateOfBirth:"", password: "",confirmPassword:""}}
                     onSubmit={(values) => {
@@ -102,9 +107,9 @@ const showDatePicker = () => {
                             icon="person"
                             placeholder="Please enter your full name" 
                             placeholderTextColor={darkLight}
-                            onChangeText={handleChange('fullName')}
+                            onChangeText={(text)=>setFullName(text)}
                             onBlur={handleBlur('fullName')}
-                            value={values.fullName}                            />
+                            value={fullName}                            />
                         <MyTextInput
                             label="Email Address"
                             icon="mail"
@@ -112,20 +117,18 @@ const showDatePicker = () => {
                             placeholderTextColor={darkLight}
                             onChangeText={(text)=>setEmail(text)}
                             onBlur={handleBlur('email')}
-                            // value={values.email}
+                            value={email}
                             keyboardType="email-address"
                             />
                         <MyTextInput
-                            label="Date of Birth"
-                            icon="calendar"
-                            placeholder="YYYY - MM - DD" 
+                            label="Phone Number"
+                            icon='device-mobile'
+                            placeholder="+216 000 000 000" 
                             placeholderTextColor={darkLight}
-                            onChangeText={handleChange('dateOfBirth')}
-                            onBlur={handleBlur('dateOfBirth')}
-                            value={dob ? dob.toDateString() : ''}  
-                            is Date={true}
-                            editable={false}
-                            showDatePicker={showDatePicker}
+                            onChangeText={(text)=>setPhoneNumber(text)}
+                            onBlur={handleBlur('phoneNumber')}
+                            value={phoneNumber} 
+                            keyboardType="phone-pad" 
                              />
 
                         <MyTextInput
@@ -134,7 +137,7 @@ const showDatePicker = () => {
                             placeholder="* * * * * * * *"
                             placeholderTextColor={darkLight}
                             onChangeText={(text)=>setPassword(text)}                            onBlur={handleBlur('password')}
-                            // value={values.password}
+                            value={password}
                             secureTextEntry={hidePassword}
                             isPassword={true}
                             hidePassword={hidePassword}
@@ -145,9 +148,9 @@ const showDatePicker = () => {
                             icon="lock"
                             placeholder="* * * * * * * *"
                             placeholderTextColor={darkLight}
-                            onChangeText={handleChange('confirmPassword')}
+                            onChangeText={(text)=>setConfirmPassword(text)}
                             onBlur={handleBlur('confirmPassword')}
-                            value={values.confirmPassword}
+                            value={confirmPassword}
                             secureTextEntry={hidePassword}
                             isPassword={true}
                             hidePassword={hidePassword}
@@ -175,7 +178,7 @@ const showDatePicker = () => {
 const MyTextInput = ({ label, icon,isPassword,hidePassword,setHidePassword,isDate,showDatePicker, ...props }) => {
     return (
         <View>
-            <LeftIcon>
+            <LeftIcon style={{ top: 35 }}>
                 <Octicons name={icon} size={30} color={brand} />
             </LeftIcon>
             <StyledInputLabel>{label}</StyledInputLabel>
@@ -186,7 +189,7 @@ const MyTextInput = ({ label, icon,isPassword,hidePassword,setHidePassword,isDat
                 </TouchableOpacity>
             }
             {isPassword && (
-                <RightIcon onPress={()=>setHidePassword(!hidePassword)} >
+                <RightIcon style={{ top: 35 }} onPress={()=>setHidePassword(!hidePassword)} >
                     <Ionicons name={hidePassword ?"md-eye-off": "md-eye"} size={30} color={darkLight} />
                 </RightIcon>
             )}
