@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
 import { View, Text, Image, TouchableOpacity, Button ,ImageBackground,StyleSheet} from 'react-native';
 import { ListItem } from 'react-native-elements';
 import Modal from 'react-native-modal';
@@ -7,10 +7,13 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import ImagePicker from 'react-native-image-picker';
 import { launchImageLibrary } from 'react-native-image-picker';
 import NavTab from './NavTab';
+import { collection, getDocs } from "firebase/firestore";
+import {FIREBASE_AUTH,FIREBASE_DB } from '../firebaseConfig'
+
 
 
 const Settings = ({ navigation }) => {
-
+  const [user, setUser] = useState([]);
   const [profilePic, setProfilePic] = useState("../assets/ahmed.png");
 
   const list = [
@@ -23,7 +26,7 @@ const Settings = ({ navigation }) => {
   ];
 
   const [isModalVisible, setModalVisible] = useState(false);
-
+  const userCollectionRef = collection(FIREBASE_DB, "user");
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
@@ -32,7 +35,7 @@ const Settings = ({ navigation }) => {
     const options = {
       noData: true,
     };
-  
+    
     launchImageLibrary(options, (response) => {
       if (response.uri) {
         setProfilePic(response.uri);
@@ -40,7 +43,23 @@ const Settings = ({ navigation }) => {
       }
     });
   };
+  const getUser = async () => {
+    try {
+      const result = await getDocs(userCollectionRef);
+      const users = result.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      })).filter((e)=>e.email === FIREBASE_AUTH.currentUser.email)[0]
+      console.log("this is user",users);
+      setUser(users);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+  useEffect(()=>{
+    getUser()
 
+  },[])
   return (
     <View style={{backgroundColor:'white'}}>
       <View>
@@ -49,7 +68,7 @@ const Settings = ({ navigation }) => {
         <Text style={{ fontSize: 27,color:"gray", fontWeight: '700', marginLeft: 1,marginTop:90 }}>Profile</Text>
       </View>
       <View style={{ borderRadius: 200, overflow: 'hidden', alignSelf:'center' }}>
-        <ImageBackground source={require("../assets/ahmed.png")} style={{ width: 200, height: 200 }}>
+        <ImageBackground source={{uri:user.imageUrl}} style={{ width: 200, height: 200 }}>
          
       </ImageBackground>
     </View>
@@ -57,8 +76,8 @@ const Settings = ({ navigation }) => {
        <TouchableOpacity onPress={handleChoosePhoto}>
   <FontAwesome5 name="pen-square" size={32} color="#C28C08" style={{marginLeft:258,marginTop:-30}} />
 </TouchableOpacity>
-          <Text style={{alignSelf:'center',fontSize:26,fontWeight:"500"}}>Ahmed Irmani</Text>
-        <Text style={{alignSelf:'center',fontSize:19,fontWeight:"400",marginBottom:30}}>ahmedirmani@gmail.com</Text>
+          <Text style={{alignSelf:'center',fontSize:26,fontWeight:"500"}}>{user.fullName}</Text>
+        <Text style={{alignSelf:'center',fontSize:19,fontWeight:"400",marginBottom:30}}>{user.email}</Text>
       </View>
       </View>
       {

@@ -1,5 +1,4 @@
-// import { StatusBar } from 'expo-status-bar';
-// import { StyleSheet, Text, View } from 'react-native';
+
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import ProfilDetails from "./screens/ProfilDetails";
@@ -13,7 +12,8 @@ import Welcome from "./screens/Welcome";
 import Onboarding1 from "./screens/Onboarding1";
 import Onboarding3 from "./screens/Onboarding3";
 import Appointment from "./screens/Appointment";
-import Settings from "./screens/Settings.jsx";
+import ReviewSummary from "./screens/ReviewSummary";
+import Settings from "./screens/Settings";
 import EditProfile from "./screens/EditProfile";
 import Notifications from "./screens/Notifications";
 import ResetPassword from "./screens/ResetPassword";
@@ -160,6 +160,13 @@ export default function App() {
           component={Onboarding3}
           options={{
             headerShown: false,
+          }}
+        />
+           <Stack.Screen
+          name="reviewSummary"
+          component={ReviewSummary}
+          options={{
+            headerShown: true,
           }}
         />
       </Stack.Navigator>
