@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import NavTab from "./NavTab";
 import {
   View,
@@ -14,11 +14,14 @@ import {
 } from "react-native";
 import { Ionicons, MaterialIcons, FontAwesome } from "@expo/vector-icons";
 import yourBackgroundImage from "../Photos/avocat6.jpeg";
+import {FIREBASE_AUTH,FIREBASE_DB } from '../firebaseConfig'
+import { collection, doc, getDocs, deleteDoc ,query, where } from "firebase/firestore";
 
 const { width, height } = Dimensions.get("window");
 
 const HomePage = ({ navigation }) => {
   const [selectedTab, setSelectedTab] = useState("Home");
+
 
   // Function to handle photo click
   const handlePhotoClick = (item) => {
@@ -73,12 +76,34 @@ const HomePage = ({ navigation }) => {
   ];
 
   const renderTabContent = () => {
+
+    const [user, setUser] = useState([]);
+
+    const userCollectionRef = collection(FIREBASE_DB, "user");
+    const getUser = async () => {
+      try {
+        const result = await getDocs(userCollectionRef);
+        const users = result.docs.map((doc) => ({
+          ...doc.data(),
+          id: doc.id,
+        })).filter((e)=>e.email === FIREBASE_AUTH.currentUser.email)[0]
+        console.log("this is user",users);
+        setUser(users);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    useEffect(()=>{
+      getUser()
+    },[])
+
     if (selectedTab === "Home") {
       return (
         <View style={styles.container}>
           <View style={styles.header}>
+          <Text style={{ fontSize: 0.026 * height,color: "white",fontWeight: "700",top: 80,marginBottom:7,left:-5}}> Hi,{user?.fullName}</Text>
             <Text style={styles.pageText}>
-              Hi, User{"\n"}browse a number of lawyersto get your issues{"\n"}
+             browse a number of lawyers to get your issues{"\n"}
               resolved. Start consulting now!
             </Text>
             <View style={styles.notificationContainer}>
@@ -259,13 +284,14 @@ const styles = StyleSheet.create({
   },
   body: {
     flex: 1,
-    backgroundColor: "grey",
+    backgroundColor: "#E5E4E2",
     padding: 1,
   },
   pageText: {
     fontSize: 0.02 * height,
     color: "white",
-    top: 70,
+    fontWeight: "500",
+    top: 80,
   },
   emptyTabContainer: {
     flex: 1,
@@ -309,15 +335,15 @@ const styles = StyleSheet.create({
   },
   bodyView1: {
     flex: 1,
-    backgroundColor: "grey",
+    backgroundColor: "#E5E4E2",
   },
   bodyView2: {
     flex: 1,
-    backgroundColor: "grey",
+    backgroundColor: "#E5E4E2",
   },
   bodyView4: {
     flex: 1,
-    backgroundColor: "grey",
+    backgroundColor: "#E5E4E2",
   },
   bodyText: {
     fontSize: 20,
@@ -325,6 +351,7 @@ const styles = StyleSheet.create({
     textAlign: "left",
     marginTop: 20,
     marginLeft: 10,
+    fontWeight: "bold",  
   },
   photoItem: {
     width: 120,

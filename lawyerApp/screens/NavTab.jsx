@@ -24,14 +24,7 @@ const NavTab = () => {
         >
           <Ionicons name="home" size={24} color="black" />
         </TouchableOpacity>
-        <TouchableOpacity
-          style={
-            selectedTab === "Profile" ? styles.tabBarItemActive : styles.tabBarItem
-          }
-          onPress={() => navigation.navigate("settings")}
-        >
-          <Ionicons name="person" size={24} color="black" />
-        </TouchableOpacity>
+       
         <TouchableOpacity
           style={
             selectedTab === "Map" ? styles.tabBarItemActive : styles.tabBarItem
@@ -47,6 +40,14 @@ const NavTab = () => {
           onPress={() => setSelectedTab("Chat")}
         >
           <Ionicons name="chatbubbles" size={24} color="black" />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={
+            selectedTab === "Profile" ? styles.tabBarItemActive : styles.tabBarItem
+          }
+          onPress={() => navigation.navigate("settings")}
+        >
+          <Ionicons name="person" size={24} color="black" />
         </TouchableOpacity>
       </View>
     </View>
