@@ -33,7 +33,10 @@ const SidebarDash = () => {
         <ul className="new-menu-list">
           <li>
             <PersonOutlineIcon className="new-icon" />
-            <span className="side-title">My Clients</span>
+
+            <span className="side-title"
+             
+            >My Clients</span>
           </li>
           <li>
             <InsertChartIcon className="new-icon" />

@@ -35,7 +35,7 @@ const AllClient = () => {
 
   return (
     <div className="d-flex">
-      {/* <SidebarDash/> */}
+      <SidebarDash/>
       <div className="allPage">
         <div className="firstDiv">
           <p className="titleClient">Client List </p>
@@ -50,7 +50,7 @@ const AllClient = () => {
           <hr />
         </div>
 
-        <div className="table-wrapper table1">
+        <div className="table-wrapper table1" style={{width:'70rem', display:'flex', marginLeft:'21rem'}}>
           <table class="table align-middle mb-0 ">
             <thead class="bg-light">
               <tr>
