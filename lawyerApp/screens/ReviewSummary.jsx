@@ -10,7 +10,7 @@ import {
   TextInput,
 } from "react-native";
 
-const ReviewSummary = () => {
+const ReviewSummary = ({route}) => {
   const [category, setCategory] = useState("Category Type");
   const [lawyerName, setLawyerName] = useState("Lawyer Name");
   const [dateTime, setDateTime] = useState("Date & Time");
@@ -18,7 +18,11 @@ const ReviewSummary = () => {
   const [isConfirmed, setIsConfirmed] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [message, setMessage] = useState("Can we schedule a consultation to discuss the details further?");
-
+  const {item}=route.params;
+  const {selectedDate}=route.params;
+  const {selectedTime}=route.params;
+  
+  console.log("this is law",selectedDate);
   const handleConfirmPayment = () => {
     setIsConfirmed(false);
     setIsModalVisible(true);
@@ -32,22 +36,18 @@ const ReviewSummary = () => {
     <View style={styles.container}>
       <View style={styles.profileSection}>
         <Image
-          source={require("../assets/balkis.png")}
+          source={{uri: item.imageUrl}}
           style={styles.profileImage}
         />
         <View style={styles.profileInfo}>
-          <Text style={styles.profileName}>Balkis Bey</Text>
+          <Text style={styles.profileName}>{item.fullName}</Text>
           <Text style={styles.profileLocation}>
             <Text style={styles.iconText}>1.5 km</Text>
             <Image
               source={require("../assets/location.png")}
               style={styles.icon}
             />
-            <Text style={styles.iconText}>16/h</Text>
-            <Image
-              source={require("../assets/dollar.png")}
-              style={styles.icon}
-            />
+
             <Text style={styles.iconText}>4.4</Text>
             <Image
               source={require("../assets/ReviewStar.png")}
@@ -63,38 +63,34 @@ const ReviewSummary = () => {
         multiline
         editable={false}
       />
-      <TouchableOpacity onPress={handleConfirmPayment}>
-        <View style={styles.iconContainer}>
-          <Image
-            source={require("../assets/pins.png")}
-            style={styles.icon}
-          />
-        </View>
-      </TouchableOpacity>
       <ScrollView style={styles.whiteBackground}>
         <Text style={styles.title}>Online consultation</Text>
         <View style={styles.infoContainer}>
-          <Text style={styles.label}>Category</Text>
-          <Text style={styles.info}>{category}</Text>
+          <Text style={styles.label}>Category :</Text>
+          <Text style={styles.info}>{item.category}</Text>
         </View>
         <View style={styles.infoContainer}>
-          <Text style={styles.label}>Lawyer</Text>
-          <Text style={styles.info}>{lawyerName}</Text>
+          <Text style={styles.label}>Lawyer :</Text>
+          <Text style={styles.info}>{item.fullName}</Text>
         </View>
         <View style={styles.infoContainer}>
-          <Text style={styles.label}>Date & Time</Text>
-          <Text style={styles.info}>{dateTime}</Text>
+          <Text style={styles.label}>Date :</Text>
+          <Text style={styles.info}>{selectedDate.dateString}</Text>
+        </View>
+        <View style={styles.infoContainer}>
+          <Text style={styles.label}>Time :</Text>
+          <Text style={styles.info}>{selectedTime}</Text>
         </View>
         <View style={styles.totalContainer}>
           <Text style={styles.totalLabel}>Total Amount</Text>
-          <Text style={styles.totalPrice}>${total}</Text>
+          <Text style={styles.totalPrice}>${item.Price}</Text>
         </View>
       </ScrollView>
       {!isConfirmed && (
         <TouchableOpacity
           style={[
             styles.confirmButton,
-            { backgroundColor: isConfirmed ? "#CCCCCC" : "#000000" },
+            { backgroundColor: isConfirmed ? "#CCCCCC" : "#D5B278" },
           ]}
           onPress={isConfirmed ? null : handleConfirmPayment}
         >
@@ -120,7 +116,7 @@ const ReviewSummary = () => {
               You have successfully Booked ! 
             </Text>
             <View style={styles.modalButtons}>
-              <TouchableOpacity style={[styles.modalButton, { backgroundColor: "#FFD700" }]} onPress={closeModal}>
+              <TouchableOpacity style={[styles.modalButton, { backgroundColor: "#D5B278" }]} onPress={closeModal}>
                 <Text style={styles.modalButtonText}>Back home</Text>
               </TouchableOpacity>
             </View>
@@ -141,15 +137,16 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 20,
     marginBottom: 20,
+    maxHeight: 300,
   },
   fullScreenModalContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    backgroundColor: "#D5B278",
   },
   fullScreenModalContent: {
-    backgroundColor: "#FFD700", // Gold background color
+    backgroundColor: "#D5B278", // Gold background color
     flex: 1,
     width: "100%",
     padding: 30,
@@ -239,9 +236,11 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   title: {
+    alignSelf: "center",
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 20,
+    color: "#D5B278",
   },
   infoContainer: {
     flexDirection: "row",
@@ -249,11 +248,13 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   label: {
-    fontSize: 16,
-    fontWeight: "bold",
+    fontSize: 20,
+    fontWeight: "500",
   },
   info: {
-    fontSize: 16,
+    fontSize: 17,
+    right: 10,
+    
   },
   totalContainer: {
     flexDirection: "row",
@@ -267,16 +268,16 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   confirmButton: {
-    backgroundColor: "#000000",
+    backgroundColor: "#D5B278",
     alignItems: "center",
     padding: 15,
     borderRadius: 8,
-    marginTop: 20,
+    marginTop: 10,
   },
   confirmButtonText: {
-    color: "#FFFFFF",
+    color: "black",
     fontSize: 18,
-    fontWeight: "bold",
+    fontWeight: "500",
   },
   modalContainer: {
     flex: 1,
@@ -290,13 +291,13 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   totalLabel: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: "bold",
   },
   totalPrice: {
-    fontSize: 18,
+    fontSize: 24,
     fontWeight: "bold",
-    color: "#FFD700", 
+    color: "#D5B278", 
   },
   enlargedModalContent: {
     backgroundColor: "#FFFFFF",
@@ -342,8 +343,9 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   modalButtonText: {
-    fontSize: 18,
+    fontSize: 20,
     color: "#FFFFFF",
+    fontWeight: "600",
   },
 });
 

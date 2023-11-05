@@ -209,7 +209,7 @@ const HomePage = ({ navigation }) => {
                     <View style={styles.photoItem}>
                       <Image source={{uri: item.imageUrl}} style={styles.photoImage} />
                     </View>
-                    <Text style={{left:35,top:3,fontSize:15,fontWeight:"500"}}>{item.fullName}</Text>
+                    <Text style={{left:-15,top:3,fontSize:15,fontWeight:"500",alignSelf:"center"}}>{item.fullName}</Text>
                   </TouchableOpacity>
                 )}
                 keyExtractor={(item) => item.id.toString()}

@@ -3,10 +3,10 @@ import { Calendar } from "react-native-calendars";
 
 import { View, StyleSheet, Image, TouchableOpacity, ScrollView, Text, SafeAreaView, Button } from "react-native";
 
-const Appointment = () => {
+const Appointment = ({navigation ,route}) => {
   const minDate = "2023-01-01";
   const maxDate = "2024-12-31";
-
+  const {item}=route.params;
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
 
@@ -78,7 +78,8 @@ const Appointment = () => {
           </TouchableOpacity>
         ))}
       </ScrollView>
-      <TouchableOpacity style={styles.bookButton}>
+      <TouchableOpacity style={styles.bookButton}
+      onPress={()=>{navigation.navigate("reviewSummary",{item,selectedDate,selectedTime})}}>
         <Text style={styles.bookButtonText}>Set Appointment</Text>
       </TouchableOpacity>
     </View>

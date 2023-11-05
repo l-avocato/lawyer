@@ -30,7 +30,7 @@ console.log(item);
         <View style={styles.photoLowyer}>
           <View style={styles.blockPhoto}>
             <Image
-              source={require("../Photos/lawyer-or-judge-in-simple-flat-personal-profile-icon-or-symbol-people-concept-illustration-vector.jpg")}
+              source={{uri: item.imageUrl}}
               style={styles.photoo}
             />
             <View style={{ position: "relative", top: 110 }}>
