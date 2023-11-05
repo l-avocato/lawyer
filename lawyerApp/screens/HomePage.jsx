@@ -25,7 +25,7 @@ const HomePage = ({ navigation }) => {
 
   // Function to handle photo click
   const handlePhotoClick = (item) => {
-    // Replace this with your desired behavior when a photo is clicked
+    navigation.navigate("Lawyer Details", { item });
     console.log("Photo clicked:", item.id);
   };
 
@@ -78,8 +78,12 @@ const HomePage = ({ navigation }) => {
   const renderTabContent = () => {
 
     const [user, setUser] = useState([]);
+    const [lawyers, setLawyers]= useState([]);
+    const [categories, setCategories]= useState([]);
 
     const userCollectionRef = collection(FIREBASE_DB, "user");
+    const lawyersCollectionRef = collection(FIREBASE_DB, "lawyers");
+    const categoryCollectionRef = collection(FIREBASE_DB, "category");
     const getUser = async () => {
       try {
         const result = await getDocs(userCollectionRef);
@@ -93,15 +97,48 @@ const HomePage = ({ navigation }) => {
         console.error("Error fetching data:", error);
       }
     };
+    const getLawyers = async () => {
+      try {
+        const result = await getDocs(lawyersCollectionRef);
+        const lawyers = result.docs.map((doc) => ({
+          ...doc.data(),
+          id: doc.id,
+          
+        })
+        );
+        setLawyers(lawyers);
+        console.log("this is lawyers",lawyers);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };    
+    const getCategories = async () => {
+      try {
+        const result = await getDocs(categoryCollectionRef);
+        const categories = result.docs.map((doc) => ({
+          ...doc.data(),
+          id: doc.id,
+          
+        })
+        );
+        setCategories(categories);
+        console.log("this is categories",categories);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };    
     useEffect(()=>{
       getUser()
+      getLawyers()
+      getCategories()
+
     },[])
 
     if (selectedTab === "Home") {
       return (
         <View style={styles.container}>
           <View style={styles.header}>
-          <Text style={{ fontSize: 0.026 * height,color: "white",fontWeight: "700",top: 80,marginBottom:7,left:-5}}> Hi,{user?.fullName}</Text>
+          <Text style={{ fontSize: 0.026 * height,color: "white",fontWeight: "700",top: 80,marginBottom:7,left:-5,color:"#D5B278"}}> Hi,{user?.fullName}</Text>
             <Text style={styles.pageText}>
              browse a number of lawyers to get your issues{"\n"}
               resolved. Start consulting now!
@@ -136,39 +173,22 @@ const HomePage = ({ navigation }) => {
               <Text style={styles.bodyText}>By Category</Text>
               <ScrollView
                 horizontal
+                showsHorizontalScrollIndicator={false}
                 contentContainerStyle={styles.buttonContainer1}>
-                <TouchableOpacity
-                  style={[styles.button, styles.buttonWithSpace]}
-                  onPress={() => handleButtonClick(1)}>
-                  <Text style={styles.buttonText}>Bankruptcy Lawyer</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
+                
+                <FlatList
+                data={categories}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                renderItem={({ item }) => (
+                  <TouchableOpacity
                   style={[styles.button2, styles.buttonWithSpace]}
                   onPress={() => handleButtonClick(2)}>
-                  <Text style={styles.buttonText}>Business Lawyer</Text>
+                  <Text style={styles.buttonText}>{item.name}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity
-                  style={[styles.button3, styles.buttonWithSpace]}
-                  onPress={() => handleButtonClick(3)}>
-                  <Text style={styles.buttonText}>Constitutional Lawyer</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={[styles.button4, styles.buttonWithSpace]}
-                  onPress={() => handleButtonClick(4)}>
-                  <Text style={styles.buttonText}>Family Lawyer</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={[styles.button5, styles.buttonWithSpace]}
-                  onPress={() => handleButtonClick(5)}>
-                  <Text style={styles.buttonText}>Entertainment Lawyer</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={[styles.button6, styles.buttonWithSpace]}
-                  onPress={() => handleButtonClick(6)}>
-                  <Text style={styles.buttonText}>
-                    Employment and Labor Lawyer
-                  </Text>
-                </TouchableOpacity>
+                )}
+                keyExtractor={(item) => item.id.toString()}
+              />
               </ScrollView>
               <TouchableOpacity
                 style={styles.topRightButton}
@@ -180,13 +200,16 @@ const HomePage = ({ navigation }) => {
             <View style={styles.bodyView2}>
               <Text style={styles.bodyText}>Nearby Lawyers</Text>
               <FlatList
-                data={photoData2}
+                data={lawyers}
+                style={{marginLeft:10,top:-10}}
                 horizontal
+                showsHorizontalScrollIndicator={false}
                 renderItem={({ item }) => (
                   <TouchableOpacity onPress={() => handlePhotoClick(item)}>
                     <View style={styles.photoItem}>
-                      <Image source={item.source} style={styles.photoImage} />
+                      <Image source={{uri: item.imageUrl}} style={styles.photoImage} />
                     </View>
+                    <Text style={{left:35,top:3,fontSize:15,fontWeight:"500"}}>{item.fullName}</Text>
                   </TouchableOpacity>
                 )}
                 keyExtractor={(item) => item.id.toString()}
@@ -316,8 +339,10 @@ const styles = StyleSheet.create({
   searchContainer: {
     position: "absolute",
     bottom: 0.03 * height,
-    left: 20,
-    width: "100%",
+    top: 180,
+    left: 4,
+    width: "109%",
+    height: 0.08 * height,
     flexDirection: "row",
     justifyContent: "space-between",
     padding: 0.03 * width,
@@ -389,11 +414,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   button2: {
-    backgroundColor: "black", // Example background color
+    backgroundColor: "#D5B278", // Example background color
     padding: 10,
     marginHorizontal: 5,
-    width: "15%",
     borderRadius: 10,
+    height: 50,
+    width: 150,
   },
   button3: {
     backgroundColor: "black", // Example background color
@@ -424,7 +450,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   buttonText: {
-    color: "white",
+    color: "black",
+    textAlign: "center",
+    fontWeight: "600",
+    top: 7,
   },
   buttonWithSpace: {
     marginHorizontal: 10,
@@ -446,6 +475,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    top: 5,
   },
   singleButton: {
     backgroundColor: "black",

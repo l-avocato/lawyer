@@ -12,7 +12,7 @@ const Appointment = () => {
 
   const customStyles = {
     selected: {
-      backgroundColor: '#ecd540',
+      backgroundColor: '#D5B278',
       borderRadius: 10,
     },
     highlighted: {
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   bookButton: {
-    backgroundColor: "#ecd540",
+    backgroundColor: "#D5B278",
     width: 390,
     height: 50,
     justifyContent: "center",

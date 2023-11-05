@@ -13,7 +13,10 @@ import LinearGradient from "react-native-linear-gradient";
 
 const { primary, tertinary } = Colors;
 
-const ProfilDetails = ({ navigation }) => {
+const ProfilDetails = ({ navigation , route}) => {
+const {item} = route.params;
+console.log(item);
+
   const galleryImages = [
     require("../Photos/lawyer-or-judge-in-simple-flat-personal-profile-icon-or-symbol-people-concept-illustration-vector.jpg"),
     require("../Photos/lawyer-or-judge-in-simple-flat-personal-profile-icon-or-symbol-people-concept-illustration-vector.jpg"),
@@ -31,8 +34,8 @@ const ProfilDetails = ({ navigation }) => {
               style={styles.photoo}
             />
             <View style={{ position: "relative", top: 110 }}>
-              <Text style={styles.nameText}>Lawyer's Name</Text>
-              <Text style={styles.specialtyText}> Immigration Law</Text>
+              <Text style={styles.nameText}>{item.fullName}</Text>
+              <Text style={styles.specialtyText}>{item.category} Law</Text>
             </View>
           </View>
         </View>
@@ -47,11 +50,11 @@ const ProfilDetails = ({ navigation }) => {
 
               <View style={{ display: "flex", flexDirection: "row" }}>
                 <FontAwesome name="dollar" style={styles.icon} />
-                <Text style={styles.infoText}>$100/H</Text>
+                <Text style={styles.infoText}>${item.Price}/H</Text>
               </View>
             </View>
             <View style={{ display: "flex", flexDirection: "row" }}>
-              <FontAwesome name="comment" style={styles.icon} />
+              <FontAwesome name="comment" style={{fontSize: 20, marginRight: 30,color: "black",marginLeft: 10}} />
               <Text style={styles.infoText}></Text>
             </View>
           </View>
@@ -77,9 +80,9 @@ const ProfilDetails = ({ navigation }) => {
           </View>
         </View>
 
-        <Text style={styles.infoText}>
+        {/* <Text style={styles.infoText}>
           Additional information about the lawyer goes here...
-        </Text>
+        </Text> */}
       </View>
 
       <View style={{ padding: 10 }}>
@@ -90,16 +93,19 @@ const ProfilDetails = ({ navigation }) => {
           ))}
         </ScrollView>
       </View>
-      <TouchableOpacity style={styles.bookButton}>
-        <Text style={styles.bookButtonText}>Book Appointment</Text>
-      </TouchableOpacity>
+      <TouchableOpacity 
+  style={styles.bookButton}
+  onPress={() => navigation.navigate("Appintment", {item})}
+>
+  <Text style={styles.bookButtonText}>Book Appointment</Text>
+</TouchableOpacity>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   body : {
-  backgroundColor : "#f5f5dc",
+  backgroundColor : "#E5E4E2",
   height : 800
   },
   nameLawyer: {
@@ -123,7 +129,7 @@ const styles = StyleSheet.create({
     marginTop: 35,
   },
   block1: {
-    backgroundColor: "#DAA520",
+    backgroundColor: "#D5B278",
     height: 100,
     width: 500,
     alignItems: "center",
@@ -135,26 +141,26 @@ const styles = StyleSheet.create({
     marginRight: 80,
   },
   block2: {
-    backgroundColor: '#ecd540',
+    backgroundColor: '#D5B278',
     height: 250,
     width: 370,
     marginTop: 90,
     marginLeft: 20,
-    borderRadius: 40,
+    borderRadius: 30,
   },
   blockBlueGhamak: {
-    backgroundColor: "#A9A9A9",
+    backgroundColor: "#C6C1B4",
     height: 80,
     width: 370,
     marginTop: 170,
-    borderRadius: 20,
+    borderRadius: 10,
   },
   photoo: {
     width: 150,
     height: 150,
     borderRadius: 100,
     position: "absolute",
-    left: 20,
+    alignSelf: "center",
   },
   blockPhoto: {
     borderRadius: 100,
@@ -216,7 +222,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   bookButton: {
-    backgroundColor: "#ecd540",
+    backgroundColor: "#D5B278",
     width: 390,
     height: 50,
     justifyContent: "center",
