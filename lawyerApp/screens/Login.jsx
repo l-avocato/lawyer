@@ -5,8 +5,9 @@ import { Formik } from "formik";
 import { View, Text, TextInput, TouchableOpacity, ActivityIndicator } from "react-native";
 //icons
 import { Octicons, Fontisto, Ionicons } from "@expo/vector-icons";
-import { FIREBASE_AUTH } from "../firebaseConfig";
 import { useNavigation } from '@react-navigation/native';
+import {FIREBASE_AUTH,FIREBASE_DB } from '../firebaseConfig'
+import { collection, doc, getDocs, deleteDoc ,query, where } from "firebase/firestore";
 
 import {
     StyledContainer,
