@@ -78,6 +78,7 @@ const HomePage = ({ navigation }) => {
   const renderTabContent = () => {
 
     const [user, setUser] = useState([]);
+    const [lawyers, setLawyers]= useState([]);
 
     const userCollectionRef = collection(FIREBASE_DB, "user");
     const getUser = async () => {
@@ -96,6 +97,26 @@ const HomePage = ({ navigation }) => {
     useEffect(()=>{
       getUser()
     },[])
+
+    const LawyersCollectionRef = collection(FIREBASE_DB, "lawyers");
+
+    const getLawyers = async () => {
+      try {
+        const result = await getDocs(userCollectionRef);
+        const lawyers = result.docs.map((doc) => ({
+          ...doc.data(),
+          id: doc.id,
+        }));
+        setLawyers(lawyers);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    useEffect(() => {
+     
+      getUser();
+    }, [refrech]);
+  
 
     if (selectedTab === "Home") {
       return (
