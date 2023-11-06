@@ -79,10 +79,7 @@ const HomePage = ({ navigation }) => {
 
     const [user, setUser] = useState([]);
     const [lawyers, setLawyers]= useState([]);
-<<<<<<< HEAD
-=======
     const [categories, setCategories]= useState([]);
->>>>>>> e87283e4072a67412e159225de04b7f91c49f812
 
     const userCollectionRef = collection(FIREBASE_DB, "user");
     const lawyersCollectionRef = collection(FIREBASE_DB, "lawyers");
@@ -137,24 +134,7 @@ const HomePage = ({ navigation }) => {
 
     },[])
 
-    const LawyersCollectionRef = collection(FIREBASE_DB, "lawyers");
-
-    const getLawyers = async () => {
-      try {
-        const result = await getDocs(userCollectionRef);
-        const lawyers = result.docs.map((doc) => ({
-          ...doc.data(),
-          id: doc.id,
-        }));
-        setLawyers(lawyers);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-    useEffect(() => {
-     
-      getUser();
-    }, [refrech]);
+   
   
 
     if (selectedTab === "Home") {
@@ -512,7 +492,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   textContainer: {
-    flex: 1, // Use flex to make it expand to take available space
+    flex: 1, 
   },
   buttonText1: {
     color: "#D5B278",
@@ -523,17 +503,16 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   arrowContainer: {
-    marginLeft: 10, // Add some space between the text and the arrow
+    marginLeft: 10, 
   },
   arrowButton: {
-    // backgroundColor: 'white',
     padding: 10,
     color: "#D5B278",
     borderRadius: 10,
   },
   buttonBackground: {
     flex: 1,
-    resizeMode: "cover", // or 'stretch' to stretch the image
+    resizeMode: "cover", 
     justifyContent: "center",
     alignItems: "center",
   },

@@ -1,9 +1,12 @@
 import React from "react";
 import "../../components/Navbar/styles.css";
 import "./styles.css";
+import { useNavigate } from "react-router-dom";
 
 
 function Navbar() {
+  const navigate = useNavigate();
+
   return (
     <div id="navBar">
       <div className="topSection">
@@ -24,7 +27,7 @@ function Navbar() {
                 </ul>
               </li>
               <li>
-                Tutorials
+                Contact
                 <i className="fa fa-angle-down"></i>
                 <ul>
                   <li>
@@ -44,7 +47,8 @@ function Navbar() {
                   </li>
                 </ul>
               </li>
-              <li>Contact</li>
+              <li onClick={  ()=>navigate("/Signin") 
+}>   Login </li>
             </ul>
           </div>
         </div>

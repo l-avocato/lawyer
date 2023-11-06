@@ -15,8 +15,12 @@ import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import { Link } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
+import { useNavigate } from "react-router-dom";
+
 
 const SidebarDash = () => {
+  const navigate = useNavigate();
+
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   const toggleSettings = () => {
@@ -35,6 +39,7 @@ const SidebarDash = () => {
             <PersonOutlineIcon className="new-icon" />
 
             <span className="side-title"
+            onClick={()=>navigate("/allClient")}
              
             >My Clients</span>
           </li>
@@ -80,7 +85,9 @@ const SidebarDash = () => {
           </li>
           <li>
             <PowerSettingsNewIcon className="new-icon" />
-            <span className="side-title">Logout</span>
+            <span className="side-title" 
+            onClick={()=>navigate('/Signin')}
+            >Logout</span>
           </li>
         </ul>
       </div>

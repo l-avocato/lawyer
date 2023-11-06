@@ -40,7 +40,7 @@ const AddClient = ({refrech, setRefrech}) => {
         email: email,
         cin: cin,
         PhoneNumber: PhoneNumber,
-        image : papers,
+        imageUrl : papers,
         gender:gender
       }
       );

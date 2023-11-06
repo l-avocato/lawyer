@@ -30,7 +30,7 @@ const Settings = () => {
       await updateDoc(lawyersCollectionRef, {
         fullName: fullName,
         adress: adress,
-        image: papers,
+        imageUrl: papers,
       });
     } catch (error) {
       console.log("Error updating lawyer", error);

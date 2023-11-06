@@ -5,6 +5,9 @@ import SidebarDash from "../SidebarDash/SidebarDash.jsx";
 import { db } from "../../firebaseconfig.js";
 import { collection, doc, getDocs, deleteDoc } from "firebase/firestore";
 
+
+
+
 const AllClient = () => {
   const [user, setUser] = useState([]);
   const userCollectionRef = collection(db, "user");
@@ -32,6 +35,8 @@ const AllClient = () => {
    
     getUser();
   }, [refrech]);
+
+  
 
   return (
     <div className="d-flex">
@@ -69,7 +74,7 @@ const AllClient = () => {
                     <td>
                       <div className="d-flex align-items-center">
                         <img
-                          src={e.image}
+                          src={e.imageUrl}
                           alt=""
                           style={{ width: "45px", height: "45px" }}
                           className="rounded-circle"
