@@ -20,7 +20,7 @@ import HelpCenter from "./screens/HelpCenter";
 import PrivacyPolicy from "./screens/PrivacyPolicy";
 import NavTab from "./screens/NavTab";
 import LawyerProfile from "./screens/LawyerProfile";
-
+import GoogleMapView from "./screens/GoogleMapView"
 export default function App() {
   const Stack = createNativeStackNavigator();
   return (
@@ -40,6 +40,13 @@ export default function App() {
         <Stack.Screen
           name="Onboarding1"
           component={Onboarding1}
+          options={{
+            headerShown: false,
+          }}
+        />
+         <Stack.Screen
+          name="GoogleMapView"
+          component={GoogleMapView}
           options={{
             headerShown: false,
           }}
