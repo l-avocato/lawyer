@@ -22,7 +22,6 @@ import PrivacyPolicy from "./screens/PrivacyPolicy";
 import NavTab from "./screens/NavTab";
 import LawyerProfile from "./screens/LawyerProfile";
 
-
 export default function App() {
   const Stack = createNativeStackNavigator();
   return (
@@ -76,6 +75,14 @@ export default function App() {
             headerShown: true,
           }}
         /> 
+        
+         <Stack.Screen
+          name="HomePage"
+          component={HomePage}
+          options={{
+            headerShown: false,
+          }}
+        />
 
         <Stack.Screen
           name="welcome"

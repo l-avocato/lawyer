@@ -12,6 +12,7 @@ import PaymentHistory from "./components/PaymentHistory/PaymentHistory";
 import Landing from "./components/LandingPage/Landing";
 import SettingSecurity from "./components/SettingSecurity/SettingSecurity.jsx";
 import SettingProfil from "./components/SettingProfil/Settings.jsx"
+import StepsCases from "./components/StepsCases/StepsCases.jsx";
 const App = () => {
   return (
     <div className="App">
@@ -29,6 +30,9 @@ const App = () => {
           <Route path="/navbar" element={<NavbarDashboard />} />
           <Route path="/settingSecurity" element={<SettingSecurity/>} />
           <Route path="/settingProfil" element={<SettingProfil/>} />
+          <Route path="/stepsCases" element={<StepsCases/>} />
+
+
 
 
 

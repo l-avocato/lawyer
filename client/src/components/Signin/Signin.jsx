@@ -2,8 +2,12 @@ import React ,{ useState }from 'react'
 import "./Signin.css"
 import { app } from '../../firebaseconfig';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+
 
 const Signin = () => {
+  const navigate = useNavigate();
+
   const auth = getAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -15,7 +19,9 @@ const Signin = () => {
       })
       .catch((err) => {
         console.log(err);
+
       });
+      navigate('/Allclient')
   };
 
   return (

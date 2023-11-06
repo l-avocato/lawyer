@@ -134,6 +134,9 @@ const HomePage = ({ navigation }) => {
 
     },[])
 
+   
+  
+
     if (selectedTab === "Home") {
       return (
         <View style={styles.container}>
@@ -489,7 +492,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   textContainer: {
-    flex: 1, // Use flex to make it expand to take available space
+    flex: 1, 
   },
   buttonText1: {
     color: "#D5B278",
@@ -500,17 +503,16 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   arrowContainer: {
-    marginLeft: 10, // Add some space between the text and the arrow
+    marginLeft: 10, 
   },
   arrowButton: {
-    // backgroundColor: 'white',
     padding: 10,
     color: "#D5B278",
     borderRadius: 10,
   },
   buttonBackground: {
     flex: 1,
-    resizeMode: "cover", // or 'stretch' to stretch the image
+    resizeMode: "cover", 
     justifyContent: "center",
     alignItems: "center",
   },

@@ -5,6 +5,9 @@ import SidebarDash from "../SidebarDash/SidebarDash.jsx";
 import { db } from "../../firebaseconfig.js";
 import { collection, doc, getDocs, deleteDoc } from "firebase/firestore";
 
+
+
+
 const AllClient = () => {
   const [user, setUser] = useState([]);
   const userCollectionRef = collection(db, "user");
@@ -33,9 +36,11 @@ const AllClient = () => {
     getUser();
   }, [refrech]);
 
+  
+
   return (
     <div className="d-flex">
-      {/* <SidebarDash/> */}
+      <SidebarDash/>
       <div className="allPage">
         <div className="firstDiv">
           <p className="titleClient">Client List </p>
@@ -50,7 +55,7 @@ const AllClient = () => {
           <hr />
         </div>
 
-        <div className="table-wrapper table1">
+        <div className="table-wrapper table1" style={{width:'70rem', display:'flex', marginLeft:'21rem'}}>
           <table class="table align-middle mb-0 ">
             <thead class="bg-light">
               <tr>
@@ -69,7 +74,7 @@ const AllClient = () => {
                     <td>
                       <div className="d-flex align-items-center">
                         <img
-                          src={e.image}
+                          src={e.imageUrl}
                           alt=""
                           style={{ width: "45px", height: "45px" }}
                           className="rounded-circle"

@@ -45,7 +45,7 @@ const Welcome = () => {
                 <PageTitle welcome={true} >Welcome!</PageTitle>
                 <SubTitle welcome={true}>Ahmed Irmani</SubTitle>
                 <SubTitle welcome={true}>ahmedirmani@gmail.com</SubTitle>
-   <StyledFormArea>
+            <StyledFormArea>
                       <Avatar resizeMode="cover" source={require("../assets/logo.png")} /> 
                        <Line/> 
 
