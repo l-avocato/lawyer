@@ -1,4 +1,3 @@
-
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import ProfilDetails from "./screens/ProfilDetails";
@@ -21,29 +20,38 @@ import HelpCenter from "./screens/HelpCenter";
 import PrivacyPolicy from "./screens/PrivacyPolicy";
 import NavTab from "./screens/NavTab";
 import LawyerProfile from "./screens/LawyerProfile";
+import GoogleMapView from "./screens/GoogleMapView"
+
 import Chat from "./screens/Chat";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName = "login" 
-                 options={{headerShown: false}}
+      <Stack.Navigator
+        initialRouteName="Onboarding1"
+        component={Onboarding1}
+        options={{ headerShown: false }}
       >
-                  <Stack.Screen
-            name="NavTab"
-            component={NavTab}
-            options={{
-              headerShown: true,
-            }}
-          />
-                <Stack.Screen
+        <Stack.Screen
+          name="NavTab"
+          component={NavTab}
+          options={{
+            headerShown: true,
+          }}
+        />
+        <Stack.Screen
           name="Onboarding1"
           component={Onboarding1}
           options={{
             headerShown: false,
           }}
         />
+
+         <Stack.Screen
+          name="Map"
+          component={GoogleMapView}
+
                 <Stack.Screen
           name="Chat"
           component={Chat}
@@ -56,9 +64,10 @@ export default function App() {
           component={LawyerProfile}
           options={{
             headerShown: true,
+            
           }}
         />
-
+        
         <Stack.Screen
           name="Appintment"
           component={Appointment}
@@ -66,7 +75,6 @@ export default function App() {
             headerShown: true,
           }}
         />
-        
 
         <Stack.Screen
           name="Home"
@@ -81,6 +89,7 @@ export default function App() {
           options={{
             headerShown: true,
           }}
+
         /> 
         
          <Stack.Screen
@@ -169,7 +178,7 @@ export default function App() {
             headerShown: false,
           }}
         />
-           <Stack.Screen
+        <Stack.Screen
           name="reviewSummary"
           component={ReviewSummary}
           options={{

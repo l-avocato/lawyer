@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from "@react-navigation/native";
+import GoogleMapView from "./GoogleMapView";
 import {
   View,
   Text,
@@ -24,12 +25,12 @@ const NavTab = () => {
         >
           <Ionicons name="home" size={24} color="black" />
         </TouchableOpacity>
-       
+
         <TouchableOpacity
           style={
             selectedTab === "Map" ? styles.tabBarItemActive : styles.tabBarItem
           }
-          onPress={() => setSelectedTab("Map")}
+          onPress={() => navigation.navigate("Map")}
         >
           <Ionicons name="map" size={24} color="black" />
         </TouchableOpacity>
@@ -43,7 +44,9 @@ const NavTab = () => {
         </TouchableOpacity>
         <TouchableOpacity
           style={
-            selectedTab === "Profile" ? styles.tabBarItemActive : styles.tabBarItem
+            selectedTab === "Profile"
+              ? styles.tabBarItemActive
+              : styles.tabBarItem
           }
           onPress={() => navigation.navigate("settings")}
         >
@@ -55,7 +58,7 @@ const NavTab = () => {
 };
 
 const styles = StyleSheet.create({
-//   
+  //
   tabBar: {
     flexDirection: "row",
     justifyContent: "space-between",
