@@ -59,7 +59,7 @@ export default function App() {
             
           }}
         />
-
+        
         <Stack.Screen
           name="Appintment"
           component={Appointment}
