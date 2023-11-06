@@ -26,8 +26,8 @@ const NavbarDashboard = () => {
             <ChatBubbleOutlineOutlinedIcon className="new-icon" /> 
             <div className="new-counter">2</div> 
           </div>
-          <PowerSettingsNewIcon className="new-icon" />
-          <span className="logout">Logout</span>
+          {/* <PowerSettingsNewIcon className="new-icon" />
+          <span className="logout">Logout</span> */}
         </div>
       </div>
     </div>
