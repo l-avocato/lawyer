@@ -45,7 +45,7 @@ export default function App() {
           }}
         />
          <Stack.Screen
-          name="GoogleMapView"
+          name="Map"
           component={GoogleMapView}
           options={{
             headerShown: false,
@@ -56,6 +56,7 @@ export default function App() {
           component={LawyerProfile}
           options={{
             headerShown: true,
+            
           }}
         />
 
