@@ -6,6 +6,7 @@ import ProfilDetails from "./screens/ProfilDetails";
 import { StatusBar } from "expo-status-bar";
 import HomePage from "./screens/HomePage";
 import Onboarding2 from "./screens/Onboarding2";
+import ManageFilters from "./screens/ManageFilters";
 //screens
 import Login from "./screens/Login";
 import Signup from "./screens/SignUp";
@@ -16,16 +17,29 @@ import Appointment from "./screens/Appointment";
 import NavTab from "./screens/NavTab";
 import LawyerProfile from "./screens/LawyerProfile";
 
-
 export default function App() {
   const Stack = createNativeStackNavigator();
   return (
+    
     <NavigationContainer>
-      <Stack.Navigator initialRouteName = "HomePage" 
-                 component={HomePage}
-                 options={{headerShown: false}}
-
-      >
+      <Stack.Navigator
+        initialRouteName="ManageFilters"
+        component={ManageFilters}
+        options={{ headerShown: true}}>
+        <Stack.Screen
+          name="ManageFilters"
+          component={ManageFilters}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="HomePage"
+          component={HomePage}
+          options={{
+            headerShown: false,
+          }}
+        />
         <Stack.Screen
           name="NavTab"
           component={NavTab}
@@ -47,22 +61,14 @@ export default function App() {
             headerShown: true,
           }}
         />
-        
 
-        <Stack.Screen
-          name="HomePage"
-          component={HomePage}
-          options={{
-            headerShown: false,
-          }}
-        />
         <Stack.Screen
           name="Lawyer Details"
           component={ProfilDetails}
           options={{
             headerShown: true,
           }}
-        /> 
+        />
 
         <Stack.Screen
           name="welcome"
@@ -108,5 +114,6 @@ export default function App() {
         />
       </Stack.Navigator>
     </NavigationContainer>
+    
   );
 }
