@@ -21,13 +21,13 @@ import HelpCenter from "./screens/HelpCenter";
 import PrivacyPolicy from "./screens/PrivacyPolicy";
 import NavTab from "./screens/NavTab";
 import LawyerProfile from "./screens/LawyerProfile";
+import Chat from "./screens/Chat";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName = "Onboarding1" 
-                 component={Onboarding1}
+      <Stack.Navigator initialRouteName = "login" 
                  options={{headerShown: false}}
       >
                   <Stack.Screen
@@ -40,6 +40,13 @@ export default function App() {
                 <Stack.Screen
           name="Onboarding1"
           component={Onboarding1}
+          options={{
+            headerShown: false,
+          }}
+        />
+                <Stack.Screen
+          name="Chat"
+          component={Chat}
           options={{
             headerShown: false,
           }}
