@@ -28,7 +28,7 @@ function Footer() {
               </div>
             </div>
             <ul className="nav">
-              <li className="nav-item"><a href="" className="nav-link pl-0"><FontAwesomeIcon icon={faFacebook} /></a></li>
+              <li className="nav-item"><a href="" className="nav-link pl-0"><FontAwesomeIcon icon={faFacebook}  /></a></li>
               <li className="nav-item"><a href="" className="nav-link"><FontAwesomeIcon icon={faTwitter} /></a></li>
               <li className="nav-item"><a href="" className="nav-link"><FontAwesomeIcon icon={faGithub} /></a></li>
               <li className="nav-item"><a href="" className="nav-link"><FontAwesomeIcon icon={faInstagram} /></a></li>
