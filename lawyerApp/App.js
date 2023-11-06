@@ -21,6 +21,9 @@ import PrivacyPolicy from "./screens/PrivacyPolicy";
 import NavTab from "./screens/NavTab";
 import LawyerProfile from "./screens/LawyerProfile";
 import GoogleMapView from "./screens/GoogleMapView"
+
+import Chat from "./screens/Chat";
+
 export default function App() {
   const Stack = createNativeStackNavigator();
   return (
@@ -44,9 +47,14 @@ export default function App() {
             headerShown: false,
           }}
         />
+
          <Stack.Screen
           name="Map"
           component={GoogleMapView}
+
+                <Stack.Screen
+          name="Chat"
+          component={Chat}
           options={{
             headerShown: false,
           }}
@@ -80,6 +88,15 @@ export default function App() {
           component={ProfilDetails}
           options={{
             headerShown: true,
+          }}
+
+        /> 
+        
+         <Stack.Screen
+          name="HomePage"
+          component={HomePage}
+          options={{
+            headerShown: false,
           }}
         />
 

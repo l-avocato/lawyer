@@ -155,8 +155,8 @@ const Settings = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   navTabContainer: {
-    flex: 1, // Use flex to push the NavTab to the bottom
-    top:120,// Align the NavTab to the bottom of the container
+    flex: 1, 
+    top:120,
     height:0,
   },
   navTab: {

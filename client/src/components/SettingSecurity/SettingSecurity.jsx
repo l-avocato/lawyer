@@ -66,7 +66,7 @@ const SettingSecurity = () => {
             display: "flex",
             flexDirection: "column",
             gap: "2rem",
-            border: "1px solid #ccc",
+            border: "0.1rem solid #ccc",
             borderRadius: "8px",
             padding: "3rem",
             marginLeft: "20rem",

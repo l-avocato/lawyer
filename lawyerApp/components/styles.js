@@ -125,7 +125,7 @@ justify-content: center;
 align-items: center;
 border-radius: 5px;
 margin-vertical: 5px;
-height: 60px;
+height: 50px;
 
 ${(props)=>props.google == true &&`
 background-color: ${red};
@@ -138,7 +138,7 @@ export const ButtonText = styled.Text`
 color: ${primary};
 font-size: 16px;
 ${(props)=>props.google == true &&`
-padding: 25px;
+padding: 10px;
 `}
 `;
 
