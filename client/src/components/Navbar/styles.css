@@ -174,7 +174,7 @@
     cursor: pointer;
     background-color: var(--subtle-grey);
   }
-  
+
   ul > li:hover > ul {
     display: block;
     margin-top: 1.5rem;
@@ -210,4 +210,32 @@
     background-color: darken(var(--blue), 5%);
   }
 
+  .custom-modal .modal-dialog {
+    max-width: 90%;
+  }
+  
+  @media (min-width: 576px) {
+    .custom-modal .modal-dialog {
+      max-width: 500px;
+    }
+  }
+  
+  @media (min-width: 768px) {
+    .custom-modal .modal-dialog {
+      max-width: 700px;
+    }
+  }
+  
+  @media (min-width: 992px) {
+    .custom-modal .modal-dialog {
+      max-width: 900px;
+    }
+  }
+  
+  @media (min-width: 1200px) {
+    .custom-modal .modal-dialog {
+      max-width: 1140px;
+    }
+  }
 
+  
