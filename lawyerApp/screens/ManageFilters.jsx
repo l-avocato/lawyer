@@ -16,7 +16,7 @@ const ManageFilters = () => {
   const handleArrowIconClick = () => {
     // Handle arrow icon click here
   };
-
+  console.log("hi");
   const handleRefreshIconClick = () => {
     // Handle refresh icon click here
   };
@@ -61,7 +61,7 @@ const ManageFilters = () => {
       </View>
 
       {/* Body View (Scrollable) */}
-      <ScrollView style={styles.body}>
+      <ScrollView style={styles.bodyMN}>
         {/* View 1 */}
         <View style={[styles.bodyView1, { backgroundColor: "white" }]}>
           <TouchableOpacity style={styles.button1} onPress={handleButtonPress}>
@@ -163,7 +163,9 @@ const ManageFilters = () => {
               value={inputValue}
               onChangeText={handleInputChange}
             />
-            <TouchableOpacity style={styles.button5} onPress={handleButtonPress}>
+            <TouchableOpacity
+              style={styles.button5}
+              onPress={handleButtonPress}>
               <Text style={styles.buttonText5}>Apply Filters!</Text>
             </TouchableOpacity>
           </View>
@@ -183,7 +185,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingBottom:10
+    paddingBottom: 10,
   },
   headerIcon: {
     padding: 10,
@@ -196,7 +198,7 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 18,
   },
-  body: {
+  bodyMN: {
     backgroundColor: "white",
     flex: 1,
     padding: 10,
@@ -359,11 +361,11 @@ const styles = StyleSheet.create({
     width: "100%",
     marginTop: 20,
   },
-  
+
   buttonText5: {
     color: "#D5B278",
     fontSize: 16,
-  }
+  },
 });
 
 export default ManageFilters;
