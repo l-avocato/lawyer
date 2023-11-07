@@ -1,0 +1,50 @@
+/*  */
+  
+  .container {
+    position: relative;
+    width: 150vw;
+    height: 70vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    border-radius: 9px;
+    border: solid 2px var(--mid);
+    background-color: blueviolet;
+    margin-top: 40rem;
+  }
+  
+  h4 {
+    color: var(--mid);
+    position: absolute;
+    width: 100%;
+    left: 0;
+    right: 0;
+    bottom: 1rem;
+    text-align: center;
+    pointer-events: none;
+  }
+  
+  .flair {
+    cursor: pointer;
+    width: 50px;
+    height: 70px;
+    max-height: 15vh;
+    max-width: 15vh;
+    font-size: 50px;
+  }
+  .tableau1 {
+    width: 250px;
+    height: 450px;
+    background-color: aliceblue;
+
+  }
+  .tableau2{
+    width: 250px;
+    height: 450px;
+    background-color: aliceblue;
+  }
+  .tableau3{
+    width: 250px;
+    height: 450px;
+    background-color: aliceblue;
+  }

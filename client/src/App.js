@@ -13,6 +13,7 @@ import Landing from "./components/LandingPage/Landing";
 import SettingSecurity from "./components/SettingSecurity/SettingSecurity.jsx";
 import SettingProfil from "./components/SettingProfil/Settings.jsx"
 import StepsCases from "./components/StepsCases/StepsCases.jsx";
+import Diagramme from "./components/Diagramme/Diagramme.jsx";
 const App = () => {
   return (
     <div className="App">
@@ -31,6 +32,8 @@ const App = () => {
           <Route path="/settingSecurity" element={<SettingSecurity/>} />
           <Route path="/settingProfil" element={<SettingProfil/>} />
           <Route path="/stepsCases" element={<StepsCases/>} />
+          <Route path="/diagramme" element={<Diagramme/>} />
+
 
 
 

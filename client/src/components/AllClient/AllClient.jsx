@@ -5,7 +5,7 @@ import SidebarDash from "../SidebarDash/SidebarDash.jsx";
 import { db } from "../../firebaseconfig.js";
 import { collection, doc, getDocs, deleteDoc } from "firebase/firestore";
 import NavbarDashboard from "../NavbarDashboard/NavbarDashboard.jsx";
-
+import DataGrid from "./DataGrid.jsx"
 
 
 
@@ -37,10 +37,12 @@ const AllClient = () => {
     getUser();
   }, [refrech]);
 
+  console.log(user);
+
   
 
   return (
-    <div className="">
+    <div>
       <NavbarDashboard/>
         <div className="allPage">
           <div className="firstDiv">
@@ -56,8 +58,9 @@ const AllClient = () => {
             <hr />
           </div>
 
-          <div className="table-wrapper table1" style={{width:'70rem', display:'flex', marginLeft:'21rem'}}>
-            <table class="table align-middle mb-0 ">
+          <div className="table-wrapper table1" style={{width:'70rem', display:'flex', flexDirection:"column", marginLeft:'21rem'}}>
+            <DataGrid user={user} deleteUser={deleteUser} />
+            {/* <table class="table align-middle mb-0 ">
               <thead class="bg-light">
                 <tr>
                   <th> Full Name</th>
@@ -128,7 +131,7 @@ const AllClient = () => {
                   </tbody>
                 );
               })}
-            </table>
+            </table> */}
           </div>
         </div>
     </div>
