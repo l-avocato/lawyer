@@ -51,6 +51,7 @@ export default function App() {
          <Stack.Screen
           name="Map"
           component={GoogleMapView}
+          />
 
                 <Stack.Screen
           name="Chat"
