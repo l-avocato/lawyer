@@ -26,31 +26,35 @@ const HomePage = ({ navigation }) => {
   // Function to handle photo click
   const handlePhotoClick = (item) => {
     navigation.navigate("Lawyer Details", { item });
-    console.log("Photo clicked:", item.id);
+    // console.log("Photo clicked:", item.id);
   };
-
-  const photoData2 = [
-    {
-      id: 1,
-      source: require("../Photos/avocat1.jpg"),
-    },
-    {
-      id: 2,
-      source: require("../Photos/avocat2.jpeg"),
-    },
-    {
-      id: 3,
-      source: require("../Photos/avocat3.jpeg"),
-    },
-    {
-      id: 4,
-      source: require("../Photos/avocat4.jpeg"),
-    },
-    {
-      id: 5,
-      source: require("../Photos/avocat5.jpeg"),
-    },
-  ];
+  const handleFilterClick = (item) => {
+    navigation.navigate("ManageFilters");
+    // console.log("Photo clicked:", item.id);
+  };
+  
+  // const photoData2 = [
+  //   {
+  //     id: 1,
+  //     source: require("../Photos/avocat1.jpg"),
+  //   },
+  //   {
+  //     id: 2,
+  //     source: require("../Photos/avocat2.jpeg"),
+  //   },
+  //   {
+  //     id: 3,
+  //     source: require("../Photos/avocat3.jpeg"),
+  //   },
+  //   {
+  //     id: 4,
+  //     source: require("../Photos/avocat4.jpeg"),
+  //   },
+  //   {
+  //     id: 5,
+  //     source: require("../Photos/avocat5.jpeg"),
+  //   },
+  // ];
 
   const photoData4 = [
     {
@@ -153,7 +157,7 @@ const HomePage = ({ navigation }) => {
                 <MaterialIcons name="notifications" size={24} color="white" />
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={() => navigation.navigate("Filter")}
+                onPress={() => handleFilterClick()}
                 style={styles.filterButton}>
                 <Ionicons name="options" size={24} color="white" />
               </TouchableOpacity>

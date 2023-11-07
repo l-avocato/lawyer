@@ -4,6 +4,7 @@ import ProfilDetails from "./screens/ProfilDetails";
 import { StatusBar } from "expo-status-bar";
 import HomePage from "./screens/HomePage";
 import Onboarding2 from "./screens/Onboarding2";
+import ManageFilters from "./screens/ManageFilters";
 //screens
 import Login from "./screens/Login";
 import Signup from "./screens/SignUp";
@@ -20,24 +21,22 @@ import HelpCenter from "./screens/HelpCenter";
 import PrivacyPolicy from "./screens/PrivacyPolicy";
 import NavTab from "./screens/NavTab";
 import LawyerProfile from "./screens/LawyerProfile";
-import GoogleMapView from "./screens/GoogleMapView"
-
+import GoogleMapView from "./screens/GoogleMapView";
 import Chat from "./screens/Chat";
-
+import SearchListings from "./screens/SearchListings";
 export default function App() {
   const Stack = createNativeStackNavigator();
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Onboarding1"
-        component={Onboarding1}
-        options={{ headerShown: false }}
-      >
+        initialRouteName="SearchListings"
+        component={SearchListings}
+        options={{ headerShown: false }}>
         <Stack.Screen
           name="NavTab"
           component={NavTab}
           options={{
-            headerShown: true,
+            headerShown: false,
           }}
         />
         <Stack.Screen
@@ -48,12 +47,8 @@ export default function App() {
           }}
         />
 
-         <Stack.Screen
-          name="Map"
-          component={GoogleMapView}
-          />
-
-                <Stack.Screen
+        <Stack.Screen name="Map" component={GoogleMapView} />
+        <Stack.Screen
           name="Chat"
           component={Chat}
           options={{
@@ -65,10 +60,9 @@ export default function App() {
           component={LawyerProfile}
           options={{
             headerShown: true,
-            
           }}
         />
-        
+
         <Stack.Screen
           name="Appintment"
           component={Appointment}
@@ -90,12 +84,10 @@ export default function App() {
           options={{
             headerShown: true,
           }}
-
-        /> 
-        
-         <Stack.Screen
-          name="HomePage"
-          component={HomePage}
+        />
+        <Stack.Screen
+          name="SearchListings"
+          component={SearchListings}
           options={{
             headerShown: false,
           }}
@@ -143,6 +135,14 @@ export default function App() {
             headerShown: false,
           }}
         />
+        <Stack.Screen
+          name="ManageFilters"
+          component={ManageFilters}
+          options={{
+            headerShown: false,
+          }}
+        />
+
         <Stack.Screen
           name="privacyPolicy"
           component={PrivacyPolicy}
