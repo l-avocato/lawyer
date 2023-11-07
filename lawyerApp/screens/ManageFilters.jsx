@@ -61,7 +61,7 @@ const ManageFilters = () => {
       </View>
 
       {/* Body View (Scrollable) */}
-      <ScrollView style={styles.body}>
+      <ScrollView style={styles.bodyMN}>
         {/* View 1 */}
         <View style={[styles.bodyView1, { backgroundColor: "white" }]}>
           <TouchableOpacity style={styles.button1} onPress={handleButtonPress}>
@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 18,
   },
-  body: {
+  bodyMN: {
     backgroundColor: "white",
     flex: 1,
     padding: 10,
