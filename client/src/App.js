@@ -11,15 +11,16 @@ import PaymentReceipt from "./components/Payment/PaymentReceipt";
 import PaymentHistory from "./components/PaymentHistory/PaymentHistory";
 import Landing from "./components/LandingPage/Landing";
 import SettingSecurity from "./components/SettingSecurity/SettingSecurity.jsx";
-import SettingProfil from "./components/SettingProfil/Settings.jsx"
+import SettingProfil from "./components/SettingProfil/Settings.jsx";
 import StepsCases from "./components/StepsCases/StepsCases.jsx";
 import Diagramme from "./components/Diagramme/Diagramme.jsx";
+import Flow from "./components/StepsCases/Flow.js";
 const App = () => {
   return (
     <div className="App">
       <Router>
         <Routes>
-         <Route path="/PaymentHistory" element={<PaymentHistory />} />
+          <Route path="/PaymentHistory" element={<PaymentHistory />} />
           <Route path="/" element={<Landing />} />
           <Route path="/nav" element={<Navbar />} />
           <Route path="/Signin" element={<Signin />} />
@@ -29,16 +30,11 @@ const App = () => {
           <Route path="/allClient" element={<AllClient />} />
           <Route path="/sidebar" element={<SidebarDash />} />
           <Route path="/navbar" element={<NavbarDashboard />} />
-          <Route path="/settingSecurity" element={<SettingSecurity/>} />
-          <Route path="/settingProfil" element={<SettingProfil/>} />
-          <Route path="/stepsCases" element={<StepsCases/>} />
-          <Route path="/diagramme" element={<Diagramme/>} />
-
-
-
-
-
-
+          <Route path="/settingSecurity" element={<SettingSecurity />} />
+          <Route path="/settingProfil" element={<SettingProfil />} />
+          <Route path="/stepsCases" element={<StepsCases />} />
+          <Route path="/diagramme" element={<Diagramme />} />
+          <Route path="/flow" element={<Flow />} />
         </Routes>
       </Router>
     </div>

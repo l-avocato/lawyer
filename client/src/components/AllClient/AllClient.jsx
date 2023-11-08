@@ -37,8 +37,6 @@ const AllClient = () => {
     getUser();
   }, [refrech]);
 
-  console.log(user);
-
   
 
   return (
