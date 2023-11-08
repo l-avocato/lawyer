@@ -30,37 +30,34 @@ function Landing() {
           </div>
         </div>
       </div>
-      <div className="services">
-        <h1>our services</h1>
+      <div className="services" id="services">
+        <h1>Our Services</h1>
       </div>
-      <div className="section-container">
-        <div className="section-one">
-          <div className="law-icon1"></div>
-          <div className="btn1">
-            <button>EXPLORE</button>
-          </div>
-        </div>
-        <div className="section-two">
-          <div className="law-icon2"></div>
-          <div className="btn1">
-            <button>EXPLORE</button>
-          </div>
-        </div>
-        <div className="section-three">
-          <div className="law-icon3"></div>
-          <div className="btn1">
-            <button>EXPLORE</button>
-          </div>
-        </div>
-        <div className="section-fore">
-          <div className="law-icon4"></div>
-          <div className="btn1">
-            <button>EXPLORE</button>
-          </div>
-        </div>
-      </div>
+      <div className="services-container">
+        <div style={{backgroundColor:'#f8f8f8' , width:"100%"}}>
+  <div className="service-section">
+    <img className="service-image" src="https://i.pinimg.com/564x/85/e9/af/85e9af635fae6aa657cd740b6e659f5d.jpg" alt="" />
+    <p className="service-text">Effortless Case Management</p>
+  </div>
+    <p className="service-paragraph1">Simplify your legal practice with our intuitive platform. Seamlessly organize clients, cases, and tasks in one place, enhancing efficiency and streamlining your workload. Focus on what matters most - winning cases.</p>
+    </div>
+  <div className="service-section reverse">
+    <img className="service-image" src="https://i.pinimg.com/564x/90/f1/1e/90f11ee4f16f997bf21b56607a85fffd.jpg" alt="" style={{height:380}} />
+    <div>
+    <p className="service-text" style={{marginTop:-160}}>Transparent Updates, Seamless Experience</p>
+  </div>
+    <p className="service-paragraph2">Create a transparent and engaging client experience with our update notifications. Keep your clients informed about case progress, important dates, and milestones. By fostering open communication, you build trust and loyalty, ensuring a seamless legal journey for your clients.</p>
+  </div>
+  <div style={{backgroundColor:'#f8f8f8' , width:"100%"}}>
+  <div className="service-section">
+    <img className="service-image" src="https://i.pinimg.com/564x/39/c7/a3/39c7a3d7a81ce484fb85ac8ba0ce5a06.jpg" alt="" />
+    <p className="service-text">Optimized Workflow & Productivity</p>
+  </div>
+    <p className="service-paragraph3">Boost your productivity with our comprehensive task management features. From deadlines to documents, our platform ensures nothing slips through the cracks. Stay on top of your game, meet deadlines, and achieve success with ease. Your legal practice, supercharged.</p>
+</div>
+</div>
       <div className="team-name">
-        <h1>clients feedback</h1>
+        <h1>Clients Feedback</h1>
       </div>
       <div className="picture1">
         <img className="image1" src={do1}></img>
