@@ -25,6 +25,7 @@ import LawyerProfile from "./screens/LawyerProfile";
 import GoogleMapView from "./screens/GoogleMapView";
 import Chat from "./screens/Chat";
 import SearchListings from "./screens/SearchListings";
+import ChatRooms from "./screens/ChatRooms";
 
 
 export default function App() {
@@ -42,6 +43,7 @@ export default function App() {
             headerShown: false,
           }}
         />
+        
         <Stack.Screen
           name="Onboarding1"
           component={Onboarding1}
@@ -49,9 +51,22 @@ export default function App() {
             headerShown: false,
           }}
         />
-        
+        <Stack.Screen
+          name="ChatRooms"
+          component={ChatRooms}
+          options={{
+            headerShown: false,
+          }}
+        />
 
-        <Stack.Screen name="Map" component={GoogleMapView} />
+        <Stack.Screen 
+        name="Map" 
+        component={GoogleMapView}
+        options={{
+          headerShown : false,
+        }}kj
+        />
+
         <Stack.Screen
           name="Chat"
           component={Chat}

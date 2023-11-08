@@ -5,6 +5,8 @@ import {
   Text,
   TextInput,
   StyleSheet,
+  Image,
+  Modal,
 } from "react-native";
 import MapView, {
   PROVIDER_GOOGLE,
@@ -14,16 +16,17 @@ import MapView, {
 } from "react-native-maps";
 import * as Location from "expo-location";
 import { MaterialIcons } from "@expo/vector-icons";
-import {FIREBASE_DB } from '../firebaseConfig'
-import { collection, doc, getDocs, deleteDoc ,query, where } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
+import { FIREBASE_DB } from '../firebaseConfig';
 
-const GoogleMapView = () => {
+const GoogleMapView = ({ navigation }) => {
   const [userLocation, setUserLocation] = useState(null);
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [showRoute, setShowRoute] = useState(false);
-  const [lawyers,setLawyers] = useState([]) 
+  const [lawyers, setLawyers] = useState([]);
+  const [selectedLawyer, setSelectedLawyer] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
   const mapRef = useRef(null);
-
 
   useEffect(() => {
     const fetchLocation = async () => {
@@ -31,12 +34,26 @@ const GoogleMapView = () => {
       if (status === "granted") {
         let location = await Location.getCurrentPositionAsync({});
         setUserLocation(location.coords);
-      } else {
+      }
+    };
+
+    const lawyersCollectionRef = collection(FIREBASE_DB, "lawyers");
+
+    const getLawyers = async () => {
+      try {
+        const result = await getDocs(lawyersCollectionRef);
+        const lawyersData = result.docs.map((doc) => ({
+          ...doc.data(),
+          id: doc.id,
+        }));
+        setLawyers(lawyersData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
       }
     };
 
     fetchLocation();
-    getLawyers()
+    getLawyers();
   }, []);
 
   const centerMapToUserLocation = () => {
@@ -58,23 +75,19 @@ const GoogleMapView = () => {
   const startRoute = () => {
     setShowRoute(true);
   };
-  const lawyersCollectionRef = collection(FIREBASE_DB, "lawyers");
-  const getLawyers = async () => {
-    try {
-      const result = await getDocs(lawyersCollectionRef);
-      const lawyers = result.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-        
-      })
-      );
-      setLawyers(lawyers);
-      console.log("this is law" ,lawyers);
-    } catch (error) {
-      console.error("Error fetching data:", error);
+  
+  const openLawyerProfile = (lawyer) => {
+    if (lawyer && lawyer.imageUrl) {
+      setSelectedLawyer(lawyer);
+      setModalVisible(true);
+    } else {
+      console.error("Invalid lawyer data");
     }
-  };  
+  };
 
+  const closeModal = () => {
+    setModalVisible(false);
+  };
 
   return (
     <View style={{ flex: 1 }}>
@@ -141,6 +154,25 @@ const GoogleMapView = () => {
               strokeColor="rgba(0, 122, 255, 0.7)"
             />
           )}
+          {lawyers.map((lawyer) => (
+            <Marker
+              key={lawyer.id}
+              coordinate={{
+                latitude: lawyer.localisation.latitude,
+                longitude: lawyer.localisation.longitude,
+              }}
+              title={lawyer.fullName}
+              description={lawyer.address}
+              onPress={() => openLawyerProfile(lawyer)}
+            >
+              {lawyer.imageUrl && (
+                <Image
+                  source={{ uri: lawyer.imageUrl }}
+                  style={{ width: 40, height: 40, borderRadius: 20 }}
+                />
+              )}
+            </Marker>
+          ))}
           {selectedLocation && (
             <Marker
               coordinate={selectedLocation}
@@ -164,6 +196,63 @@ const GoogleMapView = () => {
           )}
         </MapView>
       )}
+
+      {selectedLawyer && (
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={modalVisible}
+          onRequestClose={closeModal}
+        >
+          <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+            {selectedLawyer.imageUrl && (
+              <Image
+                source={{ uri: selectedLawyer.imageUrl }}
+                style={{ width: 200, height: 200, borderRadius: 100, marginBottom: 20 }}
+              />
+            )}
+            <Text style={{ fontSize: 24, fontWeight: "bold", marginBottom: 10 }}>{selectedLawyer.fullName}</Text>
+            <Text style={{ fontSize: 18, marginBottom: 10 }}>Number: {selectedLawyer.phoneNumber}</Text>
+            <TouchableOpacity
+              style={{
+                backgroundColor: "gold",
+                padding: 10,
+                borderRadius: 5,
+                marginBottom: 20,
+              }}
+              onPress={() => {
+                navigation.navigate("Lawyer Details", { lawyer: selectedLawyer });
+              }}
+            >
+              <Text style={{ color: "black", textAlign: "center", fontSize: 16 }}>Go to Profile</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                backgroundColor: "gold",
+                padding: 10,
+                borderRadius: 5,
+                marginBottom: 20,
+              }}
+              onPress={() => {
+                navigation.navigate("Chat", { lawyer: selectedLawyer });
+              }}
+            >
+              <Text style={{ color: "black", textAlign: "center", fontSize: 16 }}>Message</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                position: "absolute",
+                top: 20,
+                right: 20,
+              }}
+              onPress={closeModal}
+            >
+              <Text style={{ fontSize: 20, color: "red" }}>X</Text>
+            </TouchableOpacity>
+          </View>
+        </Modal>
+      )}
+
       {selectedLocation && !showRoute && (
         <View
           style={{
@@ -222,7 +311,6 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   searchInput: {
-    Bottom: 30,
     fontSize: 16,
   },
 });

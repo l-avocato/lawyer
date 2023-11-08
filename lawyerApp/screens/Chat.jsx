@@ -68,18 +68,7 @@ const Chat = () => {
   }, []);
 
 
-  // const renderInputToolbar =(props) => (
-  //   <View>
-  //     <GiftedChat {...props} />
-  //     <View onPress={handleCameraIconPress}>
-  //       <MaterialIcons name="photo-camera" size={24} color="black" style={styles.icon}/>
-  //     </View>
-  //     <View onPress={handleFileIconPress}>
-  //       <MaterialIcons name="attach-file" size={24} color="black" style={styles.icon} />
-  //     </View>
-  //   </View>
-  // )
-
+ 
 
   _pickDocument = async () => {
 
@@ -189,26 +178,7 @@ const styles = StyleSheet.create({
   },
 });
 
-// return (
-//   <GiftedChat
-//     messages={messages}
-//     showAvatarForEveryMessage={false}
-//     showUserAvatar={false}
-//     onSend={messages => onSend(messages)}
-//     messagesContainerStyle={{
-//       backgroundColor: '#fff'
-//     }}
-//     textInputStyle={{
-//       backgroundColor: '#fff',
-//       borderRadius: 20,
-//     }}
-//     user={{
-//       _id: FIREBASE_AUTH?.currentUser?.email,
-//       avatar: 'https://i.pravatar.cc/300'
-//     }}
-//   />
-// );
-      
+ 
 
 
 export default Chat;

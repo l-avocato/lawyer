@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -11,12 +11,15 @@ import {
 import { FontAwesome } from "react-native-vector-icons";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Slider from "@react-native-community/slider";
+import { FIREBASE_DB } from "../firebaseConfig"; // Adjust the path as needed
+
+import { QuerySnapshot, collection, getDocs} from "firebase/firestore";
 
 const ManageFilters = () => {
+
   const handleArrowIconClick = () => {
     // Handle arrow icon click here
   };
-
   const handleRefreshIconClick = () => {
     // Handle refresh icon click here
   };
@@ -37,13 +40,33 @@ const ManageFilters = () => {
   };
   const buttonLabels = ["Proprety", "Criminal", "Tax"];
   const [inputValue, setInputValue] = useState("");
-  const [priceRange, setPriceRange] = useState(20);
+  const [priceRange, setPriceRange] = useState(40);
   const [selectedRating, setSelectedRating] = useState(null);
   const ratings = [1, 2, 3, 4, 5];
+  const [lawyers, setLawyers]= useState([]);
+  // const lawyersCollectionRef = collection(FIREBASE_DB, "lawyers").where('Price','<',80)
+
+  // const getLawyers = async () => {try {
+  //   const collectionRef= await getDocs(lawyersCollectionRef)
+  //   const lawyer = collectionRef.docs.map((doc) => ({
+  //     ...doc.data(),
+  //   id: doc.id}))
+  //   setLawyers(lawyer)
+  // } catch (error) {
+  //   console.log(error);
+  // }
+  
+  // }
+  // };
+  // useEffect(()=>{
+  //   getLawyers()
+
+  // },[])
+  
+
 
   return (
     <View style={styles.container}>
-      {/* Header View */}
       <View style={styles.header}>
         <TouchableOpacity
           style={styles.headerIcon}
@@ -59,10 +82,7 @@ const ManageFilters = () => {
           <FontAwesome name="refresh" size={14} color="white" />
         </TouchableOpacity>
       </View>
-
-      {/* Body View (Scrollable) */}
-      <ScrollView style={styles.body}>
-        {/* View 1 */}
+      <ScrollView style={styles.bodyMN}>
         <View style={[styles.bodyView1, { backgroundColor: "white" }]}>
           <TouchableOpacity style={styles.button1} onPress={handleButtonPress}>
             <Text style={styles.button1Text}>See All</Text>
@@ -82,8 +102,6 @@ const ManageFilters = () => {
           </ScrollView>
           <Text style={styles.bodyView1Text}>Select Categories</Text>
         </View>
-
-        {/* View 2 */}
         <View style={[styles.bodyView2, { backgroundColor: "white" }]}>
           <Text style={styles.bodyView2Text}>Choose Location</Text>
           <View style={styles.inputContainer}>
@@ -101,8 +119,6 @@ const ManageFilters = () => {
             />
           </View>
         </View>
-
-        {/* View 3 */}
         <View style={[styles.bodyView3, { backgroundColor: "white" }]}>
           <Text style={styles.bodyView3Text}>Price Range</Text>
           <Slider
@@ -119,8 +135,6 @@ const ManageFilters = () => {
             <Text style={styles.buttonPRText}>$ 40-200 / h</Text>
           </TouchableOpacity>
         </View>
-
-        {/* View 4 */}
         <View style={[styles.bodyView4, { backgroundColor: "white" }]}>
           <TouchableOpacity style={styles.button1} onPress={handleButtonPress}>
             <Text style={styles.button1Text}>See All</Text>
@@ -140,14 +154,12 @@ const ManageFilters = () => {
                 ]}
                 onPress={() => handleRatingButtonPress(item)}>
                 {Array.from({ length: item }).map((_, index) => (
-                  <Icon key={index} name="star" size={20} color="#D5B278" />
+                  <Icon key={index} name="star" size={20} color="#D5B278"  />
                 ))}
               </TouchableOpacity>
             )}
           />
         </View>
-
-        {/* View 5 */}
         <View style={[styles.bodyView5, { backgroundColor: "white" }]}>
           <Text style={styles.bodyView5Text}>Customize with Details</Text>
           <View style={styles.inputContainer1}>
@@ -163,7 +175,9 @@ const ManageFilters = () => {
               value={inputValue}
               onChangeText={handleInputChange}
             />
-            <TouchableOpacity style={styles.button5} onPress={handleButtonPress}>
+            <TouchableOpacity
+              style={styles.button5}
+              onPress={handleButtonPress}>
               <Text style={styles.buttonText5}>Apply Filters!</Text>
             </TouchableOpacity>
           </View>
@@ -183,7 +197,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingBottom:10
+    paddingBottom: 10,
   },
   headerIcon: {
     padding: 10,
@@ -196,7 +210,7 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 18,
   },
-  body: {
+  bodyMN: {
     backgroundColor: "white",
     flex: 1,
     padding: 10,
@@ -280,6 +294,8 @@ const styles = StyleSheet.create({
   ratingButton: {
     padding: 10,
     borderRadius: 5,
+    transform: [{ rotate: "100deg" }],
+    marginRight: 20,
   },
   bodyView5: {
     padding: 40,
@@ -359,11 +375,11 @@ const styles = StyleSheet.create({
     width: "100%",
     marginTop: 20,
   },
-  
+
   buttonText5: {
     color: "#D5B278",
     fontSize: 16,
-  }
+  },
 });
 
 export default ManageFilters;

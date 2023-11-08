@@ -4,6 +4,7 @@ import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import NavbarDashboard from "../NavbarDashboard/NavbarDashboard";
 import { db } from "../../firebaseconfig";
 import { doc, updateDoc } from "firebase/firestore";
+import { green } from "@mui/material/colors";
 
 const SettingSecurity = () => {
   const [oldPasswordVisible, setOldPasswordVisible] = useState(false);
@@ -171,7 +172,7 @@ const SettingSecurity = () => {
 
           {/* Alert */}
           {alertMessage && (
-            <div className="alert alert-danger">{alertMessage}</div>
+            <div className="alert alert-danger" style={{backgroundColor:"#d1e7dd", borderColor:'#226656', color:"#226656"}}>{alertMessage}</div>
           )}
 
           <button
