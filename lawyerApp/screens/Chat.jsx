@@ -1,75 +1,214 @@
-import React,{useState,useEffect,useLayoutEffect,useCallback} from "react";
-import { GiftedChat } from "react-native-gifted-chat";
-import { TouchableOpacity , View,Button} from "react-native";
-import { collection,addDoc,orderBy,query,onSnapshot } from "firebase/firestore";
-import { FIREBASE_AUTH ,FIREBASE_DB  } from "../firebaseConfig";
-import { useNavigation } from "@react-navigation/native";
-// import VideoCall from "./VideoCall";
+import React, { useState, useEffect,useCallback } from 'react';
+import { GiftedChat,Send,Bubble } from 'react-native-gifted-chat';
+import { TouchableOpacity, View, StyleSheet, Alert } from 'react-native'; 
+import * as ImagePicker from 'expo-image-picker';
+import { MaterialIcons } from '@expo/vector-icons';
+import { collection, addDoc, orderBy, query, onSnapshot,serverTimestamp,Timestamp} from 'firebase/firestore';
+import { FIREBASE_DB , FIREBASE_AUTH } from '../firebaseConfig';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { Icon } from 'react-native-elements';
+import * as DocumentPicker from 'expo-document-picker';
 
-export default function Chat(){
+const Chat = () => {
+  
+  const [messages, setMessages] = useState([]);
+
+  
+  const handleCameraIconPress = async () => {
+    const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
+
+    if (permissionResult.granted === false) {
+      alert('Camera permission is required to take a photo.');
+      return;
+    }
+
+    const result = await ImagePicker.launchCameraAsync({ mediaTypes: ImagePicker.MediaTypeOptions.Images });
+
+    if (!result.canceled) {
+      const newMessage = {
+        text: '',
+        image: result.assets[0].uri,
+      };
+
+      onSend([newMessage]);
+    }
+  };
+
+  const handleFileIconPress = async () => {
+    // File upload logic
+    // ... (implementation for file upload)
+  };
+
+  const onSend = async (newMessages = []) => {
+    const formattedMessages = newMessages.map((message) => ({
+      ...message,
+      createdAt:  serverTimestamp(),
+      user: {
+        _id: FIREBASE_AUTH?.currentUser?.email,
+        avatar: 'https://i.pravatar.cc/300',
+      },
+    }));
+
+    await Promise.all(formattedMessages.map((message) => addDoc(collection(FIREBASE_DB , 'chats'), message)));
+  };
+
+  useEffect(() => {
+    const collectionRef = collection(FIREBASE_DB , 'chats');
+    const q = query(collectionRef, orderBy('createdAt', 'desc'));
+
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      const updatedMessages = querySnapshot.docs.map((doc) => ({
+        _id: doc.id,
+        ...doc.data(),
+      }));
+      setMessages(updatedMessages);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+
+  // const renderInputToolbar =(props) => (
+  //   <View>
+  //     <GiftedChat {...props} />
+  //     <View onPress={handleCameraIconPress}>
+  //       <MaterialIcons name="photo-camera" size={24} color="black" style={styles.icon}/>
+  //     </View>
+  //     <View onPress={handleFileIconPress}>
+  //       <MaterialIcons name="attach-file" size={24} color="black" style={styles.icon} />
+  //     </View>
+  //   </View>
+  // )
+
+
+  _pickDocument = async () => {
+
+    let result = await DocumentPicker.getDocumentAsync({});
     
-    const [messages, setMessages] = useState([]);
-    const navigation = useNavigation();
+    Alert.alert(result.assets[0].name);
+    
+    console.log(result);
+    if (!result.canceled) {
+      const newMessage = {
+        text: result.assets[0].name,
+        document: result.assets[0].uri,
+      };
 
-    const [showVideoCall, setShowVideoCall] = useState(false);
-
-    const startVideoCall = () => {
-        setShowVideoCall(true);
+      onSend([newMessage]);
     }
     
+    }
 
-    useLayoutEffect(() => {
 
-        const collectionRef = collection(FIREBASE_DB , 'chats');
-        const q = query(collectionRef, orderBy('createdAt', 'desc'));
-
-    const unsubscribe = onSnapshot(q, querySnapshot => {
-        console.log('querySnapshot unsusbscribe');
-          setMessages(
-            querySnapshot.docs.map(doc => ({
-              _id: doc.data()._id,
-              createdAt: doc.data().createdAt.toDate(),
-              text: doc.data().text,
-              user: doc.data().user
-            }))
-          );
-        });
-    return unsubscribe;
-      }, []);
-
-      const onSend = useCallback((messages = []) => {
-        setMessages(previousMessages =>
-          GiftedChat.append(previousMessages, messages)
-        );
-        // setMessages([...messages, ...messages]);
-        const { _id, createdAt, text, user } = messages[0];    
-        addDoc(collection(FIREBASE_DB , 'chats'), {
-          _id,
-          createdAt,
-          text,
-          user
-        });
-      }, []);
-
-    
-    return(
-        <GiftedChat
-          messages={messages}
-          showAvatarForEveryMessage={false}
-          showUserAvatar={false}
-          onSend={messages => onSend(messages)}
-          messagesContainerStyle={{
-            backgroundColor: '#fff'
-          }}
-          textInputStyle={{
-            backgroundColor: '#fff',
-            borderRadius: 20,
-          }}
-          user={{
-            _id: FIREBASE_AUTH?.currentUser?.email,
-            avatar: 'https://i.pravatar.cc/300'
-          }}
+  const renderSend = (props) => {
+    return (
+      <Send {...props}>
+      <View style={{flexDirection: 'row'}}>
+        <TouchableOpacity onPress={()=>_pickDocument()}>
+          <Icon
+            type="font-awesome"
+            name="paperclip"
+            style={styles.paperClip}
+            size={25}
+            color='black'
+          />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={()=>{handleCameraIconPress()}}>
+        <View >
+        <MaterialIcons name="photo-camera" size={24} color="black" style={styles.icon}/>
+      
+      </View>
+      </TouchableOpacity>
+      <Icon
+          type="font-awesome"
+          name="send"
+          // eslint-disable-next-line react-native/no-inline-styles
+          style={{marginBottom: 10, marginRight: 10}}
+          size={25}
+          color='black'
+          tvParallaxProperties={undefined}
         />
-    )
+      </View>
+      </Send>
+    );
+  };
+
+
+  const renderBubble = (props) => {
+    return (
+      <Bubble
+        {...props}
+        wrapperStyle={{
+          right: {
+            backgroundColor: '#2e64e5',
+          },
+        }}
+        textStyle={{
+          right: {
+            color: '#fff',
+          },
+        }}
+      />
+    );
+  };
+
+  const scrollToBottomComponent = () => {
+    return <FontAwesome name="angle-double-down" size={22} color="#333" />;
+  };
+
+  return (
     
-}
+    <GiftedChat
+      messages={messages}
+      onSend={onSend}
+      user={{
+        _id: FIREBASE_AUTH?.currentUser?.email,
+        avatar: 'https://i.pravatar.cc/300',
+      }}
+      renderBubble={renderBubble}
+      alwaysShowSend
+      scrollToBottom
+      renderSend={renderSend}
+      scrollToBottomComponent={scrollToBottomComponent}
+      // renderInputToolbar={renderInputToolbar}
+      />
+  );
+};
+
+const styles = StyleSheet.create({
+  inputToolbar: {
+    flexDirection: 'row',
+    // alignItems: 'center',
+    paddingHorizontal: 3,
+    paddingVertical:15 
+    
+  },
+  icon: {
+    marginHorizontal: 25, 
+    // marginTop:-190
+  },
+});
+
+// return (
+//   <GiftedChat
+//     messages={messages}
+//     showAvatarForEveryMessage={false}
+//     showUserAvatar={false}
+//     onSend={messages => onSend(messages)}
+//     messagesContainerStyle={{
+//       backgroundColor: '#fff'
+//     }}
+//     textInputStyle={{
+//       backgroundColor: '#fff',
+//       borderRadius: 20,
+//     }}
+//     user={{
+//       _id: FIREBASE_AUTH?.currentUser?.email,
+//       avatar: 'https://i.pravatar.cc/300'
+//     }}
+//   />
+// );
+      
+
+
+export default Chat;

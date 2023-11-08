@@ -5,6 +5,7 @@ import { StatusBar } from "expo-status-bar";
 import HomePage from "./screens/HomePage";
 import Onboarding2 from "./screens/Onboarding2";
 import ManageFilters from "./screens/ManageFilters";
+
 //screens
 import Login from "./screens/Login";
 import Signup from "./screens/SignUp";
@@ -24,13 +25,15 @@ import LawyerProfile from "./screens/LawyerProfile";
 import GoogleMapView from "./screens/GoogleMapView";
 import Chat from "./screens/Chat";
 import SearchListings from "./screens/SearchListings";
+
+
 export default function App() {
   const Stack = createNativeStackNavigator();
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="SearchListings"
-        component={SearchListings}
+        initialRouteName="Onboarding1"
+        component={Onboarding1}
         options={{ headerShown: false }}>
         <Stack.Screen
           name="NavTab"
@@ -46,6 +49,7 @@ export default function App() {
             headerShown: false,
           }}
         />
+        
 
         <Stack.Screen name="Map" component={GoogleMapView} />
         <Stack.Screen
