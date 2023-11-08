@@ -71,9 +71,9 @@ const initialNodes = [
 
 
 const initialEdges = [
-  // { id: "1-2", source: "1", target: "2", label: "to the", type: "step" },
-  // { id: "2-3", source: "2", target: "3", label: "what happend", type: "step" },
-  // { id: "3-4", source: "3", target: "4", label: "to the", type: "step" },
+  { id: "1-2", source: "1", target: "2", label: "to the", type: "step" },
+  { id: "2-3", source: "2", target: "3", label: "what happend", type: "step" },
+  { id: "3-4", source: "3", target: "4", label: "to the", type: "step" },
 
 ];
 
@@ -81,6 +81,13 @@ function Flow() {
   const [nodes, setNodes] = useState(initialNodes);
   const [edges, setEdges] = useState(initialEdges);
 
+  const [selectedEdge, setSelectedEdge] = useState(null);
+const [showEdgeModal, setShowEdgeModal] = useState(false);
+
+ const [label, setLabel] = useState("")
+ const [ x, setX]=useState(0)
+ const [y, setY]=useState(0)
+const [color, setColor]= useState("")
   const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), []);
 
   const onNodesChange = useCallback(
@@ -91,6 +98,10 @@ function Flow() {
     (changes) => setEdges((eds) => applyEdgeChanges(changes, eds)),
     [setEdges]
   );
+
+  const AddEdge = () => {
+    
+  };
  
 
   return (
@@ -112,6 +123,11 @@ function Flow() {
         <ReactFlow
           nodes={nodes}
           onNodesChange={onNodesChange}
+          onNodeClick={(event, edge)=>{
+            setSelectedEdge(edge);
+            setShowEdgeModal(true);
+          }}
+          // onNodeMouseEnter={()=>}
           edges={edges}
           onEdgesChange={onEdgesChange}
           onConnect={onConnect}
@@ -122,6 +138,44 @@ function Flow() {
 
         >
           <Background />
+
+          {showEdgeModal && (
+  <div className="modal fade show" style={{ display: "block" , height:"18rem" }}>
+    <div className="modal-dialog">
+      <div className="modal-content">
+        <div className="modal-header">
+          <h5 className="modal-title">Edge Details</h5>
+          <button
+            type="button"
+            className="btn-close"
+            onClick={() => setShowEdgeModal(false)}
+          ></button>
+        </div>
+        <div className="modal-body">
+          <h6>Edge ID: {selectedEdge.id}</h6>
+          <h6>Edge Label: {selectedEdge.label}</h6>
+          {/* Add other edge details as needed */}
+        </div>
+        <div className="modal-footer">
+          <button
+            type="button"
+            className="btn btn-secondary"
+            onClick={() => setShowEdgeModal(false)}
+          >
+            Close
+          </button>
+          <button
+            type="button"
+            className="btn btn-secondary"
+
+          >
+           See All details
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
           <MiniMap
             nodeStrokeColor={(n) => {
               if (n.style?.background) return n.style.background;
@@ -155,7 +209,7 @@ function Flow() {
 
 
 
-        {/* <button data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+        <button data-bs-toggle="modal" data-bs-target="#staticBackdrop" >
           Create Step{" "}
         </button>
 
@@ -202,6 +256,7 @@ function Flow() {
                     }}
                     type="string"
                     placeholder="name step"
+                           onChange={(e)=>{setLabel(e.target.value)}}
                   />
                   <label for="name">Enter position x:</label>
 
@@ -214,6 +269,7 @@ function Flow() {
                     }}
                     type="number"
                     placeholder="Position x"
+                    onChange={(e)=>{setX(e.target.value)}}
                   />
                   <label for="name">Enter position y </label>
 
@@ -226,6 +282,20 @@ function Flow() {
                     }}
                     type="number"
                     placeholder="Position y"
+                    onChange={(e)=>{setY(e.target.value)}}
+                  />
+                  <label for="name">Enter position background</label>
+
+                  <input
+                    style={{
+                      display: "flex",
+                      width: "35rem",
+                      borderRadius: "0.5rem",
+                      height: "2.5rem",
+                    }}
+                    type="color"
+                    placeholder="BackgroundColor"
+                    onChange={(e)=>{setColor(e.target.value)} }
                   />
                 </div>
               </div>
@@ -236,8 +306,8 @@ function Flow() {
                   data-bs-dismiss="modal"
                 >
                   Close
-                </button>
-                <button type="button" class="btn btn-primary">
+                </button> 
+                <button type="button" class="btn btn-primary" onClick={AddEdge}>
                   Insert
                 </button>
               </div>
@@ -278,18 +348,7 @@ function Flow() {
                     gap: "1rem",
                   }}
                 >
-                  <label for="name">Enter Id:</label>
-
-                  <input
-                    style={{
-                      display: "flex",
-                      width: "35rem",
-                      borderRadius: "0.5rem",
-                      height: "2.5rem",
-                    }}
-                    type="number"
-                    placeholder="id"
-                  />
+                 
                   <label for="name">Source:</label>
 
                   <input
@@ -340,11 +399,11 @@ function Flow() {
                 </button>
                 <button type="button" class="btn btn-primary">
                   Insert
-                </button> */}
-              {/* </div> */}
-            {/* </div> */}
-          {/* </div> */}
-        {/* </div> */}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
