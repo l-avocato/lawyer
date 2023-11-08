@@ -20,7 +20,7 @@ import HelpCenter from "./screens/HelpCenter";
 import PrivacyPolicy from "./screens/PrivacyPolicy";
 import NavTab from "./screens/NavTab";
 import LawyerProfile from "./screens/LawyerProfile";
-import GoogleMapView from "./screens/GoogleMapView"
+import GoogleMapView from "./screens/GoogleMapView";
 
 import Chat from "./screens/Chat";
 
@@ -48,11 +48,15 @@ export default function App() {
           }}
         />
 
-         <Stack.Screen
-          name="Map"
-          component={GoogleMapView}
+        <Stack.Screen 
+        name="Map" 
+        component={GoogleMapView}
+        options={{
+          headerShown : false,
+        }}kj
+        />
 
-                <Stack.Screen
+        <Stack.Screen
           name="Chat"
           component={Chat}
           options={{
@@ -64,10 +68,9 @@ export default function App() {
           component={LawyerProfile}
           options={{
             headerShown: true,
-            
           }}
         />
-        
+
         <Stack.Screen
           name="Appintment"
           component={Appointment}
@@ -89,10 +92,9 @@ export default function App() {
           options={{
             headerShown: true,
           }}
+        />
 
-        /> 
-        
-         <Stack.Screen
+        <Stack.Screen
           name="HomePage"
           component={HomePage}
           options={{
