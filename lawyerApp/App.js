@@ -29,7 +29,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="SearchListings"
+        initialRouteName="SearchListings" 
         component={SearchListings}
         options={{ headerShown: false }}>
         <Stack.Screen
