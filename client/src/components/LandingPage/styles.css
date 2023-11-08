@@ -2,7 +2,7 @@
   top: -9rem;
   width: 90rem;
   height: 40rem;
-  background-color: gold;
+  background-color: rgb(212,175,55)!important;
   background-size: cover;
   background-position: top;
   border: 1px solid #b06e6e;
@@ -78,13 +78,23 @@
 }
 
 .btn1 {
-  margin-top: -10%;
-  width: 50%;
-  margin-left: 25%;
+  margin-top: -85%;
+  width: 90%;
+  margin-left: 10%;
   transition: all 0.4s ease;
-  color: white;
-  border: none;
   cursor: pointer;
+  font-size:2rem;
+  font-weight: bolder;
+}
+.button1 {
+  width: 90%;
+  padding: 10px;
+  background-color: black;
+  color: rgb(255, 255, 255);
+  border: none;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: 8px;
 }
 
 .btn2 {
@@ -98,6 +108,24 @@
 }
 .btn1:hover {
   transform: scale(1.1);
+  width: "92%";
+}
+button:hover {
+  transform: scale(1.1);
+  background-color: black;
+  color: rgb(255, 255, 255);
+  width: "90%";
+}
+.button4{
+  /* width: 90%; */
+  padding: 10px;
+  margin-left: -5%;
+  background-color: black;
+  color: rgb(255, 255, 255);
+  border: none;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: 8px;
 }
 .law-icon1 {
   width: 10rem;
@@ -159,6 +187,7 @@
 .services {
   margin-left: 44%;
   font-size: 30rem;
+  margin-bottom: 3rem;
 }
 .team-name {
   margin-left: 43%;
@@ -190,6 +219,79 @@
   margin-left: 4%;
   margin-top: 3%;
 }
+.services-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.service-section {
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+  transition: all 0.5s ease;
+}
+
+.service-section.reverse {
+  flex-direction: row-reverse;
+}
+
+.service-image {
+  width: 20%;
+  background-size: cover;
+  border-radius: 25rem;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: all 0.5s ease;
+  margin-left: 250px;
+  margin-right: 250px; 
+}
+
+.service-text {
+  transition: all 0.5s ease;
+  margin-left: 90px; 
+  margin-top: -14rem;
+  font-size: 2.5rem;
+  font-weight: 700;
+  white-space: nowrap; 
+}
+
+.service-paragraph1 {
+  width: 40%;
+  text-align: center;
+  transition: all 0.5s ease;
+  /* margin-right: -420px; */
+  margin-left: 800px;
+  margin-bottom: 12rem;
+  margin-top: -17rem;
+  font-size: 1rem;
+  font-weight: 700;
+}
+.service-paragraph2 {
+  width: 40%;
+  text-align: center;
+  transition: all 0.5s ease;
+  margin-right: -720px;
+  margin-bottom: 10rem;
+  margin-top: 6.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+}
+.service-paragraph3 {
+  width: 40%;
+  text-align: center;
+  transition: all 0.5s ease;
+  margin-left: 860px;
+  margin-bottom: 12rem;
+  margin-top: -17rem;
+  font-size: 1rem;
+  font-weight: 700;
+}
+.service-section:hover .service-text {
+  transform: scale(1.1);
+}
+
 
 
 

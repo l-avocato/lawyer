@@ -4,17 +4,87 @@ import { ListItem } from 'react-native-elements';
 import Modal from 'react-native-modal';
 import { Line } from '../components/styles';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import ImagePicker from 'react-native-image-picker';
+import * as ImagePicker from 'expo-image-picker';
 import { launchImageLibrary } from 'react-native-image-picker';
 import NavTab from './NavTab';
 import { collection, getDocs } from "firebase/firestore";
 import {FIREBASE_AUTH,FIREBASE_DB } from '../firebaseConfig'
-
+import firebase from 'firebase/app';
+import { FIREBASE_STORAGE } from "../firebaseConfig"
+import 'firebase/firestore';
+import {update, updateDoc, doc ,setDoc} from "firebase/firestore";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 
 const Settings = ({ navigation }) => {
   const [user, setUser] = useState([]);
   const [profilePic, setProfilePic] = useState("../assets/ahmed.png");
+  const [image, setImage] = useState(null);
+
+  const db = FIREBASE_DB;
+  // const updateUserImage = async () => {
+  //   try {
+  //     await updateDoc(userCollectionRef, {
+  //       imageUrl: imageUrl,
+  //     });
+  //   } catch (error) {
+  //     console.log("Error updating user image", error);
+  //   }
+  // };
+
+  // const uploadImage = async () => {
+  // code to upload image
+  // let's say imageUrl is the URL of the uploaded image
+  //   imageUrl = imageUrl;
+  //   await updateUserImage();
+  // };
+ 
+
+  const updateUserImage = async (imageUrl) => {
+    const userDocRef = doc(db, 'user', user.id);
+    await setDoc(userDocRef, { imageUrl: imageUrl }, { merge: true });
+  };
+  const handleImageUpload = async (image) => {
+    // Create a reference to the location you want to upload to in Firebase
+      const storageRef =ref(FIREBASE_STORAGE,`images/${image.uri.split('/').pop()}`);
+      const uploadTask = uploadBytesResumable(storageRef, blob);
+    // Upload the file to Firebase Storage
+    const response = await fetch(image.uri);
+    const blob = await response.blob();
+  
+    uploadTask.on('state_changed', 
+    (snapshot) => {
+      console.log('Bytes transferred:', snapshot.bytesTransferred);
+      console.log('Total bytes:', snapshot.totalBytes);
+  
+      if (snapshot.totalBytes > 0) {
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log('Upload is ' + progress + '% done');
+      } else {
+        console.log('Upload is 0% done');
+      }
+    },
+    async () => {
+      // Handle successful uploads on complete
+      const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+      await updateUserImage(downloadURL);
+    }
+  );
+  };
+  
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+  
+    if (!result.canceled) {
+      handleImageUpload(result);
+    }
+  };
 
   const list = [
     { title: 'Edit Profile', page: 'editProfile' },
@@ -68,12 +138,12 @@ const Settings = ({ navigation }) => {
         <Text style={{ fontSize: 27,color:"gray", fontWeight: '700', marginLeft: 1,marginTop:90 }}>Profile</Text>
       </View>
       <View style={{ borderRadius: 200, overflow: 'hidden', alignSelf:'center' }}>
-        <ImageBackground source={{uri:user.imageUrl}} style={{ width: 200, height: 200 }}>
+        <ImageBackground source={{uri:image}} style={{ width: 200, height: 200 }}>
          
       </ImageBackground>
     </View>
        <View>
-       <TouchableOpacity onPress={handleChoosePhoto}>
+       <TouchableOpacity onPress={pickImage}>
   <FontAwesome5 name="pen-square" size={32} color="#C28C08" style={{marginLeft:258,marginTop:-30}} />
 </TouchableOpacity>
           <Text style={{alignSelf:'center',fontSize:26,fontWeight:"500"}}>{user.fullName}</Text>

@@ -17,11 +17,12 @@ import { Link } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
 import { useNavigate } from "react-router-dom";
 
-
 const SidebarDash = () => {
   const navigate = useNavigate();
 
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isHoveredProfile, setIsHoveredProfile] = useState(false);
+  const [isHoveredSecurity, setIsHoveredSecurity] = useState(false);
 
   const toggleSettings = () => {
     setIsSettingsOpen(!isSettingsOpen);
@@ -38,10 +39,9 @@ const SidebarDash = () => {
           <li>
             <PersonOutlineIcon className="new-icon" />
 
-            <span className="side-title"
-            onClick={()=>navigate("/allClient")}
-             
-            >My Clients</span>
+            <span className="side-title" onClick={() => navigate("/allClient")}>
+              My Clients
+            </span>
           </li>
           <li>
             <InsertChartIcon className="new-icon" />
@@ -62,7 +62,12 @@ const SidebarDash = () => {
 
                 <Link
                   to="../SettingProfil"
-                  style={{ textDecoration: "none", color: "white" }}
+                  style={{
+                    textDecoration: "none",
+                    color: isHoveredProfile ? "black" : "white",
+                  }}
+                  onMouseEnter={() => setIsHoveredProfile(true)}
+                  onMouseLeave={() => setIsHoveredProfile(false)}
                 >
                   Edit Profile
                 </Link>
@@ -72,7 +77,12 @@ const SidebarDash = () => {
 
                 <Link
                   to="../SettingSecurity"
-                  style={{ textDecoration: "none", color: "white" }}
+                  style={{
+                    textDecoration: "none",
+                    color: isHoveredSecurity ? "black" : "white",
+                  }}
+                  onMouseEnter={() => setIsHoveredSecurity(true)}
+                  onMouseLeave={() => setIsHoveredSecurity(false)}
                 >
                   Edit Security
                 </Link>
@@ -85,9 +95,9 @@ const SidebarDash = () => {
           </li>
           <li>
             <PowerSettingsNewIcon className="new-icon" />
-            <span className="side-title" 
-            onClick={()=>navigate('/Signin')}
-            >Logout</span>
+            <span className="side-title" onClick={() => navigate("/")}>
+              Logout
+            </span>
           </li>
         </ul>
       </div>

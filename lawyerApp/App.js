@@ -29,8 +29,8 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="SearchListings" 
-        component={SearchListings}
+        initialRouteName="Onboarding1"
+        component={Onboarding1}
         options={{ headerShown: false }}>
         <Stack.Screen
           name="NavTab"
@@ -46,9 +46,14 @@ export default function App() {
             headerShown: false,
           }}
         />
-
-        <Stack.Screen name="Map" component={GoogleMapView} />
-        <Stack.Screen
+         <Stack.Screen
+          name="Map"
+          component={GoogleMapView}
+          options={{
+            headerShown: false,
+          }}
+        />
+          <Stack.Screen
           name="Chat"
           component={Chat}
           options={{
