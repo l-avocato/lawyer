@@ -20,7 +20,7 @@ const Diagramme = () => {
   }, []);
 
   return (
-    <div className="container">
+    <div className="container1">
 
         <div className='tableau1 '></div>
         <div className='tableau2 '></div>
