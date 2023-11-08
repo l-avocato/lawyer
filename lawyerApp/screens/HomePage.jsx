@@ -29,7 +29,7 @@ const HomePage = ({ navigation }) => {
     // console.log("Photo clicked:", item.id);
   };
   const handleFilterClick = (item) => {
-    navigation.navigate("ManageFilters");
+    navigation.navigate("ManageFilters" );
     // console.log("Photo clicked:", item.id);
   };
   
