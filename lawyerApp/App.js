@@ -29,8 +29,8 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="SearchListings"
-        component={SearchListings}
+        initialRouteName="Onboarding1"
+        component={Onboarding1}
         options={{ headerShown: false }}>
         <Stack.Screen
           name="NavTab"
