@@ -37,11 +37,96 @@ const Settings = () => {
     }
   };
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  rfdf
   return (
     <div>
       <NavbarDashboard />
-  
-      
 
       <div style={{ flex: 1 }}>
         <form
@@ -98,7 +183,7 @@ const Settings = () => {
               }}
             />
             <label className="form-label" htmlFor="form6Example3">
-              Full Name
+          
             </label>
           </div>
           <div className="form-outline mb-2">
@@ -113,7 +198,7 @@ const Settings = () => {
               }}
             />
             <label className="form-label" htmlFor="form6Example3">
-              Address
+
             </label>
           </div>
 
@@ -132,7 +217,6 @@ const Settings = () => {
             Update
           </button>
         </form>
-       
       </div>
     </div>
   );
