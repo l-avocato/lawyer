@@ -15,7 +15,7 @@ import {
 import { Ionicons, MaterialIcons, FontAwesome } from "@expo/vector-icons";
 import yourBackgroundImage from "../Photos/avocat6.jpeg";
 import {FIREBASE_AUTH,FIREBASE_DB } from '../firebaseConfig'
-import { collection, doc, getDocs, deleteDoc ,query, where } from "firebase/firestore";
+import { collection, getDocs} from "firebase/firestore";
 
 const { width, height } = Dimensions.get("window");
 
