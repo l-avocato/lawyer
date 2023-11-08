@@ -47,12 +47,14 @@ export default function App() {
             headerShown: false,
           }}
         />
-
          <Stack.Screen
           name="Map"
           component={GoogleMapView}
-
-                <Stack.Screen
+          options={{
+            headerShown: false,
+          }}
+        />
+          <Stack.Screen
           name="Chat"
           component={Chat}
           options={{
