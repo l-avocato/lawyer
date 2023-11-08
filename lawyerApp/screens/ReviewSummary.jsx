@@ -19,10 +19,10 @@ const ReviewSummary = ({route}) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [message, setMessage] = useState("Can we schedule a consultation to discuss the details further?");
   const {item}=route.params;
-  const {selectedDate}=route.params;
+  const {selected}=route.params;
   const {selectedTime}=route.params;
   
-  console.log("this is law",selectedDate);
+  console.log("this is law",selected);
   const handleConfirmPayment = () => {
     setIsConfirmed(false);
     setIsModalVisible(true);
@@ -75,7 +75,7 @@ const ReviewSummary = ({route}) => {
         </View>
         <View style={styles.infoContainer}>
           <Text style={styles.label}>Date :</Text>
-          <Text style={styles.info}>{selectedDate.dateString}</Text>
+          <Text style={styles.info}>{selected}</Text>
         </View>
         <View style={styles.infoContainer}>
           <Text style={styles.label}>Time :</Text>
