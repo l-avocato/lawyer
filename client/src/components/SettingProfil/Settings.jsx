@@ -36,94 +36,6 @@ const Settings = () => {
       console.log("Error updating lawyer", error);
     }
   };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  rfdf
   return (
     <div>
       <NavbarDashboard />
@@ -145,11 +57,12 @@ const Settings = () => {
           <p
             style={{
               fontSize: "2.5rem",
-              fontFamily: "-moz-initial",
+              fontFamily: "",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               gap: "1rem",
+              marginLeft :"-60rem"
             }}
           >
             Edit Profile
