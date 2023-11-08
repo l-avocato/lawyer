@@ -41,7 +41,10 @@
     background-color: #ffffff;
     color: #000000;
   }
-
+ 
+  .link:hover {
+    color: black;
+  }
     .new-separator {
       height: 0;
       border: 0.03125rem solid rgb(230, 227, 227);
