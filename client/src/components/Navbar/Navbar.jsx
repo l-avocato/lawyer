@@ -94,7 +94,7 @@ function Navbar() {
       <div className="topSection">
         <div className="rightSection">
           <div className="navBarLinks">
-            <ul>
+            <ul className="ul">
               <li>Home</li>
               <li>About us</li>
               <li>
