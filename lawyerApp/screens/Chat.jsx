@@ -13,7 +13,7 @@ const Chat = () => {
   
   const [messages, setMessages] = useState([]);
 
-  
+  console.log("this is the logged user",FIREBASE_AUTH?.currentUser.uid);
   const handleCameraIconPress = async () => {
     const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
 

@@ -3,12 +3,12 @@ import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { collection, addDoc, getDocs, query, doc, orderBy ,where,limit,onSnapshot} from 'firebase/firestore';
 import { FIREBASE_DB } from '../firebaseConfig';
 import { ScrollView, TextInput } from 'react-native';
-import { Button } from 'react-native-elements';
+import { Button ,Icon} from 'react-native-elements';
 
 const ChatRooms = ({ navigation }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [conversations, setConversations] = useState([]);
-  const [messages, setMessages] = useState({}); // Store messages for each conversation
+  const [messages, setMessages] = useState({}); 
 
   const handleConversationPress = (conversationId) => {
     navigation.navigate('Chat', { conversationId });
@@ -27,26 +27,7 @@ const ChatRooms = ({ navigation }) => {
       setConversations(convers);
 
       
-    //   for (const conversation of convers) {
-    //     const conversationMessages = [];
-
-    //     const conversationMessagesQuery = query(
-    //       messagesRef,
-    //       where('conversationId', '==', conversation._id),
-    //       orderBy('createdAt', 'desc'),
-    //       limit(1)
-    //     );
-
-    //     const conversationMessagesSnapshot = await getDocs(conversationMessagesQuery);
-    //     conversationMessagesSnapshot.docs.forEach((doc) => {
-    //       conversationMessages.push(doc.data());
-    //     });
-
-    //     setMessages((prevMessages) => ({
-    //       ...prevMessages,
-    //       [conversation.id]: conversationMessages,
-    //     }));
-    //   }
+  
 
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -69,48 +50,74 @@ const ChatRooms = ({ navigation }) => {
       return () => unsubscribe();
   }, []);
 
-console.log(messages[0].text,"say hello");
-  const createConversationsCollection = async () => {
-    try {
-      const conversationsRef = collection(FIREBASE_DB, 'conversations');
+console.log(messages[0]?.text,"say hello");
+  // const createConversationsCollection = async () => {
+  //   try {
+  //     const conversationsRef = collection(FIREBASE_DB, 'conversations');
 
-      const sampleConversations = [
-        { username: 'User A', otherDetails: 'Details for User A conversation' },
-        { username: 'User B', otherDetails: 'Details for User B conversation' },
-      ];
+  //     const sampleConversations = [
+  //       { username: 'User A', otherDetails: 'Details for User A conversation' },
+  //       { username: 'User B', otherDetails: 'Details for User B conversation' },
+  //     ];
 
-      for (const conversation of sampleConversations) {
-        await addDoc(conversationsRef, conversation);
-      }
+  //     for (const conversation of sampleConversations) {
+  //       await addDoc(conversationsRef, conversation);
+  //     }
 
-      console.log('Sample conversations added to Firestore.');
-    } catch (error) {
-      console.error('Error adding sample conversations: ', error);
-    }
-  };
+  //     console.log('Sample conversations added to Firestore.');
+  //   } catch (error) {
+  //     console.error('Error adding sample conversations: ', error);
+  //   }
+  // };
 
-  useEffect(() => {
-    createConversationsCollection();
-  }, []);
+  // useEffect(() => {
+  //   createConversationsCollection();
+  // }, []);
 
   return (
-    <View style={styles.container}>
-      <TextInput
-        style={styles.searchInput}
-        placeholder="Search Conversations"
-        value={searchTerm}
-        onChangeText={(text) => setSearchTerm(text)}
-      />
+    // <View style={styles.container}>
+    //   <TextInput
+    //     style={styles.searchInput}
+    //     placeholder="Search Conversations"
+    //     value={searchTerm}
+    //     onChangeText={(text) => setSearchTerm(text)}
+    //   />
 
-      <Button
-        title="Search"
-        onPress={() => {
-          const filteredConversations = conversations.filter((conversation) =>
-            conversation.username.toLowerCase().includes(searchTerm.toLowerCase())
-          );
-          console.log('filtered conversations', filteredConversations);
-        }}
-      />
+    //   <Button
+    //     title="Search"
+    //     onPress={() => {
+    //       const filteredConversations = conversations.filter((conversation) =>
+    //         conversation.username.toLowerCase().includes(searchTerm.toLowerCase())
+    //       );
+    //       console.log('filtered conversations', filteredConversations);
+    //     }}
+    //   />
+    <View style={styles.container}>
+    <View style={styles.header}>
+      <Text style={styles.headerText}>Chats</Text>
+      <TouchableOpacity>
+        <Icon
+          name="search"
+          type="material"
+          color="white"
+          size={24}
+          onPress={() => {
+            
+            const filteredConversations = conversations.filter((conversation) =>
+              conversation.username.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+            console.log('filtered conversations', filteredConversations);
+          }}
+        />
+      </TouchableOpacity>
+    </View>
+
+    <TextInput
+      style={styles.searchInput}
+      placeholder="Search Conversations"
+      value={searchTerm}
+      onChangeText={(text) => setSearchTerm(text)}
+    />
 
       <ScrollView>
         {conversations.map((conversation) => {
@@ -129,11 +136,11 @@ console.log(messages[0].text,"say hello");
               <View style={{ flex: 1 }}>
                 <Text style={styles.username}>{conversation.username}</Text>
 
-                {lastMessage && (
+                {messages[0]?.text && (
                   <Text style={styles.lastMessage}>
-                    {lastMessage.length > 30
-                      ? `${lastMessage.substring(0, 30)}...`
-                      : lastMessage}
+                    {messages[0]?.text.length > 30
+                      ? `${messages[0]?.text.substring(0, 30)}...`
+                      : messages[0]?.text}
                   </Text>
                 )}
               </View>
@@ -152,14 +159,26 @@ const styles = StyleSheet.create({
         marginTop:50,
         backgroundColor:'black'
       },
+      header: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingHorizontal: 20,
+        marginTop: 10,
+      },
+      headerText: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        color: 'white',
+      },
       conversation: {
         flexDirection: 'row',
         padding: 10,
         backgroundColor: '#fff',
         borderBottomColor: '#ccc',
         borderBottomWidth: 1,
-        borderRadius:40,
-        marginTop:8,
+        // borderRadius:40,
+        marginTop:5,
         borderBottomRightRadius:7
       },
       userPicture: {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useMemo } from "react";
 import { Calendar } from "react-native-calendars";
 
 import { View, StyleSheet, Image, TouchableOpacity, ScrollView, Text, SafeAreaView, Button } from "react-native";
@@ -7,9 +7,12 @@ const Appointment = ({navigation ,route}) => {
   const minDate = "2023-01-01";
   const maxDate = "2024-12-31";
   const {item}=route.params;
-  const [selectedDate, setSelectedDate] = useState(null);
+  const initDate = '2023-11-08';
+  const [selected, setSelected] = useState(initDate);
   const [selectedTime, setSelectedTime] = useState(null);
-
+  const [selectedDate, setSelectedDate] = useState(null);
+  
+  
   const customStyles = {
     selected: {
       backgroundColor: '#D5B278',
@@ -22,8 +25,7 @@ const Appointment = ({navigation ,route}) => {
   };
 
   const dayPressHandler = date => {
-    setSelectedDate(date);
-
+    setSelected(date.dateString);
     console.log("Selected Date:", date);
   };
 
@@ -33,9 +35,18 @@ const Appointment = ({navigation ,route}) => {
     console.log("Selected Time:", time);
   };
 
-  const markedDates = {
-    [selectedDate]: { selected: true, selectedColor: customStyles.selected.backgroundColor },
-  };
+  // const markedDates = {
+  //   [selectedDate]: { selected: true, selectedColor: customStyles.selected.backgroundColor },
+  // };
+
+  const marked = useMemo(() => ({
+    [selected]: {
+      selected: true,
+      selectedColor: '#D5B278',
+      selectedTextColor: 'white',
+      backgroundColor: '#D5B278',
+    }
+  }), [selected]);
 
   const timeSlots = [
     "10:00 AM", "11:00 AM", "12:00 PM", "01:00 PM", "02:00 PM", "03:00 PM", "04:00 PM", "05:00 PM",
@@ -48,17 +59,19 @@ const Appointment = ({navigation ,route}) => {
       <View>
         <Calendar
           style={{ borderRadius: 10, margin: 30, marginTop: 60 }}
-          minDate={minDate}
-          maxDate={maxDate}
+          // minDate={minDate}
+          // maxDate={maxDate}
           theme={{
-            selectedDayBackgroundColor: customStyles.selected.backgroundColor,
-            selectedDayBorderRadius: customStyles.selected.borderRadius,
+            backgroundColor: '#ffffff',
+            calendarBackground: '#ffffff',
+            textSectionTitleColor: '#b6c1cd',
+            selectedDayBackgroundColor: '#00adf5',
+            selectedDayTextColor: '#ffffff',
+            todayTextColor: '#00adf5',
+            dayTextColor: '#2d4150',
           }}
           onDayPress={dayPressHandler}
-          markedDates={{
-            ...markedDates,
-            [selectedDate]: { selected: true, customStyles: customStyles.highlighted },
-          }}
+          markedDates={marked}
         />
       </View>
       <View style={styles.headerContainer}>
@@ -79,7 +92,9 @@ const Appointment = ({navigation ,route}) => {
         ))}
       </ScrollView>
       <TouchableOpacity style={styles.bookButton}
-      onPress={()=>{navigation.navigate("reviewSummary",{item,selectedDate,selectedTime})}}>
+      onPress={()=>{navigation.navigate("reviewSummary",{
+        item,
+        selected,selectedTime})}}>
         <Text style={styles.bookButtonText}>Set Appointment</Text>
       </TouchableOpacity>
     </View>
