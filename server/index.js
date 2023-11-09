@@ -1,4 +1,5 @@
 const express = require('express');
+const PhaseRoute = require("./routes/phases.route")
 
 require("./models/index")
 const routerPhase= require('./routes/phases.route')
@@ -11,6 +12,7 @@ app.use(express.json())
 
 
 app.use("/api/phase",routerPhase);
+
 
 
 let port = 1128;

@@ -26,7 +26,8 @@ const HomePage = ({ navigation }) => {
   // Function to handle photo click
   const handlePhotoClick = (item) => {
     navigation.navigate("Lawyer Details", { item });
-    // console.log("Photo clicked:", item.id);
+
+    console.log("Photo clicked:", item.id);
   };
   const handleFilterClick = (item) => {
     navigation.navigate("ManageFilters" );

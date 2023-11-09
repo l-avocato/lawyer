@@ -6,7 +6,7 @@ module.exports = {
 
     getAllPhases: async (req,res)=>{
         try {
-            const allPhases= await db.Phase.findAll()
+            const allPhases= await db.Phase.findAll({})
             res.status(200).send(allPhases)
         } catch (error) {
             throw error
