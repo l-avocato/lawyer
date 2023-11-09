@@ -15,7 +15,7 @@ const { primary, tertinary } = Colors;
 
 const ProfilDetails = ({ navigation , route}) => {
 const {item} = route.params;
-console.log(item);
+console.log("this is item ",item);
 
   const galleryImages = [
     require("../Photos/lawyer-or-judge-in-simple-flat-personal-profile-icon-or-symbol-people-concept-illustration-vector.jpg"),
@@ -53,10 +53,12 @@ console.log(item);
                 <Text style={styles.infoText}>${item.Price}/H</Text>
               </View>
             </View>
-            <View style={{ display: "flex", flexDirection: "row" }}>
+            <TouchableOpacity style={{ display: "flex", flexDirection: "row" }} onPress={()=>{
+              navigation.navigate("Chat", {item})
+            }}>
               <FontAwesome name="comment" style={{fontSize: 20, marginRight: 30,color: "black",marginLeft: 10}} />
               <Text style={styles.infoText}></Text>
-            </View>
+            </TouchableOpacity>
           </View>
         </View>
       </View>
