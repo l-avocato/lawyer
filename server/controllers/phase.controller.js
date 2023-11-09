@@ -1,12 +1,12 @@
 const sequalize =require('sequelize')
-const {db}= require('../models/index')
+const {Phase}= require('../models/index')
 
 
 module.exports = {
 
     getAllPhases: async (req,res)=>{
         try {
-            const allPhases= await db.Phase.findAll()
+            const allPhases= await Phase.findAll({})
             res.status(200).send(allPhases)
         } catch (error) {
             throw error
@@ -15,7 +15,7 @@ module.exports = {
     },
     getPhaseId: async (req,res)=>{
         try {
-            const onePhase= await db.Phase.findOne({
+            const onePhase= await Phase.findOne({
                where :{id: req.params.id }
             })
             res.status(200).send(onePhase)
@@ -26,7 +26,7 @@ module.exports = {
     
     add: async (req,res)=>{
         try {
-            const newPhase= await db.Phase.create(req.body)
+            const newPhase= await Phase.create(req.body)
             res.status(201).send(newPhase)
         } catch (error) {
             throw error
@@ -34,7 +34,7 @@ module.exports = {
     },
     remove: async (req,res)=>{
         try {
-            const phaseDeleted= await db.Phase.destroy({
+            const phaseDeleted= await Phase.destroy({
           where:{  id:req.params.id }
             })
             res.send(phaseDeleted)
@@ -44,11 +44,11 @@ module.exports = {
     }, 
     update: async function (req, res) {
         try {
-          await db.Phase.update(req.body, {
+          await Phase.update(req.body, {
             where: { id: req.params.id }
           });
       
-          const updatedPhase = await db.Phase.findByPk(req.params.id);
+          const updatedPhase = await Phase.findByPk(req.params.id);
       
           res.send(updatedPhase);
         } catch (error) {

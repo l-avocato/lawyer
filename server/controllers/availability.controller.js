@@ -1,12 +1,12 @@
 const sequalize =require('sequelize')
-const {db}= require('../models/index')
+const {Availability}= require('../models/index')
 
 
 
 module.exports = {
     getAllAvalabilities: async function (req, res) {
         try {
-            const availability = await db.Availability.findAll()
+            const availability = await Availability.findAll()
             res.status(200).send(availability)
         } catch (error) {
             res.status(500).send({
@@ -16,7 +16,7 @@ module.exports = {
     },
     getAvailabilityById: async function (req, res) {
         try {
-            const availability = await db.Availability.findAll({
+            const availability = await Availability.findAll({
                 where: {
                     id: req.params.id
                 }
@@ -30,7 +30,7 @@ module.exports = {
     },
     addAvailability: async function (req, res) {
         try {
-            const availability = await db.Availability.create(req.body)
+            const availability = await Availability.create(req.body)
             res.status(200).send(availability)
         } catch (error) {
             res.status(500).send({
@@ -40,7 +40,7 @@ module.exports = {
     },
     deleteAvailability: async function (req, res) {
         try {
-            const availability = await db.Availability.destroy({
+            const availability = await Availability.destroy({
                 where: {
                     id: req.params.id
                 }
@@ -54,7 +54,7 @@ module.exports = {
     },
     updateAvailability: async function (req, res) {
         try {
-            const availability = await db.Availability.update(req.body, {
+            const availability = await Availability.update(req.body, {
                 where: {
                     id: req.params.id
                 }
@@ -68,7 +68,7 @@ module.exports = {
     },
     getAvailabilityByLawyerId: async function (req, res) {
         try {
-            const availability = await db.Availability.findAll({
+            const availability = await Availability.findAll({
                 where: {
                     LawyerId: req.params.LawyerId
                 }
