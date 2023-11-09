@@ -1,9 +1,6 @@
 module.exports=(connection,DataTypes)=>{
     const phase= connection.define("phase",{
-        id: {
-            type: DataTypes.STRING,
-            primaryKey: true,
-          },
+      
           label: {
             type: DataTypes.STRING,
           },
