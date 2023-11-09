@@ -30,6 +30,8 @@ const connection = new Sequelize('lavocato', 'root', 'root', {
   const Receipt= require("./receipts.model")(connection,DataTypes)
   const TaskList = require("./tasklist.model")(connection,DataTypes)
   const User_Lawyer= require("./user_lawyer")(connection,DataTypes)
+
+  
     
   User.belongsToMany(Lawyer,{through:User_Lawyer})
   Lawyer.belongsToMany(User,{through:User_Lawyer})
@@ -102,15 +104,6 @@ const connection = new Sequelize('lavocato', 'root', 'root', {
   Phase.hasMany(Media)
   Media.belongsTo(Phase)
 
-
-
-
-
-
- 
-
-
-
   
 
 
@@ -120,7 +113,7 @@ const connection = new Sequelize('lavocato', 'root', 'root', {
   .catch((err) => console.log(err))
 
 
-  const db={}
+ 
  
 
-  module.exports=db
+  module.exports={User,Phase,Case}

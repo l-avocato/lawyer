@@ -1,9 +1,11 @@
 const express = require('express');
+const PhaseRoute = require("./routes/phases.route")
 
 require("./models/index")
 let app = express();
 
 app.use(express.json())
+
 
 
 
