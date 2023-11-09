@@ -1,6 +1,7 @@
 module.exports=(connection,DataTypes)=>{
     const phase= connection.define("phase",{
-      
+
+    
           label: {
             type: DataTypes.STRING,
           },

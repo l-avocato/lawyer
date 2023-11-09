@@ -10,17 +10,17 @@ import ReactFlow, {
 } from "reactflow";
 import "reactflow/dist/style.css";
 import NavbarDashboard from "../NavbarDashboard/NavbarDashboard.jsx";
+import { useEffect } from "react";
 
 const rfStyle = {
-  backgroundColor: '#B8CEFF',
+  backgroundColor: "#B8CEFF",
 };
 const initialNodes = [
   {
     id: "1",
     data: { label: "open case" },
-    text :" fkfkf",
     position: { x: 0, y: 0 },
-    
+
     style: {
       background: "gold",
       color: "#333",
@@ -31,7 +31,7 @@ const initialNodes = [
   },
   {
     id: "2",
-    type: 'textUpdater',
+    type: "textUpdater",
     data: { label: "first step" },
     position: { x: 100, y: 100 },
     style: {
@@ -64,31 +64,31 @@ const initialNodes = [
       width: 180,
       borderRadius: "100px",
     },
-    
   },
-
 ];
-
 
 const initialEdges = [
   { id: "1-2", source: "1", target: "2", label: "to the", type: "step" },
   { id: "2-3", source: "2", target: "3", label: "what happend", type: "step" },
   { id: "3-4", source: "3", target: "4", label: "to the", type: "step" },
-
 ];
 
 function Flow() {
-  const [nodes, setNodes] = useState(initialNodes);
+  const [nodes, setNodes] = useState([]);
   const [edges, setEdges] = useState(initialEdges);
 
   const [selectedEdge, setSelectedEdge] = useState(null);
-const [showEdgeModal, setShowEdgeModal] = useState(false);
+  const [showEdgeModal, setShowEdgeModal] = useState(false);
 
- const [label, setLabel] = useState("")
- const [ x, setX]=useState(0)
- const [y, setY]=useState(0)
-const [color, setColor]= useState("")
-  const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), []);
+  //  const [label, setLabel] = useState("")
+  //  const [ x, setX]=useState(0)
+  //  const [y, setY]=useState(0)
+  // const [color, setColor]= useState("")
+
+  const onConnect = useCallback(
+    (params) => setEdges((eds) => addEdge(params, eds)),
+    []
+  );
 
   const onNodesChange = useCallback(
     (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
@@ -99,14 +99,38 @@ const [color, setColor]= useState("")
     [setEdges]
   );
 
-  const AddEdge = () => {
-    
+  const addNode = () => {
+    const newNode = {
+      id: String(initialNodes.length + 1),
+      data: { label: "text" },
+      position: {
+        x: 300,
+        y: 0,
+      },
+      style: {
+        background: "gold",
+        color: "#333",
+        border: "1px solid #222138",
+        width: 180,
+        borderRadius: "100px",
+      },
+    };
+    initialEdges.push(newNode);
+    setNodes((node) => [...nodes, newNode]);
   };
- 
+
+  // const Edge = ()=>{
+
+  // }
+
+  useEffect(() => {
+    addNode();
+    setNodes(initialNodes);
+  }, [initialNodes.length]);
 
   return (
     <div>
-            <NavbarDashboard/>
+      <NavbarDashboard />
 
       <div
         style={{
@@ -114,16 +138,15 @@ const [color, setColor]= useState("")
           width: "60%",
           position: "absolute",
           top: "15%",
-          display: 'flex', 
-          marginLeft : "25rem",
-          backgroundColor :'black'
-
+          display: "flex",
+          marginLeft: "25rem",
+          backgroundColor: "black",
         }}
       >
         <ReactFlow
           nodes={nodes}
           onNodesChange={onNodesChange}
-          onNodeClick={(event, edge)=>{
+          onNodeClick={(event, edge) => {
             setSelectedEdge(edge);
             setShowEdgeModal(true);
           }}
@@ -133,49 +156,45 @@ const [color, setColor]= useState("")
           onConnect={onConnect}
           fitView
           style={rfStyle}
-
-
-
         >
           <Background />
 
           {showEdgeModal && (
-  <div className="modal fade show" style={{ display: "block" , height:"18rem" }}>
-    <div className="modal-dialog">
-      <div className="modal-content">
-        <div className="modal-header">
-          <h5 className="modal-title">Edge Details</h5>
-          <button
-            type="button"
-            className="btn-close"
-            onClick={() => setShowEdgeModal(false)}
-          ></button>
-        </div>
-        <div className="modal-body">
-          <h6>Edge ID: {selectedEdge.id}</h6>
-          <h6>Edge Label: {selectedEdge.label}</h6>
-          {/* Add other edge details as needed */}
-        </div>
-        <div className="modal-footer">
-          <button
-            type="button"
-            className="btn btn-secondary"
-            onClick={() => setShowEdgeModal(false)}
-          >
-            Close
-          </button>
-          <button
-            type="button"
-            className="btn btn-secondary"
-
-          >
-           See All details
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-)}
+            <div
+              className="modal fade show"
+              style={{ display: "block", height: "18rem" }}
+            >
+              <div className="modal-dialog">
+                <div className="modal-content">
+                  <div className="modal-header">
+                    <h5 className="modal-title">Edge Details</h5>
+                    <button
+                      type="button"
+                      className="btn-close"
+                      onClick={() => setShowEdgeModal(false)}
+                    ></button>
+                  </div>
+                  <div className="modal-body">
+                    <h6>Edge ID: {selectedEdge.id}</h6>
+                    <h6>Edge Label: {selectedEdge.label}</h6>
+                    {/* Add other edge details as needed */}
+                  </div>
+                  <div className="modal-footer">
+                    <button
+                      type="button"
+                      className="btn btn-secondary"
+                      onClick={() => setShowEdgeModal(false)}
+                    >
+                      Close
+                    </button>
+                    <button type="button" className="btn btn-secondary">
+                      See All details
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
           <MiniMap
             nodeStrokeColor={(n) => {
               if (n.style?.background) return n.style.background;
@@ -190,8 +209,7 @@ const [color, setColor]= useState("")
             }}
             nodeBorderRadius={2}
           />
-          
-          
+
           <Controls />
         </ReactFlow>
       </div>
@@ -206,116 +224,10 @@ const [color, setColor]= useState("")
           top: "20rem",
         }}
       >
+        <button onClick={addNode}>Create Step </button>
 
-
-
-        <button data-bs-toggle="modal" data-bs-target="#staticBackdrop" >
-          Create Step{" "}
-        </button>
-
-        <div
-          class="modal fade"
-          id="staticBackdrop"
-          data-bs-backdrop="static"
-          data-bs-keyboard="false"
-          tabindex="-1"
-          aria-labelledby="staticBackdropLabel"
-          aria-hidden="true"
-        >
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">
-                  {" "}
-                  Insert a cnew step{" "}
-                </h1>
-                <button
-                  type="button"
-                  class="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div class="modal-body">
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "1rem",
-                  }}
-                >
-                  
-                  <label for="name">Enter name step:</label>
-
-                  <input
-                    style={{
-                      display: "flex",
-                      width: "35rem",
-                      borderRadius: "0.5rem",
-                      height: "2.5rem",
-                    }}
-                    type="string"
-                    placeholder="name step"
-                           onChange={(e)=>{setLabel(e.target.value)}}
-                  />
-                  <label for="name">Enter position x:</label>
-
-                  <input
-                    style={{
-                      display: "flex",
-                      width: "35rem",
-                      borderRadius: "0.5rem",
-                      height: "2.5rem",
-                    }}
-                    type="number"
-                    placeholder="Position x"
-                    onChange={(e)=>{setX(e.target.value)}}
-                  />
-                  <label for="name">Enter position y </label>
-
-                  <input
-                    style={{
-                      display: "flex",
-                      width: "35rem",
-                      borderRadius: "0.5rem",
-                      height: "2.5rem",
-                    }}
-                    type="number"
-                    placeholder="Position y"
-                    onChange={(e)=>{setY(e.target.value)}}
-                  />
-                  <label for="name">Enter position background</label>
-
-                  <input
-                    style={{
-                      display: "flex",
-                      width: "35rem",
-                      borderRadius: "0.5rem",
-                      height: "2.5rem",
-                    }}
-                    type="color"
-                    placeholder="BackgroundColor"
-                    onChange={(e)=>{setColor(e.target.value)} }
-                  />
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button
-                  type="button"
-                  class="btn btn-secondary"
-                  data-bs-dismiss="modal"
-                >
-                  Close
-                </button> 
-                <button type="button" class="btn btn-primary" onClick={AddEdge}>
-                  Insert
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
         <button data-bs-toggle="modal" data-bs-target="#staticBackdrops">
-           Edge
+          Edge
         </button>
         <div
           class="modal fade"
@@ -348,7 +260,6 @@ const [color, setColor]= useState("")
                     gap: "1rem",
                   }}
                 >
-                 
                   <label for="name">Source:</label>
 
                   <input
@@ -385,8 +296,6 @@ const [color, setColor]= useState("")
                     type="number"
                     placeholder="Label"
                   />
-
-                
                 </div>
               </div>
               <div class="modal-footer">
