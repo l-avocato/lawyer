@@ -1,12 +1,12 @@
 const sequalize =require('sequelize')
-const {db}= require('../models/index')
+const {Receipt}= require('../models/index')
 
 
 module.exports = {
 
     getAllReceipts: async (req,res)=>{
         try {
-            const allReceipts= await db.Receipt.findAll()
+            const allReceipts= await Receipt.findAll()
             res.status(200).send(allReceipts)
         } catch (error) {
             throw error
@@ -15,7 +15,7 @@ module.exports = {
     },
     getReceiptId: async (req,res)=>{
         try {
-            const oneReceipt= await db.Receipt.findOne({
+            const oneReceipt= await Receipt.findOne({
                where :{id: req.params.id }
             })
             res.status(200).send(oneReceipt)
@@ -26,7 +26,7 @@ module.exports = {
     
     add: async (req,res)=>{
         try {
-            const newReceipt= await db.Receipt.create(req.body)
+            const newReceipt= await Receipt.create(req.body)
             res.status(201).send(newReceipt)
         } catch (error) {
             throw error
@@ -34,7 +34,7 @@ module.exports = {
     },
     delete: async (req,res)=>{
         try {
-            const receiptDeleted= await db.Receipt.destroy({
+            const receiptDeleted= await Receipt.destroy({
           where:{  id:req.params.id }
             })
             res.send(receiptDeleted)

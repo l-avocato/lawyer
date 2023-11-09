@@ -1,12 +1,12 @@
 const sequalize =require('sequelize')
-const {db}= require('../models/index')
+const {Media}= require('../models/index')
 
 
 module.exports = {
 
     getAllMedia: async function (req, res) {
         try {
-            const media = await db.Media.findAll()
+            const media = await Media.findAll()
             res.status(200).send(media)
         } catch (error) {
             res.status(500).send({
@@ -16,7 +16,7 @@ module.exports = {
     },
     getMediaById: async function (req, res) {
         try {
-            const media = await db.Media.findAll({
+            const media = await Media.findAll({
                 where: {
                     id: req.params.id
                 }
@@ -30,7 +30,7 @@ module.exports = {
     },
     addMedia: async function (req, res) {
         try {
-            const media = await db.Media.create(req.body)
+            const media = await Media.create(req.body)
             res.status(200).send(media)
         } catch (error) {
             res.status(500).send({
@@ -40,7 +40,7 @@ module.exports = {
     },
     deleteMedia: async function (req, res) {
         try {
-            const media = await db.Media.destroy({
+            const media = await Media.destroy({
                 where: {
                     id: req.params.id
                 }
@@ -54,7 +54,7 @@ module.exports = {
     },
     updateMedia: async function (req, res) {
         try {
-            const media = await db.Media.update(req.body, {
+            const media = await Media.update(req.body, {
                 where: {
                     id: req.params.id
                 }
@@ -68,7 +68,7 @@ module.exports = {
     },
     getMediaByCase: async function (req, res) {
         try {
-            const media = await db.Media.findAll({
+            const media = await Media.findAll({
                 where: {
                     caseId: req.params.id
                 }
@@ -82,7 +82,7 @@ module.exports = {
     },
     getMediaByLawyer: async function (req, res) {
         try {
-            const media = await db.Media.findAll({
+            const media = await Media.findAll({
                 where: {
                     lawyerId: req.params.id
                 }
@@ -96,7 +96,7 @@ module.exports = {
     },
     getMediaByUser: async function (req, res) {
         try {
-            const media = await db.Media.findAll({
+            const media = await Media.findAll({
                 where: {
                     userId: req.params.id
                 }
@@ -110,7 +110,7 @@ module.exports = {
     },
     getMediaByPhase: async function (req, res) {
         try {
-            const media = await db.Media.findAll({
+            const media = await Media.findAll({
                 where: {
                     phaseId: req.params.id
                 }
@@ -124,7 +124,7 @@ module.exports = {
     },
     getMediaByConversation: async function (req, res) {
         try {
-            const media = await db.Media.findAll({
+            const media = await Media.findAll({
                 where: {
                     conversationId: req.params.id
                 }

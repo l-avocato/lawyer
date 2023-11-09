@@ -1,12 +1,12 @@
 const sequalize =require('sequelize')
-const {db}= require('../models/index')
+const {TaskList}= require('../models/index')
 
 
 module.exports = {
     
     getAllTasks : async () => {
         try {
-            const allTasks= await db.TaskList.findAll()
+            const allTasks= await TaskList.findAll()
             res.status(200).send(allTasks)
         } catch (error) {
             throw error
@@ -15,7 +15,7 @@ module.exports = {
     },
     getTaskId: async (req,res)=>{
         try {
-            const oneTask= await db.TaskList.findOne({
+            const oneTask= await TaskList.findOne({
                where :{id: req.params.id }
             })
             res.status(200).send(oneTask)
@@ -26,7 +26,7 @@ module.exports = {
     
     add: async (req,res)=>{
         try {
-            const newTask= await db.TaskList.create(req.body)
+            const newTask= await TaskList.create(req.body)
             res.status(201).send(newTask)
         } catch (error) {
             throw error
@@ -34,7 +34,7 @@ module.exports = {
     },
     delete: async (req,res)=>{
         try {
-            const taskDeleted= await db.TaskList.destroy({
+            const taskDeleted= await TaskList.destroy({
           where:{  id:req.params.id }
             })
             res.send(taskDeleted)
@@ -44,11 +44,11 @@ module.exports = {
     },
     update: async function (req, res) {
         try {
-          await db.TaskList.update(req.body, {
+          await TaskList.update(req.body, {
             where: { id: req.params.id }
           });
       
-          const updatedTask = await db.TaskList.findByPk(req.params.id);
+          const updatedTask = await TaskList.findByPk(req.params.id);
       
           res.send(updatedTask);
         } catch (error) {
@@ -57,7 +57,7 @@ module.exports = {
       },
       searchTask: async (req,res)=>{
         try {
-            const searchTask= await db.TaskList.findAll({
+            const searchTask= await TaskList.findAll({
                 where: {name: req.params.name}
             })
             res.status(200).send(searchTask)
@@ -68,7 +68,7 @@ module.exports = {
 
     searchTaskByClient: async (req,res)=>{
         try {
-            const searchTask= await db.TaskList.findAll({
+            const searchTask= await TaskList.findAll({
                 where: {userId: req.params.userId}
             })
             res.status(200).send(searchTask)
@@ -78,7 +78,7 @@ module.exports = {
     },
     searchTaskByUser: async (req,res)=>{
         try {
-            const searchTask= await db.TaskList.findAll({
+            const searchTask= await TaskList.findAll({
                 where: {userId: req.params.userId}
             })
             res.status(200).send(searchTask)
@@ -88,7 +88,7 @@ module.exports = {
     },
     searchTaskByPhase: async (req,res)=>{
         try {
-            const searchTask= await db.TaskList.findAll({
+            const searchTask= await TaskList.findAll({
                 where: {phaseId: req.params.phaseId}
             })
             res.status(200).send(searchTask)
@@ -98,7 +98,7 @@ module.exports = {
     },
     searchTaskByCase: async (req,res)=>{
         try {
-            const searchTask= await db.TaskList.findAll({
+            const searchTask= await TaskList.findAll({
                 where: {caseId: req.params.caseId}
             })
             res.status(200).send(searchTask)
@@ -108,7 +108,7 @@ module.exports = {
     },
     completeTask: async (req,res)=>{
         try {
-            const taskCompleted= await db.TaskList.update({
+            const taskCompleted= await TaskList.update({
                 isCompleted: true
             },{
                 where: {id: req.params.id}
@@ -120,7 +120,7 @@ module.exports = {
     },
     updateTaskDeadline: async (req,res)=>{
         try {
-            const taskDeadlineUpdated= await db.TaskList.update({
+            const taskDeadlineUpdated= await TaskList.update({
                 deadline: req.body.deadline
             },{
                 where: {id: req.params.id}

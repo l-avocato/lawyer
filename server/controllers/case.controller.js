@@ -1,11 +1,11 @@
 const sequalize =require('sequelize')
-const {db}= require('../models/index')
+const {Case}= require('../models/index')
 
 
 module.exports = {
     getAllCases: async function (req, res) {
         try {
-            const cases = await db.Case.findAll()
+            const cases = await Case.findAll()
             res.status(200).send(cases)
         } catch (error) {
             res.status(500).send({
@@ -15,7 +15,7 @@ module.exports = {
     },
     getCaseById: async function (req, res) {
         try {
-            const cases = await db.Case.findAll({
+            const cases = await Case.findAll({
                 where: {
                     id: req.params.id
                 }

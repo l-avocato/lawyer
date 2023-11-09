@@ -1,12 +1,12 @@
 const sequalize =require('sequelize')
-const {db}= require('../models/index')
+const {Category}= require('../models/index')
 
 
 module.exports = {
 
     getAllCategories: async function (req, res) {
         try {
-            const category = await db.Category.findAll()
+            const category = await Category.findAll()
             res.status(200).send(category)
         } catch (error) {
             res.status(500).send({
@@ -16,7 +16,7 @@ module.exports = {
     },
     getCategoryById: async function (req, res) {
         try {
-            const category = await db.Category.findAll({
+            const category = await Category.findAll({
                 where: {
                     id: req.params.id
                 }
@@ -30,7 +30,7 @@ module.exports = {
     },
     addCategory: async function (req, res) {
         try {
-            const category = await db.Category.create(req.body)
+            const category = await Category.create(req.body)
             res.status(200).send(category)
         } catch (error) {
             res.status(500).send({
@@ -40,7 +40,7 @@ module.exports = {
     },
     deleteCategory: async function (req, res) {
         try {
-            const category = await db.Category.destroy({
+            const category = await Category.destroy({
                 where: {
                     id: req.params.id
                 }
@@ -54,7 +54,7 @@ module.exports = {
     },
     updateCategory: async function (req, res) {
         try {
-            const category = await db.Category.update(req.body, {
+            const category = await Category.update(req.body, {
                 where: {
                     id: req.params.id
                 }

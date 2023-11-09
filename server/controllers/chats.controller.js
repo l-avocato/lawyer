@@ -1,12 +1,12 @@
 const sequalize =require('sequelize')
-const {db}= require('../models/index')
+const {Chat}= require('../models/index')
 
 
 module.exports = {
 
     getAllChats: async function (req, res) {
         try {
-            const chat = await db.Chat.findAll()
+            const chat = await Chat.findAll()
             res.status(200).send(chat)
         } catch (error) {
             res.status(500).send({
@@ -16,7 +16,7 @@ module.exports = {
     },
     getChatById: async function (req, res) {
         try {
-            const chat = await db.Chat.findAll({
+            const chat = await Chat.findAll({
                 where: {
                     id: req.params.id
                 }
@@ -30,7 +30,7 @@ module.exports = {
     },
     addChat: async function (req, res) {
         try {
-            const chat = await db.Chat.create(req.body)
+            const chat = await Chat.create(req.body)
             res.status(200).send(chat)
         } catch (error) {
             res.status(500).send({
@@ -40,7 +40,7 @@ module.exports = {
     },
     deleteChat: async function (req, res) {
         try {
-            const chat = await db.Chat.destroy({
+            const chat = await Chat.destroy({
                 where: {
                     id: req.params.id
                 }
@@ -54,7 +54,7 @@ module.exports = {
     },
     updateChat: async function (req, res) {
         try {
-            const chat = await db.Chat.update(req.body, {
+            const chat = await Chat.update(req.body, {
                 where: {
                     id: req.params.id
                 }
@@ -68,7 +68,7 @@ module.exports = {
     },
     getChatByLawyer: async function (req, res) {
         try {
-            const chat = await db.Chat.findAll({
+            const chat = await Chat.findAll({
                 where: {
                     lawyerId: req.params.id
                 }
@@ -82,7 +82,7 @@ module.exports = {
     },
     getChatByConversation: async function (req, res) {
         try {
-            const chat = await db.Chat.findAll({
+            const chat = await Chat.findAll({
                 where: {
                     conversationId: req.params.id
                 }
