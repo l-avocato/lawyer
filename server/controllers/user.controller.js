@@ -32,7 +32,7 @@ getAllUsers : async () => {
         throw error
     }
  },
-delete: async (req,res)=>{
+deleteUser: async (req,res)=>{
     try {
         const userDeleted= await User.destroy({
       where:{  id:req.params.id }
@@ -86,11 +86,5 @@ update: async function (req, res) {
         throw error
     }
   },
-
-
-
-  
-
-
 
 }

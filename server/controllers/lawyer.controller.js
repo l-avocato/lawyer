@@ -31,7 +31,7 @@ module.exports = {
             throw error
         }
      },
-    delete: async (req,res)=>{
+    deleteLawyer: async (req,res)=>{
         try {
             const lawyerDeleted= await Lawyer.destroy({
           where:{  id:req.params.id }

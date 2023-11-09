@@ -32,7 +32,7 @@ module.exports = {
             throw error
         }
     },
-    delete: async (req,res)=>{
+    deleteReceipt: async (req,res)=>{
         try {
             const receiptDeleted= await Receipt.destroy({
           where:{  id:req.params.id }

@@ -4,20 +4,6 @@ const {Notification}= require('../models/index')
 
 module.exports = {
 
-    async getNotification(req, res) {
-        try {
-            const notification = await Notification.findAll({
-                where: {
-                    userId: req.params.id
-                }
-            })
-            res.status(200).send(notification)
-        } catch (error) {
-            res.status(500).send({
-                error: error.message
-            })
-        }
-    },
     async addNotification(req, res) {
         try {
             const notification = await Notification.create({
