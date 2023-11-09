@@ -1,12 +1,12 @@
 const sequalize =require('sequelize')
-const {db}= require('../models/index')
+const {Notification}= require('../models/index')
 
 
 module.exports = {
 
     async getNotification(req, res) {
         try {
-            const notification = await db.Notification.findAll({
+            const notification = await Notification.findAll({
                 where: {
                     userId: req.params.id
                 }
@@ -20,7 +20,7 @@ module.exports = {
     },
     async addNotification(req, res) {
         try {
-            const notification = await db.Notification.create({
+            const notification = await Notification.create({
                 userId: req.body.userId,
                 message: req.body.message,
                 isRead: req.body.isRead
@@ -34,7 +34,7 @@ module.exports = {
     },
     async deleteNotification(req, res) {
         try {
-            const notification = await db.Notification.destroy({
+            const notification = await Notification.destroy({
                 where: {
                     id: req.params.id
                 }
@@ -48,7 +48,7 @@ module.exports = {
     },
     async updateNotification(req, res) {
         try {
-            const notification = await db.Notification.update({
+            const notification = await Notification.update({
                 isRead: req.body.isRead
             }, {
                 where: {
@@ -64,7 +64,7 @@ module.exports = {
     },
     async getAllNotifications(req, res) {
         try {
-            const notification = await db.Notification.findAll()
+            const notification = await Notification.findAll()
             res.status(200).send(notification)
         } catch (error) {
             res.status(500).send({
@@ -74,7 +74,7 @@ module.exports = {
     },
     async getNotificationById(req, res) {
         try {
-            const notification = await db.Notification.findOne({
+            const notification = await Notification.findOne({
                 where: {
                     id: req.params.id
                 }
@@ -88,7 +88,7 @@ module.exports = {
     },
     async getNotificationsByUser(req, res) {
         try {
-            const notification = await db.Notification.findAll({
+            const notification = await Notification.findAll({
                 where: {
                     userId: req.params.id
                 }
@@ -102,7 +102,7 @@ module.exports = {
     },
     async getNotificationsByLawyer(req, res) {
         try {
-            const notification = await db.Notification.findAll({
+            const notification = await Notification.findAll({
                 where: {
                     lawyerId: req.params.id
                 }

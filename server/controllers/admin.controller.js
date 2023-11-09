@@ -1,12 +1,12 @@
 const sequalize =require('sequelize')
-const {db}= require('../models/index')
+const {Admin}= require('../models/index')
 
 
 module.exports = {
 
     getAllAdmins: async function (req, res) {
         try {
-            const admins = await db.Admin.findAll()
+            const admins = await Admin.findAll()
             res.status(200).send(admins)
         } catch (error) {
             res.status(500).send({
@@ -16,7 +16,7 @@ module.exports = {
     },
     getAdminById: async function (req, res) {
         try {
-            const admins = await db.Admin.findAll({
+            const admins = await Admin.findAll({
                 where: {
                     id: req.params.id
                 }
@@ -30,7 +30,7 @@ module.exports = {
     },
     addAdmin: async function (req, res) {
         try {
-            const admins = await db.Admin.create(req.body)
+            const admins = await Admin.create(req.body)
             res.status(200).send(admins)
         } catch (error) {
             res.status(500).send({
@@ -40,7 +40,7 @@ module.exports = {
     },
     deleteAdmin: async function (req, res) {
         try {
-            const admins = await db.Admin.destroy({
+            const admins = await Admin.destroy({
                 where: {
                     id: req.params.id
                 }
@@ -54,7 +54,7 @@ module.exports = {
     },
     updateAdmin: async function (req, res) {
         try {
-            const admins = await db.Admin.update(req.body, {
+            const admins = await Admin.update(req.body, {
                 where: {
                     id: req.params.id
                 }

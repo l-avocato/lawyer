@@ -1,12 +1,12 @@
 const sequalize =require('sequelize')
-const {db}= require('../models/index')
+const {Payment}= require('../models/index')
 
 
 module.exports = {
 
     getAllPayments: async (req,res)=>{
         try {
-            const allPayments= await db.Payment.findAll()
+            const allPayments= await Payment.findAll()
             res.status(200).send(allPayments)
         } catch (error) {
             throw error
@@ -15,7 +15,7 @@ module.exports = {
     },
     getPaymentId: async (req,res)=>{
         try {
-            const onePayment= await db.Payment.findOne({
+            const onePayment= await Payment.findOne({
                where :{id: req.params.id }
             })
             res.status(200).send(onePayment)
@@ -26,7 +26,7 @@ module.exports = {
     
     add: async (req,res)=>{
         try {
-            const newPayment= await db.Payment.create(req.body)
+            const newPayment= await Payment.create(req.body)
             res.status(201).send(newPayment)
         } catch (error) {
             throw error
@@ -34,7 +34,7 @@ module.exports = {
     },
     delete: async (req,res)=>{
         try {
-            const paymentDeleted= await db.Payment.destroy({
+            const paymentDeleted= await Payment.destroy({
           where:{  id:req.params.id }
             })
             res.send(paymentDeleted)
@@ -44,11 +44,11 @@ module.exports = {
     },
     update: async function (req, res) {
         try {
-          await db.Payment.update(req.body, {
+          await Payment.update(req.body, {
             where: { id: req.params.id }
           });
       
-          const updatedPayment = await db.Payment.findByPk(req.params.id);
+          const updatedPayment = await Payment.findByPk(req.params.id);
       
           res.send(updatedPayment);
         } catch (error) {
@@ -57,7 +57,7 @@ module.exports = {
       },
       searchPaymentByUser: async (req,res)=>{
         try {
-            const searchPayment= await db.Payment.findAll({
+            const searchPayment= await Payment.findAll({
                 where :{UserId: req.params.id }
             })
             res.status(200).send(searchPayment)

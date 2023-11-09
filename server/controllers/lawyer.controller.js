@@ -1,11 +1,11 @@
 const sequalize =require('sequelize')
-const {db}= require('../models/index')
+const {Lawyer}= require('../models/index')
 
 module.exports = {
 
     getAllLawyers : async () => {
         try {
-            const allLawyers= await db.Lawyer.findAll()
+            const allLawyers= await Lawyer.findAll()
             res.status(200).send(allLawyers)
         } catch (error) {
             throw error
@@ -14,7 +14,7 @@ module.exports = {
      },
      getLawyerId: async (req,res)=>{
         try {
-            const oneLawyer= await db.Lawyer.findOne({
+            const oneLawyer= await Lawyer.findOne({
                where :{id: req.params.id }
             })
             res.status(200).send(oneLawyer)
@@ -25,7 +25,7 @@ module.exports = {
     
      add: async (req,res)=>{
         try {
-            const newLawyer= await db.Lawyer.create(req.body)
+            const newLawyer= await Lawyer.create(req.body)
             res.status(201).send(newLawyer)
         } catch (error) {
             throw error
@@ -33,7 +33,7 @@ module.exports = {
      },
     delete: async (req,res)=>{
         try {
-            const lawyerDeleted= await db.Lawyer.destroy({
+            const lawyerDeleted= await Lawyer.destroy({
           where:{  id:req.params.id }
             })
             res.send(lawyerDeleted)
@@ -43,11 +43,11 @@ module.exports = {
     },
     update: async (req, res) =>{
         try {
-          await db.User.update(req.body, {
+          await User.update(req.body, {
             where: { id: req.params.id }
           });
       
-          const updatedLawyer = await db.Lawyer.findByPk(req.params.id);
+          const updatedLawyer = await Lawyer.findByPk(req.params.id);
       
           res.send(updatedLawyer);
         } catch (error) {
@@ -57,7 +57,7 @@ module.exports = {
       
       searchLawyer: async (req,res)=>{
         try {
-            const searchLawyer= await db.Lawyer.findAll({
+            const searchLawyer= await Lawyer.findAll({
                where :{fullName: req.params.fullName }
             })
             res.status(200).send(searchLawyer)
@@ -67,7 +67,7 @@ module.exports = {
       },
         searchLawyerByfield: async (req,res)=>{
             try {
-                const searchLawyer= await db.Lawyer.findAll({
+                const searchLawyer= await Lawyer.findAll({
                  where :{field: req.params.field }
                 })
                 res.status(200).send(searchLawyer)
@@ -77,7 +77,7 @@ module.exports = {
         },
         verifyLawyer: async (req,res)=>{
             try {
-                const lawyerVerified= await db.Lawyer.update({
+                const lawyerVerified= await Lawyer.update({
                     IsVerified: true
                 },{
                     where: {id: req.params.id}
@@ -89,7 +89,7 @@ module.exports = {
         },
         blockLawyer: async (req,res)=>{
             try {
-                const lawyerBlocked= await db.Lawyer.update({
+                const lawyerBlocked= await Lawyer.update({
                     IsBlocked: true
                 },{
                     where: {id: req.params.id}
@@ -101,7 +101,7 @@ module.exports = {
         },
         updateAvailability: async (req,res)=>{
             try {
-                const lawyerAvailabilityUpdated= await db.Lawyer.update({
+                const lawyerAvailabilityUpdated= await Lawyer.update({
                     isAvailable: req.body.isAvailable
                 },{
                     where: {id: req.params.id}

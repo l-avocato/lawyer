@@ -1,12 +1,12 @@
 const sequalize =require('sequelize')
-const {db}= require('../models/index')
+const {Rating}= require('../models/index')
 
 
 module.exports = {
 
     getAllRatings: async (req,res)=>{
         try {
-            const allRatings= await db.Rating.findAll()
+            const allRatings= await Rating.findAll()
             res.status(200).send(allRatings)
         } catch (error) {
             throw error
@@ -15,7 +15,7 @@ module.exports = {
     },
     getRatingId: async (req,res)=>{
         try {
-            const oneRating= await db.Rating.findOne({
+            const oneRating= await Rating.findOne({
                where :{id: req.params.id }
             })
             res.status(200).send(oneRating)
@@ -26,7 +26,7 @@ module.exports = {
     
     add: async (req,res)=>{
         try {
-            const newRating= await db.Rating.create(req.body)
+            const newRating= await Rating.create(req.body)
             res.status(201).send(newRating)
         } catch (error) {
             throw error
@@ -34,7 +34,7 @@ module.exports = {
     },
     delete: async (req,res)=>{
         try {
-            const ratingDeleted= await db.Rating.destroy({
+            const ratingDeleted= await Rating.destroy({
           where:{  id:req.params.id }
             })
             res.send(ratingDeleted)
@@ -44,7 +44,7 @@ module.exports = {
     },
     getRatingByLawyer: async (req,res)=>{
         try {
-            const ratingByLawyer= await db.Rating.findAll({
+            const ratingByLawyer= await Rating.findAll({
                 where:{lawyerId:req.params.id}
             })
             res.send(ratingByLawyer)
@@ -54,7 +54,7 @@ module.exports = {
     },
     getRatingByUser: async (req,res)=>{
         try {
-            const ratingByUser= await db.Rating.findAll({
+            const ratingByUser= await Rating.findAll({
                 where:{userId:req.params.id}
             })
             res.send(ratingByUser)
@@ -64,11 +64,11 @@ module.exports = {
     },
     update: async function (req, res) {
         try {
-          await db.Rating.update(req.body, {
+          await Rating.update(req.body, {
             where: { id: req.params.id }
           });
       
-          const updatedRating = await db.Rating.findByPk(req.params.id);
+          const updatedRating = await Rating.findByPk(req.params.id);
       
           res.send(updatedRating);
         } catch (error) {
@@ -77,7 +77,7 @@ module.exports = {
       },
       searchRating: async (req,res)=>{
         try {
-            const searchRating= await db.Rating.findAll({
+            const searchRating= await Rating.findAll({
                where :{fullName: req.params.fullName }
             })
             res.status(200).send(searchRating)

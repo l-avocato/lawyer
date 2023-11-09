@@ -1,11 +1,11 @@
 const sequalize =require('sequelize')
-const {db}= require('../models/index')
+const {Conversation}= require('../models/index')
 
 
 module.exports = {
     getAllConversations: async function (req, res) {
         try {
-            const conversation = await db.Conversation.findAll()
+            const conversation = await Conversation.findAll()
             res.status(200).send(conversation)
         } catch (error) {
             res.status(500).send({
@@ -15,7 +15,7 @@ module.exports = {
     },
     getConversationById: async function (req, res) {
         try {
-            const conversation = await db.Conversation.findAll({
+            const conversation = await Conversation.findAll({
                 where: {
                     id: req.params.id
                 }
@@ -29,7 +29,7 @@ module.exports = {
     },
     addConversation: async function (req, res) {
         try {
-            const conversation = await db.Conversation.create(req.body)
+            const conversation = await Conversation.create(req.body)
             res.status(200).send(conversation)
         } catch (error) {
             res.status(500).send({
@@ -39,7 +39,7 @@ module.exports = {
     },
     deleteConversation: async function (req, res) {
         try {
-            const conversation = await db.Conversation.destroy({
+            const conversation = await Conversation.destroy({
                 where: {
                     id: req.params.id
                 }
@@ -53,7 +53,7 @@ module.exports = {
     },
     updateConversation: async function (req, res) {
         try {
-            const conversation = await db.Conversation.update(req.body, {
+            const conversation = await Conversation.update(req.body, {
                 where: {
                     id: req.params.id
                 }
@@ -67,7 +67,7 @@ module.exports = {
     },
     getConversationByLawyer: async function (req, res) {
         try {
-            const conversation = await db.Conversation.findAll({
+            const conversation = await Conversation.findAll({
                 where: {
                     lawyerId: req.params.id
                 }
@@ -81,7 +81,7 @@ module.exports = {
     },
     getConversationByUser: async function (req, res) {
         try {
-            const conversation = await db.Conversation.findAll({
+            const conversation = await Conversation.findAll({
                 where: {
                     userId: req.params.id
                 }

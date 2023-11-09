@@ -1,12 +1,12 @@
 const sequalize =require('sequelize')
-const {db}= require('../models/index')
+const {Appointment}= require('../models/index')
 
 
 module.exports = {
 
     getAllAppointments: async function (req, res) {
         try {
-            const appointment = await db.Appointment.findAll()
+            const appointment = await Appointment.findAll()
             res.status(200).send(appointment)
         } catch (error) {
             res.status(500).send({
@@ -16,7 +16,7 @@ module.exports = {
     },
     getAppointmentById: async function (req, res) {
         try {
-            const appointment = await db.Appointment.findAll({
+            const appointment = await Appointment.findAll({
                 where: {
                     id: req.params.id
                 }
@@ -30,7 +30,7 @@ module.exports = {
     },  
     addAppointment: async function (req, res) {
         try {
-            const appointment = await db.Appointment.create(req.body)
+            const appointment = await Appointment.create(req.body)
             res.status(200).send(appointment)
         } catch (error) {
             res.status(500).send({
@@ -40,7 +40,7 @@ module.exports = {
     },
     deleteAppointment: async function (req, res) {
         try {
-            const appointment = await db.Appointment.destroy({
+            const appointment = await Appointment.destroy({
                 where: {
                     id: req.params.id
                 }
@@ -54,7 +54,7 @@ module.exports = {
     },
     updateAppointment: async function (req, res) {
         try {
-            const appointment = await db.Appointment.update(req.body, {
+            const appointment = await Appointment.update(req.body, {
                 where: {
                     id: req.params.id
                 }
@@ -68,7 +68,7 @@ module.exports = {
     },
     getAppointmentByLawyerId: async function (req, res) {
         try {
-            const appointment = await db.Appointment.findAll({
+            const appointment = await Appointment.findAll({
                 where: {
                     lawyerId: req.params.id
                 }
@@ -82,7 +82,7 @@ module.exports = {
     },
     getAppointmentByUserId: async function (req, res) {
         try {
-            const appointment = await db.Appointment.findAll({
+            const appointment = await Appointment.findAll({
                 where: {
                     userId: req.params.id
                 }
@@ -96,7 +96,7 @@ module.exports = {
     },
     getAppointmentByCaseId: async function (req, res) {
         try {
-            const appointment = await db.Appointment.findAll({
+            const appointment = await Appointment.findAll({
                 where: {
                     caseId: req.params.id
                 }
@@ -110,7 +110,7 @@ module.exports = {
     },
     getAppointmentByDate: async function (req, res) {
         try {
-            const appointment = await db.Appointment.findAll({
+            const appointment = await Appointment.findAll({
                 where: {
                     date: req.params.date
                 }
@@ -124,7 +124,7 @@ module.exports = {
     },
     getAppointmentByTime: async function (req, res) {
         try {
-            const appointment = await db.Appointment.findAll({
+            const appointment = await Appointment.findAll({
                 where: {
                     time: req.params.time
                 }
@@ -138,7 +138,7 @@ module.exports = {
     },
     getAppointmentByStatus: async function (req, res) {
         try {
-            const appointment = await db.Appointment.findAll({
+            const appointment = await Appointment.findAll({
                 where: {
                     accepted: req.params.accepted
                 }
@@ -152,7 +152,7 @@ module.exports = {
     },
     getAppointmentByReason: async function (req, res) {
         try {
-            const appointment = await db.Appointment.findAll({
+            const appointment = await Appointment.findAll({
                 where: {
                     reason: req.params.reason
                 }
