@@ -11,6 +11,7 @@ import ReactFlow, {
 import "reactflow/dist/style.css";
 import NavbarDashboard from "../NavbarDashboard/NavbarDashboard.jsx";
 import { useEffect } from "react";
+import axios from "axios"
 
 const rfStyle = {
   backgroundColor: "#B8CEFF",
@@ -80,6 +81,8 @@ function Flow() {
   const [selectedEdge, setSelectedEdge] = useState(null);
   const [showEdgeModal, setShowEdgeModal] = useState(false);
 
+  const [ edge , setEdge]= useState([])
+  console.log(edge);
   //  const [label, setLabel] = useState("")
   //  const [ x, setX]=useState(0)
   //  const [y, setY]=useState(0)
@@ -99,34 +102,68 @@ function Flow() {
     [setEdges]
   );
 
-  const addNode = () => {
-    const newNode = {
-      id: String(initialNodes.length + 1),
-      data: { label: "text" },
-      position: {
-        x: 300,
-        y: 0,
-      },
-      style: {
-        background: "gold",
-        color: "#333",
-        border: "1px solid #222138",
-        width: 180,
-        borderRadius: "100px",
-      },
-    };
-    initialEdges.push(newNode);
-    setNodes((node) => [...nodes, newNode]);
-  };
+  // const addNode = () => {
+  //   const newNode = {
+  //     id: String(initialNodes.length + 1),
+  //     data: { label: "text" },
+  //     position: {
+  //       x: 300,
+  //       y: 0,
+  //     },
+  //     style: {
+  //       background: "gold",
+  //       color: "#333",
+  //       border: "1px solid #222138",
+  //       width: 180,
+  //       borderRadius: "100px",
+  //     },
+  //   };
+  //   initialEdges.push(newNode);
+  //   setNodes((node) => [...nodes, newNode]);
+  // };
 
-  // const Edge = ()=>{
+  const fetchData =  async ()=>{
+    try {
+      const result = await axios.get("http://localhost:1128/api/phase/allPhase")
+      setEdge(result.data)
 
-  // }
+    } catch (error) {
+      throw new Error  
+    }
+  }
 
   useEffect(() => {
-    addNode();
+    fetchData()
     setNodes(initialNodes);
   }, [initialNodes.length]);
+
+
+
+  const addNode = () => {
+    const newNode = {
+      label: "New Node", 
+      positionX: 0, 
+      positionY: 0, 
+      background: "gold",
+      color: "#333",
+      border: "1px solid #222138",
+      width: 180,
+      borderRadius: "100px",
+    };
+  
+    axios
+      .post("http://localhost:1128/api/phase/add", newNode)
+      .then((response) => {
+        const createdNode = response.data;
+        console.log(createdNode);
+          setNodes((prevNodes) => [...prevNodes, createdNode]);
+      })
+      .catch((error) => {
+        console.error("Failed to add a new node:", error);
+      });
+  };
+  
+
 
   return (
     <div>
@@ -224,7 +261,7 @@ function Flow() {
           top: "20rem",
         }}
       >
-        <button onClick={addNode}>Create Step </button>
+        <button onClick={addEdge}>Create Step </button>
 
         <button data-bs-toggle="modal" data-bs-target="#staticBackdrops">
           Edge
