@@ -11,16 +11,16 @@ const initialState = {
 // Async Thunk for Signup
 export const signupUser = createAsyncThunk("signup/signupUser", async (formData) => {
   try {
-    const response = await axios.post("http://localhost:1128/api/user/add", formData);
-    return response.data; // Assuming your API returns user data upon successful signup
+    const response = await axios.post("http://c:1128/api/user/add", formData);
+    return response.data; 
   } catch (error) {
-    // Handle error and reject the promise with the error message
+    alert(error.message, "sign up failed");
     return "Signup failed";
   }
 });
 
-const signUpSlice = createSlice({
-  name: "signUp",
+const signUpUserSlice = createSlice({
+  name: "signUpUser",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -31,8 +31,7 @@ const signUpSlice = createSlice({
     builder.addCase(signupUser.fulfilled, (state, action) => {
       state.loading = false;
       state.error = null;
-      state.user = action.payload; // Fix the property name here
-      state.role = action.payload.role;
+      state.user = action.payload; 
     });
     builder.addCase(signupUser.rejected, (state, action) => {
       state.loading = false;
@@ -40,4 +39,4 @@ const signUpSlice = createSlice({
   },
 });
 
-export default signUpSlice.reducer;
+export default signUpUserSlice.reducer;

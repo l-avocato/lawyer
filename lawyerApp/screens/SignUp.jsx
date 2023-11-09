@@ -2,6 +2,8 @@ import React, {useState} from "react";
 import { StatusBar } from 'expo-status-bar';
 import {FIREBASE_DB} from "../firebaseConfig";
 import { addDoc, collection } from "firebase/firestore";
+import { useDispatch } from "react-redux";
+import { signupUser } from "../../client/src/store/signUpUser";
 //formik
 import { Formik } from "formik";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
@@ -65,26 +67,33 @@ console.log("usercollection",userCollectionRef);
 
 const signUp = async () => {
     createUserWithEmailAndPassword(auth, email, password)
-      .then((res) => {
-        addDoc(userCollectionRef, {
-          localId: res.user.uid,
-          fullName: fullName,
+    .then((userCredential) => {
+        const lawyer = userCredential.user;
+
+        const formData = {
           email: email,
-          password: res.user.reloadUserInfo.passwordHash  ,
+          password: password,
+          fullName: fullName,
+          gender: gender,
           phoneNumber: phoneNumber,
-        })
+        };
+
+        dispatch(signupUser(formData))
           .then((res) => {
-            alert("User added successfully");
-            console.log(res);
+            navigation.navigate("login");
           })
-          .catch((err) => {
-            console.log(err);
+          .catch((error) => {
+            alert(error.message, "sign up failed");
           });
       })
-      .catch((err) => {
-        console.log(err);
+      .catch((error) => {
+        // const errorCode = error.code;
+        // const errorMessage = error.message;
+        // alert(errorMessage, "sign up failed");
+        console.log(error);
+        // ..
       });
-      navigation.navigate("login");
+      
 };
 
 

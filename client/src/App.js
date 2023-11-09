@@ -15,9 +15,16 @@ import SettingProfil from "./components/SettingProfil/Settings.jsx";
 import StepsCases from "./components/StepsCases/StepsCases.jsx";
 import Diagramme from "./components/Diagramme/Diagramme.jsx";
 import Flow from "./components/StepsCases/Flow.js";
+import { Provider } from "react-redux";
+import {store} from './store/index.jsx'
+
+
+
 const App = () => {
   return (
+    <Provider store={store}>
     <div className="App">
+  
       <Router>
         <Routes>
           <Route path="/PaymentHistory" element={<PaymentHistory />} />
@@ -38,6 +45,7 @@ const App = () => {
         </Routes>
       </Router>
     </div>
+    </Provider>
   );
 };
 

@@ -9,10 +9,13 @@ import { db } from "../../firebaseconfig";
 import { addDoc, collection } from "firebase/firestore";
 import axios from "axios";
 import { Link } from "react-scroll";
+import { useDispatch } from "react-redux";
+import { signupLawyer } from "../../store/signUpLawyer";
 
 function Navbar() {
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
+  const dispatch = useDispatch();
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -46,33 +49,41 @@ function Navbar() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const lawyerCollectionRef = collection(db, "lawyers");
 
-  const handleSignUp = async () => {
+  const handleSignUp = (event) => {
+    event.preventDefault();
     if (password !== confirmPassword) {
       alert("Passwords do not match");
       return;
     }
+
     createUserWithEmailAndPassword(auth, email, password)
-      .then((res) => {
-        addDoc(lawyerCollectionRef, {
-          localId: res.user.reloadUserInfo.localId,
-          email: res.user.reloadUserInfo.email,
-          password: res.user.reloadUserInfo.passwordHash,
+      .then((userCredential) => {
+        const user = userCredential.user;
+
+        const formData = {
+          email: email,
+          password: password,
           imageUrl: papers,
           fullName: fullName,
           gender: gender,
           phoneNumber: phoneNumber,
-        })
+        };
+
+        dispatch(signupLawyer(formData))
           .then((res) => {
-            console.log(res);
+            navigate("/allClient");
           })
-          .catch((err) => {
-            console.log(err);
+          .catch((error) => {
+            alert(error.message, "sign up failed");
           });
       })
-      .catch((err) => {
-        console.log(err);
+      .catch((error) => {
+        // const errorCode = error.code;
+        // const errorMessage = error.message;
+        // alert(errorMessage, "sign up failed");
+        console.log(error);
+        // ..
       });
-    navigate("/allClient");
   };
 
   const handleFile = async (e) => {
@@ -214,7 +225,9 @@ function Navbar() {
                         }}
                       />
                       <Form
-                        onSubmit={handleSignUp}
+                        onSubmit={(event) => {
+                          handleSignUp(event);
+                        }}
                         style={{ width: "100%", marginTop: 5 }}
                       >
                         <Form.Group controlId="formImage">
