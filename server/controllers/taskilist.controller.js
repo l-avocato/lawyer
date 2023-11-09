@@ -32,7 +32,7 @@ module.exports = {
             throw error
         }
     },
-    delete: async (req,res)=>{
+    deleteTask: async (req,res)=>{
         try {
             const taskDeleted= await TaskList.destroy({
           where:{  id:req.params.id }
