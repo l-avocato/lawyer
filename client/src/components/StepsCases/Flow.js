@@ -16,6 +16,7 @@ import axios from "axios"
 const rfStyle = {
   backgroundColor: "#B8CEFF",
 };
+
 const initialNodes = [
   {
     id: "1",
@@ -30,42 +31,7 @@ const initialNodes = [
       borderRadius: "100px",
     },
   },
-  {
-    id: "2",
-    type: "textUpdater",
-    data: { label: "first step" },
-    position: { x: 100, y: 100 },
-    style: {
-      background: "gold",
-      border: "1px solid #222138",
-      width: 180,
-      borderRadius: "100px",
-    },
-  },
-  {
-    id: "3",
-    data: { label: "second step" },
-    position: { x: 200, y: 200 },
-    style: {
-      background: "gold",
-      color: "#333",
-      border: "1px solid #222138",
-      width: 180,
-      borderRadius: "100px",
-    },
-  },
-  {
-    id: "4",
-    data: { label: "3eme step" },
-    position: { x: 300, y: 300 },
-    style: {
-      background: "gold",
-      color: "#333",
-      border: "1px solid #222138",
-      width: 180,
-      borderRadius: "100px",
-    },
-  },
+  
 ];
 
 const initialEdges = [
@@ -81,8 +47,8 @@ function Flow() {
   const [selectedEdge, setSelectedEdge] = useState(null);
   const [showEdgeModal, setShowEdgeModal] = useState(false);
 
-  const [ edge , setEdge]= useState([])
-  console.log(edge);
+  // const [ edge , setEdge]= useState([])
+
   //  const [label, setLabel] = useState("")
   //  const [ x, setX]=useState(0)
   //  const [y, setY]=useState(0)
@@ -125,7 +91,8 @@ function Flow() {
   const fetchData =  async ()=>{
     try {
       const result = await axios.get("http://localhost:1128/api/phase/allPhase")
-      setEdge(result.data)
+      setNodes(result.data)
+      console.log('this is data', result.data);
 
     } catch (error) {
       throw new Error  
@@ -134,8 +101,8 @@ function Flow() {
 
   useEffect(() => {
     fetchData()
-    setNodes(initialNodes);
-  }, [initialNodes.length]);
+    // setNodes(initialNodes);
+  }, []);
 
 
 
