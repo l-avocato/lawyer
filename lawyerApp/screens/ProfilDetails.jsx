@@ -54,7 +54,7 @@ console.log("this is item ",item);
               </View>
             </View>
             <TouchableOpacity style={{ display: "flex", flexDirection: "row" }} onPress={()=>{
-              navigation.navigate("Chat", {})
+              navigation.navigate("Chat", {item})
             }}>
               <FontAwesome name="comment" style={{fontSize: 20, marginRight: 30,color: "black",marginLeft: 10}} />
               <Text style={styles.infoText}></Text>

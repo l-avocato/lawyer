@@ -1,17 +1,30 @@
 import React, { useState, useEffect,useCallback } from 'react';
 import { GiftedChat,Send,Bubble } from 'react-native-gifted-chat';
-import { TouchableOpacity, View, StyleSheet, Alert } from 'react-native'; 
+import { TouchableOpacity, View, StyleSheet, Alert ,Image,Text,Linking} from 'react-native'; 
 import * as ImagePicker from 'expo-image-picker';
 import { MaterialIcons } from '@expo/vector-icons';
-import { collection, addDoc, orderBy, query, onSnapshot,serverTimestamp,Timestamp} from 'firebase/firestore';
+import { collection, addDoc, orderBy, query, onSnapshot,serverTimestamp,Timestamp,getDocs } from 'firebase/firestore';
 import { FIREBASE_DB , FIREBASE_AUTH } from '../firebaseConfig';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { Icon } from 'react-native-elements';
 import * as DocumentPicker from 'expo-document-picker';
 
-const Chat = () => {
-  
+
+const Chat = ({route}) => {
+  const {item}=route.params;
+  console.log(item);
+
   const [messages, setMessages] = useState([]);
+
+  const makePhoneCall = () => {
+    if (item.phoneNumber) {
+      Linking.openURL(`tel:${item.phoneNumber}`);
+    } else {
+      console.log('Phone number not available');
+    }
+  };
+ 
+
 
   console.log("this is the logged user",FIREBASE_AUTH?.currentUser.uid);
   const handleCameraIconPress = async () => {
@@ -87,6 +100,26 @@ const Chat = () => {
     }
     
     }
+    // useEffect(() => {
+    //   const fetchLawyerDetails = async () => {
+    //     try {
+    //       const lawyersCollection = collection(FIREBASE_DB, 'lawyers');
+    //       const querySnapshot = await getDocs(lawyersCollection);
+          
+    //       if (!querySnapshot.empty) {
+    //         const lawyer = querySnapshot.docs[0].data();
+    //         setLawyerDetails({
+    //           name: lawyer.name, // Replace 'name' with the field name in your Firestore
+    //           image: lawyer.imageUrl, // Replace 'image' with the field name containing the image URL
+    //         });
+    //       }
+    //     } catch (error) {
+    //       console.error('Error fetching lawyer details:', error);
+    //     }
+    //   };
+  
+    //   fetchLawyerDetails();
+    // }, []);
 
 
   const renderSend = (props) => {
@@ -146,6 +179,14 @@ const Chat = () => {
   };
 
   return (
+    <View style={styles.container}>
+    <View style={styles.header}>
+      <Image source={{ uri: item.imageUrl }} style={styles.lawyerImage} />
+      <Text style={styles.lawyerName}>{item.fullName}</Text>
+      <TouchableOpacity onPress={makePhoneCall}>
+        <MaterialIcons   style={styles.phone} name="phone" size={24} color="black" />
+      </TouchableOpacity>
+    </View>
     
     <GiftedChat
       messages={messages}
@@ -161,6 +202,8 @@ const Chat = () => {
       scrollToBottomComponent={scrollToBottomComponent}
       // renderInputToolbar={renderInputToolbar}
       />
+      </View>
+
   );
 };
 
@@ -176,6 +219,32 @@ const styles = StyleSheet.create({
     marginHorizontal: 25, 
     // marginTop:-190
   },
+  container: {
+    flex: 1,
+    backgroundColor: 'white', // Set the desired background color
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+    backgroundColor:'white',
+    marginTop:40
+  },
+  lawyerImage: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    marginRight: 10,
+  },
+  lawyerName: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  phone:{
+    marginLeft:180
+  }
 });
 
  

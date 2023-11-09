@@ -15,7 +15,7 @@ const ChatRooms = ({ navigation }) => {
   };
 
   const conversationsRef = collection(FIREBASE_DB, 'conversations');
-  const messagesRef = collection(FIREBASE_DB, 'chat');
+  // const messagesRef = collection(FIREBASE_DB, 'chat');
 
   const getConversations = async () => {
     try {
