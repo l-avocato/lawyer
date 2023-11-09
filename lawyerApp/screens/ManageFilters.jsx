@@ -11,21 +11,20 @@ import {
 import { FontAwesome } from "react-native-vector-icons";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Slider from "@react-native-community/slider";
-import { FIREBASE_DB } from "../firebaseConfig"; // Adjust the path as needed
-
-import { QuerySnapshot, collection, getDocs} from "firebase/firestore";
+import { FIREBASE_DB } from "../firebaseConfig"; 
+import { MaterialIcons } from '@expo/vector-icons';
+import { QuerySnapshot, collection, getDocs } from "firebase/firestore";
 
 const ManageFilters = () => {
-
   const handleArrowIconClick = () => {
-    // Handle arrow icon click here
+  
   };
   const handleRefreshIconClick = () => {
-    // Handle refresh icon click here
+    
   };
 
   const handleButtonPress = () => {
-    // Handle button press here
+    
     console.log("Button pressed");
   };
   const handleInputChange = (text) => {
@@ -36,34 +35,13 @@ const ManageFilters = () => {
   };
   const handleRatingButtonPress = (rating) => {
     setSelectedRating(rating);
-    // Perform the search based on the selected rating here
   };
   const buttonLabels = ["Proprety", "Criminal", "Tax"];
   const [inputValue, setInputValue] = useState("");
   const [priceRange, setPriceRange] = useState(40);
-  const [selectedRating, setSelectedRating] = useState(null);
+  const [starRating, setStarRating] = useState(null);
   const ratings = [1, 2, 3, 4, 5];
-  const [lawyers, setLawyers]= useState([]);
-  // const lawyersCollectionRef = collection(FIREBASE_DB, "lawyers").where('Price','<',80)
-
-  // const getLawyers = async () => {try {
-  //   const collectionRef= await getDocs(lawyersCollectionRef)
-  //   const lawyer = collectionRef.docs.map((doc) => ({
-  //     ...doc.data(),
-  //   id: doc.id}))
-  //   setLawyers(lawyer)
-  // } catch (error) {
-  //   console.log(error);
-  // }
-  
-  // }
-  // };
-  // useEffect(()=>{
-  //   getLawyers()
-
-  // },[])
-  
-
+  const [lawyers, setLawyers] = useState([]);
 
   return (
     <View style={styles.container}>
@@ -140,25 +118,43 @@ const ManageFilters = () => {
             <Text style={styles.button1Text}>See All</Text>
           </TouchableOpacity>
           <Text style={styles.bodyView4Text}>By User Rating</Text>
-          <FlatList
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            data={ratings}
-            keyExtractor={(item) => item.toString()}
-            renderItem={({ item }) => (
-              <TouchableOpacity
-                style={[
-                  styles.ratingButton,
-                  selectedRating === item ? styles.selectedRatingButton : null,
-                  { marginRight: 50 }, // Add margin for spacing between buttons
-                ]}
-                onPress={() => handleRatingButtonPress(item)}>
-                {Array.from({ length: item }).map((_, index) => (
-                  <Icon key={index} name="star" size={20} color="#D5B278"  />
-                ))}
-              </TouchableOpacity>
-            )}
-          />
+        <View style={styles.stars}>
+          <TouchableOpacity onPress={() => setStarRating(1)}>
+            <MaterialIcons
+              name={starRating >= 1 ? 'star' : 'star-border'}
+              size={40}
+              style={starRating >= 1 ? styles.starSelected : styles.starUnselected}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => setStarRating(2)}>
+            <MaterialIcons
+              name={starRating >= 2 ? 'star' : 'star-border'}
+              size={40}
+              style={starRating >= 2 ? styles.starSelected : styles.starUnselected}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => setStarRating(3)}>
+            <MaterialIcons
+              name={starRating >= 3 ? 'star' : 'star-border'}
+              size={40}
+              style={starRating >= 3 ? styles.starSelected : styles.starUnselected}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => setStarRating(4)}>
+            <MaterialIcons
+              name={starRating >= 4 ? 'star' : 'star-border'}
+              size={40}
+              style={starRating >= 4 ? styles.starSelected : styles.starUnselected}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => setStarRating(5)}>
+            <MaterialIcons
+              name={starRating >= 5 ? 'star' : 'star-border'}
+              size={40}
+              style={starRating >= 5 ? styles.starSelected : styles.starUnselected}
+            />
+          </TouchableOpacity>
+        </View>
         </View>
         <View style={[styles.bodyView5, { backgroundColor: "white" }]}>
           <Text style={styles.bodyView5Text}>Customize with Details</Text>
@@ -287,15 +283,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     height: 150,
   },
-  ratingButtonContainer: {
-    flexDirection: "row",
-    justifyContent: "space-around",
+  stars: {
+    display: 'flex',
+    flexDirection: 'row',
   },
-  ratingButton: {
-    padding: 10,
-    borderRadius: 5,
-    transform: [{ rotate: "100deg" }],
-    marginRight: 20,
+  starUnselected: {
+    color: '#aaa',
+  },
+  starSelected: {
+    color: "#D5B278",
   },
   bodyView5: {
     padding: 40,
