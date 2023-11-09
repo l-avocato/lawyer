@@ -32,7 +32,7 @@ module.exports = {
             throw error
         }
     },
-    delete: async (req,res)=>{
+    deleteReport: async (req,res)=>{
         try {
             const reportDeleted= await Report.destroy({
           where:{  id:req.params.id }
