@@ -9,19 +9,14 @@ const initialState = {
 };
 
 // Async Thunk for Signup
-export const signupUser = createAsyncThunk(
-  "signup/signupUser",
-  async (formData) => {
-    try {
-      const response = await axios.post("http://c:1128/api/user/add", formData);
-      return response.data;
-    } catch (error) {
-      alert(error.message, "sign up failed");
-      return "Signup failed";
-    }
+export const signupUser = createAsyncThunk("signup/signupUser", async (input, { dispatch }) => {
+    // console.log(input,'this is the body');
+    // console.log(process.env.IPV_IP,"logged");
+   const response = await axios.post(`http://172.20.10.3:1128/api/user/addUser`, input);
+   console.log(response.data,"this is from the store");
+return response.data
   }
-);
-console.log(process.env.IPV_IP, "asdfg");
+  );
 
 const signUpUserSlice = createSlice({
   name: "signUpUser",
@@ -35,7 +30,7 @@ const signUpUserSlice = createSlice({
     builder.addCase(signupUser.fulfilled, (state, action) => {
       state.loading = false;
       state.error = null;
-      state.user = action.payload;
+      state.user = action.payload; 
     });
     builder.addCase(signupUser.rejected, (state, action) => {
       state.loading = false;

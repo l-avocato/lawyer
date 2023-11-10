@@ -2,8 +2,6 @@ import React, {useState} from "react";
 import { StatusBar } from 'expo-status-bar';
 import {FIREBASE_DB} from "../firebaseConfig";
 import { addDoc, collection } from "firebase/firestore";
-import { useDispatch } from "react-redux";
-import { signupUser } from "../../client/src/store/signUpUser";
 //formik
 import { Formik } from "formik";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
@@ -31,12 +29,16 @@ import {
     TextLink,
     TextLinkContent,
 } from "../components/styles";
+import { useSelector, useDispatch } from 'react-redux';
+import { signupUser } from "../store/signUpUser"
 
 //colors
 const { brand, darkLight, primary } = Colors;
 //DateTimePicker
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+
+
 
 const Signup = ({ navigation }) => {
 const [email, setEmail] = useState("");
@@ -53,6 +55,12 @@ const auth = FIREBASE_AUTH;
 const db = FIREBASE_DB;
 //Actual date of birth to be sent
 // const [dob, setDob] = useState();
+
+const dispatch = useDispatch();
+// const user= useSelector((state) => state.user.data);
+// console.log(user,"this is the user from the store");
+
+
 
 const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -74,14 +82,13 @@ const signUp = async () => {
           email: email,
           password: password,
           fullName: fullName,
-          gender: gender,
           phoneNumber: phoneNumber,
         };
 
         dispatch(signupUser(formData))
-          .then((res) => {
-            navigation.navigate("login");
-          })
+        //   .then((res) => {
+        //     navigation.navigate("login");
+        //   })
           .catch((error) => {
             alert(error.message, "sign up failed");
           });
