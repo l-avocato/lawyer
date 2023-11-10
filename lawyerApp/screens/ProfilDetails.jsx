@@ -11,31 +11,34 @@ import { FontAwesome } from "react-native-vector-icons";
 import { Colors } from "../components/styles";
 import LinearGradient from "react-native-linear-gradient";
 
+
 const { primary, tertinary } = Colors;
 
 const ProfilDetails = ({ navigation , route}) => {
 const {item} = route.params;
-console.log(item);
+const {lawyer} = route.params
 
+
+const law = item?item:lawyer
   const galleryImages = [
     require("../Photos/lawyer-or-judge-in-simple-flat-personal-profile-icon-or-symbol-people-concept-illustration-vector.jpg"),
     require("../Photos/lawyer-or-judge-in-simple-flat-personal-profile-icon-or-symbol-people-concept-illustration-vector.jpg"),
     require("../Photos/lawyer-or-judge-in-simple-flat-personal-profile-icon-or-symbol-people-concept-illustration-vector.jpg"),
     require("../Photos/lawyer-or-judge-in-simple-flat-personal-profile-icon-or-symbol-people-concept-illustration-vector.jpg"),
   ];
-
+console.log("this item",lawyer);
   return (
     <View style={styles.body}>
       <View style={styles.block2}>
         <View style={styles.photoLowyer}>
           <View style={styles.blockPhoto}>
             <Image
-              source={{uri: item.imageUrl}}
+              source={{uri: law.imageUrl}}
               style={styles.photoo}
             />
             <View style={{ position: "relative", top: 110 }}>
-              <Text style={styles.nameText}>{item.fullName}</Text>
-              <Text style={styles.specialtyText}>{item.category} Law</Text>
+              <Text style={styles.nameText}>{law.fullName}</Text>
+              <Text style={styles.specialtyText}>{law.category} Law</Text>
             </View>
           </View>
         </View>
@@ -50,7 +53,7 @@ console.log(item);
 
               <View style={{ display: "flex", flexDirection: "row" }}>
                 <FontAwesome name="dollar" style={styles.icon} />
-                <Text style={styles.infoText}>${item.Price}/H</Text>
+                <Text style={styles.infoText}>${law.Price}/H</Text>
               </View>
             </View>
             <View style={{ display: "flex", flexDirection: "row" }}>
@@ -95,7 +98,7 @@ console.log(item);
       </View>
       <TouchableOpacity 
   style={styles.bookButton}
-  onPress={() => navigation.navigate("Appintment", {item})}
+  onPress={() => navigation.navigate("Appintment", {law})}
 >
   <Text style={styles.bookButtonText}>Book Appointment</Text>
 </TouchableOpacity>

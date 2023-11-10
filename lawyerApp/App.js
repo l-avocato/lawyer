@@ -86,7 +86,7 @@ export default function App() {
           }}
         />
         <Stack.Screen
-          name="Lawyer Details"
+          name="ProfilDetails"
           component={ProfilDetails}
           options={{
             headerShown: true,

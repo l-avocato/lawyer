@@ -1,61 +1,80 @@
-import React, { useState, useMemo } from "react";
+import React, { useState ,useRef, useEffect} from "react";
 import axios from "axios";
 import NavbarDashboard from "../NavbarDashboard/NavbarDashboard";
 import { db } from "../../firebaseconfig";
 import { updateDoc, doc } from "firebase/firestore";
-import SidebarDash from "../SidebarDash/SidebarDash";
-import defaultpic from "../../assets/images/default.png";
-import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
+import { GoogleMap, Marker } from "@react-google-maps/api";
+import "./Style.css";
 
-const ProfileDetails = () => {
+const Settings = () => {
   const [papers, setPapers] = useState("");
   const [fullName, setFullName] = useState("");
-  const [address, setAddress] = useState("");
-  const [mapVisible, setMapVisible] = useState(false);
-  const [map, setMap] = React.useState(null);
+  const [adress, setAdress] = useState("");
+  const [latitude, setLatitude] = useState("");
+  const [longitude, setLongitude] = useState("");
+  const [isMenuOpen, setMenuOpen] = useState(false);
+  const position = { lat: parseFloat(latitude) || 51.505, lng: parseFloat(longitude) || -0.09 };
+  const menuRef = useRef(null);
 
-  const { isLoaded } = useJsApiLoader({
-    id: "google-map-script",
-    googleMapsApiKey: "AIzaSyBJCGfd16u9ZMNd8v2rmZYqz6s2b4VGA1c",
-  });
+ 
 
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const showModal = () => setIsModalVisible(true);
+  const hideModal = () => setIsModalVisible(false);
+
+  
   const handleFile = async (e) => {
     const formData = new FormData();
     formData.append("file", e.target.files[0]);
     formData.append("upload_preset", "oztadvnr");
     try {
-      const response = await axios.post(
-        "https://api.cloudinary.com/v1_1/dl4qexes8/upload",
-        formData
-      );
-      setPapers(response.data["secure_url"]);
+      const response = await axios.post("https://api.cloudinary.com/v1_1/dl4qexes8/upload", formData);
+      setPapers(response.data.secure_url);
     } catch (error) {
-      console.error("Error uploading file:", error);
+      console.error(error);
     }
   };
 
+  const getLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
+          setLatitude(latitude);
+          setLongitude(longitude);
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
+    } else {
+      console.error("Geolocation is not supported by this browser.");
+    }
+  };
 
   const lawyersCollectionRef = doc(db, "lawyers", "EIKiyaY44S1xWenxPxVh");
+
   const updateLawyerData = async () => {
     try {
       await updateDoc(lawyersCollectionRef, {
         fullName: fullName,
-        address: address,
+        adress: adress,
         imageUrl: papers,
+        latitude: parseFloat(latitude),
+        longitude: parseFloat(longitude),
       });
+      hideModal();
     } catch (error) {
       console.error("Error updating lawyer", error);
     }
   };
-
-  const handleMapToggle = () => {
-    setMapVisible(!mapVisible);
-  };
+  
 
   return (
     <div>
       <NavbarDashboard />
-      <SidebarDash />
 
       <div style={{ flex: 1 }}>
         <form
@@ -67,33 +86,29 @@ const ProfileDetails = () => {
             marginLeft: "35rem",
             gap: "0.5rem",
             marginBottom: "2rem",
-            marginTop: "-6rem",
+            border: "0.1rem solid #ccc",
+            borderRadius: "8px",
           }}
         >
           <p
             style={{
               fontSize: "2.5rem",
-              fontFamily: "",
+              fontFamily: "-moz-initial",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               gap: "1rem",
-              marginLeft: "-60rem",
-              marginTop: "6rem",
             }}
           >
             Edit Profile
           </p>
+
           <div className="flex">
             <img
-              src={papers || defaultpic}
+              src={papers}
               alt=""
               className="imageUrl"
-              style={{
-                width: "8rem",
-                height: "8rem",
-                backgroundSize: "cover",
-              }}
+              style={{ width: "8rem", height: "8rem" }}
             />
             <input
               type="file"
@@ -125,62 +140,48 @@ const ProfileDetails = () => {
               className="form-control"
               style={{ fontSize: "18px" }}
               onChange={(e) => {
-                setAddress(e.target.value);
+                setAdress(e.target.value);
               }}
             />
             <label className="form-label" htmlFor="form6Example3"></label>
           </div>
-          {mapVisible && (
-            <div
-              className="map"
-              style={{
-                width: "100%",
-                height: "400px",
-                backgroundColor: "lightgray",
-              }}
-            >
-              <GoogleMap
-                mapContainerClassName="map"
-                // center={center}
-                zoom={10}
-        
-              >
-                <Marker position={{ lat: 18.52043, lng: 73.856743 }} />
-              </GoogleMap>
-            </div>
-          )}
-
           <button
             type="button"
             style={{
               backgroundColor: "gold",
               color: "black",
               fontSize: "1.3rem",
-              marginTop: "8rem",
             }}
-            onClick={(e) => {
-              e.preventDefault();
-              updateLawyerData();
+            onClick={() => {
+              showModal();
+              getLocation();
             }}
           >
-            Update
+            Update Localisation
           </button>
-          <button
-            type="button"
-            style={{
-              backgroundColor: "green",
-              color: "white",
-              fontSize: "1.3rem",
-              marginTop: "2rem",
-            }}
-            onClick={handleMapToggle}
-          >
-            Toggle Map
-          </button>
+
+          {isModalVisible && (
+            <div className="modal-map">
+              <div className="modal-content">
+                <GoogleMap
+                  center={position}
+                  zoom={13}
+                  mapContainerStyle={{ height: "600px", width: "100%" }}
+                >
+                  <Marker position={position} />
+                </GoogleMap>
+                <button className="close-btn" onClick={() => hideModal()}>
+                  Close
+                </button>
+            
+              </div>
+            </div>
+          )}
         </form>
       </div>
     </div>
   );
+  
 };
 
-export default ProfileDetails;
+export default Settings;

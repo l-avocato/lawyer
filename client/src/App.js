@@ -15,6 +15,7 @@ import SettingProfil from "./components/SettingProfil/Settings.jsx";
 import StepsCases from "./components/StepsCases/StepsCases.jsx";
 import Diagramme from "./components/Diagramme/Diagramme.jsx";
 import Flow from "./components/StepsCases/Flow.js";
+import CaseHistory from "./components/CaseHistory/CaseHistory.jsx";
 const App = () => {
   return (
     <div className="App">
@@ -35,6 +36,7 @@ const App = () => {
           <Route path="/stepsCases" element={<StepsCases />} />
           <Route path="/diagramme" element={<Diagramme />} />
           <Route path="/flow" element={<Flow />} />
+          <Route path="/CaseHistory" element={< CaseHistory/>} />
         </Routes>
       </Router>
     </div>
