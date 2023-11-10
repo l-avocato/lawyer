@@ -1,621 +1,133 @@
-// // import React from "react";
-// // import "./clientDetails.css";
-// // import SidebarDash from "../SidebarDash/SidebarDash";
-
-// // const ClientDetails = () => {
-// //   return (
-// //     <div className="d-flex">
-// //       <SidebarDash />
-// //      <div>
-// //      <section style={{ backgroundColor: '#eee' }}>
-// //       <div className="container py-5 ">
-// //         <div className="row">
-// //           <div className="col">
-// //             <nav aria-label="breadcrumb" className="bg-light rounded-3 p-3 mb-4">
-// //               <ol className="breadcrumb mb-0">
-// //                 <li className="breadcrumb-item"><a href="#">Home</a></li>
-// //                 <li className="breadcrumb-item"><a href="#">User</a></li>
-// //                 <li className="breadcrumb-item active" aria-current="page">client Profile</li>
-// //               </ol>
-// //             </nav>
-// //           </div>
-// //         </div>
-
-// //         <div className="row">
-// //           <div className="col-lg-4">
-// //             <div className="card mb-4">
-// //               <div className="card-body text-center">
-// //                 <img
-// //                   src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
-// //                   alt="avatar"
-// //                   className="rounded-circle img-fluid"
-// //                   style={{ width: '150px' }}
-// //                 />
-// //                 <h5 className="my-3">John Smith</h5>
-// //                 <p className="text-muted mb-1">Full Stack Developer</p>
-// //                 <p className="text-muted mb-4">Bay Area, San Francisco, CA</p>
-// //                 <div className="d-flex justify-content-center mb-2">
-// //                   <button type="button" className="btn btn-primary">Follow</button>
-// //                   <button type="button" className="btn btn-outline-primary ms-1">Message</button>
-// //                 </div>
-// //               </div>
-// //             </div>
-// //             <div className="card mb-4 mb-lg-0">
-// //               <div className="card-body p-0">
-// //                 <ul className="list-group list-group-flush rounded-3">
-// //                   <li className="list-group-item d-flex justify-content-between align-items-center p-3">
-// //                     <i className="fas fa-globe fa-lg text-warning"></i>
-// //                     <p className="mb-0">https://mdbootstrap.com</p>
-// //                   </li>
-// //                   <li className="list-group-item d-flex justify-content-between align-items-center p-3">
-// //                     <i className="fab fa-github fa-lg" style={{ color: '#333333' }}></i>
-// //                     <p className="mb-0">mdbootstrap</p>
-// //                   </li>
-// //                   <li className="list-group-item d-flex justify-content-between align-items-center p-3">
-// //                     <i className="fab fa-twitter fa-lg" style={{ color: '#55acee' }}></i>
-// //                     <p className="mb-0">@mdbootstrap</p>
-// //                   </li>
-// //                   <li className="list-group-item d-flex justify-content-between align-items-center p-3">
-// //                     <i className="fab fa-instagram fa-lg" style={{ color: '#ac2bac' }}></i>
-// //                     <p className="mb-0">mdbootstrap</p>
-// //                   </li>
-// //                   <li className="list-group-item d-flex justify-content-between align-items-center p-3">
-// //                     <i className="fab fa-facebook-f fa-lg" style={{ color: '#3b5998' }}></i>
-// //                     <p className="mb-0">mdbootstrap</p>
-// //                   </li>
-// //                 </ul>
-// //               </div>
-// //             </div>
-// //           </div>
-// //           <div className="col-lg-8">
-// //             <div className="card mb-4">
-// //               <div className="card-body">
-// //                 <div className="row">
-// //                   <div className="col-sm-3">
-// //                     <p className="mb-0">Full Name</p>
-// //                   </div>
-// //                   <div className="col-sm-9">
-// //                     <p className="text-muted mb-0">Johnatan Smith</p>
-// //                   </div>
-// //                 </div>
-// //                 <hr />
-// //                 <div className="row">
-// //                   <div className="col-sm-3">
-// //                     <p className="mb-0">Email</p>
-// //                   </div>
-// //                   <div className="col-sm-9">
-// //                     <p className="text-muted mb-0">example@example.com</p>
-// //                   </div>
-// //                 </div>
-// //                 <hr />
-// //                 <div className="row">
-// //                   <div className="col-sm-3">
-// //                     <p className="mb-0">Phone</p>
-// //                   </div>
-// //                   <div className="col-sm-9">
-// //                     <p className="text-muted mb-0">(097) 234-5678</p>
-// //                   </div>
-// //                 </div>
-// //                 <hr />
-// //                 <div className="row">
-// //                   <div className="col-sm-3">
-// //                     <p className="mb-0">Mobile</p>
-// //                   </div>
-// //                   <div className="col-sm-9">
-// //                     <p className="text-muted mb-0">(098) 765-4321</p>
-// //                   </div>
-// //                 </div>
-// //                 <hr />
-// //                 <div className="row">
-// //                   <div className="col-sm-3">
-// //                     <p className="mb-0">Address</p>
-// //                   </div>
-// //                   <div className="col-sm-9">
-// //                     <p className="text-muted mb-0">Bay Area, San Francisco, CA</p>
-// //                   </div>
-// //                 </div>
-// //               </div>
-// //             </div>
-// //             <div className="row">
-// //               <div className="col-md-6">
-// //                 <div className="card mb-4 mb-md-0">
-// //                   <div className="card-body">
-// //                     <p className="mb-4"><span className="text-primary font-italic me-1">assigment</span> Project Status</p>
-// //                     <p className="mb-1" style={{ fontSize: '.77rem' }}>Web Design</p>
-// //                     <div className="progress rounded" style={{ height: '5px' }}>
-// //                       <div className="progress-bar" role="progressbar" style={{ width: '80%' }} aria-valuenow="80"
-// //                         aria-valuemin="0" aria-valuemax="100"></div>
-// //                     </div>
-// //                     <p className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>Website Markup</p>
-// //                     <div className="progress rounded" style={{ height: '5px' }}>
-// //                       <div className="progress-bar" role="progressbar" style={{ width: '72%' }} aria-valuenow="72"
-// //                         aria-valuemin="0" aria-valuemax="100"></div>
-// //                     </div>
-// //                     <p className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>One Page</p>
-// //                     <div className="progress rounded" style={{ height: '5px' }}>
-// //                       <div className="progress-bar" role="progressbar" style={{ width: '89%' }} aria-valuenow="89"
-// //                         aria-valuemin="0" aria-valuemax="100"></div>
-// //                     </div>
-// //                     <p className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>Mobile Template</p>
-// //                     <div className="progress rounded" style={{ height: '5px' }}>
-// //                       <div className="progress-bar" role="progressbar" style={{ width: '55%' }} aria-valuenow="55"
-// //                         aria-valuemin="0" aria-valuemax="100"></div>
-// //                     </div>
-// //                     <p className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>Backend API</p>
-// //                     <div className="progress rounded mb-2" style={{ height: '5px' }}>
-// //                       <div className="progress-bar" role="progressbar" style={{ width: '66%' }} aria-valuenow="66"
-// //                         aria-valuemin="0" aria-valuemax="100"></div>
-// //                     </div>
-// //                   </div>
-// //                 </div>
-// //               </div>
-// //               <div className="col-md-6">
-// //                 <div className="card mb-4 mb-md-0">
-// //                   <div className="card-body">
-// //                     <p className="mb-4"><span className="text-primary font-italic me-1">assigment</span> Project Status</p>
-// //                     <p className="mb-1" style={{ fontSize: '.77rem' }}>Web Design</p>
-// //                     <div className="progress rounded" style={{ height: '5px' }}>
-// //                       <div className="progress-bar" role="progressbar" style={{ width: '80%' }} aria-valuenow="80"
-// //                         aria-valuemin="0" aria-valuemax="100"></div>
-// //                     </div>
-// //                     <p className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>Website Markup</p>
-// //                     <div className="progress rounded" style={{ height: '5px' }}>
-// //                       <div className="progress-bar" role="progressbar" style={{ width: '72%' }} aria-valuenow="72"
-// //                         aria-valuemin="0" aria-valuemax="100"></div>
-// //                     </div>
-// //                     <p className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>One Page</p>
-// //                     <div className="progress rounded" style={{ height: '5px' }}>
-// //                       <div className="progress-bar" role="progressbar" style={{ width: '89%' }} aria-valuenow="89"
-// //                         aria-valuemin="0" aria-valuemax="100"></div>
-// //                     </div>
-// //                     <p className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>Mobile Template</p>
-// //                     <div className="progress rounded" style={{ height: '5px' }}>
-// //                       <div className="progress-bar" role="progressbar" style={{ width: '55%' }} aria-valuenow="55"
-// //                         aria-valuemin="0" aria-valuemax="100"></div>
-// //                     </div>
-// //                     <p className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>Backend API</p>
-// //                     <div className="progress rounded mb-2" style={{ height: '5px' }}>
-// //                       <div className="progress-bar" role="progressbar" style={{ width: '66%' }} aria-valuenow="66"
-// //                         aria-valuemin="0" aria-valuemax="100"></div>
-// //                     </div>
-// //                   </div>
-// //                 </div>
-// //               </div>
-// //             </div>
-// //           </div>
-// //         </div>
-// //       </div>
-// //     </section>
-// //       </div>
-// //     </div>
-// //   );
-// // };
-
-// // export default ClientDetails;
-// import React from "react";
-// import "./clientDetails.css";
-// import SidebarDash from "../SidebarDash/SidebarDash";
-
-// const ClientDetails = () => {
-//   return (
-//     <div className="app">
-//       <SidebarDash />
-//       <div className="container">
-//         <section style={{ backgroundColor: '#eee' }}>
-//           <div className="container py-5 row d-flex">
-//             <div className="row">
-//               <div className="col">
-//                 <nav aria-label="breadcrumb" className="bg-light rounded-3 p-3 mb-4">
-//                   <ol className="breadcrumb mb-0">
-//                     <li className="breadcrumb-item"><a href="#">Home</a></li>
-//                     <li className="breadcrumb-item"><a href="#">User</a></li>
-//                     <li className="breadcrumb-item active" aria-current="page">Client Profile</li>
-//                   </ol>
-//                 </nav>
-//               </div>
-//             </div>
-
-//             <div className="row">
-//               <div className="col-lg-4">
-//                 <div className="card mb-4">
-//                   <div className="card-body text-center">
-//                     {/* Client avatar */}
-//                     <img
-//                       src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
-//                       alt="avatar"
-//                       className="rounded-circle img-fluid"
-//                       style={{ width: '150px' }}
-//                     />
-//                     <h5 className="my-3">John Smith</h5>
-//                     <p className="text-muted mb-1">Full Stack Developer</p>
-//                     <p className="text-muted mb-4">Bay Area, San Francisco, CA</p>
-//                     <div className="d-flex justify-content-center mb-2">
-//                       <button type="button" className="btn btn-primary">Follow</button>
-//                       <button type="button" className="btn btn-outline-primary ms-1">Message</button>
-//                     </div>
-//                   </div>
-//                 </div>
-//                 <div className="card mb-4 mb-lg-0">
-//                   <div className="card-body p-0">
-//                     {/* Client social links */}
-//                     <ul className="list-group list-group-flush rounded-3">
-//                       <li className="list-group-item d-flex justify-content-between align-items-center p-3">
-//                         <i className="fas fa-globe fa-lg text-warning"></i>
-//                         <p className="mb-0">https://mdbootstrap.com</p>
-//                       </li>
-//                       <li className="list-group-item d-flex justify-content-between align-items-center p-3">
-//                         <i className="fab fa-github fa-lg" style={{ color: '#333333' }}></i>
-//                         <p className="mb-0">mdbootstrap</p>
-//                       </li>
-//                       <li className="list-group-item d-flex justify-content-between align-items-center p-3">
-//                         <i className="fab fa-twitter fa-lg" style={{ color: '#55acee' }}></i>
-//                         <p className="mb-0">@mdbootstrap</p>
-//                       </li>
-//                       <li className="list-group-item d-flex justify-content-between align-items-center p-3">
-//                         <i className="fab fa-instagram fa-lg" style={{ color: '#ac2bac' }}></i>
-//                         <p className="mb-0">mdbootstrap</p>
-//                       </li>
-//                       <li className="list-group-item d-flex justify-content-between align-items-center p-3">
-//                         <i className="fab fa-facebook-f fa-lg" style={{ color: '#3b5998' }}></i>
-//                         <p className="mb-0">mdbootstrap</p>
-//                       </li>
-//                     </ul>
-//                   </div>
-//                 </div>
-//               </div>
-//               <div className="col-lg-8">
-//                 <div className="card mb-4">
-//                   <div className="card-body">
-//                     {/* Client details */}
-//                     <div className="row">
-//                       <div className="col-sm-3">
-//                         <p className="mb-0">Full Name</p>
-//                       </div>
-//                       <div className="col-sm-9">
-//                         <p className="text-muted mb-0">Johnatan Smith</p>
-//                       </div>
-//                     </div>
-//                     <hr />
-//                     {/* More client details here */}
-//                   </div>
-//                 </div>
-//                 <div className="row">
-//                   <div className="col-md-6">
-//                     <div className="card mb-4 mb-md-0">
-//                       <div className="card-body">
-//                         {/* Project status and progress bars */}
-//                         <p className="mb-4"><span className="text-primary font-italic me-1">Assignment</span> Project Status</p>
-//                         {/* Progress bars for different tasks */}
-//                       </div>
-//                     </div>
-//                   </div>
-//                   <div className="col-md-6">
-//                     <div className="card mb-4 mb-md-0">
-//                       <div className="card-body">
-//                         {/* More project status and progress bars */}
-//                       </div>
-//                     </div>
-//                   </div>
-//                 </div>
-//               </div>
-//             </div>
-//           </div>
-//         </section>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default ClientDetails;
-import React from "react";
+import React, { useState } from "react";
 import SidebarDash from "../SidebarDash/SidebarDash";
 import "./clientDetails.css";
+import image from "../../assets/images/dev.png";
+// import Profile from "../aziz/Aziz"
+import  Avatar  from "./avatar.jpg";
+import banner from "./lawyer77.avif"
 
 const ClientDetails = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const handleItemClick = (index) => {
+    setActiveIndex(index);
+  };
+
+
   return (
     <div className="profileDetails">
       <SidebarDash />
-      <div className="client-details-container ">
-        <div className="client-details-content">
-          <section style={{ backgroundColor: "#eee" }}>
-            <div className="container py-5">
-              <div className="row">
-                <div className="col-lg-4">
-                  <div className="card mb-4">
-                    <div className="card-body text-center">
-                      <img
-                        src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
-                        alt="avatar"
-                        className="rounded-circle img-fluid"
-                        style={{ width: "9.375rem" }}
-                      />
-                      <h5 className="my-3">John Smith</h5>
-                      <p className="text-muted mb-1">Full Stack Developer</p>
-                      <p className="text-muted mb-4">
-                        Bay Area, San Francisco, CA
-                      </p>
-                      <div className="d-flex justify-content-center">
-                        <button
-                          type="button"
-                          className="btn btn-outline-primary ms-1">
-                          Message
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="card mb-4 mb-lg-0">
-                    <div className="card-body p-0">
-                      <ul className="list-group list-group-flush rounded-3">
-                        <li className="list-group-item d-flex justify-content-between align-items-center p-3">
-                          <i className="fas fa-globe fa-lg text-warning"></i>
-                          <p className="mb-0">https://mdbootstrap.com</p>
-                        </li>
-                        <li className="list-group-item d-flex justify-content-between align-items-center p-3">
-                          <i
-                            className="fab fa-github fa-lg"
-                            style={{ color: "#333333" }}></i>
-                          <p className="mb-0">mdbootstrap</p>
-                        </li>
-                        <li className="list-group-item d-flex justify-content-between align-items-center p-3">
-                          <i
-                            className="fab fa-twitter fa-lg"
-                            style={{ color: "#55acee" }}></i>
-                          <p className="mb-0">@mdbootstrap</p>
-                        </li>
-                        <li className="list-group-item d-flex justify-content-between align-items-center p-3">
-                          <i
-                            className="fab fa-instagram fa-lg"
-                            style={{ color: "#ac2bac" }}></i>
-                          <p className="mb-0">mdbootstrap</p>
-                        </li>
-                        <li className="list-group-item d-flex justify-content-between align-items-center p-3">
-                          <i
-                            className="fab fa-facebook-f fa-lg"
-                            style={{ color: "#3b5998" }}></i>
-                          <p className="mb-0">mdbootstrap</p>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-lg-8">
-                  <div className="card mb-4">
-                    <div className="card-body">
-                      <div className="row">
-                        <div className="col-sm-3">
-                          <p className="mb-0">Full Name</p>
-                        </div>
-                        <div className="col-sm-9">
-                          <p className="text-muted mb-0">Johnatan Smith</p>
-                        </div>
-                      </div>
-                      <hr />
-                      <div className="row">
-                        <div className="col-sm-3">
-                          <p className="mb-0">Email</p>
-                        </div>
-                        <div className="col-sm-9">
-                          <p className="text-muted mb-0">example@example.com</p>
-                        </div>
-                      </div>
-                      <hr />
-                      <div className="row">
-                        <div className="col-sm-3">
-                          <p className="mb-0">Phone</p>
-                        </div>
-                        <div className="col-sm-9">
-                          <p className="text-muted mb-0">(097) 234-5678</p>
-                        </div>
-                      </div>
-                      <hr />
-                      <div className="row">
-                        <div className="col-sm-3">
-                          <p className="mb-0">Mobile</p>
-                        </div>
-                        <div className="col-sm-9">
-                          <p className="text-muted mb-0">(098) 765-4321</p>
-                        </div>
-                      </div>
-                      <hr />
-                      <div className="row">
-                        <div className="col-sm-3">
-                          <p className="mb-0">Address</p>
-                        </div>
-                        <div className="col-sm-9">
-                          <p className="text-muted mb-0">
-                            Bay Area, San Francisco, CA
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-6">
-                      <div className="card mb-4 mb-md-0">
-                        <div className="card-body">
-                          <p className="mb-4">
-                            <span className="text-primary font-italic me-1">
-                              assignment
-                            </span>{" "}
-                            Case status
-                          </p>
-                          <p className="mb-1" style={{ fontSize: "0.77rem" }}>
-                            Web Design
-                          </p>
-                          <div
-                            className="progress rounded"
-                            style={{ height: "0.15625rem" }}>
-                            <div
-                              className="progress-bar"
-                              role="progressbar"
-                              style={{ width: "80%" }}
-                              aria-valuenow="80"
-                              aria-valuemin="0"
-                              aria-valuemax="100"></div>
-                          </div>
-                          <p
-                            className="mt-4 mb-1"
-                            style={{ fontSize: "0.77rem" }}>
-                            Website Markup
-                          </p>
-                          <div
-                            className="progress rounded"
-                            style={{ height: "0.15625rem" }}>
-                            <div
-                              className="progress-bar"
-                              role="progressbar"
-                              style={{ width: "72%" }}
-                              aria-valuenow="72"
-                              aria-valuemin="0"
-                              aria-valuemax="100"></div>
-                          </div>
-                          <p
-                            className="mt-4 mb-1"
-                            style={{ fontSize: "0.77rem" }}>
-                            One Page
-                          </p>
-                          <div
-                            className="progress rounded"
-                            style={{ height: "0.15625rem" }}>
-                            <div
-                              className="progress-bar"
-                              role="progressbar"
-                              style={{ width: "89%" }}
-                              aria-valuenow="89"
-                              aria-valuemin="0"
-                              aria-valuemax="100"></div>
-                          </div>
-                          <p
-                            className="mt-4 mb-1"
-                            style={{ fontSize: "0.77rem" }}>
-                            Mobile Template
-                          </p>
-                          <div
-                            className="progress rounded"
-                            style={{ height: "0.15625rem" }}>
-                            <div
-                              className="progress-bar"
-                              role="progressbar"
-                              style={{ width: "55%" }}
-                              aria-valuenow="55"
-                              aria-valuemin="0"
-                              aria-valuemax="100"></div>
-                          </div>
-                          <p
-                            className="mt-4 mb-1"
-                            style={{ fontSize: "0.77rem" }}>
-                            Backend API
-                          </p>
-                          <div
-                            className="progress rounded mb-2"
-                            style={{ height: "0.15625rem" }}>
-                            <div
-                              className="progress-bar"
-                              role="progressbar"
-                              style={{ width: "66%" }}
-                              aria-valuenow="66"
-                              aria-valuemin="0"
-                              aria-valuemax="100"></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-md-6">
-                      <div className="card mb-4 mb-md-0">
-                        <div className="card-body">
-                          <p className="mb-4">
-                            <span className="text-primary font-italic me-1">
-                              assignment
-                            </span>{" "}
-                            Payement Status
-                          </p>
-                          <p className="mb-1" style={{ fontSize: "0.77rem" }}>
-                            Web Design
-                          </p>
-                          <div
-                            className="progress rounded"
-                            style={{ height: "0.15625rem" }}>
-                            <div
-                              className="progress-bar"
-                              role="progressbar"
-                              style={{ width: "80%" }}
-                              aria-valuenow="80"
-                              aria-valuemin="0"
-                              aria-valuemax="100"></div>
-                          </div>
-                          <p
-                            className="mt-4 mb-1"
-                            style={{ fontSize: "0.77rem" }}>
-                            Website Markup
-                          </p>
-                          <div
-                            className="progress rounded"
-                            style={{ height: "0.15625rem" }}>
-                            <div
-                              className="progress-bar"
-                              role="progressbar"
-                              style={{ width: "72%" }}
-                              aria-valuenow="72"
-                              aria-valuemin="0"
-                              aria-valuemax="100"></div>
-                          </div>
-                          <p
-                            className="mt-4 mb-1"
-                            style={{ fontSize: "0.77rem" }}>
-                            One Page
-                          </p>
-                          <div
-                            className="progress rounded"
-                            style={{ height: "0.15625rem" }}>
-                            <div
-                              className="progress-bar"
-                              role="progressbar"
-                              style={{ width: "89%" }}
-                              aria-valuenow="89"
-                              aria-valuemin="0"
-                              aria-valuemax="100"></div>
-                          </div>
-                          <p
-                            className="mt-4 mb-1"
-                            style={{ fontSize: "0.77rem" }}>
-                            Mobile Template
-                          </p>
-                          <div
-                            className="progress rounded"
-                            style={{ height: "0.15625rem" }}>
-                            <div
-                              className="progress-bar"
-                              role="progressbar"
-                              style={{ width: "55%" }}
-                              aria-valuenow="55"
-                              aria-valuemin="0"
-                              aria-valuemax="100"></div>
-                          </div>
-                          <p
-                            className="mt-4 mb-1"
-                            style={{ fontSize: "0.77rem" }}>
-                            Backend API
-                          </p>
-                          <div
-                            className="progress rounded mb-2"
-                            style={{ height: "0.15625rem" }}>
-                            <div
-                              className="progress-bar"
-                              role="progressbar"
-                              style={{ width: "66%" }}
-                              aria-valuenow="66"
-                              aria-valuemin="0"
-                              aria-valuemax="100"></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+      <div className="client-details-container">
+      <div className="profile-header-main-container">
+      <div className="profile-header">
+        <div className="cover-photo">
+          <img src={banner} alt="" />
+        </div>
+        <div className="profile-header-container">
+          <div className="profile-photo">
+            <img src={Avatar} alt="" />
+            <div className="camera_icon_avatar">
+              <svg
+                style={{cursor:'pointer'}}
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="18"
+                fill="white"
+                class="bi bi-camera-fill"
+                viewBox="0 0 16 16"
+              >
+                <path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+                <path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z" />
+              </svg>
+            </div>
+          </div>
+          <div className="profile-info">
+            <p>Pixy Kravasky</p>
+            <div className="profile-info-adress">
+              <div className="profile-info-adress-wrap">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="rgb(119, 119, 119)"
+                  class="bi bi-building-check"
+                  viewBox="0 0 16 16"
+                >
+                  <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm1.679-4.493-1.335 2.226a.75.75 0 0 1-1.174.144l-.774-.773a.5.5 0 0 1 .708-.708l.547.548 1.17-1.951a.5.5 0 1 1 .858.514Z" />
+                  <path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6.5a.5.5 0 0 1-1 0V1H3v14h3v-2.5a.5.5 0 0 1 .5-.5H8v4H3a1 1 0 0 1-1-1V1Z" />
+                  <path d="M4.5 2a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Zm-6 3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Zm-6 3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Z" />
+                </svg>
+                <p>Developer</p>
+              </div>
+              <div className="profile-info-adress-wrap">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="rgb(119, 119, 119)"
+                  class="bi bi-geo-alt"
+                  viewBox="0 0 16 16"
+                >
+                  <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z" />
+                  <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                </svg>
+
+                <p>New York</p>
+              </div>
+              <div className="profile-info-adress-wrap">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="rgb(119, 119, 119)"
+                  class="bi bi-calendar-week"
+                  viewBox="0 0 16 16"
+                >
+                  <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-5 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z" />
+                  <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z" />
+                </svg>
+                <p>Joined March 17</p>
               </div>
             </div>
-          </section>
+          </div>
+          <div className="profile-header-statistics">
+            <div className="profile-card">
+              <p>$4.550</p>
+              <p>Earning</p>
+            </div>
+            <div className="profile-card">
+              <p>$4.550</p>
+              <p>Projects</p>
+            </div>
+            <div className="profile-card">
+              <p>$4.550</p>
+              <p>Success Rate</p>
+            </div>
+          </div>
+          <div className="bottom-nav">
+            <ul className="bottom-nav-ul">
+              <li
+                onClick={() => handleItemClick(0)}
+                className={`my-text ${activeIndex === 0 ? "highlight" : ""}`}
+              >
+                Overview
+              </li>
+              <li
+                onClick={() => handleItemClick(1)}
+                className={`my-text ${activeIndex === 1 ? "highlight" : ""}`}
+              >
+                Projects
+              </li>
+              <li
+                onClick={() => handleItemClick(2)}
+                className={`my-text ${activeIndex === 2 ? "highlight" : ""}`}
+              >
+                Documents
+              </li>
+            </ul>
+          </div>
         </div>
+      </div>
+    </div>
       </div>
     </div>
   );
