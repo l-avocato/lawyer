@@ -3,7 +3,7 @@ const {Lawyer}= require('../models/index')
 
 module.exports = {
 
-    getAllLawyers : async () => {
+    getAllLawyers : async (req,res) => {
         try {
             const allLawyers= await Lawyer.findAll()
             res.status(200).send(allLawyers)

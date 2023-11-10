@@ -1,6 +1,6 @@
 const express = require('express');
 const PhaseRoute = require("./routes/phases.route")
-
+const cors = require("cors")
 
 require("./models/index")
 const routerPhase= require('./routes/phases.route')
@@ -27,7 +27,7 @@ const routerNotification = require('./routes/notification.route')
 let app = express();
 
 app.use(express.json())
-
+app.use(cors())
 
 app.use("/api/phase",routerPhase);
 
