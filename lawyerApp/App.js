@@ -5,6 +5,7 @@ import { StatusBar } from "expo-status-bar";
 import HomePage from "./screens/HomePage";
 import Onboarding2 from "./screens/Onboarding2";
 import ManageFilters from "./screens/ManageFilters";
+
 //screens
 import Login from "./screens/Login";
 import Signup from "./screens/SignUp";
@@ -26,6 +27,9 @@ import Chat from "./screens/Chat";
 import SearchListings from "./screens/SearchListings";
 import { Provider } from "react-redux";
 import { store } from './store/index'
+import ChatRooms from "./screens/ChatRooms";
+
+
 export default function App() {
   const Stack = createNativeStackNavigator();
   return (
@@ -42,9 +46,17 @@ export default function App() {
             headerShown: false,
           }}
         />
+        
         <Stack.Screen
           name="Onboarding1"
           component={Onboarding1}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="ChatRooms"
+          component={ChatRooms}
           options={{
             headerShown: false,
           }}

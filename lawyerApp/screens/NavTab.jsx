@@ -36,9 +36,9 @@ const NavTab = () => {
         </TouchableOpacity>
         <TouchableOpacity
           style={
-            selectedTab === "Chat" ? styles.tabBarItemActive : styles.tabBarItem
+            selectedTab === "ChatRooms" ? styles.tabBarItemActive : styles.tabBarItem
           }
-          onPress={() => navigation.navigate("Chat")}
+          onPress={() => navigation.navigate("ChatRooms")}
         >
           <Ionicons name="chatbubbles" size={24} color="black" />
         </TouchableOpacity>
