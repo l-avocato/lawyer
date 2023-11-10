@@ -25,12 +25,15 @@ import LawyerProfile from "./screens/LawyerProfile";
 import GoogleMapView from "./screens/GoogleMapView";
 import Chat from "./screens/Chat";
 import SearchListings from "./screens/SearchListings";
+import { Provider } from "react-redux";
+import { store } from './store/index'
 import ChatRooms from "./screens/ChatRooms";
 
 
 export default function App() {
   const Stack = createNativeStackNavigator();
   return (
+    <Provider store={store}> 
     <NavigationContainer>
       <Stack.Navigator
         initialRouteName="Onboarding1"
@@ -207,5 +210,6 @@ export default function App() {
         />
       </Stack.Navigator>
     </NavigationContainer>
+    </Provider>
   );
 }
