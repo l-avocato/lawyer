@@ -4,7 +4,7 @@ const {User}= require('../models/index')
 
 module.exports = {
 
-getAllUsers : async () => {
+getAllUsers : async (req,res) => {
     try {
         const allUsers= await User.findAll()
         res.status(200).send(allUsers)
