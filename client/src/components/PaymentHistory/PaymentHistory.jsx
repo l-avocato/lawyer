@@ -10,17 +10,16 @@ import SidebarDash from '../SidebarDash/SidebarDash';
 const columns = [
   { field: 'id', headerName: 'ID', width: 90 },
   {
-    field: 'firstName',
-    headerName: 'First name',
+    field: 'fullname',
+    headerName: 'Full name',
     width: 150,
     editable: true,
   },
-  {
-    field: 'lastName',
-    headerName: 'Last name',
-    width: 150,
-    editable: true,
-  },
+ {
+    field: 'email',
+    headerName: 'Email',
+    width: 230,
+ },
   {
     field: 'age',
     headerName: 'Age',
@@ -28,27 +27,19 @@ const columns = [
     width: 110,
     editable: true,
   },
-  {
-    field: 'fullName',
-    headerName: 'Full name',
-    description: 'This column has a value getter and is not sortable.',
-    sortable: false,
-    width: 160,
-    valueGetter: (params) =>
-      `${params.row.firstName || ''} ${params.row.lastName || ''}`,
-  },
+ 
 ];
 
 const rows = [
-  { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-  { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-  { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-  { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-  { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-  { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-  { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-  { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-  { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
+  { id: 1, fullname: 'cherni dhia', email: 'chernidhia@gmail.com', age: 35 },
+  { id: 2, fullname: 'haykel ksiksi', email: 'haykelksiksi@gmail.com', age: 42 },
+  { id: 3, fullname: 'layla snousi', email: 'laylasnousi@gmail.com', age: 45 },
+  { id: 4, fullname: 'Sarra ghrioui', email: 'Sarraghrioui@gmail.com', age: 16 },
+  { id: 5, fullname: 'Tarek jdidi', email: 'Tarekjdidi@gmail.com', age: 48 },
+  { id: 6, fullname: 'Mohamed mousa', email:'Mohamedmousa@gmail.com', age: 150 },
+  { id: 7, fullname: 'Cyrin arfaoui', email: 'Cyrinarfaoui@gmail.com', age: 44 },
+  { id: 8, fullname: 'Firas aabess', email: 'Firasaabess@gmail.com', age: 36 },
+  { id: 9, fullname: 'Rawen chamsi', email: 'Rawenchamsi@gmail.com', age: 65 },
 ];
 
 const PaymentHistory = () => {
@@ -95,42 +86,17 @@ const PaymentHistory = () => {
   const headers = ['Date', 'Client', 'Amount', 'Description'];
 
   return (
-    // <div className='ALL-Cd'>
-    //    <SidebarDash/>
-    //     <div className="payment-history-container">
-    //   <h2 className='word-class'>Payment History</h2>
-    //   <table className="payment-history">
-    //     <thead>
-    //       <tr>
-    //         {headers.map((header, index) => (
-    //           <th key={index}>{header}</th>
-    //         ))}
-    //       </tr>
-    //     </thead>
-    //     <tbody>
-    //       {payments.map((payment, index) => (
-    //         <tr key={index}>
-    //           <td>{payment.date}</td>
-    //           <td onClick={handlePaymentClick}>{payment.clientName}</td>
-    //           <td>{payment.amount}</td>
-    //           <td>{payment.description}</td>
-    //         </tr>
-    //       ))}
-    //     </tbody>
-    //   </table>
-    // </div>
-    // </div>
-    <div style={{display:"flex"}}>  
-      {/* <NavbarDashboard /> */}
-      <SidebarDash/>
-    <div style={{display: 'flex',justifyContent:'center',flexDirection:"column"}}>
-    <div style={{display: 'flex',justifyContent:'center',flexDirection:"column"}}>
-    <div style={{width:"160px", height:"90px" , backgroundColor:"grey" ,marginLeft:'40%' , marginTop:'3%',borderRadius:'5%'}}> <p style={{marginLeft:'4%'}}>Total Earning</p></div>
-    <div style={{width:"170px", height:"90px" , backgroundColor:"grey",marginLeft:'60%' ,marginBottom:'-10%' , borderRadius:'5%'}}> <p style={{marginLeft:'4%'}}>Pending</p></div>
-    </div>
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: "11rem", marginLeft: "15rem" }}>
+    <div style={{display:"flex" ,}}>  
+      <NavbarDashboard />
+      
+    <div style={{display: 'flex',justifyContent:'center',flexDirection:"column" }}>
+    {/* <div style={{display: 'flex',justifyContent:'center',flexDirection:"column"}}>
+    
+    </div> */}
+    
+      <div style={{ display: 'flex', alignItems: 'center', marginTop: "12em",marginLeft:'-50%'  }}>
 
-        <Box sx={{ height: 400, width: '110%', marginLeft: "15rem" }}>
+        <Box sx={{ marginTop:'2rem', height: 400, width: '150%', display: 'flex'  }}>
           <DataGrid
             rows={ rows}
             columns={ columns}
