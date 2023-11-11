@@ -6,7 +6,6 @@ import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 import NavbarDashboard from '../NavbarDashboard/NavbarDashboard';
 import SidebarDash from '../SidebarDash/SidebarDash';
 import axios from 'axios'
-import Modal from "../AddClient/AddClient.jsx";
 
 
 
