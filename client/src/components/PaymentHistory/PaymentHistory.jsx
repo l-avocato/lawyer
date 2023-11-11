@@ -1,10 +1,11 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import './PaymentHistory.css';
 import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 import NavbarDashboard from '../NavbarDashboard/NavbarDashboard';
 import SidebarDash from '../SidebarDash/SidebarDash';
+import axios from 'axios'
 
 
 const columns = [
@@ -30,6 +31,10 @@ const columns = [
  
 ];
 
+
+
+
+
 const rows = [
   { id: 1, fullname: 'cherni dhia', email: 'chernidhia@gmail.com', age: 35 },
   { id: 2, fullname: 'haykel ksiksi', email: 'haykelksiksi@gmail.com', age: 42 },
@@ -44,6 +49,21 @@ const rows = [
 
 const PaymentHistory = () => {
   const navigate = useNavigate()
+  const [users,setUsers]= useState([]);
+
+
+const fetch=async()=>{
+  try {
+    
+    const response=axios.get("http://localhost:1128/api/user/allUsers")
+    setUsers(response);
+  } catch (error) {
+    console.log(error)
+  }
+}
+useEffect(()=>{
+  fetch()
+},[])
 
   const payments = [
     {

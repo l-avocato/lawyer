@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./allclient.css";
 import Modal from "../AddClient/AddClient.jsx";
-import SidebarDash from "../SidebarDash/SidebarDash.jsx";
+// import SidebarDash from "../SidebarDash/SidebarDash.jsx";
 import { db } from "../../firebaseconfig.js";
 import { collection, doc, getDocs, deleteDoc } from "firebase/firestore";
 import NavbarDashboard from "../NavbarDashboard/NavbarDashboard.jsx";
