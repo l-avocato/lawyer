@@ -4,13 +4,13 @@ import SidebarDash from "../SidebarDash/SidebarDash";
 import axios from "axios";
 import { Table, Space, Button } from "antd";
 import CaseProfile from "../CaseProfile/CaseProfile";
-import { useNavigation } from "@react-navigation/native"; 
+import { useNavigate } from "react-router-dom"; 
 
 const CaseHistory = () => {
   const [cases, setCases] = useState([]);
   const [users, setUsers] = useState([]);
   const [data, setData] = useState([]);
-  const navigation = useNavigation();
+  const navigation = useNavigate();
 
   useEffect(() => {
     const fetchCasesData = async () => {
@@ -93,12 +93,12 @@ const CaseHistory = () => {
       key: "action",
       render: (_, record) => (
         <Space size="middle">
-          <Button type="primary" onClick={() => navigation.navigate("CaseProfile")}>
+          <Button type="primary" onClick={() => navigation("/CaseProfile")}>
             View
           </Button>
-          {/* <Button type="danger" onClick={() => deleteUser("CaseProfile")}>
+          <Button type="danger" onClick={() => deleteUser("CaseProfile")}>
             Delete
-          </Button> */}
+          </Button>
         </Space>
       ),
     },
