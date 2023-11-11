@@ -115,30 +115,15 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   body1: {
-    flexGrow: 1,
+    // flexGrow: 1,
+    height: 1800,
   },
   lawyerView1: {
     backgroundColor: "white",
     height: 150,
     padding: 10,
     marginBottom: 10,
-    flexDirection: "row", // To align image and content side by side
-    alignItems: "center",
-  },
-  lawyerView2: {
-    backgroundColor: "white",
-    height: 150,
-    padding: 10,
-    marginBottom: 10,
-    flexDirection: "row", // To align image and content side by side
-    alignItems: "center",
-  },
-  lawyerView3: {
-    backgroundColor: "white",
-    height: 150,
-    padding: 10,
-    marginBottom: 10,
-    flexDirection: "row", // To align image and content side by side
+    flexDirection: "row", 
     alignItems: "center",
   },
   lawyerImage: {
@@ -168,13 +153,13 @@ const styles = StyleSheet.create({
   },
   starIcon: {
     position: "absolute",
-    top: 85, // Adjust the top position as needed
-    right: 275, // Adjust the right position as needed
+    top: 85, 
+    right: 275, 
   },
   locationIcon: {
     position: "absolute",
-    top: 85, // Adjust the top position as needed
-    right: 205, // Adjust the right position as needed
+    top: 85, 
+    right: 205, 
   },
   priceIcon: {
     position:"absolute",
