@@ -4,7 +4,7 @@ const {User}= require('../models/index')
 
 module.exports = {
 
-getAllUsers : async () => {
+getAllUsers : async (req,res) => {
     try {
         const allUsers= await User.findAll()
         res.status(200).send(allUsers)
@@ -37,7 +37,7 @@ deleteUser: async (req,res)=>{
         const userDeleted= await User.destroy({
       where:{  id:req.params.id }
         })
-        res.send(userDeleted)
+        res.json(userDeleted)
     } catch (error) {
         throw error
     }

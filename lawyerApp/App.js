@@ -36,6 +36,7 @@ export default function App() {
         initialRouteName="Onboarding1"
         component={Onboarding1}
         options={{ headerShown: false }}>
+          
         <Stack.Screen
           name="NavTab"
           component={NavTab}
