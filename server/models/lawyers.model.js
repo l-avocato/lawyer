@@ -21,6 +21,7 @@ module.exports=(connection,DataTypes)=>{
     certifications: DataTypes.STRING,
     field: DataTypes.STRING,
     IsVerified: DataTypes.BOOLEAN,
+    price: DataTypes.INTEGER,
     } )
     return lawyers
     }
