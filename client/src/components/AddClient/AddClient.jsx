@@ -1,9 +1,6 @@
 import React, {  useState } from "react";
 import "./AddClient.css";
 import axios from "axios";
-import {db} from "../../firebaseconfig.js"
-
-import {addDoc, collection} from "firebase/firestore";
 
 const AddClient = ({refrech, setRefrech}) => {
   const [papers, setPapers] = useState("");
@@ -12,42 +9,46 @@ const AddClient = ({refrech, setRefrech}) => {
   const [cin, setCin]=useState(0);
   const [PhoneNumber, setPhoneNumber]=useState(0)
   const [gender,setGender]=useState("male")
-
+  const [address, setAddress]=useState("")
+ const [birthDate, setBirthDate]= useState("")
  
+
   const handleFile = async (e) => {
     const formData = new FormData();
     formData.append("file", e.target.files[0]);
     formData.append("upload_preset", "oztadvnr");
-  
-    try {
-      const response = await axios.post("https://api.cloudinary.com/v1_1/dl4qexes8/upload", formData);
-      const imageUrl = response.data["secure_url"];
-  
-      setPapers(imageUrl);
-    } catch (error) {
-      console.error("Error uploading file:", error);
-    }
+    await axios
+      .post("https://api.cloudinary.com/v1_1/dl4qexes8/upload", formData)
+      .then((response) => {
+        setPapers(response.data["secure_url"]);
+      })
+      
+      .catch((error) => {
+        throw error;
+      });
   };
+
   
 
+ 
   const creacteUser = async () => {
     try {
       const response = await axios.post("http://localhost:1128/api/user/addUser", {
         fullName: fullName,
         email: email,
-        CIN:cin ,
+        CIN: cin,
         phoneNumber: PhoneNumber,
         ImageUrl: papers,
         gender: gender,
+        adress : address,
+        birthDate : birthDate
       });
-
-      console.log("User created successfully:", response.data);
-
       setRefrech(!refrech);
     } catch (error) {
       console.error("Error creating user:", error);
     }
   };
+
   return (
     <div>
       <div
@@ -66,69 +67,104 @@ const AddClient = ({refrech, setRefrech}) => {
                 Create a new clients
               </h1>
             </div>
-            <img src={papers} alt="" style={{borderRadius:"50%", width:"130px", height:"130px", marginLeft:"260px", marginTop:"0.5rem"}} />
+           <div style={{display:'flex', flexDirection:'column' , alignItems:'center', justifyContent:'center', gap:'1rem', width:'100%', marginBottom:'1rem', marginTop:'1rem'}}>
+           <img src={papers} alt="" style={{borderRadius:"50%", width:"130px", height:"130px"}} />
 
+<div style={{display:"flex", justifyContent:'center', alignItems:"center" , width:'100%'}}>
+     
+   <div style={{display:"flex" , justifyContent:'center', gap:'3rem', width:'100%'}}>
+   <div class="form-floating">
+     <label for="formFile" class="form-label"></label>
+     <input
+       class="form-control"
+       type="file"
+       id="formFile"
+       onChange={(e) => {
+         handleFile(e);
+       }}
+     />
+   </div>
+   <div class="form-floating ">
+     <input
+       type="date"
+       class="form-control"
+       id="floatingInput"
+       placeholder="Full Name"
+       onChange={((e)=>{setBirthDate(e.target.value)})}
+       
+     />
+     <label for="floatingInput">Birth Date</label>
+   </div>
+   </div>
+      
+</div>
+   
 
-            <div class="form-floating">
-              <label for="formFile" class="form-label"></label>
-              <input
-                class="form-control"
-                type="file"
-                id="formFile"
-                onChange={(e) => {
-                  handleFile(e);
-                }}
-              />
-            </div>
+    <div style={{display:"flex" , justifyContent:'center', gap:'3rem', width:'100%'}}>
+    <div class="form-floating ">
+     <input
+       type="text"
+       class="form-control"
+       id="floatingInput"
+       placeholder="Full Name"
+       onChange={((e)=>{setfullName(e.target.value)})}
+     />
+     <label for="floatingInput">Full Name</label>
+   </div>
+   <div class="form-floating">
+     <select class="form-select" id="floatingSelectGrid" onChange={((e)=>{ setGender(e.target.value)})} >
+       <option value="Male" >Male</option>
+       <option value="Female">Female</option>
+     </select>
+     <label for="floatingSelectGrid">select a gender</label>
+   </div>
+    </div>
+  <div style={{display:"flex" , justifyContent:'center', gap:'3rem', width:'100%'}}>
+  <div class="form-floating">
+     <input
+       type="email"
+       class="form-control"
+       id="floatingPassword"
+       placeholder="Email"
+       onChange={((e)=>{setEmail(e.target.value)})}
+     />
+     <label for="floatingPassword">Adress Email</label>
+   </div>
+   <div class="form-floating">
+     <input
+       type="text"
+       class="form-control"
+       id="floatingPassword"
+       placeholder="Phone Number"
+       onChange={((e)=>{setPhoneNumber(e.target.value)})}
+     />
+     <label for="floatingPassword">Phone Number</label>
+   </div>
+  </div>
+   <div style={{display:"flex" , justifyContent:'center', gap:'3rem', width:'100%'}}>
+   <div class="form-floating" >
+     <input
+       type="number"
+       class="form-control"
+       id="floatingPassword"
+       placeholder="Cin"
+       onChange={((e)=>{setCin(e.target.value)})}
+     />
+     <label for="floatingPassword">Cin</label>
+   </div>
+   <div class="form-floating">
+     <input
+       type="string"
+       class="form-control"
+       id="floatingPassword"
+       placeholder="Cin"
+       onChange={((e)=>{setAddress(e.target.value)})}
+     />
+     <label for="floatingPassword">Address</label>
+   </div>
+   </div>
 
-            <div class="form-floating ">
-              <input
-                type="text"
-                class="form-control"
-                id="floatingInput"
-                placeholder="Full Name"
-                onChange={((e)=>{setfullName(e.target.value)})}
-              />
-              <label for="floatingInput">Full Name</label>
-            </div>
-            <div class="form-floating">
-              <select class="form-select" id="floatingSelectGrid" onChange={((e)=>{ setGender(e.target.value)})} >
-                <option value="Male" >Male</option>
-                <option value="Female">Female</option>
-              </select>
-              <label for="floatingSelectGrid">select a gender</label>
-            </div>
-            <div class="form-floating">
-              <input
-                type="email"
-                class="form-control"
-                id="floatingPassword"
-                placeholder="Email"
-                onChange={((e)=>{setEmail(e.target.value)})}
-              />
-              <label for="floatingPassword">Adress Email</label>
-            </div>
-            <div class="form-floating">
-              <input
-                type="text"
-                class="form-control"
-                id="floatingPassword"
-                placeholder="Phone Number"
-                onChange={((e)=>{setPhoneNumber(e.target.value)})}
-              />
-              <label for="floatingPassword">Phone Number</label>
-            </div>
-            <div class="form-floating">
-              <input
-                type="number"
-                class="form-control"
-                id="floatingPassword"
-                placeholder="Cin"
-                onChange={((e)=>{setCin(e.target.value)})}
-              />
-              <label for="floatingPassword">Cin</label>
-            </div>
-
+           </div>
             <div class="modal-footer">
               <button
                 class="btn btn-outline-secondary"

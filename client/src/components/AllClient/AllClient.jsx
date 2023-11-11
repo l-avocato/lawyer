@@ -6,6 +6,7 @@ import NavbarDashboard from "../NavbarDashboard/NavbarDashboard.jsx";
 import DataGrid from "./DataGrid.jsx";
 import axios from "axios";
 
+
 const AllClient = () => {
   const [users, setUsers] = useState([]);
   const [refrech, setRefrech] = useState(false);
@@ -14,7 +15,7 @@ const AllClient = () => {
   const deleteUser = async (id) => {
     try {
       await axios.delete(`http://localhost:1128/api/user/deleteUser/${id}`);
-      getUsers(); // Call getUsers directly after deleting a user
+      getUsers(); 
     } catch (error) {
       console.error("Error deleting user:", error);
     }

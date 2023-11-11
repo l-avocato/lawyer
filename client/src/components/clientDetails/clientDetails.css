@@ -1,8 +1,9 @@
 .client-details-container {
   margin-left: 20rem;
+  width:75%;
 }
 .profile-header-main-container {
-  height: 68vh;
+  height: 95vh;
   width: 100%;
   display: flex;
   justify-content: center;
