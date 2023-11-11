@@ -39,6 +39,7 @@ export default function App() {
         initialRouteName="ManageFilters"
         component={ManageFilters}
         options={{ headerShown: false }}>
+          
         <Stack.Screen
           name="NavTab"
           component={NavTab}

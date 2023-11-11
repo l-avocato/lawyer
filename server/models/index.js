@@ -30,6 +30,7 @@ const connection = new Sequelize('lavocato', 'root', 'root', {
   const Receipt= require("./receipts.model")(connection,DataTypes)
   const TaskList = require("./tasklist.model")(connection,DataTypes)
   const User_Lawyer= require("./user_lawyer")(connection,DataTypes)
+  const Edge= require("./edge.model")(connection,DataTypes)
 
   
     
@@ -116,11 +117,13 @@ const connection = new Sequelize('lavocato', 'root', 'root', {
   Conversation.hasMany(Notification)
   Notification.belongsTo(Conversation)
 
+  // Phase.hasMany(Edge)
+  // Edge.belongsTo(Phase)
 
 
 
 
-  // connection.sync({ alter: true })
+  // connection.sync({ force: true })
   // .then(() => console.log("tables are created"))
   // .catch((err) => console.log(err))
 
@@ -144,6 +147,7 @@ const connection = new Sequelize('lavocato', 'root', 'root', {
   db.Receipt=Receipt
   db.TaskList=TaskList
   db.User_Lawyer=User_Lawyer
+  db.Edge = Edge
   
  
 
