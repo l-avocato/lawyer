@@ -1,10 +1,45 @@
-import React, { useState } from "react";
-import { Space, Table, Tag, Button } from "antd";
-
+import './allclient.css'
+import React, { useState, useMemo } from "react";
+import { Space, notification, Table, Button, Modal } from "antd";
+import {
+  RadiusBottomleftOutlined,
+  RadiusBottomrightOutlined,
+  RadiusUpleftOutlined,
+  RadiusUprightOutlined,
+} from "@ant-design/icons";
 
 const App = ({ user, deleteUser }) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [api, contextHolder] = notification.useNotification();
+
+  const Context = React.createContext({
+    name: "Default",
+  });
+
+  const openNotification = (placement, userName) => {
+    notification.success({
+      message: ``,
+      description: `User ${userName} has been deleted successfully.`,
+      placement,
+    });
+  };
+
+  const contextValue = useMemo(() => ({
+    name: "Ant Design",
+  }), []);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
 
   const columns = [
     {
@@ -41,58 +76,81 @@ const App = ({ user, deleteUser }) => {
       key: "address",
     },
     {
-        title: "Action",
-        key: "action",
-        render: (_, record) => (
-          <Space size="middle">
-            <button style={{backgroundColor:'grey', color:'white', padding:"0.4rem 0.8rem"}} >View {record.name}</button>
-            <button style={{backgroundColor:'grey', color:'white', padding:"0.4rem 0.8rem"}}  onClick={() => deleteUser(record.id)}>Delete</button>
-          </Space>
-        ),
-      },
+      title: "Action",
+      key: "action",
+      render: (_, record) => (
+        <Space size="middle">
+          <button
+            style={{
+              backgroundColor: "grey",
+              color: "white",
+              padding: "0.4rem 0.8rem",
+            }}
+          >
+            View {record.name}
+          </button>
+          <Button type="primary" onClick={showModal} danger>
+            Delete
+          </Button>
+          <Modal
+            title={`Delete ${record.fullName}`}
+            open={isModalOpen}
+            onOk={async () => {
+              await deleteUser(record.id);
+              handleOk();
+              openNotification("topRight", record.fullName);
+            }}
+            onCancel={handleCancel}
+            mask={false}
+            style={{ boxShadow: "none" }}
+            okText="Confirm"
+          >
+            <p> Are you sure you want to delete this user</p>
+          </Modal>
+        </Space>
+      ),
+    },
   ];
 
-  const start = () => {
-    setLoading(true);
-    // ajax request after empty completing
-    setTimeout(() => {
-      setSelectedRowKeys([]);
-      setLoading(false);
-    }, 1000);
-  };
   const onSelectChange = (newSelectedRowKeys) => {
-    console.log("selectedRowKeys changed: ", newSelectedRowKeys);
     setSelectedRowKeys(newSelectedRowKeys);
   };
+
   const rowSelection = {
     selectedRowKeys,
     onChange: onSelectChange,
   };
+
   const hasSelected = selectedRowKeys.length > 0;
+
   return (
     <div>
-      <div
-        style={{
-          marginBottom: 16,
-        }}
-      >
-        <span
+      <Context.Provider value={contextValue}>
+        {contextHolder}
+        <div
           style={{
-            marginLeft: 8,
+            marginBottom: 16,
           }}
         >
-          {hasSelected ? `Selected ${selectedRowKeys.length} items` : ""}
-        </span>
-      </div>
-      <div>
-        <Table
-          pagination={{ pageSize: 7 }}
-          columns={columns}
-          dataSource={user}
-          size="small"
-        />
-      </div>{" "}
+          <span
+            style={{
+              marginLeft: 8,
+            }}
+          >
+            {hasSelected ? `Selected ${selectedRowKeys.length} items` : ""}
+          </span>
+        </div>
+        <div>
+          <Table
+            pagination={{ pageSize: 7 }}
+            columns={columns}
+            dataSource={user}
+            size="small"
+          />
+        </div>{" "}
+      </Context.Provider>
     </div>
   );
 };
+
 export default App;
