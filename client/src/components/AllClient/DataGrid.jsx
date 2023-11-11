@@ -27,7 +27,7 @@ const App = ({ user, deleteUser }) => {
     },
     {
       title: "CIN",
-      dataIndex: "cin",
+      dataIndex: "CIN",
       key: "age",
     },
     {
@@ -37,7 +37,7 @@ const App = ({ user, deleteUser }) => {
     },
     {
       title: "Phone Number",
-      dataIndex: "PhoneNumber",
+      dataIndex: "phoneNumber",
       key: "address",
     },
     {

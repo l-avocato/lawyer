@@ -1,6 +1,6 @@
 const express = require('express');
 const PhaseRoute = require("./routes/phases.route")
-const cors = require("cors")var cors = require('cors');
+const cors = require("cors")
 
 
 require("./models/index")
