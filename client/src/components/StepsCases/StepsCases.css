@@ -6,6 +6,16 @@
     font-weight: bold;
 }
 
+.btn-close {
+    background-color: white;
+    transition: 0.2s;
+}
+
+.btn-close:hover {
+    background-color: rgb(144, 144, 144);
+    color: white;
+}
+
 .name-case {
     display: flex;
     flex-direction: column;

@@ -19,6 +19,7 @@ import { Provider } from "react-redux";
 import {store} from './store/index.jsx'
 import CaseHistory from "./components/CaseHistory/CaseHistory.jsx";
 import CaseProfile from "./components/CaseProfile/CaseProfile.jsx"
+import Chat  from "./components/Chat/Chat.js";
 
 
 
