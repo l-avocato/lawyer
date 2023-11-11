@@ -1,4 +1,4 @@
-import React, { useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -9,11 +9,12 @@ import {
   FlatList,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
-import {FIREBASE_DB } from '../firebaseConfig'
-import { collection, getDocs} from "firebase/firestore";
+import { FIREBASE_DB } from "../firebaseConfig";
+import { collection, getDocs } from "firebase/firestore";
 
+const SearchListings = ({ route }) => {
+  const { filteredLawyers } = route.params;
 
-const SearchListings = () => {
   const handleArrowClick = () => {
     // Handle arrow icon click here
   };
@@ -24,29 +25,26 @@ const SearchListings = () => {
   };
   const [isHeartPressed, setIsHeartPressed] = useState(false);
   const lawyersCollectionRef = collection(FIREBASE_DB, "lawyers");
-  const [lawyers, setLawyers]= useState([]);
+  const [lawyers, setLawyers] = useState([]);
   const getLawyers = async () => {
     try {
       const result = await getDocs(lawyersCollectionRef);
       const lawyers = result.docs.map((doc) => ({
         ...doc.data(),
         id: doc.id,
-
-      })
-      );
+      }));
       setLawyers(lawyers);
-      console.log("this is lawyers",lawyers);
+      console.log("this is lawyers", lawyers);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
-  useEffect(()=>{
-    getLawyers()
-
-  },[])
+  useEffect(() => {
+    getLawyers();
+  }, []);
   const renderItem = ({ item }) => (
     <View style={styles.lawyerView1}>
-      <Image source={{uri : item.imageUrl}} style={styles.lawyerImage} />
+      <Image source={{ uri: item.imageUrl }} style={styles.lawyerImage} />
       <TouchableOpacity style={styles.button} onPress={handleButtonPress}>
         <Text style={styles.buttonText}>{item.fullName}</Text>
       </TouchableOpacity>
@@ -65,8 +63,7 @@ const SearchListings = () => {
       </View>
       <TouchableOpacity
         onPress={() => setIsHeartPressed(!isHeartPressed)}
-        style={styles.heartIcon}
-      >
+        style={styles.heartIcon}>
         {isHeartPressed ? (
           <Icon name="heart" size={20} color="red" />
         ) : (
@@ -86,12 +83,12 @@ const SearchListings = () => {
 
       {/* Body View */}
       <ScrollView contentContainerStyle={styles.body1}>
-      <FlatList
-      data={lawyers}
-      keyExtractor={(item) => item.id}
-      renderItem={renderItem}
-      contentContainerStyle={styles.body1}
-    />
+        <FlatList
+          data={filteredLawyers ? filteredLawyers : lawyers}
+          keyExtractor={(item) => item.id}
+          renderItem={renderItem}
+          contentContainerStyle={styles.body1}
+        />
       </ScrollView>
     </View>
   );
@@ -123,7 +120,7 @@ const styles = StyleSheet.create({
     height: 150,
     padding: 10,
     marginBottom: 10,
-    flexDirection: "row", 
+    flexDirection: "row",
     alignItems: "center",
   },
   lawyerImage: {
@@ -153,21 +150,21 @@ const styles = StyleSheet.create({
   },
   starIcon: {
     position: "absolute",
-    top: 85, 
-    right: 275, 
+    top: 85,
+    right: 275,
   },
   locationIcon: {
     position: "absolute",
-    top: 85, 
-    right: 205, 
+    top: 85,
+    right: 205,
   },
   priceIcon: {
-    position:"absolute",
+    position: "absolute",
     top: 86,
     right: 160,
   },
   heartIcon: {
-    position:"absolute",
+    position: "absolute",
     top: 30, // Adjust the top position as needed
     right: 20, // Adjust the right position as needed
   },

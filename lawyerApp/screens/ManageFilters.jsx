@@ -11,37 +11,54 @@ import {
 import { FontAwesome } from "react-native-vector-icons";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Slider from "@react-native-community/slider";
-import { FIREBASE_DB } from "../firebaseConfig"; 
-import { MaterialIcons } from '@expo/vector-icons';
+import { FIREBASE_DB } from "../firebaseConfig";
+import { MaterialIcons } from "@expo/vector-icons";
 import { QuerySnapshot, collection, getDocs } from "firebase/firestore";
+import axios from "axios";
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+const ManageFilters = ({navigation}) => {
+  const buttonLabels = ["Proprety", "Criminal", "Tax"];
+  const [inputValue, setInputValue] = useState("");
+  const [priceRange, setPriceRange] = useState(40);
+  const [price, setPrice] = useState(0);
+  const [starRating, setStarRating] = useState(null);
+  const ratings = [1, 2, 3, 4, 5];
+  const [lawyers, setLawyers] = useState([]);
+  console.log(price, "price");
+  const handleArrowIconClick = () => {};
+  const handleRefreshIconClick = () => {};
+  const filtredLawyer = async (body) => {
+    try {
+      console.log(body);
+      const response = await axios.post(
+        "http://192.168.103.5:1128/api/lawyer/getByFilter",
+        {
+          price: body,
+        },
+      );
+      navigation.navigate('SearchListings', {
+        filteredLawyers: response.data,
+      });
+      console.log(response.data, "data");
 
-const ManageFilters = () => {
-  const handleArrowIconClick = () => {
-  
+      // return response.data;
+    } catch (error) {
+      throw error;
+    }
   };
-  const handleRefreshIconClick = () => {
-    
-  };
-
   const handleButtonPress = () => {
-    
     console.log("Button pressed");
   };
   const handleInputChange = (text) => {
     setInputValue(text);
   };
   const handlePriceRangeChange = (value) => {
-    setPriceRange(value);
+    setPrice(Math.floor(value));
   };
   const handleRatingButtonPress = (rating) => {
     setSelectedRating(rating);
   };
-  const buttonLabels = ["Proprety", "Criminal", "Tax"];
-  const [inputValue, setInputValue] = useState("");
-  const [priceRange, setPriceRange] = useState(40);
-  const [starRating, setStarRating] = useState(null);
-  const ratings = [1, 2, 3, 4, 5];
-  const [lawyers, setLawyers] = useState([]);
 
   return (
     <View style={styles.container}>
@@ -101,13 +118,13 @@ const ManageFilters = () => {
           <Text style={styles.bodyView3Text}>Price Range</Text>
           <Slider
             style={styles.priceRangeSlider}
-            value={priceRange}
+            value={price}
             minimumValue={40}
             maximumValue={200}
             onValueChange={handlePriceRangeChange}
           />
           <Text style={styles.priceRangeText}>
-            $ {priceRange.toFixed(0)}-200 / h
+            $ {price.toFixed(0)}-200 / h
           </Text>
           <TouchableOpacity style={styles.buttonPR} onPress={handleButtonPress}>
             <Text style={styles.buttonPRText}>$ 40-200 / h</Text>
@@ -118,43 +135,53 @@ const ManageFilters = () => {
             <Text style={styles.button1Text}>See All</Text>
           </TouchableOpacity>
           <Text style={styles.bodyView4Text}>By User Rating</Text>
-        <View style={styles.stars}>
-          <TouchableOpacity onPress={() => setStarRating(1)}>
-            <MaterialIcons
-              name={starRating >= 1 ? 'star' : 'star-border'}
-              size={40}
-              style={starRating >= 1 ? styles.starSelected : styles.starUnselected}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => setStarRating(2)}>
-            <MaterialIcons
-              name={starRating >= 2 ? 'star' : 'star-border'}
-              size={40}
-              style={starRating >= 2 ? styles.starSelected : styles.starUnselected}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => setStarRating(3)}>
-            <MaterialIcons
-              name={starRating >= 3 ? 'star' : 'star-border'}
-              size={40}
-              style={starRating >= 3 ? styles.starSelected : styles.starUnselected}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => setStarRating(4)}>
-            <MaterialIcons
-              name={starRating >= 4 ? 'star' : 'star-border'}
-              size={40}
-              style={starRating >= 4 ? styles.starSelected : styles.starUnselected}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => setStarRating(5)}>
-            <MaterialIcons
-              name={starRating >= 5 ? 'star' : 'star-border'}
-              size={40}
-              style={starRating >= 5 ? styles.starSelected : styles.starUnselected}
-            />
-          </TouchableOpacity>
-        </View>
+          <View style={styles.stars}>
+            <TouchableOpacity onPress={() => setStarRating(1)}>
+              <MaterialIcons
+                name={starRating >= 1 ? "star" : "star-border"}
+                size={40}
+                style={
+                  starRating >= 1 ? styles.starSelected : styles.starUnselected
+                }
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => setStarRating(2)}>
+              <MaterialIcons
+                name={starRating >= 2 ? "star" : "star-border"}
+                size={40}
+                style={
+                  starRating >= 2 ? styles.starSelected : styles.starUnselected
+                }
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => setStarRating(3)}>
+              <MaterialIcons
+                name={starRating >= 3 ? "star" : "star-border"}
+                size={40}
+                style={
+                  starRating >= 3 ? styles.starSelected : styles.starUnselected
+                }
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => setStarRating(4)}>
+              <MaterialIcons
+                name={starRating >= 4 ? "star" : "star-border"}
+                size={40}
+                style={
+                  starRating >= 4 ? styles.starSelected : styles.starUnselected
+                }
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => setStarRating(5)}>
+              <MaterialIcons
+                name={starRating >= 5 ? "star" : "star-border"}
+                size={40}
+                style={
+                  starRating >= 5 ? styles.starSelected : styles.starUnselected
+                }
+              />
+            </TouchableOpacity>
+          </View>
         </View>
         <View style={[styles.bodyView5, { backgroundColor: "white" }]}>
           <Text style={styles.bodyView5Text}>Customize with Details</Text>
@@ -173,7 +200,7 @@ const ManageFilters = () => {
             />
             <TouchableOpacity
               style={styles.button5}
-              onPress={handleButtonPress}>
+              onPress={() => filtredLawyer([40, price])}>
               <Text style={styles.buttonText5}>Apply Filters!</Text>
             </TouchableOpacity>
           </View>
@@ -284,11 +311,11 @@ const styles = StyleSheet.create({
     height: 150,
   },
   stars: {
-    display: 'flex',
-    flexDirection: 'row',
+    display: "flex",
+    flexDirection: "row",
   },
   starUnselected: {
-    color: '#aaa',
+    color: "#aaa",
   },
   starSelected: {
     color: "#D5B278",
