@@ -6,30 +6,10 @@ import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 import NavbarDashboard from '../NavbarDashboard/NavbarDashboard';
 import SidebarDash from '../SidebarDash/SidebarDash';
 import axios from 'axios'
+import Modal from "../AddClient/AddClient.jsx";
 
 
-const columns = [
-  { field: 'id', headerName: 'ID', width: 90 },
-  {
-    field: 'fullname',
-    headerName: 'Full name',
-    width: 150,
-    editable: true,
-  },
- {
-    field: 'email',
-    headerName: 'Email',
-    width: 230,
- },
-  {
-    field: 'age',
-    headerName: 'Age',
-    type: 'number',
-    width: 110,
-    editable: true,
-  },
- 
-];
+
 
 
 
@@ -50,16 +30,18 @@ const rows = [
 const PaymentHistory = () => {
   const navigate = useNavigate()
   const [users,setUsers]= useState([]);
-
+ 
 
 const fetch=async()=>{
-  try {
-    
-    const response=axios.get("http://localhost:1128/api/user/allUsers")
-    setUsers(response);
-  } catch (error) {
-    console.log(error)
-  }
+    const response= await axios.get("http://localhost:1128/api/user/allUsers")
+    .then((res)=> {
+      setUsers(res.data)
+    }
+    )
+    .catch((error)=>{
+      console.log(error);
+    })
+ 
 }
 useEffect(()=>{
   fetch()
@@ -98,41 +80,93 @@ useEffect(()=>{
     }
   ];
 
+  
+const handleDeleteClient = (id) => {
+  const updatedUsers = users.filter(user => user.id !== id);
+  setUsers(updatedUsers);
+};
+
+const columns = [
+  { field: 'id', headerName: 'ID', width: 90 },
+  {
+    field: 'fullName',
+    headerName: 'Full name',
+    width: 150,
+    editable: true,
+  },
+  {
+    field: 'email',
+    headerName: 'Email',
+    width: 230,
+  },
+  {
+    field: 'age',
+    headerName: 'Age',
+    type: 'number',
+    width: 110,
+    editable: true,
+  },
+  {
+    field: 'delete',
+    headerName: 'Delete',
+    width: 120,
+    renderCell: (params) => (
+      <button onClick={() => handleDeleteClient(params.row.id)}>Delete</button>
+    ),
+  },
+];
+
   const handlePaymentClick = () => {
 
     navigate('/PaymentReceipt');
   };
 
+  const handleAddClient = () => {
+    navigate('/allClient'); 
+  };
   const headers = ['Date', 'Client', 'Amount', 'Description'];
+
 
   return (
     <div style={{display:"flex" ,}}>  
       <NavbarDashboard />
       
     <div style={{display: 'flex',justifyContent:'center',flexDirection:"column" }}>
-    {/* <div style={{display: 'flex',justifyContent:'center',flexDirection:"column"}}>
     
-    </div> */}
+    <div style={{ display: 'flex', alignItems: 'center', marginTop: "12em", marginLeft: '-40%' }}>
+    <Box sx={{ marginTop: '2rem', height: 400, width: '150%', display: 'flex' }}>
+      <DataGrid
+        rows={users}
+        columns={columns}
+        initialState={{
+          pagination: {
+            paginationModel: {
+              pageSize: 5,
+            },
+          },
+        }}
+        pageSizeOptions={[5]}
+        checkboxSelection
+        onRowClick={handlePaymentClick}
+      />
+      {/* <DataGrid
+  rows={users}
+  columns={columns}
+  initialState={{
+    pagination: {
+      paginationModel: {
+        pageSize: 5,
+      },
+    },
+  }}
+  pageSizeOptions={[5]}
+  checkboxSelection
+  onRowClick={handlePaymentClick}
+/> */}
+    </Box>
     
-      <div style={{ display: 'flex', alignItems: 'center', marginTop: "12em",marginLeft:'-50%'  }}>
-
-        <Box sx={{ marginTop:'2rem', height: 400, width: '150%', display: 'flex'  }}>
-          <DataGrid
-            rows={ rows}
-            columns={ columns}
-            initialState={{
-              pagination: {
-                paginationModel: {
-                  pageSize: 5,
-                },
-              },
-            }}
-            pageSizeOptions={[5]}
-            checkboxSelection
-            onRowClick={handlePaymentClick}
-          />
-        </Box>
-      </div>
+  </div>
+  <button style={{marginTop:-480,marginRight:40,width:90}} onClick={handleAddClient}>Add Client</button>
       </div>
     </div>
 
