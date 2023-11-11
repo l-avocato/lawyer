@@ -3,7 +3,7 @@ const {Lawyer}= require('../models/index')
 
 module.exports = {
 
-    getAllLawyers : async () => {
+    getAllLawyers : async (req,res) => {
         try {
             const allLawyers= await Lawyer.findAll()
             res.status(200).send(allLawyers)
@@ -75,6 +75,17 @@ module.exports = {
                 throw error
             }
         },
+        searchLawyerByPrice: async (req,res)=>{
+            try {
+                const searchLawyer= await Lawyer.findAll({
+                 where :{price: req.params.price }
+                })
+                res.status(200).send(searchLawyer)
+            } catch (error) {
+                throw error
+            }
+        },
+
         verifyLawyer: async (req,res)=>{
             try {
                 const lawyerVerified= await Lawyer.update({

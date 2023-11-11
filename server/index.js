@@ -1,6 +1,6 @@
 const express = require('express');
 const PhaseRoute = require("./routes/phases.route")
-var cors = require('cors');
+const cors = require("cors")var cors = require('cors');
 
 
 require("./models/index")
@@ -31,7 +31,7 @@ app.use(cors({
   origin: "*"
 }));
 app.use(express.json())
-
+app.use(cors())
 
 app.use("/api/phase",routerPhase);
 
