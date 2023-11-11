@@ -29,12 +29,16 @@ import {
     TextLink,
     TextLinkContent,
 } from "../components/styles";
+import { useSelector, useDispatch } from 'react-redux';
+import { signupUser } from "../store/signUpUser"
 
 //colors
 const { brand, darkLight, primary } = Colors;
 //DateTimePicker
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+
+
 
 const Signup = ({ navigation }) => {
 const [email, setEmail] = useState("");
@@ -52,6 +56,12 @@ const db = FIREBASE_DB;
 //Actual date of birth to be sent
 // const [dob, setDob] = useState();
 
+const dispatch = useDispatch();
+// const user= useSelector((state) => state.user.data);
+// console.log(user,"this is the user from the store");
+
+
+
 const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setShow(false);
@@ -65,26 +75,32 @@ console.log("usercollection",userCollectionRef);
 
 const signUp = async () => {
     createUserWithEmailAndPassword(auth, email, password)
-      .then((res) => {
-        addDoc(userCollectionRef, {
-          localId: res.user.uid,
-          fullName: fullName,
+    .then((userCredential) => {
+        const lawyer = userCredential.user;
+
+        const formData = {
           email: email,
-          password: res.user.reloadUserInfo.passwordHash  ,
+          password: password,
+          fullName: fullName,
           phoneNumber: phoneNumber,
-        })
-          .then((res) => {
-            alert("User added successfully");
-            console.log(res);
-          })
-          .catch((err) => {
-            console.log(err);
+        };
+
+        dispatch(signupUser(formData))
+        //   .then((res) => {
+        //     navigation.navigate("login");
+        //   })
+          .catch((error) => {
+            alert(error.message, "sign up failed");
           });
       })
-      .catch((err) => {
-        console.log(err);
+      .catch((error) => {
+        // const errorCode = error.code;
+        // const errorMessage = error.message;
+        // alert(errorMessage, "sign up failed");
+        console.log(error);
+        // ..
       });
-      navigation.navigate("login");
+      
 };
 
 

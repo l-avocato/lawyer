@@ -16,7 +16,11 @@ const { primary, tertinary } = Colors;
 
 const ProfilDetails = ({ navigation , route}) => {
 const {item} = route.params;
+<<<<<<< HEAD
 const {lawyer} = route.params
+=======
+console.log("this is item ",item);
+>>>>>>> 632fbb3e8e2f53a1db4aa90f51e134397c1965b8
 
 
 const law = item?item:lawyer
@@ -56,10 +60,12 @@ console.log("this item",lawyer);
                 <Text style={styles.infoText}>${law.Price}/H</Text>
               </View>
             </View>
-            <View style={{ display: "flex", flexDirection: "row" }}>
+            <TouchableOpacity style={{ display: "flex", flexDirection: "row" }} onPress={()=>{
+              navigation.navigate("Chat", {item})
+            }}>
               <FontAwesome name="comment" style={{fontSize: 20, marginRight: 30,color: "black",marginLeft: 10}} />
               <Text style={styles.infoText}></Text>
-            </View>
+            </TouchableOpacity>
           </View>
         </View>
       </View>

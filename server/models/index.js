@@ -30,6 +30,8 @@ const connection = new Sequelize('lavocato', 'root', 'root', {
   const Receipt= require("./receipts.model")(connection,DataTypes)
   const TaskList = require("./tasklist.model")(connection,DataTypes)
   const User_Lawyer= require("./user_lawyer")(connection,DataTypes)
+
+  
     
   User.belongsToMany(Lawyer,{through:User_Lawyer})
   Lawyer.belongsToMany(User,{through:User_Lawyer})
@@ -45,6 +47,9 @@ const connection = new Sequelize('lavocato', 'root', 'root', {
   
   User.hasMany(Rating)
   Rating.belongsTo(User)
+
+  User.hasMany(Payment)
+  Payment.belongsTo(User)
 
   User.hasMany(Case)
   Case.belongsTo(User)
@@ -102,25 +107,44 @@ const connection = new Sequelize('lavocato', 'root', 'root', {
   Phase.hasMany(Media)
   Media.belongsTo(Phase)
 
+  Conversation.hasMany(Chat)
+  Chat.belongsTo(Conversation)
+
+  Conversation.hasMany(Media)
+  Media.belongsTo(Conversation)
+
+  Conversation.hasMany(Notification)
+  Notification.belongsTo(Conversation)
 
 
 
 
 
- 
-
-
-
-  
-
-
-
-  connection.sync({ alter: true })
-  .then(() => console.log("tables are created"))
-  .catch((err) => console.log(err))
+  // connection.sync({ alter: true })
+  // .then(() => console.log("tables are created"))
+  // .catch((err) => console.log(err))
 
 
   const db={}
+  db.User=User
+  db.Lawyer=Lawyer
+  db.Report=Report
+  db.Media=Media
+  db.Admin=Admin
+  db.Appointment=Appointment
+  db.Availavility=Availavility
+  db.Case=Case
+  db.Category=Category
+  db.Chat=Chat
+  db.Conversation=Conversation
+  db.Notification=Notification
+  db.Payment=Payment
+  db.Phase=Phase
+  db.Rating=Rating
+  db.Receipt=Receipt
+  db.TaskList=TaskList
+  db.User_Lawyer=User_Lawyer
+  
  
 
-  module.exports=db
+  module.exports= db
