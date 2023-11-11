@@ -1,4 +1,4 @@
-import './allclient.css'
+import "./allclient.css";
 import React, { useState, useMemo } from "react";
 import { Space, notification, Table, Button, Modal } from "antd";
 import {
@@ -25,9 +25,12 @@ const App = ({ user, deleteUser }) => {
     });
   };
 
-  const contextValue = useMemo(() => ({
-    name: "Ant Design",
-  }), []);
+  const contextValue = useMemo(
+    () => ({
+      name: "Ant Design",
+    }),
+    []
+  );
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -45,7 +48,7 @@ const App = ({ user, deleteUser }) => {
     {
       title: "Image",
       key: "image",
-      dataIndex: "imageUrl",
+      dataIndex: "ImageUrl",
       render: (image) => (
         <img
           src={image}
@@ -89,24 +92,43 @@ const App = ({ user, deleteUser }) => {
           >
             View {record.name}
           </button>
-          <Button type="primary" onClick={showModal} danger>
+          <Button
+            type="primary"
+            onClick={() => {
+              
+              showModal();
+            }}
+            danger
+          >
             Delete
           </Button>
           <Modal
-            title={`Delete ${record.fullName}`}
-            open={isModalOpen}
-            onOk={async () => {
-              await deleteUser(record.id);
-              handleOk();
-              openNotification("topRight", record.fullName);
-            }}
-            onCancel={handleCancel}
-            mask={false}
-            style={{ boxShadow: "none" }}
-            okText="Confirm"
-          >
-            <p> Are you sure you want to delete this user</p>
-          </Modal>
+  title={`Delete ${record.fullName}`}
+  // visible={isModalOpen}
+  onCancel={handleCancel}
+  mask={false}
+  style={{ boxShadow: "none" }}
+  footer={[
+    <Button key="back" onClick={handleCancel}>
+      Cancel
+    </Button>,
+    <Button
+      key="confirm"
+      type="primary"
+      danger
+      onClick={async (e) => {
+        e.preventDefault();
+        await deleteUser(record.id);
+        handleOk();
+        openNotification("topRight", record.fullName);
+      }}
+    >
+      Confirm
+    </Button>,
+  ]}
+>
+  <p>Are you sure you want to delete this user</p>
+</Modal>
         </Space>
       ),
     },

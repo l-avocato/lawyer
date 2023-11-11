@@ -8,17 +8,18 @@ import axios from "axios";
 
 const AllClient = () => {
   const [users, setUsers] = useState([]);
-  console.log("this is user", users);
   const [refrech, setRefrech] = useState(false);
 
+  
   const deleteUser = async (id) => {
     try {
       await axios.delete(`http://localhost:1128/api/user/deleteUser/${id}`);
-      setRefrech(!refrech);
+      getUsers(); // Call getUsers directly after deleting a user
     } catch (error) {
       console.error("Error deleting user:", error);
     }
   };
+
 
   const getUsers = async () => {
     try {
@@ -53,7 +54,9 @@ const AllClient = () => {
           className="table-wrapper table1"
           style={{ width: "70rem", display: "flex", flexDirection: "column", marginLeft: "21rem" }}
         >
-          <DataGrid user={users} deleteUser={deleteUser} />
+          <DataGrid user={users}
+          
+          deleteUser={deleteUser} />
         </div>
       </div>
     </div>

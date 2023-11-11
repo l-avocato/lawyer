@@ -12,39 +12,38 @@ const AddClient = ({refrech, setRefrech}) => {
   const [cin, setCin]=useState(0);
   const [PhoneNumber, setPhoneNumber]=useState(0)
   const [gender,setGender]=useState("male")
-  const userCollectionRef = collection(db, "user")
 
  
-
   const handleFile = async (e) => {
     const formData = new FormData();
     formData.append("file", e.target.files[0]);
     formData.append("upload_preset", "oztadvnr");
-    await axios
-      .post("https://api.cloudinary.com/v1_1/dl4qexes8/upload", formData)
-      .then((response) => {
-        setPapers(response.data["secure_url"]);
-      })
-      
-      .catch((error) => {
-        throw error;
-      });
+  
+    try {
+      const response = await axios.post("https://api.cloudinary.com/v1_1/dl4qexes8/upload", formData);
+      const imageUrl = response.data["secure_url"];
+  
+      setPapers(imageUrl);
+    } catch (error) {
+      console.error("Error uploading file:", error);
+    }
   };
-
   
 
   const creacteUser = async () => {
     try {
-      await addDoc(userCollectionRef, {
+      const response = await axios.post("http://localhost:1128/api/user/addUser", {
         fullName: fullName,
         email: email,
-        cin: cin,
-        PhoneNumber: PhoneNumber,
-        imageUrl : papers,
-        gender:gender
-      }
-      );
-      setRefrech(!refrech)
+        CIN:cin ,
+        phoneNumber: PhoneNumber,
+        ImageUrl: papers,
+        gender: gender,
+      });
+
+      console.log("User created successfully:", response.data);
+
+      setRefrech(!refrech);
     } catch (error) {
       console.error("Error creating user:", error);
     }
@@ -67,7 +66,7 @@ const AddClient = ({refrech, setRefrech}) => {
                 Create a new clients
               </h1>
             </div>
-            <img src={papers} alt="" style={{borderRadius:"50%", width:"130px", height:"130px", marginLeft:"300px", marginTop:"1rem"}} />
+            <img src={papers} alt="" style={{borderRadius:"50%", width:"130px", height:"130px", marginLeft:"260px", marginTop:"0.5rem"}} />
 
 
             <div class="form-floating">
