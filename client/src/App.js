@@ -17,6 +17,7 @@ import Diagramme from "./components/Diagramme/Diagramme.jsx";
 import Flow from "./components/StepsCases/Flow.js";
 import { Provider } from "react-redux";
 import {store} from './store/index.jsx'
+import Chat  from "./components/Chat/Chat.js";
 
 
 
@@ -42,6 +43,7 @@ const App = () => {
           <Route path="/stepsCases" element={<StepsCases />} />
           <Route path="/diagramme" element={<Diagramme />} />
           <Route path="/flow" element={<Flow />} />
+          <Route path="/chat" element={<Chat />} />
         </Routes>
       </Router>
     </div>

@@ -1,6 +1,6 @@
 const express = require('express')
 const routerLawyer = express.Router()
-const {getAllLawyers,getLawyerId,add,deleteLawyer,update,searchLawyer,searchLawyerByfield,verifyLawyer,blockLawyer,updateAvailability}= require('../controllers/lawyer.controller')
+const {getAllLawyers,getLawyerId,add,deleteLawyer,update,searchLawyer,searchLawyerByfield,verifyLawyer,blockLawyer,updateAvailability, filterLawyers}= require('../controllers/lawyer.controller')
 
 
 routerLawyer.get('/allLawyers',getAllLawyers)
@@ -22,5 +22,7 @@ routerLawyer.put('/verifyLawyer/:id',verifyLawyer)
 routerLawyer.put('/blockLawyer/:id',blockLawyer)
 
 routerLawyer.put('/updateAvailability/:id',updateAvailability)
+
+routerLawyer.post('/getByFilter',filterLawyers)
 
 module.exports = routerLawyer

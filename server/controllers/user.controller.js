@@ -37,7 +37,7 @@ deleteUser: async (req,res)=>{
         const userDeleted= await User.destroy({
       where:{  id:req.params.id }
         })
-        res.send(userDeleted)
+        res.json(userDeleted)
     } catch (error) {
         throw error
     }
