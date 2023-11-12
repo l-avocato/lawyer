@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import NavbarDashboard from "../NavbarDashboard/NavbarDashboard";
+import SidebarDash from "../SidebarDash/SidebarDash";
 
 ////////////// Information Phase //////////////////
 
@@ -109,11 +109,11 @@ const InformationPhase = () => {
 
   return (
     <div>
-      <NavbarDashboard />
+      <SidebarDash />
       <div>
         <ul
           className="bottom-nav-ul"
-          style={{ display: "flex", gap: "5rem", marginLeft: "60px" }}
+          style={{ display: "flex", gap: "5rem", marginLeft: "60px", marginTop: "40px"}}
         >
           <li
             onClick={() => handleItemClick(0)}
