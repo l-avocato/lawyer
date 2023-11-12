@@ -4,7 +4,7 @@ module.exports=(connection,DataTypes)=>{
     fullName: DataTypes.STRING,
     email: DataTypes.STRING,
     password:DataTypes.STRING,
-    phoneNumber: DataTypes.INTEGER,
+    phoneNumber: DataTypes.BIGINT,
     adress: DataTypes.STRING,
     ImageUrl: DataTypes.STRING,
     gender: DataTypes.STRING,

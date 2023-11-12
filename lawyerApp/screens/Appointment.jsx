@@ -129,18 +129,18 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   bookButton: {
-    backgroundColor: "#D5B278",
+    backgroundColor: "black",
     width: 390,
     height: 50,
     justifyContent: "center",
     alignItems: "center",
     alignSelf: "center",
     marginTop: 50,
-    borderRadius: 15,
+    borderRadius: 10,
   },
   bookButtonText: {
     fontSize: 20,
-    color: "black",
+    color: "white",
   },
 });
 

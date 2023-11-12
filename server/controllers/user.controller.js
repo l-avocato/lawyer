@@ -75,6 +75,16 @@ update: async function (req, res) {
         throw error
     }
   },
+  getUserByEmail: async (req,res)=>{
+    try {
+        const searchUser= await User.findAll({
+         where :{email: req.params.email }
+        })
+        res.status(200).send(searchUser)
+    } catch (error) {
+        throw error
+    }
+  },
   blockUser: async (req,res)=>{
     try {
         const blockUser= await User.update(
