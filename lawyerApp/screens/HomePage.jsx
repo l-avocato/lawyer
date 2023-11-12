@@ -14,14 +14,15 @@ import {
 } from "react-native";
 import { Ionicons, MaterialIcons, FontAwesome } from "@expo/vector-icons";
 import yourBackgroundImage from "../Photos/avocat6.jpeg";
-import {FIREBASE_AUTH,FIREBASE_DB } from '../firebaseConfig'
-import { collection, getDocs} from "firebase/firestore";
+import { FIREBASE_AUTH, FIREBASE_DB } from "../firebaseConfig";
+import { collection, getDocs } from "firebase/firestore";
+import axios from "axios";
 
 const { width, height } = Dimensions.get("window");
 
 const HomePage = ({ navigation }) => {
+  const config = "172.20.10.3";
   const [selectedTab, setSelectedTab] = useState("Home");
-
 
   // Function to handle photo click
   const handlePhotoClick = (item) => {
@@ -30,10 +31,10 @@ const HomePage = ({ navigation }) => {
     console.log("Photo clicked:", item.id);
   };
   const handleFilterClick = (item) => {
-    navigation.navigate("ManageFilters" );
+    navigation.navigate("ManageFilters");
     // console.log("Photo clicked:", item.id);
   };
-  
+
   // const photoData2 = [
   //   {
   //     id: 1,
@@ -81,85 +82,82 @@ const HomePage = ({ navigation }) => {
   ];
 
   const renderTabContent = () => {
-
     const [user, setUser] = useState([]);
-    const [lawyers, setLawyers]= useState([]);
-    const [categories, setCategories]= useState([]);
+    const [lawyers, setLawyers] = useState([]);
+    const [categories, setCategories] = useState([]);
 
     const userCollectionRef = collection(FIREBASE_DB, "user");
     const lawyersCollectionRef = collection(FIREBASE_DB, "lawyers");
     const categoryCollectionRef = collection(FIREBASE_DB, "category");
+
+
+
+    const loggedInUser = FIREBASE_AUTH.currentUser.email;
+
     const getUser = async () => {
-      try {
-        const result = await getDocs(userCollectionRef);
-        const users = result.docs.map((doc) => ({
-          ...doc.data(),
-          id: doc.id,
-        })).filter((e)=>e.email === FIREBASE_AUTH.currentUser.email)[0]
-        console.log("this is user",users);
-        setUser(users);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
+      const response = await axios.get(`http://${config}:1128/api/user/getUserByEmail/${loggedInUser}`)
+      .then((res) => {
+          console.log("this is user",res.data);
+          setUser(res.data);
+        })
+      };
+
     const getLawyers = async () => {
-      try {
-        const result = await getDocs(lawyersCollectionRef);
-        const lawyers = result.docs.map((doc) => ({
-          ...doc.data(),
-          id: doc.id,
-          
-        })
-        );
-        setLawyers(lawyers);
-        console.log("this is lawyers",lawyers);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };    
+      const response = await axios.get(
+        `http://${config}:1128/api/lawyer/allLawyers`
+      );
+      setLawyers(response.data);
+      console.log("this is lawyers", lawyers);
+      return response.data;
+    };
     const getCategories = async () => {
-      try {
-        const result = await getDocs(categoryCollectionRef);
-        const categories = result.docs.map((doc) => ({
-          ...doc.data(),
-          id: doc.id,
-          
-        })
-        );
-        setCategories(categories);
-        console.log("this is categories",categories);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };    
-    useEffect(()=>{
-      getUser()
-      getLawyers()
-      getCategories()
-
-    },[])
-
-   
-  
+      console.log("this is the config", config);
+      const response = await axios.get(
+        `http://${config}:1128/api/category/allCategories`
+      );
+      setCategories(response.data);
+      console.log("this is lawyers", categories);
+      return response.data;
+    };
+    useEffect(() => {
+      getUser();
+      getLawyers();
+      getCategories();
+    }, []);
 
     if (selectedTab === "Home") {
       return (
         <View style={styles.container}>
           <View style={styles.header}>
-          <Text style={{ fontSize: 0.026 * height,color: "white",fontWeight: "700",top: 80,marginBottom:7,left:-5,color:"#D5B278"}}> Hi,{user?.fullName}</Text>
+            <Text
+              style={{
+                fontSize: 0.026 * height,
+                color: "white",
+                fontWeight: "700",
+                top: 80,
+                marginBottom: 7,
+                left: -5,
+                color: "#D5B278",
+              }}
+            >
+              {" "}
+              Hi,{user[0]?.fullName}
+            </Text>
             <Text style={styles.pageText}>
-             browse a number of lawyers to get your issues{"\n"}
+              browse a number of lawyers to get your issues{"\n"}
               resolved. Start consulting now!
             </Text>
             <View style={styles.notificationContainer}>
               <TouchableOpacity
                 onPress={() => navigation.navigate("Notifications")}
-                style={styles.notificationButton}>
+                style={styles.notificationButton}
+              >
                 <MaterialIcons name="notifications" size={24} color="white" />
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => handleFilterClick()}
-                style={styles.filterButton}>
+                style={styles.filterButton}
+              >
                 <Ionicons name="options" size={24} color="white" />
               </TouchableOpacity>
             </View>
@@ -182,25 +180,27 @@ const HomePage = ({ navigation }) => {
               <ScrollView
                 horizontal
                 showsHorizontalScrollIndicator={false}
-                contentContainerStyle={styles.buttonContainer1}>
-                
+                contentContainerStyle={styles.buttonContainer1}
+              >
                 <FlatList
-                data={categories}
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                renderItem={({ item }) => (
-                  <TouchableOpacity
-                  style={[styles.button2, styles.buttonWithSpace]}
-                  onPress={() => handleButtonClick(2)}>
-                  <Text style={styles.buttonText}>{item.name}</Text>
-                </TouchableOpacity>
-                )}
-                keyExtractor={(item) => item.id.toString()}
-              />
+                  data={categories}
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  renderItem={({ item }) => (
+                    <TouchableOpacity
+                      style={[styles.button2, styles.buttonWithSpace]}
+                      onPress={() => handleButtonClick(2)}
+                    >
+                      <Text style={styles.buttonText}>{item.name}</Text>
+                    </TouchableOpacity>
+                  )}
+                  keyExtractor={(item) => item.id.toString()}
+                />
               </ScrollView>
               <TouchableOpacity
                 style={styles.topRightButton}
-                onPress={() => handleTopRightButtonClick()}>
+                onPress={() => handleTopRightButtonClick()}
+              >
                 <Text style={styles.topRightButtonText}>See All</Text>
               </TouchableOpacity>
             </View>
@@ -209,22 +209,36 @@ const HomePage = ({ navigation }) => {
               <Text style={styles.bodyText}>Nearby Lawyers</Text>
               <FlatList
                 data={lawyers}
-                style={{marginLeft:10,top:-10}}
+                style={{ marginLeft: 10, top: -10 }}
                 horizontal
                 showsHorizontalScrollIndicator={false}
                 renderItem={({ item }) => (
                   <TouchableOpacity onPress={() => handlePhotoClick(item)}>
                     <View style={styles.photoItem}>
-                      <Image source={{uri: item.imageUrl}} style={styles.photoImage} />
+                      <Image
+                        source={{ uri: item.ImageUrl }}
+                        style={styles.photoImage}
+                      />
                     </View>
-                    <Text style={{left:-15,top:3,fontSize:15,fontWeight:"500",alignSelf:"center"}}>{item.fullName}</Text>
+                    <Text
+                      style={{
+                        left: -15,
+                        top: 3,
+                        fontSize: 15,
+                        fontWeight: "500",
+                        alignSelf: "center",
+                      }}
+                    >
+                      {item.fullName}
+                    </Text>
                   </TouchableOpacity>
                 )}
                 keyExtractor={(item) => item.id.toString()}
               />
               <TouchableOpacity
                 style={styles.topRightButton}
-                onPress={() => handleTopRightButtonClick()}>
+                onPress={() => handleTopRightButtonClick()}
+              >
                 <Text style={styles.topRightButtonText}>See All</Text>
               </TouchableOpacity>
             </View>
@@ -232,7 +246,8 @@ const HomePage = ({ navigation }) => {
               <View style={styles.buttonContainer}>
                 <TouchableOpacity
                   style={styles.singleButton}
-                  onPress={() => handleButtonClick(7)}>
+                  onPress={() => handleButtonClick(7)}
+                >
                   <View style={styles.textContainer}>
                     <Text style={styles.buttonText1}>
                       Can't find need help?
@@ -244,7 +259,8 @@ const HomePage = ({ navigation }) => {
                   <View style={styles.arrowContainer}>
                     <TouchableOpacity
                       style={styles.arrowButton}
-                      onPress={() => handleArrowClick()}>
+                      onPress={() => handleArrowClick()}
+                    >
                       <FontAwesome name="angle-right" size={24} color="white" />
                     </TouchableOpacity>
                   </View>
@@ -255,20 +271,32 @@ const HomePage = ({ navigation }) => {
             <View style={styles.bodyView4}>
               <Text style={styles.bodyText}>Top Rated</Text>
               <FlatList
-                data={photoData4}
+                data={lawyers}
                 horizontal
                 renderItem={({ item }) => (
                   <TouchableOpacity onPress={() => handlePhotoClick(item)}>
                     <View style={styles.photoItem}>
-                      <Image source={item.source} style={styles.photoImage} />
+                      <Image source={{uri: item.ImageUrl}} style={styles.photoImage} />
                     </View>
+                    <Text
+                      style={{
+                        left: -15,
+                        top: 3,
+                        fontSize: 15,
+                        fontWeight: "500",
+                        alignSelf: "center",
+                      }}
+                    >
+                      {item.fullName}
+                    </Text>
                   </TouchableOpacity>
                 )}
                 keyExtractor={(item) => item.id.toString()}
               />
               <TouchableOpacity
                 style={styles.topRightButton}
-                onPress={() => handleTopRightButtonClick()}>
+                onPress={() => handleTopRightButtonClick()}
+              >
                 <Text style={styles.topRightButtonText}>See All</Text>
               </TouchableOpacity>
             </View>
@@ -384,7 +412,7 @@ const styles = StyleSheet.create({
     textAlign: "left",
     marginTop: 20,
     marginLeft: 10,
-    fontWeight: "bold",  
+    fontWeight: "bold",
   },
   photoItem: {
     width: 120,
@@ -412,7 +440,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer1: {
     flexDirection: "row",
-    marginTop: 40,
+    marginTop: 15,
   },
   button: {
     backgroundColor: "black", // Example background color
@@ -488,16 +516,17 @@ const styles = StyleSheet.create({
   singleButton: {
     backgroundColor: "black",
     padding: 15,
-    borderRadius: 30,
-    flexDirection: "row", // Allow items to be in a row
-    alignItems: "center", // Align items vertically in the center
+    borderRadius: 20,
+    flexDirection: "row",
+    alignItems: "center", 
     top: 10,
     marginBottom: 20,
     marginRight: 10,
     marginLeft: 10,
   },
   textContainer: {
-    flex: 1, 
+    flex: 1,
+    
   },
   buttonText1: {
     color: "#D5B278",
@@ -508,7 +537,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   arrowContainer: {
-    marginLeft: 10, 
+    marginLeft: 10,
   },
   arrowButton: {
     padding: 10,
@@ -517,7 +546,7 @@ const styles = StyleSheet.create({
   },
   buttonBackground: {
     flex: 1,
-    resizeMode: "cover", 
+    resizeMode: "cover",
     justifyContent: "center",
     alignItems: "center",
   },

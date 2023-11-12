@@ -1,6 +1,6 @@
 const express = require('express')
 const routerUser = express.Router()
-const {getAllUsers,getUserId,add,deleteUser,update,searchUser,searchUserByCIN,blockUser}= require('../controllers/user.controller')
+const {getAllUsers,getUserId,add,deleteUser,update,searchUser,searchUserByCIN,blockUser,getUserByEmail}= require('../controllers/user.controller')
 
 routerUser.get('/allUsers',getAllUsers)
 
@@ -17,5 +17,7 @@ routerUser.post('/searchUser',searchUser)
 routerUser.post('/searchUserByCIN',searchUserByCIN)
 
 routerUser.put('/blockUser/:id',blockUser)
+
+routerUser.get('/getUserByEmail/:email',getUserByEmail)
 
 module.exports = routerUser

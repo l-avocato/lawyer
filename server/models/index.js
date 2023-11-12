@@ -117,8 +117,8 @@ const connection = new Sequelize('lavocato', 'root', 'root', {
   Conversation.hasMany(Notification)
   Notification.belongsTo(Conversation)
 
-  // Phase.hasMany(Edge)
-  // Edge.belongsTo(Phase)
+  Phase.hasMany(Edge)
+  Edge.belongsTo(Phase)
 
 
 

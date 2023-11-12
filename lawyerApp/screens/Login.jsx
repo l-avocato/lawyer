@@ -66,7 +66,7 @@ const Login = () => {
         await AsyncStorage.setItem("token", res.user.accessToken);
       }
       setLoading(false);
-      // navigation.navigate("Home");
+      navigation.navigate("Home");
     } catch (error) {
       alert("Invalid email or password", error.message);
       setLoading(false);
