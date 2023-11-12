@@ -7,13 +7,13 @@ const initialState = {
   error: null,
   user: {},
 };
-
+const config = "172.20.10.3"
 // Async Thunk for Signup
 export const signupUser = createAsyncThunk(
   "signup/signupUser",
   async (formData) => {
     try {
-      const response = await axios.post("http://c:1128/api/user/add", formData);
+      const response = await axios.post(`http://${config}:1128/api/user/add`, formData);
       return response.data;
     } catch (error) {
       alert(error.message, "sign up failed");

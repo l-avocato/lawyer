@@ -17,6 +17,7 @@ export const signupUser = createAsyncThunk("signup/signupUser", async (input, { 
 return response.data
   }
   );
+  
 
 const signUpUserSlice = createSlice({
   name: "signUpUser",
