@@ -135,29 +135,25 @@ function Navbar() {
                   <Modal.Title style={{ marginLeft: 290 }}>Login</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                  <div style={{ display: "flex" }}>
+                  <div style={{ display: "flex" , gap:'2rem' }}>
                     <img
                       src="https://i.pinimg.com/564x/03/b0/eb/03b0eb5b973e4a65d3a63fc0fe3cf7e1.jpg"
                       alt="Lawyer"
                       style={{
-                        width: "70%",
-                        height: 500,
-                        marginRight: 50,
-                        marginLeft: -16,
-                        marginTop: -16,
-                        marginBottom: -16,
+                        width: "40%",
+                      
                       }}
                     />
                     <Form
                       onSubmit={handleSignIn}
-                      style={{ width: "100%", marginTop: 40 }}
+                      style={{ width: "100%", display: "flex", flexDirection: "column", gap: "1.3rem" , marginTop:'60px'}}
                     >
                       <Form.Group controlId="formBasicEmail">
                         <Form.Label>Email address</Form.Label>
                         <Form.Control
                           type="email"
                           placeholder="Enter email"
-                          style={{ fontSize: "1.5rem" }}
+                          style={{ fontSize: "14px" }}
                           onChange={(e) => {
                             setEmail(e.target.value);
                           }}
@@ -169,7 +165,7 @@ function Navbar() {
                         <Form.Control
                           type="password"
                           placeholder="Password"
-                          style={{ fontSize: "1.5rem" }}
+                          style={{ fontSize: "14px" }}
                           onChange={(e) => {
                             setPassword(e.target.value);
                           }}
@@ -179,16 +175,17 @@ function Navbar() {
                         <Form.Check
                           type="checkbox"
                           label="Remember me"
-                          style={{ marginTop: 10 }}
                         />
                       </Form.Group>
-                      <Button
+                     <div style={{display:'flex' , alignItems:'center', justifyContent:'center', width:'135%'}}>
+                     <Button
                         variant="primary"
                         type="submit"
-                        style={{ fontSize: "1.5rem", marginTop: 100 }}
+                        style={{ fontSize: "1.2rem" }}
                       >
                         Submit
                       </Button>
+                     </div>
                     </Form>
                   </div>
                 </Modal.Body>
@@ -211,24 +208,21 @@ function Navbar() {
                     </Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
-                    <div style={{ display: "flex" }}>
+                    <div style={{ display: "flex" , justifyContent:'space-between' , alignItems:'center'}}>
                       <img
                         src="https://i.pinimg.com/564x/f1/8f/5c/f18f5c7c3a6d1208330de82a7f5489e7.jpg"
                         alt="Lawyer"
                         style={{
-                          width: "51%",
-                          height: 670,
-                          marginRight: 50,
-                          marginLeft: -16,
-                          marginTop: -16,
-                          marginBottom: -16,
+                          width: "45%",
+                          height:'450px',
+                         
                         }}
                       />
                       <Form
                         onSubmit={(event) => {
                           handleSignUp(event);
                         }}
-                        style={{ width: "100%", marginTop: 5 }}
+                        style={{ width: "50%", marginTop: 5, display: "flex", flexDirection: "column" , gap :'0.5rem'}}
                       >
                         <Form.Group controlId="formImage">
                           <Form.Label>Profile Image</Form.Label>
@@ -239,7 +233,7 @@ function Navbar() {
                           <Form.Control
                             type="text"
                             placeholder="Enter full name"
-                            style={{ fontSize: "1.5rem" }}
+                            style={{ fontSize: "14px" }}
                             onChange={(e) => setFullName(e.target.value)}
                           />
                         </Form.Group>
@@ -249,7 +243,7 @@ function Navbar() {
                           <Form.Control
                             type="email"
                             placeholder="Enter email"
-                            style={{ fontSize: "1.5rem" }}
+                            style={{ fontSize: "14px" }}
                             onChange={(e) => setEmail(e.target.value)}
                           />
                         </Form.Group>
@@ -259,7 +253,7 @@ function Navbar() {
                           <Form.Control
                             type="password"
                             placeholder="Enter password"
-                            style={{ fontSize: "1.5rem" }}
+                            style={{ fontSize: "14px" }}
                             onChange={(e) => setPassword(e.target.value)}
                           />
                         </Form.Group>
@@ -269,7 +263,7 @@ function Navbar() {
                           <Form.Control
                             type="password"
                             placeholder="Confirm password"
-                            style={{ fontSize: "1.5rem" }}
+                            style={{ fontSize: "14px" }}
                             onChange={(e) => setConfirmPassword(e.target.value)}
                           />
                         </Form.Group>
@@ -279,7 +273,7 @@ function Navbar() {
                           <Form.Control
                             type="tel"
                             placeholder="Enter phone number"
-                            style={{ fontSize: "1.5rem" }}
+                            style={{ fontSize: "14px" }}
                             onChange={(e) => setPhoneNumber(e.target.value)}
                           />
                         </Form.Group>
@@ -287,7 +281,7 @@ function Navbar() {
                         <Form.Group controlId="formGender">
                           <Form.Label>Gender</Form.Label>
                           <Form.Select
-                            style={{ fontSize: "1.5rem" }}
+                            style={{ fontSize: "14px" }}
                             onChange={(e) => setGender(e.target.value)}
                           >
                             <option>Select gender</option>
@@ -296,14 +290,16 @@ function Navbar() {
                             <option>Other</option>
                           </Form.Select>
                         </Form.Group>
-
+                         <div style={{display:'flex', alignItems:'center', justifyContent:'center' , width:'138%'}}>
+                          
                         <Button
                           variant="primary"
                           type="submit"
-                          style={{ fontSize: "1.5rem", marginTop: 25 }}
+                          style={{ fontSize: "1.3rem", }}
                         >
                           Submit
                         </Button>
+                         </div>
                       </Form>
                     </div>
                   </Modal.Body>

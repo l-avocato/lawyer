@@ -1,9 +1,6 @@
 import React, {  useState } from "react";
 import "./AddClient.css";
 import axios from "axios";
-import {db} from "../../firebaseconfig.js"
-
-import {addDoc, collection} from "firebase/firestore";
 
 const AddClient = ({refrech, setRefrech}) => {
   const [papers, setPapers] = useState("");
@@ -12,8 +9,8 @@ const AddClient = ({refrech, setRefrech}) => {
   const [cin, setCin]=useState(0);
   const [PhoneNumber, setPhoneNumber]=useState(0)
   const [gender,setGender]=useState("male")
-  const userCollectionRef = collection(db, "user")
-
+  const [address, setAddress]=useState("")
+ const [birthDate, setBirthDate]= useState("")
  
 
   const handleFile = async (e) => {
@@ -33,26 +30,29 @@ const AddClient = ({refrech, setRefrech}) => {
 
   
 
+ 
   const creacteUser = async () => {
     try {
-      await addDoc(userCollectionRef, {
+      const response = await axios.post("http://localhost:1128/api/user/addUser", {
         fullName: fullName,
         email: email,
-        cin: cin,
-        PhoneNumber: PhoneNumber,
-        imageUrl : papers,
-        gender:gender
-      }
-      );
-      setRefrech(!refrech)
+        CIN: cin,
+        phoneNumber: PhoneNumber,
+        ImageUrl: papers,
+        gender: gender,
+        adress : address,
+        birthDate : birthDate
+      });
+      setRefrech(!refrech);
     } catch (error) {
       console.error("Error creating user:", error);
     }
   };
+
   return (
     <div>
       <div
-        class="modal fade"
+        className="modal fade"
         id="staticBackdrop"
         data-bs-backdrop="static"
         data-bs-keyboard="false"
@@ -60,79 +60,114 @@ const AddClient = ({refrech, setRefrech}) => {
         aria-labelledby="staticBackdropLabel"
         aria-hidden="true"
       >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h1 class="modal-title fs-5" id="staticBackdropLabel">
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h1 className="modal-title fs-5" id="staticBackdropLabel">
                 Create a new clients
               </h1>
             </div>
-            <img src={papers} alt="" style={{borderRadius:"50%", width:"130px", height:"130px", marginLeft:"300px", marginTop:"1rem"}} />
+           <div style={{display:'flex', flexDirection:'column' , alignItems:'center', justifyContent:'center', gap:'1rem', width:'100%', marginBottom:'1rem', marginTop:'1rem'}}>
+           <img src={papers} alt="" style={{borderRadius:"50%", width:"130px", height:"130px"}} />
 
+<div style={{display:"flex", justifyContent:'center', alignItems:"center" , width:'100%'}}>
+     
+   <div style={{display:"flex" , justifyContent:'center', gap:'3rem', width:'100%'}}>
+   <div className="form-floating">
+     <label for="formFile" className="form-label"></label>
+     <input
+       className="form-control"
+       type="file"
+       id="formFile"
+       onChange={(e) => {
+         handleFile(e);
+       }}
+     />
+   </div>
+   <div className="form-floating ">
+     <input
+       type="date"
+       className="form-control"
+       id="floatingInput"
+       placeholder="Full Name"
+       onChange={((e)=>{setBirthDate(e.target.value)})}
+       
+     />
+     <label for="floatingInput">Birth Date</label>
+   </div>
+   </div>
+      
+</div>
+   
 
-            <div class="form-floating">
-              <label for="formFile" class="form-label"></label>
-              <input
-                class="form-control"
-                type="file"
-                id="formFile"
-                onChange={(e) => {
-                  handleFile(e);
-                }}
-              />
-            </div>
+    <div style={{display:"flex" , justifyContent:'center', gap:'3rem', width:'100%'}}>
+    <div className="form-floating ">
+     <input
+       type="text"
+       className="form-control"
+       id="floatingInput"
+       placeholder="Full Name"
+       onChange={((e)=>{setfullName(e.target.value)})}
+     />
+     <label for="floatingInput">Full Name</label>
+   </div>
+   <div className="form-floating">
+     <select className="form-select" id="floatingSelectGrid" onChange={((e)=>{ setGender(e.target.value)})} >
+       <option value="Male" >Male</option>
+       <option value="Female">Female</option>
+     </select>
+     <label for="floatingSelectGrid">select a gender</label>
+   </div>
+    </div>
+  <div style={{display:"flex" , justifyContent:'center', gap:'3rem', width:'100%'}}>
+  <div className="form-floating">
+     <input
+       type="email"
+       className="form-control"
+       id="floatingPassword"
+       placeholder="Email"
+       onChange={((e)=>{setEmail(e.target.value)})}
+     />
+     <label for="floatingPassword">Adress Email</label>
+   </div>
+   <div className="form-floating">
+     <input
+       type="text"
+       className="form-control"
+       id="floatingPassword"
+       placeholder="Phone Number"
+       onChange={((e)=>{setPhoneNumber(e.target.value)})}
+     />
+     <label for="floatingPassword">Phone Number</label>
+   </div>
+  </div>
+   <div style={{display:"flex" , justifyContent:'center', gap:'3rem', width:'100%'}}>
+   <div className="form-floating" >
+     <input
+       type="number"
+       className="form-control"
+       id="floatingPassword"
+       placeholder="Cin"
+       onChange={((e)=>{setCin(e.target.value)})}
+     />
+     <label for="floatingPassword">Cin</label>
+   </div>
+   <div className="form-floating">
+     <input
+       type="string"
+       className="form-control"
+       id="floatingPassword"
+       placeholder="Cin"
+       onChange={((e)=>{setAddress(e.target.value)})}
+     />
+     <label for="floatingPassword">Address</label>
+   </div>
+   </div>
 
-            <div class="form-floating ">
-              <input
-                type="text"
-                class="form-control"
-                id="floatingInput"
-                placeholder="Full Name"
-                onChange={((e)=>{setfullName(e.target.value)})}
-              />
-              <label for="floatingInput">Full Name</label>
-            </div>
-            <div class="form-floating">
-              <select class="form-select" id="floatingSelectGrid" onChange={((e)=>{ setGender(e.target.value)})} >
-                <option value="Male" >Male</option>
-                <option value="Female">Female</option>
-              </select>
-              <label for="floatingSelectGrid">select a gender</label>
-            </div>
-            <div class="form-floating">
-              <input
-                type="email"
-                class="form-control"
-                id="floatingPassword"
-                placeholder="Email"
-                onChange={((e)=>{setEmail(e.target.value)})}
-              />
-              <label for="floatingPassword">Adress Email</label>
-            </div>
-            <div class="form-floating">
-              <input
-                type="text"
-                class="form-control"
-                id="floatingPassword"
-                placeholder="Phone Number"
-                onChange={((e)=>{setPhoneNumber(e.target.value)})}
-              />
-              <label for="floatingPassword">Phone Number</label>
-            </div>
-            <div class="form-floating">
-              <input
-                type="number"
-                class="form-control"
-                id="floatingPassword"
-                placeholder="Cin"
-                onChange={((e)=>{setCin(e.target.value)})}
-              />
-              <label for="floatingPassword">Cin</label>
-            </div>
-
-            <div class="modal-footer">
+           </div>
+            <div className="modal-footer">
               <button
-                class="btn btn-outline-secondary"
+                className="btn btn-outline-secondary"
                 type="button"
                 id="inputGroupFileAddon04"
                 data-bs-dismiss="modal"
@@ -142,7 +177,7 @@ const AddClient = ({refrech, setRefrech}) => {
               </button>
               <button
                 type="button"
-                class="btn btn-outline-secondary"
+                className="btn btn-outline-secondary"
                 data-bs-dismiss="modal"
               >
                 Close
