@@ -216,7 +216,7 @@ const HomePage = ({ navigation }) => {
                   <TouchableOpacity onPress={() => handlePhotoClick(item)}>
                     <View style={styles.photoItem}>
                       <Image
-                        source={{ uri: item.imageUrl }}
+                        source={{ uri: item.ImageUrl }}
                         style={styles.photoImage}
                       />
                     </View>
@@ -271,13 +271,24 @@ const HomePage = ({ navigation }) => {
             <View style={styles.bodyView4}>
               <Text style={styles.bodyText}>Top Rated</Text>
               <FlatList
-                data={photoData4}
+                data={lawyers}
                 horizontal
                 renderItem={({ item }) => (
                   <TouchableOpacity onPress={() => handlePhotoClick(item)}>
                     <View style={styles.photoItem}>
-                      <Image source={item.source} style={styles.photoImage} />
+                      <Image source={{uri: item.ImageUrl}} style={styles.photoImage} />
                     </View>
+                    <Text
+                      style={{
+                        left: -15,
+                        top: 3,
+                        fontSize: 15,
+                        fontWeight: "500",
+                        alignSelf: "center",
+                      }}
+                    >
+                      {item.fullName}
+                    </Text>
                   </TouchableOpacity>
                 )}
                 keyExtractor={(item) => item.id.toString()}
@@ -429,7 +440,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer1: {
     flexDirection: "row",
-    marginTop: 40,
+    marginTop: 15,
   },
   button: {
     backgroundColor: "black", // Example background color
@@ -505,9 +516,9 @@ const styles = StyleSheet.create({
   singleButton: {
     backgroundColor: "black",
     padding: 15,
-    borderRadius: 30,
-    flexDirection: "row", // Allow items to be in a row
-    alignItems: "center", // Align items vertically in the center
+    borderRadius: 20,
+    flexDirection: "row",
+    alignItems: "center", 
     top: 10,
     marginBottom: 20,
     marginRight: 10,
@@ -515,6 +526,7 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     flex: 1,
+    
   },
   buttonText1: {
     color: "#D5B278",

@@ -36,7 +36,7 @@ const ReviewSummary = ({route}) => {
     <View style={styles.container}>
       <View style={styles.profileSection}>
         <Image
-          source={{uri: item.imageUrl}}
+          source={{uri: item.ImageUrl}}
           style={styles.profileImage}
         />
         <View style={styles.profileInfo}>
@@ -67,7 +67,7 @@ const ReviewSummary = ({route}) => {
         <Text style={styles.title}>Online consultation</Text>
         <View style={styles.infoContainer}>
           <Text style={styles.label}>Category :</Text>
-          <Text style={styles.info}>{item.category}</Text>
+          <Text style={styles.info}>{item.field}</Text>
         </View>
         <View style={styles.infoContainer}>
           <Text style={styles.label}>Lawyer :</Text>
@@ -83,14 +83,14 @@ const ReviewSummary = ({route}) => {
         </View>
         <View style={styles.totalContainer}>
           <Text style={styles.totalLabel}>Total Amount</Text>
-          <Text style={styles.totalPrice}>${item.Price}</Text>
+          <Text style={styles.totalPrice}>${item.price}</Text>
         </View>
       </ScrollView>
       {!isConfirmed && (
         <TouchableOpacity
           style={[
             styles.confirmButton,
-            { backgroundColor: isConfirmed ? "#CCCCCC" : "#D5B278" },
+            { backgroundColor: isConfirmed ? "black" : "black" },
           ]}
           onPress={isConfirmed ? null : handleConfirmPayment}
         >
@@ -268,14 +268,14 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   confirmButton: {
-    backgroundColor: "#D5B278",
+    backgroundColor: "black",
     alignItems: "center",
     padding: 15,
     borderRadius: 8,
     marginTop: 10,
   },
   confirmButtonText: {
-    color: "black",
+    color: "white",
     fontSize: 18,
     fontWeight: "500",
   },
