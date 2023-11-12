@@ -52,7 +52,7 @@ const AddClient = ({refrech, setRefrech}) => {
   return (
     <div>
       <div
-        class="modal fade"
+        className="modal fade"
         id="staticBackdrop"
         data-bs-backdrop="static"
         data-bs-keyboard="false"
@@ -60,10 +60,10 @@ const AddClient = ({refrech, setRefrech}) => {
         aria-labelledby="staticBackdropLabel"
         aria-hidden="true"
       >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h1 class="modal-title fs-5" id="staticBackdropLabel">
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h1 className="modal-title fs-5" id="staticBackdropLabel">
                 Create a new clients
               </h1>
             </div>
@@ -73,10 +73,10 @@ const AddClient = ({refrech, setRefrech}) => {
 <div style={{display:"flex", justifyContent:'center', alignItems:"center" , width:'100%'}}>
      
    <div style={{display:"flex" , justifyContent:'center', gap:'3rem', width:'100%'}}>
-   <div class="form-floating">
-     <label for="formFile" class="form-label"></label>
+   <div className="form-floating">
+     <label for="formFile" className="form-label"></label>
      <input
-       class="form-control"
+       className="form-control"
        type="file"
        id="formFile"
        onChange={(e) => {
@@ -84,10 +84,10 @@ const AddClient = ({refrech, setRefrech}) => {
        }}
      />
    </div>
-   <div class="form-floating ">
+   <div className="form-floating ">
      <input
        type="date"
-       class="form-control"
+       className="form-control"
        id="floatingInput"
        placeholder="Full Name"
        onChange={((e)=>{setBirthDate(e.target.value)})}
@@ -101,18 +101,18 @@ const AddClient = ({refrech, setRefrech}) => {
    
 
     <div style={{display:"flex" , justifyContent:'center', gap:'3rem', width:'100%'}}>
-    <div class="form-floating ">
+    <div className="form-floating ">
      <input
        type="text"
-       class="form-control"
+       className="form-control"
        id="floatingInput"
        placeholder="Full Name"
        onChange={((e)=>{setfullName(e.target.value)})}
      />
      <label for="floatingInput">Full Name</label>
    </div>
-   <div class="form-floating">
-     <select class="form-select" id="floatingSelectGrid" onChange={((e)=>{ setGender(e.target.value)})} >
+   <div className="form-floating">
+     <select className="form-select" id="floatingSelectGrid" onChange={((e)=>{ setGender(e.target.value)})} >
        <option value="Male" >Male</option>
        <option value="Female">Female</option>
      </select>
@@ -120,20 +120,20 @@ const AddClient = ({refrech, setRefrech}) => {
    </div>
     </div>
   <div style={{display:"flex" , justifyContent:'center', gap:'3rem', width:'100%'}}>
-  <div class="form-floating">
+  <div className="form-floating">
      <input
        type="email"
-       class="form-control"
+       className="form-control"
        id="floatingPassword"
        placeholder="Email"
        onChange={((e)=>{setEmail(e.target.value)})}
      />
      <label for="floatingPassword">Adress Email</label>
    </div>
-   <div class="form-floating">
+   <div className="form-floating">
      <input
        type="text"
-       class="form-control"
+       className="form-control"
        id="floatingPassword"
        placeholder="Phone Number"
        onChange={((e)=>{setPhoneNumber(e.target.value)})}
@@ -142,20 +142,20 @@ const AddClient = ({refrech, setRefrech}) => {
    </div>
   </div>
    <div style={{display:"flex" , justifyContent:'center', gap:'3rem', width:'100%'}}>
-   <div class="form-floating" >
+   <div className="form-floating" >
      <input
        type="number"
-       class="form-control"
+       className="form-control"
        id="floatingPassword"
        placeholder="Cin"
        onChange={((e)=>{setCin(e.target.value)})}
      />
      <label for="floatingPassword">Cin</label>
    </div>
-   <div class="form-floating">
+   <div className="form-floating">
      <input
        type="string"
-       class="form-control"
+       className="form-control"
        id="floatingPassword"
        placeholder="Cin"
        onChange={((e)=>{setAddress(e.target.value)})}
@@ -165,9 +165,9 @@ const AddClient = ({refrech, setRefrech}) => {
    </div>
 
            </div>
-            <div class="modal-footer">
+            <div className="modal-footer">
               <button
-                class="btn btn-outline-secondary"
+                className="btn btn-outline-secondary"
                 type="button"
                 id="inputGroupFileAddon04"
                 data-bs-dismiss="modal"
@@ -177,7 +177,7 @@ const AddClient = ({refrech, setRefrech}) => {
               </button>
               <button
                 type="button"
-                class="btn btn-outline-secondary"
+                className="btn btn-outline-secondary"
                 data-bs-dismiss="modal"
               >
                 Close

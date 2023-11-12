@@ -16,21 +16,20 @@ const ClientDetails = () => {
 
   const location = useLocation()
 const record = location.state
-console.log(record.user);
 
 const date = new Date(record.user.birthDate)
 
   return (
     <div className="profileDetails">
       <SidebarDash />
-      <div className="client-details-container">
+      <div className="client-details-container" >
       <div className="profile-header-main-container">
       <div className="profile-header">
         <div className="cover-photo">
           <img src={banner} alt="" />
         </div>
         <div className="profile-header-container">
-          <div className="profile-photo">
+          <div className="profile-photo" >
             <img src={record.user.ImageUrl} alt="" />
             <div className="camera_icon_avatar">
               <svg
@@ -48,7 +47,7 @@ const date = new Date(record.user.birthDate)
             </div>
           </div>
           <div className="profile-info">
-            <p>{record.user.fullName}</p>
+            <p style={{fontSize:'25px' , fontWeight:'bold'}}>{record.user.fullName}</p>
             <div className="profile-info-adress">
               <div className="profile-info-adress-wrap">
                 <svg
@@ -63,7 +62,7 @@ const date = new Date(record.user.birthDate)
                   <path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6.5a.5.5 0 0 1-1 0V1H3v14h3v-2.5a.5.5 0 0 1 .5-.5H8v4H3a1 1 0 0 1-1-1V1Z" />
                   <path d="M4.5 2a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Zm-6 3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Zm-6 3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Z" />
                 </svg>
-                <p>{record.user.phoneNumber}</p>
+                <p style={{fontSize:'20px'}}>{record.user.phoneNumber}</p>
               </div>
               <div className="profile-info-adress-wrap">
                 <svg
@@ -78,7 +77,7 @@ const date = new Date(record.user.birthDate)
                   <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
                 </svg>
 
-                <p>{record.user.adress}</p>
+                <p style={{fontSize:'20px'}}>{record.user.adress}</p>
               </div>
               <div className="profile-info-adress-wrap">
                 <svg
@@ -92,7 +91,7 @@ const date = new Date(record.user.birthDate)
                   <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-5 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z" />
                   <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z" />
                 </svg>
-                <p>{date.toLocaleDateString("en-US")}</p>
+                <p style={{fontSize:'20px'}}>{date.toLocaleDateString("en-US")}</p>
               
 
               </div>

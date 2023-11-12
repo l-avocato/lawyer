@@ -96,7 +96,6 @@ const App = ({ user, deleteUser }) => {
             }}
             onClick={() => {
               navigate("/clientDetails", { state: { user: record } });
-              console.log(record);
             }}
           >
             View
