@@ -17,6 +17,8 @@ import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
 import { Link } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
 import { useNavigate } from "react-router-dom";
+import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
+import CaseHistory from "../CaseHistory/CaseHistory";
 
 const SidebarDash = () => {
   const navigate = useNavigate();
@@ -42,6 +44,12 @@ const SidebarDash = () => {
 
             <span className="side-title" onClick={() => navigate("/allClient")}>
               My Clients
+            </span>
+          </li>
+          <li>
+          <span className="side-title" onClick={() => navigate("/CaseHistory")}>
+          <BusinessCenterIcon className="new-icon" />
+              My Cases
             </span>
           </li>
           <li>
