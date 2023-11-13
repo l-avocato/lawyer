@@ -37,7 +37,7 @@ deleteUser: async (req,res)=>{
         const userDeleted= await User.destroy({
       where:{  id:req.params.id }
         })
-        res.send(userDeleted)
+        res.json(userDeleted)
     } catch (error) {
         throw error
     }
@@ -69,6 +69,16 @@ update: async function (req, res) {
     try {
         const searchUser= await User.findAll({
          where :{CIN: req.params.CIN }
+        })
+        res.status(200).send(searchUser)
+    } catch (error) {
+        throw error
+    }
+  },
+  getUserByEmail: async (req,res)=>{
+    try {
+        const searchUser= await User.findAll({
+         where :{email: req.params.email }
         })
         res.status(200).send(searchUser)
     } catch (error) {

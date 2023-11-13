@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-
+import "./StepsCases.css";
 import ReactFlow, {
   Controls,
   Background,
@@ -11,158 +11,252 @@ import ReactFlow, {
 import "reactflow/dist/style.css";
 import NavbarDashboard from "../NavbarDashboard/NavbarDashboard.jsx";
 import { useEffect } from "react";
+import axios from "axios";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import EditNoteIcon from "@mui/icons-material/EditNote";
+import AddIcon from '@mui/icons-material/Add';
+import { useNavigate } from "react-router-dom";
+
 
 const rfStyle = {
-  backgroundColor: "#B8CEFF",
+  backgroundColor: "white",
 };
-const initialNodes = [
-  {
-    id: "1",
-    data: { label: "open case" },
-    position: { x: 0, y: 0 },
-
-    style: {
-      background: "gold",
-      color: "#333",
-      border: "1px solid #222138",
-      width: 180,
-      borderRadius: "100px",
-    },
-  },
-  {
-    id: "2",
-    type: "textUpdater",
-    data: { label: "first step" },
-    position: { x: 100, y: 100 },
-    style: {
-      background: "gold",
-      border: "1px solid #222138",
-      width: 180,
-      borderRadius: "100px",
-    },
-  },
-  {
-    id: "3",
-    data: { label: "second step" },
-    position: { x: 200, y: 200 },
-    style: {
-      background: "gold",
-      color: "#333",
-      border: "1px solid #222138",
-      width: 180,
-      borderRadius: "100px",
-    },
-  },
-  {
-    id: "4",
-    data: { label: "3eme step" },
-    position: { x: 300, y: 300 },
-    style: {
-      background: "gold",
-      color: "#333",
-      border: "1px solid #222138",
-      width: 180,
-      borderRadius: "100px",
-    },
-  },
-];
-
-const initialEdges = [
-  { id: "1-2", source: "1", target: "2", label: "to the", type: "step" },
-  { id: "2-3", source: "2", target: "3", label: "what happend", type: "step" },
-  { id: "3-4", source: "3", target: "4", label: "to the", type: "step" },
-];
 
 function Flow() {
   const [nodes, setNodes] = useState([]);
-  const [edges, setEdges] = useState(initialEdges);
-
+  const [edges, setEdges] = useState([]);
   const [selectedEdge, setSelectedEdge] = useState(null);
   const [showEdgeModal, setShowEdgeModal] = useState(false);
+  const [refresh, setRefresh] = useState(false);
+  // const [clicked, setClicked] = useState(false);
+  const [newLabel, setNewLabel] = useState("");
+  const [source, setSource] = useState("");
+  const [target, setTarget] = useState("");
 
-  //  const [label, setLabel] = useState("")
-  //  const [ x, setX]=useState(0)
-  //  const [y, setY]=useState(0)
-  // const [color, setColor]= useState("")
+  const navigate = useNavigate();
+
 
   const onConnect = useCallback(
-    (params) => setEdges((eds) => addEdge(params, eds)),
-    []
+    (params) => {
+      setEdges((prevEdges) => {
+        const updatedEdges = addEdge(params, prevEdges);
+
+        axios
+          .post("http://localhost:1128/api/edge/add", {
+            label: "",
+            source: JSON.parse(updatedEdges[updatedEdges.length - 1].source),
+            target: JSON.parse(updatedEdges[updatedEdges.length - 1].target),
+            type: "step",
+          })
+          .then((res) => {
+            console.log("this is res", res.data);
+            setRefresh(!refresh);
+          })
+          .catch((err) => console.log(err));
+
+        return updatedEdges;
+      });
+    },
+    [refresh]
   );
+
+  // const HoverModal = ({ nodeInfo, onClose }) => {
+  //   return (
+  //     <div className="hover-modal">
+  //       <h3>Node Information</h3>
+  //       <p>ID: {nodeInfo.id}</p>
+  //       <button onClick={onClose}>Close</button>
+  //     </div>
+  //   );
+  // };
 
   const onNodesChange = useCallback(
     (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
     [setNodes]
   );
   const onEdgesChange = useCallback(
-    (changes) => setEdges((eds) => applyEdgeChanges(changes, eds)),
+    (changes) =>
+      setEdges((eds) => {
+        applyEdgeChanges(changes, eds);
+      }),
     [setEdges]
   );
+  const fetchData = async () => {
+    try {
+      const result = await axios.get(
+        "http://localhost:1128/api/phase/allPhase"
+      );
+
+      if (result.data.length) {
+        const newNodes = result.data.map((data) => {
+          return {
+            id: String(data.id),
+            data: { label: data.label },
+            position: {
+              x: data.positionX,
+              y: data.positionY,
+            },
+            style: {
+              background: "gold",
+              color: "#333",
+              border: "1px solid #222138",
+              width: 180,
+              borderRadius: "100px",
+            },
+          };
+        });
+        setNodes((prev) => [...prev, ...newNodes]);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchEdge = async () => {
+    try {
+      const result = await axios.get(
+        "http://localhost:1128/api/edge/getAll/edge"
+      );
+
+      if (result.data.length) {
+        const newEdge = result.data.map((data) => {
+          return {
+            id: String(data.source + "-" + data.target),
+            source: String(data.source),
+            target: String(data.target),
+            label: data.label,
+            type: "step",
+          };
+        });
+        setEdges(newEdge);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+    fetchEdge();
+  }, [refresh]);
+
+  const AddEdge = async () => {
+    const NewEdge = {
+      source: source,
+      target: target,
+      label: newLabel,
+      type: "step",
+    };
+    try {
+      await axios.post("http://localhost:1128/api/edge/add", NewEdge);
+      setRefresh(!refresh);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const addNode = () => {
     const newNode = {
-      id: String(initialNodes.length + 1),
-      data: { label: "text" },
-      position: {
-        x: 300,
-        y: 0,
-      },
-      style: {
-        background: "gold",
-        color: "#333",
-        border: "1px solid #222138",
-        width: 180,
-        borderRadius: "100px",
-      },
+      label: "New Node",
+      positionX: 250,
+      positionY: 150,
+      background: "gold",
+      color: "#333",
+      border: "1px solid #222138",
+      width: 180,
+      borderRadius: "100px",
     };
-    initialEdges.push(newNode);
-    setNodes((node) => [...nodes, newNode]);
+
+    axios
+      .post("http://localhost:1128/api/phase/add", newNode)
+      .then((response) => {
+        const createdNode = response.data;
+        setRefresh(!refresh);
+      })
+      .catch((error) => {
+        console.error("Failed to add a new node:", error);
+      });
   };
 
-  // const Edge = ()=>{
+  const deleteNode = async (id) => {
+    try {
+      await axios.delete(`http://localhost:1128/api/phase/remove/${id}`);
+      console.log(`Node with ID ${id} deleted successfully.`);
+      setRefresh((prev) => !prev);
+    } catch (error) {
+      console.error("Error deleting node:", error);
+    }
+  };
 
-  // }
+  const updateNodeName = async (id) => {
+    try {
+      await axios.put(`http://localhost:1128/api/phase/update/${id}`, {
+        label: newLabel,
+      });
+      setRefresh(!refresh);
 
-  useEffect(() => {
-    addNode();
-    setNodes(initialNodes);
-  }, [initialNodes.length]);
+      console.log("Node updated:", response.data);
+    } catch (error) {
+      console.error("Error updating node:", error);
+    }
+  };
+  const onNodeDragStop = (event, node) => {
+    const { id, position } = node;
+
+    axios
+      .put(`http://localhost:1128/api/phase/update/${id}`, {
+        positionX: position.x,
+        positionY: position.y,
+      })
+      .then((response) => {
+        console.log("Node position updated:", response.data);
+      })
+      .catch((error) => {
+        console.error("Error updating node position:", error);
+      });
+  };
 
   return (
     <div>
+      
       <NavbarDashboard />
 
       <div
         style={{
-          height: "75%",
-          width: "60%",
+          height: "85%",
+          width: "71%",
           position: "absolute",
-          top: "15%",
+          top: "12%",
           display: "flex",
-          marginLeft: "25rem",
+          marginLeft: "20rem",
           backgroundColor: "black",
         }}
       >
+
         <ReactFlow
           nodes={nodes}
           onNodesChange={onNodesChange}
           onNodeClick={(event, edge) => {
             setSelectedEdge(edge);
             setShowEdgeModal(true);
+            // console.log(selectedEdge?.id)
           }}
-          // onNodeMouseEnter={()=>}
+          
+          onNodeMouseEnter={() => {}}
           edges={edges}
           onEdgesChange={onEdgesChange}
           onConnect={onConnect}
+          onNodeDragStop={onNodeDragStop}
           fitView
           style={rfStyle}
         >
           <Background />
 
+
           {showEdgeModal && (
             <div
               className="modal fade show"
-              style={{ display: "block", height: "18rem" }}
+              style={{ display: "block", position: "relative" }}
             >
               <div className="modal-dialog">
                 <div className="modal-content">
@@ -176,18 +270,66 @@ function Flow() {
                   </div>
                   <div className="modal-body">
                     <h6>Edge ID: {selectedEdge.id}</h6>
-                    <h6>Edge Label: {selectedEdge.label}</h6>
-                    {/* Add other edge details as needed */}
+                    <input
+                      name="text"
+                      class="input"
+                      placeholder="Update Edge Name"
+                      style={{
+                        width: "500px",
+                        borderRadius: "0.75rem",
+                        padding: "0.5rem",
+                        marginLeft: "4rem",
+                        border: "2px solid #f0f0f0",
+                        transition: " all 0.2s ease-in-out",
+                      }}
+                      onChange={(e) => {
+                        setNewLabel(e.target.value);
+                      }}
+                    ></input>
                   </div>
-                  <div className="modal-footer">
+                  <div
+                    className="modal-footer"
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      marginLeft: "0.5rem",
+                    }}
+                  >
+                    <DeleteForeverIcon
+                      style={{
+                        color: "gold",
+                        height: "40px",
+                        width: "40px",
+                        borderRadius: "50%",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => {
+                        deleteNode(selectedEdge.id);
+                        setShowEdgeModal(false);
+                      }}
+                    />
+                    <EditNoteIcon
+                      style={{
+                        color: "gold",
+                        height: "45px",
+                        width: "45px",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => {
+                        updateNodeName(selectedEdge.id);
+                        setShowEdgeModal(false);
+                      }}
+                    />
+
                     <button
                       type="button"
-                      className="btn btn-secondary"
-                      onClick={() => setShowEdgeModal(false)}
+                      style={{
+                        height: "45px",
+                        width: "120px",
+                        transition: "0.2s",
+                      }}
+                      onClick={() => navigate("/informations")}
                     >
-                      Close
-                    </button>
-                    <button type="button" className="btn btn-secondary">
                       See All details
                     </button>
                   </div>
@@ -217,7 +359,7 @@ function Flow() {
       <div
         style={{
           position: "absolute",
-          right: 40,
+          right: 10,
           display: "flex",
           gap: "6px",
           flexDirection: "column",
@@ -225,10 +367,11 @@ function Flow() {
         }}
       >
         <button onClick={addNode}>Create Step </button>
-
-        <button data-bs-toggle="modal" data-bs-target="#staticBackdrops">
+        {/* <button data-bs-toggle="modal" data-bs-target="#staticBackdrops">
           Edge
-        </button>
+        </button> */}
+       {/* <AddIcon onClick={addNode} style={{color:'green' , fontSize:'50px', display:'flex' , backgroundColor:'whi'}} /> */}
+
         <div
           class="modal fade"
           id="staticBackdrops"
@@ -271,6 +414,9 @@ function Flow() {
                     }}
                     type="string"
                     placeholder="Source"
+                    onChange={(e) => {
+                      setSource(e.target.value);
+                    }}
                   />
                   <label for="name">target:</label>
 
@@ -283,6 +429,9 @@ function Flow() {
                     }}
                     type="number"
                     placeholder="Target"
+                    onChange={(e) => {
+                      setTarget(e.target.value);
+                    }}
                   />
                   <label for="name">Label</label>
 
@@ -293,8 +442,11 @@ function Flow() {
                       borderRadius: "0.5rem",
                       height: "2.5rem",
                     }}
-                    type="number"
+                    type="text"
                     placeholder="Label"
+                    onChange={(e) => {
+                      setNewLabel(e.target.value);
+                    }}
                   />
                 </div>
               </div>
@@ -306,7 +458,13 @@ function Flow() {
                 >
                   Close
                 </button>
-                <button type="button" class="btn btn-primary">
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  onClick={() => {
+                    AddEdge();
+                  }}
+                >
                   Insert
                 </button>
               </div>

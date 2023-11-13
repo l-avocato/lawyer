@@ -2,6 +2,7 @@ const express = require('express');
 const PhaseRoute = require("./routes/phases.route")
 const cors = require("cors")
 
+
 require("./models/index")
 const routerPhase= require('./routes/phases.route')
 const routerAdmin = require('./routes/admin.route')
@@ -20,12 +21,15 @@ const routerReceipt = require('./routes/receipt.route')
 const routerReport = require('./routes/report.route')
 const routerMedia = require('./routes/media.route')
 const routerNotification = require('./routes/notification.route')
+const routerEdge = require("./routes/edges.route")
 
 
 
 
 let app = express();
-
+app.use(cors({
+  origin: "*"
+}));
 app.use(express.json())
 app.use(cors())
 
@@ -62,6 +66,8 @@ app.use("/api/report",routerReport);
 app.use("/api/media",routerMedia);
 
 app.use("/api/notification",routerNotification);
+
+app.use("/api/edge", routerEdge);
 
 
 

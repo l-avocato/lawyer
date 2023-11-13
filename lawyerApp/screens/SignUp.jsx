@@ -83,20 +83,22 @@ const signUp = async () => {
           password: password,
           fullName: fullName,
           phoneNumber: phoneNumber,
+          ImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/2048px-Windows_10_Default_Profile_Picture.svg.png'
+
         };
 
         dispatch(signupUser(formData))
-        //   .then((res) => {
-        //     navigation.navigate("login");
-        //   })
+          .then((res) => {
+            navigation.navigate("login");
+          })
           .catch((error) => {
             alert(error.message, "sign up failed");
           });
       })
       .catch((error) => {
-        // const errorCode = error.code;
-        // const errorMessage = error.message;
-        // alert(errorMessage, "sign up failed");
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        alert(errorMessage, "sign up failed");
         console.log(error);
         // ..
       });

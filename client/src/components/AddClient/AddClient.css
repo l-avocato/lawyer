@@ -3,6 +3,7 @@
 }
 .form-floating {
     /* padding: 0.5rem; */
+    width: 40%;
 }
 .btn {
     background-color: black ;
@@ -23,4 +24,14 @@
 
 .modal-dialog {
     height: 200px;;
+}
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: gold;
+}
+#staticBackdropLabel {
+    font-weight: bold !important;
+    font-size: 24px !important;
 }

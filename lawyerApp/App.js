@@ -39,6 +39,7 @@ export default function App() {
         initialRouteName="Onboarding1"
         component={Onboarding1}
         options={{ headerShown: false }}>
+          
         <Stack.Screen
           name="NavTab"
           component={NavTab}
@@ -101,7 +102,7 @@ export default function App() {
           }}
         />
         <Stack.Screen
-          name="Lawyer Details"
+          name="ProfilDetails"
           component={ProfilDetails}
           options={{
             headerShown: true,

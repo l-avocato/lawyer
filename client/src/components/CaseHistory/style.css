@@ -1,0 +1,27 @@
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+.data-grid {
+  display: flex;
+  justify-content: center;
+  margin-top: 5%;
+  margin-left: 14%;
+  width: 150%;
+
+}
+
+
+.ant-table {
+  width: 100%;
+}
+
+.ant-table-pagination {
+  margin-right: 16px;
+  margin-top: 16px;
+}
+
+.sidebar {
+  flex-shrink: 0;
+}
