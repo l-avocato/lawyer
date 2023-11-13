@@ -150,7 +150,11 @@ const Settings = () => {
             style={{
               backgroundColor: "gold",
               color: "black",
-              fontSize: "1.3rem",
+              fontSize: "1.3rem", 
+              border: "none",
+              borderRadius: "8px",
+              padding: "10px 20px",
+              cursor: "pointer",
             }}
             onClick={() => {
               showModal();
