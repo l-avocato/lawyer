@@ -11,20 +11,24 @@ import { FontAwesome } from "react-native-vector-icons";
 import { Colors } from "../components/styles";
 import { color } from "react-native-elements/dist/helpers";
 
+import LinearGradient from "react-native-linear-gradient";
+
 
 const { primary, tertinary } = Colors;
 
 const ProfilDetails = ({ navigation , route}) => {
 const {item} = route.params;
+const {lawyer} = route.params
 console.log("this is item ",item);
 
+const law = item?item:lawyer
   const galleryImages = [
     require("../Photos/lawyer-or-judge-in-simple-flat-personal-profile-icon-or-symbol-people-concept-illustration-vector.jpg"),
     require("../Photos/lawyer-or-judge-in-simple-flat-personal-profile-icon-or-symbol-people-concept-illustration-vector.jpg"),
     require("../Photos/lawyer-or-judge-in-simple-flat-personal-profile-icon-or-symbol-people-concept-illustration-vector.jpg"),
     require("../Photos/lawyer-or-judge-in-simple-flat-personal-profile-icon-or-symbol-people-concept-illustration-vector.jpg"),
   ];
-
+console.log("this item",lawyer);
   return (
     <View style={styles.body}>
       <View style={styles.block2}>
@@ -32,11 +36,14 @@ console.log("this is item ",item);
           <View style={styles.blockPhoto}>
             <Image
               source={{uri: item.ImageUrl}}
+              // source={{uri: law.imageUrl}}
               style={styles.photoo}
             />
             <View style={{ position: "relative", top: 110 }}>
               <Text style={styles.nameText}>{item.fullName}</Text>
               <Text style={styles.specialtyText}>{item.field}</Text>
+              <Text style={styles.nameText}>{law.fullName}</Text>
+              <Text style={styles.specialtyText}>{law.category} Law</Text>
             </View>
           </View>
         </View>
@@ -51,7 +58,11 @@ console.log("this is item ",item);
 
               <View style={{ display: "flex", flexDirection: "row" }}>
                 <FontAwesome name="dollar" style={styles.icon} />
+{/* <<<<<<< HEAD
+                <Text style={styles.infoText}>${law.Price}/H</Text>
+======= */}
                 <Text style={styles.infoText}>{item.price}/H</Text>
+{/* >>>>>>> 3e3aa7e74b98fb159a6a5156acf1d95fccc1edbb */}
               </View>
             </View>
             <TouchableOpacity style={{ display: "flex", flexDirection: "row" }} onPress={()=>{
@@ -98,7 +109,7 @@ console.log("this is item ",item);
       </View>
       <TouchableOpacity 
   style={styles.bookButton}
-  onPress={() => navigation.navigate("Appintment", {item})}
+  onPress={() => navigation.navigate("Appintment", {law})}
 >
   <Text style={styles.bookButtonText}>Book Appointment</Text>
 </TouchableOpacity>
