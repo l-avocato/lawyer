@@ -18,6 +18,7 @@ import * as Location from "expo-location";
 import { MaterialIcons } from "@expo/vector-icons";
 import { collection, getDocs } from "firebase/firestore";
 import { FIREBASE_DB } from '../firebaseConfig';
+import axios from "axios";
 
 const GoogleMapView = ({ navigation }) => {
   const [userLocation, setUserLocation] = useState(null);
@@ -27,6 +28,12 @@ const GoogleMapView = ({ navigation }) => {
   const [selectedLawyer, setSelectedLawyer] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const mapRef = useRef(null);
+
+
+  const config = "172.20.10.3";
+
+
+
 
   useEffect(() => {
     const fetchLocation = async () => {
@@ -301,7 +308,7 @@ const GoogleMapView = ({ navigation }) => {
 const styles = StyleSheet.create({
   searchBarContainer: {
     position: "absolute",
-    top: 30,
+    top: 70,
     left: 10,
     right: 10,
     backgroundColor: "white",
