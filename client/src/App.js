@@ -49,6 +49,8 @@ const App = () => {
           <Route path="/flow" element={<Flow />} />
           <Route path="/CaseHistory" element={< CaseHistory/>} />
           <Route path="/CaseProfile" element={< CaseProfile/>} />
+          <Route path="/informations" element={<InformationPhase/>} />
+          <Route path="/stat" element={<Statestique/>} />
         </Routes>
       </Router>
     </div>

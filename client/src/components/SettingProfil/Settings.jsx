@@ -144,7 +144,18 @@ const Settings = () => {
               }}
             />
             <label className="form-label" htmlFor="form6Example3"></label>
-          </div>
+          </div>      
+           <button
+            type="button"
+            style={{
+              backgroundColor: "gold",
+              color: "black",
+              fontSize: "1.3rem",
+            }}
+            
+          >
+            Update 
+          </button>
           <button
             type="button"
             style={{
