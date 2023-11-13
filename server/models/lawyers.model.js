@@ -8,7 +8,7 @@ module.exports=(connection,DataTypes)=>{
     password:DataTypes.STRING,
     corfirmedPassword:DataTypes.STRING,
     adress: DataTypes.STRING,
-    phoneNumber: DataTypes.INTEGER,
+    phoneNumber: DataTypes.BIGINT,
     adress: DataTypes.STRING,
     ImageUrl: DataTypes.STRING,
     gender: DataTypes.STRING,

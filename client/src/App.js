@@ -18,6 +18,8 @@ import Flow from "./components/StepsCases/Flow.js";
 import { Provider } from "react-redux";
 import {store} from './store/index.jsx'
 import Chat  from "./components/Chat/Chat.js";
+import InformationPhase from "./components/StepsCases/InformationPhase.jsx";
+import Statestique from "./components/Statestique/Statestique.jsx";
 
 
 
@@ -44,6 +46,8 @@ const App = () => {
           <Route path="/diagramme" element={<Diagramme />} />
           <Route path="/flow" element={<Flow />} />
           <Route path="/chat" element={<Chat />} />
+          <Route path="/informations" element={<InformationPhase />} />
+          <Route path="/stat" element={<Statestique />} />
         </Routes>
       </Router>
     </div>
