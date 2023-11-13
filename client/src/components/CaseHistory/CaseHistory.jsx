@@ -5,7 +5,8 @@ import axios from "axios";
 import { Table, Space, Button } from "antd";
 import CaseProfile from "../CaseProfile/CaseProfile";
 import { useNavigate } from "react-router-dom"; 
-
+import NavbarDashboard from "../NavbarDashboard/NavbarDashboard";
+import Navbar from "./../Navbar/Navbar"
 const CaseHistory = () => {
   const [cases, setCases] = useState([]);
   const [users, setUsers] = useState([]);
@@ -54,18 +55,18 @@ const CaseHistory = () => {
   };
 
   const columns = [
-    {
-      title: "image",
-      dataIndex: "imageUrl",
-      key: "image",
-      render: (image) => (
-        <img
-          src={image}
-          alt="User Image"
-          style={{ width: "50px", height: "50px", borderRadius: "0.5rem" }}
-        />
-      ),
-    },
+    // {
+    //   title: "image",
+    //   dataIndex: "imageUrl",
+    //   key: "image",
+    //   render: (image) => (
+    //     <img
+    //       src={image}
+    //       alt="User Image"
+    //       style={{ width: "50px", height: "50px", borderRadius: "0.5rem" }}
+    //     />
+    //   ),
+    // },
     {
       title: "case title",
       dataIndex: "title",
@@ -106,8 +107,9 @@ const CaseHistory = () => {
 
   return (
     <div className="container">
+      {/* <Navbar/> */}
       <SidebarDash />
-      <div className="data-grid">
+      <div className="data-grid"> 
         <Table
           columns={columns}
           dataSource={data}

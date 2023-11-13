@@ -2,11 +2,14 @@ import React, { useState, useEffect } from "react";
 import SidebarDash from "../SidebarDash/SidebarDash";
 import axios from "axios";
 import "./style.css";
+import Flow from "../StepsCases/Flow";
 
 const CaseProfile = () => {
   const [cases, setCases] = useState([]);
   const [users, setUsers] = useState([]);
   const [data, setData] = useState([]);
+  const [showStepsDashboard, setShowStepsDashboard] = useState(false);
+
   useEffect(() => {
     const fetchCasesData = async () => {
       try {
@@ -40,10 +43,15 @@ const CaseProfile = () => {
 
   const handleItemClick = (index) => {
     setActiveIndex(index);
+
+
+    if (index === 1) {
+      setShowStepsDashboard((prev) => !prev);
+    }
   };
 
   return (
-    <div className="profileDetails">
+    <div className="profileDetails" style = {{position: "relative"}}>
       <SidebarDash />
       <div className="client-details-container">
         <div className="profile-header-main-container">
@@ -54,12 +62,8 @@ const CaseProfile = () => {
             <div className="profile-header-container">
               <div className="profile-photo">
                 {data.length > 0 && (
-                  <img
-                    src={data[0].imageUrl}
-                    alt="Profile Image"
-                  />
+                  <img src={data[0].imageUrl} alt="Profile Image" />
                 )}
-            
               </div>
               <div className="profile-info">
                 <p>{data.length > 0 && data[0].title}</p>
@@ -109,24 +113,31 @@ const CaseProfile = () => {
                 </div>
               </div>
               <div className="profile-header-statistics">
-              <p className="details" style = {{marginTop:"-40px"}}>case Details</p>
-                <div className="profile-card" style={{width:"500px",height:"90px"}}>
-                
+                <p className="details" style={{ marginTop: "-40px" }}>
+                  case Details
+                </p>
+                <div
+                  className="profile-card"
+                  style={{ width: "500px", height: "90px" }}
+                >
                   <p>{data.length > 0 && data[0].details}</p>
-                 
                 </div>
               </div>
               <div className="bottom-nav">
                 <ul className="bottom-nav-ul">
                   <li
                     onClick={() => handleItemClick(0)}
-                    className={`my-text ${activeIndex === 0 ? "highlight" : ""}`}
+                    className={`my-text ${
+                      activeIndex === 0 ? "highlight" : ""
+                    }`}
                   >
                     documents
                   </li>
                   <li
                     onClick={() => handleItemClick(1)}
-                    className={`my-text ${activeIndex === 1 ? "highlight" : ""}`}
+                    className={`my-text ${
+                      activeIndex === 1 ? "highlight" : ""
+                    }`}
                   >
                     phases
                   </li>
@@ -136,6 +147,7 @@ const CaseProfile = () => {
           </div>
         </div>
       </div>
+      {showStepsDashboard && <Flow />}
     </div>
   );
 };
