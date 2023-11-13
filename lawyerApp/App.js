@@ -36,8 +36,8 @@ export default function App() {
     <Provider store={store}> 
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="ManageFilters"
-        component={ManageFilters}
+        initialRouteName="Onboarding1"
+        component={Onboarding1}
         options={{ headerShown: false }}>
         <Stack.Screen
           name="NavTab"
