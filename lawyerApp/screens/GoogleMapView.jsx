@@ -17,10 +17,15 @@ import MapView, {
 import * as Location from "expo-location";
 import { MaterialIcons } from "@expo/vector-icons";
 import { collection, getDocs } from "firebase/firestore";
+<<<<<<< HEAD
+import { FIREBASE_DB } from '../firebaseConfig';
+import axios from "axios";
+=======
 import { FIREBASE_DB } from "../firebaseConfig";
 import { Linking } from "react-native";
 import ProfilDetails from "./ProfilDetails";
 import { Portal, PaperProvider } from "react-native-paper";
+>>>>>>> c1546b8ce628d237a5ad37ad9a43cd722d57a81a
 
 const GoogleMapView = ({ navigation }) => {
   const [userLocation, setUserLocation] = useState(null);
@@ -34,6 +39,14 @@ const GoogleMapView = ({ navigation }) => {
   const mapRef = useRef(null);
 
 
+<<<<<<< HEAD
+  const config = "172.20.10.3";
+
+
+
+
+=======
+>>>>>>> c1546b8ce628d237a5ad37ad9a43cd722d57a81a
   useEffect(() => {
     const fetchLocation = async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
@@ -302,7 +315,7 @@ const GoogleMapView = ({ navigation }) => {
 const styles = StyleSheet.create({
   searchBarContainer: {
     position: "absolute",
-    top: 30,
+    top: 70,
     left: 10,
     right: 10,
     backgroundColor: "white",

@@ -13,6 +13,7 @@ import SettingsSystemDaydreamOutlinedIcon from "@mui/icons-material/SettingsSyst
 import PsychologyOutlinedIcon from "@mui/icons-material/PsychologyOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
+import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
 import { Link } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
 import { useNavigate } from "react-router-dom";
@@ -58,6 +59,10 @@ const SidebarDash = () => {
           <li>
             <NotificationsNoneIcon className="new-icon" />
             <span className="side-title">Notifications</span>
+          </li>
+          <li>
+            <AssignmentTurnedInIcon className="new-icon" />
+            <span className="side-title" onClick={() => navigate("/task")}>Tasks</span>
           </li>
           <li onClick={toggleSettings}>
             <SettingsApplicationsIcon className="new-icon" />

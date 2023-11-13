@@ -68,7 +68,7 @@ export default function App() {
         component={GoogleMapView}
         options={{
           headerShown : false,
-        }}kj
+        }}
         />
 
         <Stack.Screen
