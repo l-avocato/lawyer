@@ -9,6 +9,8 @@ import {
 } from "react-native";
 import { FontAwesome } from "react-native-vector-icons";
 import { Colors } from "../components/styles";
+import { color } from "react-native-elements/dist/helpers";
+
 import LinearGradient from "react-native-linear-gradient";
 
 
@@ -16,12 +18,8 @@ const { primary, tertinary } = Colors;
 
 const ProfilDetails = ({ navigation , route}) => {
 const {item} = route.params;
-<<<<<<< HEAD
 const {lawyer} = route.params
-=======
 console.log("this is item ",item);
->>>>>>> 632fbb3e8e2f53a1db4aa90f51e134397c1965b8
-
 
 const law = item?item:lawyer
   const galleryImages = [
@@ -37,10 +35,13 @@ console.log("this item",lawyer);
         <View style={styles.photoLowyer}>
           <View style={styles.blockPhoto}>
             <Image
-              source={{uri: law.imageUrl}}
+              source={{uri: item.ImageUrl}}
+              // source={{uri: law.imageUrl}}
               style={styles.photoo}
             />
             <View style={{ position: "relative", top: 110 }}>
+              <Text style={styles.nameText}>{item.fullName}</Text>
+              <Text style={styles.specialtyText}>{item.field}</Text>
               <Text style={styles.nameText}>{law.fullName}</Text>
               <Text style={styles.specialtyText}>{law.category} Law</Text>
             </View>
@@ -57,7 +58,11 @@ console.log("this item",lawyer);
 
               <View style={{ display: "flex", flexDirection: "row" }}>
                 <FontAwesome name="dollar" style={styles.icon} />
+{/* <<<<<<< HEAD
                 <Text style={styles.infoText}>${law.Price}/H</Text>
+======= */}
+                <Text style={styles.infoText}>{item.price}/H</Text>
+{/* >>>>>>> 3e3aa7e74b98fb159a6a5156acf1d95fccc1edbb */}
               </View>
             </View>
             <TouchableOpacity style={{ display: "flex", flexDirection: "row" }} onPress={()=>{
@@ -80,12 +85,12 @@ console.log("this item",lawyer);
           }}
         >
           <View style={styles.infoBlock}>
-            <FontAwesome name="briefcase" style={styles.icon} />
-            <Text style={styles.infoText}>Number of Cases: 100</Text>
+            <FontAwesome name="briefcase" style={{  fontSize: 20,marginRight: 10,color: "black",marginLeft: 10}} />
+            <Text style={{fontSize: 16,fontFamily: "normal" ,marginLeft:20}}>Number of Cases: 100</Text>
           </View>
           <View style={styles.infoBlock}>
-            <FontAwesome name="check-circle" style={styles.icon} />
-            <Text style={styles.infoText}>Success Rate: 85%</Text>
+            <FontAwesome name="check-circle" style={{  fontSize: 20,marginRight: 40,color: "black",marginLeft: 10}} />
+            <Text style={{   fontSize: 16,fontFamily: "normal" ,marginRight:20}}>Success Rate: 85%</Text>
           </View>
         </View>
 
@@ -150,15 +155,15 @@ const styles = StyleSheet.create({
     marginRight: 80,
   },
   block2: {
-    backgroundColor: '#D5B278',
+    backgroundColor: '#292929',
     height: 250,
     width: 370,
     marginTop: 90,
-    marginLeft: 20,
-    borderRadius: 30,
+    marginLeft: 30,
+    borderRadius: 20,
   },
   blockBlueGhamak: {
-    backgroundColor: "#C6C1B4",
+    backgroundColor: "#D5B278",
     height: 80,
     width: 370,
     marginTop: 170,
@@ -185,6 +190,8 @@ const styles = StyleSheet.create({
     marginTop: -15,
     color: "#cca01d",
     fontFamily: "Roboto",
+    fontWeight: "700",
+    marginLeft: 20
   },
   galleryImage: {
     width: 130,
@@ -202,6 +209,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
     color: "#cca01d",
     fontFamily: "Roboto",
+    fontWeight: "700",
+    marginLeft: 20
   },
   infoContainer: {
     display: "flex",
@@ -216,22 +225,26 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   infoText: {
-    fontSize: 16,
-    fontFamily: "normal"
+    fontSize: 17,
+    color: "black",
+    fontFamily: "normal",
+    fontWeight: "500",
 
   },
   nameText: {
+    color: "white",
     fontSize: 25,
     fontWeight: "bold",
     textAlign: "center",
   },
   specialtyText: {
+    color: "white",
     fontSize: 15,
     fontWeight: "500",
     textAlign: "center",
   },
   bookButton: {
-    backgroundColor: "#D5B278",
+    backgroundColor: "black",
     width: 390,
     height: 50,
     justifyContent: "center",
@@ -242,7 +255,7 @@ const styles = StyleSheet.create({
   },
   bookButtonText: {
     fontSize: 20,
-    color: "black",
+    color: "white",
   },
 });
 

@@ -14,14 +14,31 @@ import { FIREBASE_STORAGE } from "../firebaseConfig"
 import 'firebase/firestore';
 import {update, updateDoc, doc ,setDoc} from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+// import { auth } from 'firebase';
+
+
+
 
 
 const Settings = ({ navigation }) => {
   const [user, setUser] = useState([]);
   const [profilePic, setProfilePic] = useState("../assets/ahmed.png");
   const [image, setImage] = useState(null);
+  const [refresh, setRefresh] = useState(false);
+
+
+  const config = "172.20.10.3";
 
   const db = FIREBASE_DB;
+
+
+
+
+
+
+  
   // const updateUserImage = async () => {
   //   try {
   //     await updateDoc(userCollectionRef, {
@@ -39,41 +56,46 @@ const Settings = ({ navigation }) => {
   //   await updateUserImage();
   // };
  
+  
 
   const updateUserImage = async (imageUrl) => {
     const userDocRef = doc(db, 'user', user.id);
     await setDoc(userDocRef, { imageUrl: imageUrl }, { merge: true });
   };
-  const handleImageUpload = async (image) => {
-    // Create a reference to the location you want to upload to in Firebase
-      const storageRef =ref(FIREBASE_STORAGE,`images/${image.uri.split('/').pop()}`);
-      const uploadTask = uploadBytesResumable(storageRef, blob);
-    // Upload the file to Firebase Storage
-    const response = await fetch(image.uri);
-    const blob = await response.blob();
-  
-    uploadTask.on('state_changed', 
-    (snapshot) => {
-      console.log('Bytes transferred:', snapshot.bytesTransferred);
-      console.log('Total bytes:', snapshot.totalBytes);
-  
-      if (snapshot.totalBytes > 0) {
-        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log('Upload is ' + progress + '% done');
-      } else {
-        console.log('Upload is 0% done');
-      }
-    },
-    async () => {
-      // Handle successful uploads on complete
-      const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-      await updateUserImage(downloadURL);
+
+
+  const updateUserImageInDB = async (imageUrl) => {
+    console.log('Updating user image in DB with imageUrl:', imageUrl); // Add this line
+      try {
+      await axios.put(`http://${config}:1128/api/user/updateUser/${user.id}`, {
+        ImageUrl: imageUrl
+      }).then(response => {
+        console.log('Response from server:', response.data);
+        setRefresh(!refresh);
+      });
+    } catch (error) {
+      console.error('Error updating user image in DB:', error);
     }
-  );
   };
+
+  const handleImageUpload = async (uri) => {
+    console.log('Image URI:', uri); // Add this line
   
+    const formData = new FormData();
+    formData.append('file', { uri, type: 'image/jpeg', name: 'upload.jpg' });
+    formData.append('upload_preset', 'oztadvnr');
+  
+    try {
+      const response = await axios.post('https://api.cloudinary.com/v1_1/dl4qexes8/upload', formData);
+      console.log('Cloudinary response:', response.data); // Add this line
+  
+      const imageUrl = response.data.secure_url;
+      await updateUserImageInDB(imageUrl);
+    } catch (error) {
+      console.error('Error uploading image:', error);
+    }
+  };
   const pickImage = async () => {
-    // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
@@ -82,7 +104,12 @@ const Settings = ({ navigation }) => {
     });
   
     if (!result.canceled) {
-      handleImageUpload(result);
+      delete result.canceled;
+      if (result.assets[0] && result.assets[0].uri) {
+        handleImageUpload(result.assets[0].uri);
+      } else {
+        console.error('Image or image URI is not defined');
+      }
     }
   };
 
@@ -101,6 +128,31 @@ const Settings = ({ navigation }) => {
     setModalVisible(!isModalVisible);
   };
 
+
+  const clearToken = async () => {
+    try {
+     const logOutToken= await AsyncStorage.removeItem('token'); //clearing token and type when you signout
+     console.log('this is logout token',logOutToken);
+  
+    } catch (error) {
+      console.error('Error clearing token:', error);
+    }
+  };
+  
+  
+
+    const logOut = async () => {
+      try {
+        // await signOut(auth)
+        await clearToken()
+        navigation.navigate('login')
+      } catch (error) {
+        console.error('Logout error:', error)
+      }
+    };
+
+
+
   const handleChoosePhoto = () => {
     const options = {
       noData: true,
@@ -113,19 +165,20 @@ const Settings = ({ navigation }) => {
       }
     });
   };
+  const loggedInUser = FIREBASE_AUTH.currentUser.email;
+
   const getUser = async () => {
-    try {
-      const result = await getDocs(userCollectionRef);
-      const users = result.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-      })).filter((e)=>e.email === FIREBASE_AUTH.currentUser.email)[0]
-      console.log("this is user",users);
-      setUser(users);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
+    const response = await axios.get(`http://${config}:1128/api/user/getUserByEmail/${loggedInUser}`)
+    .then((res) => {
+        console.log("this is user",res.data);
+        setUser(res.data[0]);
+      })
+    };
+
+
+
+
+
   useEffect(()=>{
     getUser()
 
@@ -138,7 +191,7 @@ const Settings = ({ navigation }) => {
         <Text style={{ fontSize: 27,color:"gray", fontWeight: '700', marginLeft: 1,marginTop:90 }}>Profile</Text>
       </View>
       <View style={{ borderRadius: 200, overflow: 'hidden', alignSelf:'center' }}>
-        <ImageBackground source={{uri:image}} style={{ width: 200, height: 200 }}>
+        <ImageBackground source={{uri:user.ImageUrl}} style={{ width: 200, height: 200 }}>
          
       </ImageBackground>
     </View>
@@ -208,9 +261,12 @@ const Settings = ({ navigation }) => {
       marginLeft: 10,
       marginTop: 20,
     }}
-    onPress={() => navigation.navigate('logout')}
+    onPress={() => navigation.navigate('Logout')}
   >
-    <Text  style={{ color: 'white',fontWeight:'500', fontSize:'20',marginTop:5 }}>Yes. Logout</Text>
+    <Text  style={{ color: 'white',fontWeight:'500', fontSize:'20',marginTop:5 }}
+    
+    onPress={logOut}
+    >Yes. Logout</Text>
   </TouchableOpacity>
 </View>
         </View>

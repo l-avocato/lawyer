@@ -6,6 +6,7 @@ module.exports=(connection,DataTypes)=>{
     details: DataTypes.STRING,
     step: DataTypes.STRING,
     number: DataTypes.INTEGER,
+    state: DataTypes.ENUM("pending","in progress","closed"),
     
     } )
     return cases

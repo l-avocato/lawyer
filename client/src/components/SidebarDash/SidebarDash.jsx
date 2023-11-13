@@ -53,7 +53,7 @@ const SidebarDash = () => {
           </li>
           <li>
             <InsertChartIcon className="new-icon" />
-            <span className="side-title">Stats</span>
+            <span className="side-title"  onClick={() => navigate("/stat")}>Stats</span>
           </li>
           <li>
             <NotificationsNoneIcon className="new-icon" />
