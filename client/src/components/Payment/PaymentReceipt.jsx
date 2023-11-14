@@ -26,6 +26,20 @@ getOnePayment(data.id)
 const handlePrint = () => {
   window.print();
 };
+const handleUpdate = async (id) => {
+  try {
+    if (data.lawyer) {
+      await axios.put(`http://localhost:1128/api/payment/updatePayment/${id}`, {
+        // amount: updatedAmount,
+      });
+      getOnePayment(data.id);
+    } else {
+      console.error('Lawyer information not available for update');
+    }
+  } catch (error) {
+    console.error('Error updating payment:', error);
+  }
+};
 
 console.log("this is the payment",payment);
 // console.log("this is the data", route);
@@ -78,7 +92,7 @@ console.log("this is the payment",payment);
       
       <div className="button-container">
           <button className="print-button"  onClick={handlePrint} >Print</button>
-          <button className="update-button" >Update</button>
+          <button className="update-button" onClick={handleUpdate}>Update</button>
         </div>
       
     </div>
