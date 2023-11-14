@@ -49,6 +49,7 @@ const App = () => {
           <Route path="/flow" element={<Flow />} />
           <Route path="/CaseHistory" element={< CaseHistory/>} />
           <Route path="/CaseProfile" element={< CaseProfile/>} />
+          <Route path="/Chat" element={< Chat/>} />
         </Routes>
       </Router>
     </div>

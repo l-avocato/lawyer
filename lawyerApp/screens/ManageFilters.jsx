@@ -32,7 +32,7 @@ const ManageFilters = ({navigation}) => {
     try {
       console.log(body);
       const response = await axios.post(
-        "http://192.168.103.5:1128/api/lawyer/getByFilter",
+        "http://192.168.103.17:1128/api/lawyer/getByFilter",
         {
           price: body,
         },

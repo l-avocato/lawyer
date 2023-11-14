@@ -21,7 +21,7 @@ import axios from "axios";
 const { width, height } = Dimensions.get("window");
 
 const HomePage = ({ navigation }) => {
-  const config = "172.20.10.3";
+  const config = "192.168.103.17";
   const [selectedTab, setSelectedTab] = useState("Home");
 
   // Function to handle photo click
