@@ -9,11 +9,27 @@ import {
 } from "@ant-design/icons";
 import { useNavigate } from 'react-router-dom';
 
-const App = ({ user, deleteUser }) => {
+const App = ({ payment, deleteUser }) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [api, contextHolder] = notification.useNotification();
   const navigate = useNavigate()
+
+
+  const payments = payment.map((e)=>{
+    return( 
+      {
+        id:e.id,
+        image : e.user?.ImageUrl, 
+        fullName: e.user?.fullName,
+        CIN : e.user?.CIN,
+        email : e.user?.email, 
+        phoneNumber : e.user?.phoneNumber
+
+
+      }
+    )
+  })
 
   const Context = React.createContext({
     name: "Default",
@@ -57,11 +73,18 @@ const App = ({ user, deleteUser }) => {
       ),
     },
     {
+      title: "PaymentId",
+      dataIndex: "id",
+      key: "age",
+    },
+    {
       title: "Name",
       dataIndex: "fullName",
       key: "name",
       render: (text, record) => (
-        <a onClick={() => handlePaymentClick(record)}>{text}</a>
+        <a onClick={() => {
+        
+          handlePaymentClick(record)}}>{text}</a>
       ),
     },
     {
@@ -117,9 +140,9 @@ const App = ({ user, deleteUser }) => {
     onChange: onSelectChange,
   };
 
-  const handlePaymentClick = () => {
-
-    navigate('/PaymentReceipt');
+  const handlePaymentClick = (record) => {
+navigate('/PaymentReceipt' ,{ state: { data: record} }
+    );
   };
 
   const hasSelected = selectedRowKeys.length > 0;
@@ -145,11 +168,12 @@ const App = ({ user, deleteUser }) => {
           <Table
             pagination={{ pageSize: 7 }}
             columns={columns}
-            dataSource={user}
+            dataSource={payments}
             size="small"
             // onRow={(record) => ({
             //   onClick: () => handlePaymentClick(record),
             // })}
+           
           />
         </div>{" "}
       </Context.Provider>

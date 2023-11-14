@@ -9,8 +9,8 @@ import axios from "axios";
 
 const PaymentHistory = () => {
   
-  const [users, setUsers] = useState([]);
-  console.log("this is user", users);
+  const [payments, setPayments] = useState([]);
+  console.log("this is user", payments);
   const [refrech, setRefrech] = useState(false);
 
   const deleteUser = async (id) => {
@@ -22,10 +22,10 @@ const PaymentHistory = () => {
     }
   };
 
-  const getUsers = async () => {
+  const getPayments = async () => {
     try {
-      const response = await axios.get("http://localhost:1128/api/user/allUsers");
-      setUsers(response.data);
+      const response = await axios.get("http://localhost:1128/api/payment/allPayments");
+      setPayments(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -33,7 +33,7 @@ const PaymentHistory = () => {
   
 
   useEffect(() => {
-    getUsers();
+    getPayments();
   }, [refrech]);
 
   return (
@@ -56,7 +56,7 @@ const PaymentHistory = () => {
           className="table-wrapper table1"
           style={{ width: "70rem", display: "flex", flexDirection: "column", marginLeft: "21rem" }}
         >
-          <DataGrid user={users} deleteUser={deleteUser}    />
+          <DataGrid payment={payments} deleteUser={deleteUser}    />
         </div>
       </div>
     </div>
