@@ -149,7 +149,7 @@ const HomePage = ({ navigation }) => {
             </Text>
             <View style={styles.notificationContainer}>
               <TouchableOpacity
-                onPress={() => navigation.navigate("Notifications")}
+                onPress={() => navigation.navigate("notifications")}
                 style={styles.notificationButton}
               >
                 <MaterialIcons name="notifications" size={24} color="white" />
