@@ -1,4 +1,4 @@
-.container {
+/* .container {
   display: flex;
   justify-content: center;
 }
@@ -24,4 +24,11 @@
 
 .sidebar {
   flex-shrink: 0;
+} */
+
+.MuiButtonBase-root.MuiIconButton-root:hover {
+  background-color: transparent !important; /* Set the background color to transparent on hover */
+} 
+.MuiButtonBase-root.MuiIconButton-root {
+  overflow: hidden !important;
 }
