@@ -11,6 +11,8 @@ const [payment, setPayments] = useState()
 const location = useLocation()
 const data = location.state.data
 
+console.log('data: ', data)
+
   const getOnePayment = async(id)=>{
     try {
       const res = await axios.get(`http://localhost:1128/api/payment/getPaymentId/${id}`)
@@ -26,20 +28,21 @@ getOnePayment(data.id)
 const handlePrint = () => {
   window.print();
 };
-const handleUpdate = async (id) => {
-  try {
-    if (data.lawyer) {
-      await axios.put(`http://localhost:1128/api/payment/updatePayment/${id}`, {
-        // amount: updatedAmount,
-      });
-      getOnePayment(data.id);
-    } else {
-      console.error('Lawyer information not available for update');
-    }
-  } catch (error) {
-    console.error('Error updating payment:', error);
-  }
-};
+// const handleUpdate = async (updatedAmount) => {
+//   try {
+//     console.log("this is id",data.id);
+//     if (data) {
+//       await axios.put(`http://localhost:1128/api/payment/updatePayment/${data.id}`, {
+//         amount: updatedAmount,
+//       });
+//       getOnePayment(data.id);
+//     } else {
+//       console.error('Lawyer information not available for update');
+//     }
+//   } catch (error) {
+//     console.error('Error updating payment:', error);
+//   }
+// };
 
 console.log("this is the payment",payment);
 // console.log("this is the data", route);
@@ -53,7 +56,7 @@ console.log("this is the payment",payment);
 
       </div>
       <div className='allll'>
-      <h2 className='hello'>Hello {data.fullName}</h2>
+      <h2 className='hello'> {data.fullName}</h2>
       <p className='para'>This is the receipt for a payment of $268.85 (USD) </p>
       <div className='dateP'>
         <h3>Payment Date</h3>
@@ -66,7 +69,7 @@ console.log("this is the payment",payment);
       <hr />
 
       <div className='recDetail'>
-        <h3>Client</h3>
+        <h3>Client Email</h3>
         <p>
          {data.email}
         </p>
@@ -92,7 +95,6 @@ console.log("this is the payment",payment);
       
       <div className="button-container">
           <button className="print-button"  onClick={handlePrint} >Print</button>
-          <button className="update-button" onClick={handleUpdate}>Update</button>
         </div>
       
     </div>
