@@ -1,4 +1,4 @@
-.signup-container {
+/* .signup-container {
     background-color: rgb(190, 190, 190);
     display: flex;
     justify-content: center;
@@ -39,8 +39,8 @@
     color: black;
     background-color: rgb(253, 248, 241);
   }
-  
-  button {
+   */
+  /* button {
     width: 100%;
     padding: 10px;
     background-color: black;
@@ -48,14 +48,14 @@
     border: none;
     cursor: pointer;
     border-radius: 8px;
-  }
+  } */
   
-  button:hover {
+  /* button:hover {
     background-color: gold;
     color: black;
-  }
+  } */
   
-  .form-2{
+  /* .form-2{
     margin-right: 2%;
     display: flex;
     flex-direction: column;
@@ -73,4 +73,4 @@
     font-size: 12px;
     border-radius: 8%;
     margin-right: 60%;
-  }
+  } */

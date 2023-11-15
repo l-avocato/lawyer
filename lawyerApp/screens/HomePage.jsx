@@ -17,16 +17,18 @@ import yourBackgroundImage from "../Photos/avocat6.jpeg";
 import { FIREBASE_AUTH, FIREBASE_DB } from "../firebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
 import axios from "axios";
+import config from "./ipv";
+
+
 
 const { width, height } = Dimensions.get("window");
 
 const HomePage = ({ navigation }) => {
-  const config = "172.20.10.3";
   const [selectedTab, setSelectedTab] = useState("Home");
 
   // Function to handle photo click
   const handlePhotoClick = (item) => {
-    navigation.navigate("Lawyer Details", { item });
+    navigation.navigate("ProfilDetails", { item });
 
     console.log("Photo clicked:", item.id);
   };
@@ -149,7 +151,7 @@ const HomePage = ({ navigation }) => {
             </Text>
             <View style={styles.notificationContainer}>
               <TouchableOpacity
-                onPress={() => navigation.navigate("Notifications")}
+                onPress={() => navigation.navigate("notifications")}
                 style={styles.notificationButton}
               >
                 <MaterialIcons name="notifications" size={24} color="white" />

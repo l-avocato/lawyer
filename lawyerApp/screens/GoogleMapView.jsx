@@ -17,7 +17,10 @@ import MapView, {
 import * as Location from "expo-location";
 import { MaterialIcons } from "@expo/vector-icons";
 import { collection, getDocs } from "firebase/firestore";
-import { FIREBASE_DB } from '../firebaseConfig';
+import { FIREBASE_DB } from "../firebaseConfig";
+import { Linking } from "react-native";
+import ProfilDetails from "./ProfilDetails";
+import { Portal, PaperProvider } from "react-native-paper";
 
 const GoogleMapView = ({ navigation }) => {
   const [userLocation, setUserLocation] = useState(null);
@@ -26,7 +29,10 @@ const GoogleMapView = ({ navigation }) => {
   const [lawyers, setLawyers] = useState([]);
   const [selectedLawyer, setSelectedLawyer] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
+  const [visible, setVisible] = React.useState(false);
+
   const mapRef = useRef(null);
+
 
   useEffect(() => {
     const fetchLocation = async () => {
@@ -66,6 +72,12 @@ const GoogleMapView = ({ navigation }) => {
       });
     }
   };
+  const handleCall = () => {
+    if (selectedLawyer.phoneNumber) {
+      const phoneNumber = selectedLawyer.phoneNumber;
+      Linking.openURL(`tel:${phoneNumber}`);
+    }
+  };
 
   const handleMapLongPress = (event) => {
     setShowRoute(false);
@@ -75,10 +87,10 @@ const GoogleMapView = ({ navigation }) => {
   const startRoute = () => {
     setShowRoute(true);
   };
-  
+
   const openLawyerProfile = (lawyer) => {
     if (lawyer && lawyer.imageUrl) {
-      setSelectedLawyer(lawyer);
+      setSelectedLawyer({ ...lawyer });
       setModalVisible(true);
     } else {
       console.error("Invalid lawyer data");
@@ -168,6 +180,7 @@ const GoogleMapView = ({ navigation }) => {
               {lawyer.imageUrl && (
                 <Image
                   source={{ uri: lawyer.imageUrl }}
+                  
                   style={{ width: 40, height: 40, borderRadius: 20 }}
                 />
               )}
@@ -200,55 +213,43 @@ const GoogleMapView = ({ navigation }) => {
       {selectedLawyer && (
         <Modal
           animationType="slide"
-          transparent={false}
+          transparent={true}
           visible={modalVisible}
           onRequestClose={closeModal}
         >
-          <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-            {selectedLawyer.imageUrl && (
-              <Image
-                source={{ uri: selectedLawyer.imageUrl }}
-                style={{ width: 200, height: 200, borderRadius: 100, marginBottom: 20 }}
-              />
-            )}
-            <Text style={{ fontSize: 24, fontWeight: "bold", marginBottom: 10 }}>{selectedLawyer.fullName}</Text>
-            <Text style={{ fontSize: 18, marginBottom: 10 }}>Number: {selectedLawyer.phoneNumber}</Text>
-            <TouchableOpacity
-              style={{
-                backgroundColor: "gold",
-                padding: 10,
-                borderRadius: 5,
-                marginBottom: 20,
-              }}
-              onPress={() => {
-                navigation.navigate("Lawyer Details", { lawyer: selectedLawyer });
-              }}
-            >
-              <Text style={{ color: "black", textAlign: "center", fontSize: 16 }}>Go to Profile</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{
-                backgroundColor: "gold",
-                padding: 10,
-                borderRadius: 5,
-                marginBottom: 20,
-              }}
-              onPress={() => {
-                navigation.navigate("Chat", { lawyer: selectedLawyer });
-              }}
-            >
-              <Text style={{ color: "black", textAlign: "center", fontSize: 16 }}>Message</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{
-                position: "absolute",
-                top: 20,
-                right: 20,
-              }}
-              onPress={closeModal}
-            >
-              <Text style={{ fontSize: 20, color: "red" }}>X</Text>
-            </TouchableOpacity>
+          <View style={styles.popupContainer}>
+            <View style={styles.popupContent}>
+              {selectedLawyer.imageUrl && (
+                <Image
+                  source={{ uri: selectedLawyer.imageUrl }}
+                  style={styles.image}
+                />
+              )}
+              <Text style={styles.name}>{selectedLawyer.fullName}</Text>
+              <Text style={styles.phoneNumber}>
+               {selectedLawyer.category}
+              </Text>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => {
+                  navigation.navigate("ProfilDetails", {
+                    lawyer: selectedLawyer,
+                  
+                  });
+                }}
+              >
+                <Text style={styles.buttonText}>Go to Profile</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={handleCall}
+              >
+                <Text style={styles.buttonText}>Call</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
+                <Text style={styles.closeButtonText}>X</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </Modal>
       )}
@@ -301,7 +302,7 @@ const GoogleMapView = ({ navigation }) => {
 const styles = StyleSheet.create({
   searchBarContainer: {
     position: "absolute",
-    top: 30,
+    top: 70,
     left: 10,
     right: 10,
     backgroundColor: "white",
@@ -312,6 +313,54 @@ const styles = StyleSheet.create({
   },
   searchInput: {
     fontSize: 16,
+  },
+  popupContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  popupContent: {
+    backgroundColor: "white",
+    padding: 20,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  image: {
+    width: 150,
+    height: 150,
+    borderRadius: 75,
+    marginBottom: 10,
+  },
+  name: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  phoneNumber: {
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  button: {
+    backgroundColor: "gold",
+    padding: 10,
+    borderRadius: 5,
+    marginBottom: 10,
+    width: 150,
+  },
+  buttonText: {
+    color: "black",
+    textAlign: "center",
+    fontSize: 14,
+  },
+  closeButton: {
+    position: "absolute",
+    top: 10,
+    right: 10,
+  },
+  closeButtonText: {
+    fontSize: 18,
+    color: "red",
   },
 });
 

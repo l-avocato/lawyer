@@ -28,7 +28,9 @@ import SearchListings from "./screens/SearchListings";
 import { Provider } from "react-redux";
 import { store } from './store/index'
 import ChatRooms from "./screens/ChatRooms";
-
+import MyCases from "./screens/MyCases";
+import CaseDetails from "./screens/CaseDetails";
+import PhaseDetails from "./screens/PhaseDetails";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -68,7 +70,7 @@ export default function App() {
         component={GoogleMapView}
         options={{
           headerShown : false,
-        }}kj
+        }}
         />
 
         <Stack.Screen
@@ -102,7 +104,7 @@ export default function App() {
           }}
         />
         <Stack.Screen
-          name="Lawyer Details"
+          name="ProfilDetails"
           component={ProfilDetails}
           options={{
             headerShown: true,
@@ -207,6 +209,27 @@ export default function App() {
           component={ReviewSummary}
           options={{
             headerShown: true,
+          }}
+        />
+        <Stack.Screen
+          name="cases"
+          component={MyCases}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="caseDetails"
+          component={CaseDetails}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="phaseDetails"
+          component={PhaseDetails}
+          options={{
+            headerShown: false,
           }}
         />
       </Stack.Navigator>
