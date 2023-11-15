@@ -1,9 +1,8 @@
-// Updated React Component
 import React, { useState } from 'react';
 import classnames from 'classnames';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import './style.css'; // Import the updated CSS file
+import './style.css';
 import SidebarDash from '../SidebarDash/SidebarDash';
 
 const TaskList = () => {
@@ -20,7 +19,7 @@ const TaskList = () => {
         done: false,
       };
 
-      setTasks([...tasks, task]);
+      setTasks([task, ...tasks]); // Add new task to the beginning of the array
       setNewTask('');
       setNewDeadline(null);
     }
@@ -67,13 +66,13 @@ const TaskList = () => {
         </button>
       </div>
       {tasks.length > 0 ? (
-        <ul className="task-list">
+        <div className="task-cards-container">
           {tasks.map((task) => (
-            <li
+            <div
               key={task.id}
-              className={classnames('task-item', { completed: task.done })}
+              className={classnames('task-card', { completed: task.done })}
             >
-              <div>
+              <div className="task-card-header">
                 <input
                   className="checkbox-task"
                   type="checkbox"
@@ -82,10 +81,10 @@ const TaskList = () => {
                 />
                 <span className="task-description">{task.description}</span>
               </div>
-              <span className="task-deadline">
-                {task.deadline && `Deadline: ${task.deadline}`}
-              </span>
-              <div>
+              <div className="task-card-body">
+                <span className="task-deadline">
+                  {task.deadline && `Deadline: ${task.deadline}`}
+                </span>
                 <button
                   className="delete-task-button"
                   onClick={() => handleDeleteTask(task.id)}
@@ -93,9 +92,9 @@ const TaskList = () => {
                   Delete
                 </button>
               </div>
-            </li>
+            </div>
           ))}
-        </ul>
+        </div>
       ) : (
         <p className="no-tasks-message">No tasks found.</p>
       )}
