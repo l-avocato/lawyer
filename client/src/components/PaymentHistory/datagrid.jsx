@@ -9,7 +9,7 @@ import {
 } from "@ant-design/icons";
 import { useNavigate } from 'react-router-dom';
 
-const App = ({ payment, deleteUser }) => {
+const App = ({ payment, deleteUser,setId }) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [api, contextHolder] = notification.useNotification();
@@ -108,7 +108,9 @@ const App = ({ payment, deleteUser }) => {
       render: (_, record) => (
         <Space size="middle">
          
-          <Button type="primary" onClick={showModal} danger style={{backgroundColor:'black'}}>
+          <Button type="primary" onClick={()=>{
+            setId(record.id)
+            showModal()}}   danger style={{backgroundColor:'black'}}>
             Delete
           </Button>
           <Modal

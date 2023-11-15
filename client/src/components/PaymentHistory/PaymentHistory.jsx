@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./PaymentHistory.css";
-import Modal from "../AddClient/AddClient.jsx";
+import Modal from "./addPayment";
 import SidebarDash from "../SidebarDash/SidebarDash.jsx";
 import NavbarDashboard from "../NavbarDashboard/NavbarDashboard.jsx";
 import DataGrid from "./datagrid.jsx";
@@ -12,10 +12,12 @@ const PaymentHistory = () => {
   const [payments, setPayments] = useState([]);
   console.log("this is user", payments);
   const [refrech, setRefrech] = useState(false);
+  const [id,setId]=useState("")
 
-  const deleteUser = async (id) => {
+  const deleteUser = async () => {
+    console.log(id,"this is the id")
     try {
-      await axios.delete(`http://localhost:1128/api/user/deleteUser/${id}`);
+      await axios.delete(`http://localhost:1128/api/payment/deletePayment/${id}`);
       setRefrech(!refrech);
     } catch (error) {
       console.error("Error deleting user:", error);
@@ -46,7 +48,7 @@ const PaymentHistory = () => {
             data-bs-toggle="modal"
             data-bs-target="#staticBackdrop"
           >
-            Add client{" "}
+            Add Payment{" "}
           </button>
           <Modal refrech={refrech} setRefrech={setRefrech} />
           <hr />
@@ -56,7 +58,7 @@ const PaymentHistory = () => {
           className="table-wrapper table1"
           style={{ width: "70rem", display: "flex", flexDirection: "column", marginLeft: "21rem" }}
         >
-          <DataGrid payment={payments} deleteUser={deleteUser}    />
+          <DataGrid payment={payments} deleteUser={deleteUser} setId={setId}    />
         </div>
       </div>
     </div>
