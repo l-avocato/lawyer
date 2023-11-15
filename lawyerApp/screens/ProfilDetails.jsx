@@ -19,7 +19,7 @@ const { primary, tertinary } = Colors;
 const ProfilDetails = ({ navigation , route}) => {
 const {item} = route.params;
 const {lawyer} = route.params
-console.log("this is item ",item);
+console.log("this is item profile ",item);
 
 const law = item?item:lawyer
   const galleryImages = [
@@ -42,8 +42,6 @@ console.log("this item",lawyer);
             <View style={{ position: "relative", top: 110 }}>
               <Text style={styles.nameText}>{item.fullName}</Text>
               <Text style={styles.specialtyText}>{item.field}</Text>
-              <Text style={styles.nameText}>{law.fullName}</Text>
-              <Text style={styles.specialtyText}>{law.category} Law</Text>
             </View>
           </View>
         </View>
@@ -109,8 +107,8 @@ console.log("this item",lawyer);
       </View>
       <TouchableOpacity 
   style={styles.bookButton}
-  onPress={() => navigation.navigate("Appintment", {law})}
->
+  onPress={() => navigation.navigate("Appintment", {law,item})}>
+
   <Text style={styles.bookButtonText}>Book Appointment</Text>
 </TouchableOpacity>
     </View>

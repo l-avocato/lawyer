@@ -14,6 +14,7 @@ import SettingSecurity from "./components/SettingSecurity/SettingSecurity.jsx";
 import SettingProfil from "./components/SettingProfil/Settings.jsx";
 import StepsCases from "./components/StepsCases/StepsCases.jsx";
 import Diagramme from "./components/Diagramme/Diagramme.jsx";
+import TaskList from "./components/Tasks/TaskList.jsx"
 import Flow from "./components/StepsCases/Flow.js";
 import { Provider } from "react-redux";
 import {store} from './store/index.jsx'
@@ -47,6 +48,10 @@ const App = () => {
           <Route path="/stepsCases" element={<StepsCases />} />
           <Route path="/diagramme" element={<Diagramme />} />
           <Route path="/flow" element={<Flow />} />
+          <Route path="/chat" element={<Chat />} />
+          <Route path="/informations" element={<InformationPhase />} />
+          <Route path="/stat" element={<Statestique />} />
+          <Route path="/task" element={<TaskList />} />
           <Route path="/CaseHistory" element={< CaseHistory/>} />
           <Route path="/CaseProfile" element={< CaseProfile/>} />
         </Routes>

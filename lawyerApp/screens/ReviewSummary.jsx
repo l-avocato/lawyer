@@ -22,6 +22,8 @@ const ReviewSummary = ({route}) => {
   const {selected}=route.params;
   const {selectedTime}=route.params;
   
+console.log(item,"item");
+
   console.log("this is law",selected);
   const handleConfirmPayment = () => {
     setIsConfirmed(false);

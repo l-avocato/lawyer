@@ -7,7 +7,7 @@ import { View, Text, TextInput, TouchableOpacity,
   import { useNavigation } from '@react-navigation/native';
   import axios from 'axios';
   import { FIREBASE_AUTH} from "../firebaseConfig";
-
+  import config from "./ipv";
 
 const EditProfile = ({ navigation }) => {
   // const [fullName, setFullName] = useState('');
@@ -20,7 +20,6 @@ const EditProfile = ({ navigation }) => {
   const [user, setUser] = useState({});
   const [refresh, setRefresh] = useState(false);
   
-  const config = "172.20.10.3";
 
   const toggleDatePicker = () => {
     setShowPicker(!showPicker);

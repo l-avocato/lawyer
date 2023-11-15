@@ -302,7 +302,7 @@ const GoogleMapView = ({ navigation }) => {
 const styles = StyleSheet.create({
   searchBarContainer: {
     position: "absolute",
-    top: 30,
+    top: 70,
     left: 10,
     right: 10,
     backgroundColor: "white",

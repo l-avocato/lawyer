@@ -16,6 +16,8 @@ import {update, updateDoc, doc ,setDoc} from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import config from "./ipv";
+
 // import { auth } from 'firebase';
 
 
@@ -29,7 +31,6 @@ const Settings = ({ navigation }) => {
   const [refresh, setRefresh] = useState(false);
 
 
-  const config = "172.20.10.3";
 
   const db = FIREBASE_DB;
 
