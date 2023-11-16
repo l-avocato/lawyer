@@ -1,0 +1,86 @@
+.apointment {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  padding: 1rem;
+}
+.table {
+  width: 120vh;
+  height: 75vh;
+  background-color: rgb(252, 248, 248);
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 2rem;
+  margin-top: 1.6rem;
+}
+.extra {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-right: 0.56rem;
+}
+.upcoming {
+  width: 50vh;
+  height: 40vh;
+  background-color: rgb(243, 241, 238);
+  border-radius: 2rem;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  overflow-y: auto;
+}
+.statistics {
+  width: 50vh;
+  height: 40vh;
+  background-color: rgb(243, 241, 238);
+  border-radius: 2rem;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.scrollable-content {
+  padding: 10px;
+}
+.upcoming-title {
+  font-size: 1.3rem;
+  font-family: cursive;
+}
+.appointment-item1 {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
+}
+.appointment-item2 {
+  display: flex;
+  gap: 1rem;
+}
+.appointment-item3 {
+  display: flex;
+  gap: 1rem;
+}
+.appointment-item1 img,
+.appointment-item2 img,
+.appointment-item3 img {
+  width: 4rem; /* Adjust the width as needed */
+  height: 4rem;
+  border-radius: 50%; /* Add border radius if desired */
+}
+
+.flex {
+  display: flex;
+}
+.jcc {
+  justify-content: center;
+}
+
+.g-10 {
+  gap: 2rem;
+}
+
+.p-1 {
+  padding: 5px;
+}
+
+.border-r-50 {
+  border-radius: 50%;
+}
+
+.align-center {
+  align-items: center;
+}

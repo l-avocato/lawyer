@@ -189,3 +189,21 @@
     color: rgb(119, 119, 119);
     font-size: 14px;
 }
+.documents-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 200px;
+    background-color: white;
+    border: 1px solid rgb(219, 219, 219);
+    border-radius: 0.5rem;
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+  }
+  
+  .file-card {
+    margin-bottom: 0.5rem;
+  }
+  
