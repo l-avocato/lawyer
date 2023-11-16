@@ -26,6 +26,7 @@ import Statestique from "./components/Statestique/Statestique.jsx";
 
 
 
+
 const App = () => {
   return (
     <Provider store={store}>
@@ -54,6 +55,8 @@ const App = () => {
           <Route path="/task" element={<TaskList />} />
           <Route path="/CaseHistory" element={< CaseHistory/>} />
           <Route path="/CaseProfile" element={< CaseProfile/>} />
+          <Route path="/informations" element={<InformationPhase/>} />
+          <Route path="/stat" element={<Statestique/>} />
         </Routes>
       </Router>
     </div>

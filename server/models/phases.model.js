@@ -31,6 +31,11 @@ module.exports=(connection,DataTypes)=>{
             defaultValue:"100px",
             type: DataTypes.STRING,
           },
+          price : {
+            type: DataTypes.INTEGER,
+defaultValue: 0
+          }
+
         
     } )
     return phase
