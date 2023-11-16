@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   cardHeader: {
-    backgroundColor: '#D5B278', // Gold color for the top section
+    backgroundColor: '#D5B278', 
     borderBottomColor: '#555',
     borderBottomWidth: 1,
     paddingBottom: 10,
