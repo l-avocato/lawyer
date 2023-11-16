@@ -1,4 +1,4 @@
-/* .sign-in-container {
+.sign-in-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -56,4 +56,4 @@
   .form-config{
     margin-top: 20%;
     margin-right: 5%;
-  } */
+  }

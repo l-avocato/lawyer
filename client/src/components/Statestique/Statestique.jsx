@@ -19,8 +19,8 @@ const Statestique = () => {
           <BarChart
             xAxis={[{ scaleType: 'band', data: ['group A', 'group B', 'group C'] }]}
             series={[{ data: [4, 3, 5] }, { data: [1, 6, 3] }, { data: [2, 5, 6] }]}
-            width={400}
-            height={240}
+            width={450}
+            height={250}
           />
           <p>All cases </p>
           <BarChart
@@ -36,8 +36,8 @@ const Statestique = () => {
                 data: [2, 5, 3],
               },
             ]}
-            width={380}
-            height={200}
+            width={450}
+            height={250}
           />
         </div>
 
@@ -52,8 +52,8 @@ const Statestique = () => {
                   data: [2, 5.5, 2, 8.5, 1.5, 5],
                 },
               ]}
-              width={400}
-              height={200}
+              width={450}
+              height={250}
             />
           </div>
 
@@ -69,7 +69,7 @@ const Statestique = () => {
                   ],
                 },
               ]}
-              width={350}
+              width={450}
               height={200}
             />
           </div>

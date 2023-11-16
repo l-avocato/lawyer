@@ -5,23 +5,39 @@
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    background-color: #eee3e3;
+    background-color: #ffffff;
     width: 90%;
-    height: 5%;
-    margin-top: -1%;
+    height: 495px;
+    margin-left: 27.5%;
+    margin-top: 2%;
+    box-shadow: rgba(242, 242, 3, 0.25) 0px 50px 100px -20px, rgb(0, 0, 0) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
   }
   .hello{
     margin-left: 2%;
+  }
+  .print-button{
+    width: 20%;
+    margin-left: 39%;
+    margin-top: 7%;
+  }
+  .update-button{
+    width: 20%;
+    margin-left: 30%;
   }
   .descript{
     margin-left: 2%;
     margin-top: -1%;
   }
   .img-logo{
-    width: 20%;
-   height: 200px;
-   margin-left: 40%;
-   margin-top: 1%;
+    width: 7%;
+   height: 7%;
+    margin-left: 40.9%;
+   margin-top: -1%; 
+  }
+  .newcomp{
+    width: 255%;
+    height: 535%;
+
   }
   .payment-receipt h2 {
     color: #333;
@@ -78,9 +94,11 @@
 }
 .descriptionn{
     margin-left: 70%;
-    margin-top: -21%;
+    margin-top: -10%;
 }
-  
+  .allll{
+    margin-top: 11%;
+  }
 .SUB{
   margin-left: 33%;
 }
