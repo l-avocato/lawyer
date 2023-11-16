@@ -44,6 +44,14 @@ const NavTab = () => {
         </TouchableOpacity>
         <TouchableOpacity
           style={
+            selectedTab === "MyCases" ? styles.tabBarItemActive : styles.tabBarItem
+          }
+          onPress={() => navigation.navigate("cases")}
+        >
+          <Ionicons name="briefcase" size={24} color="black" />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={
             selectedTab === "Profile"
               ? styles.tabBarItemActive
               : styles.tabBarItem
