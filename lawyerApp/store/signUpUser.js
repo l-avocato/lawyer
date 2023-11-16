@@ -1,6 +1,7 @@
 // signUpSlice.js
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import config from "../screens/ipv";
 
 const initialState = {
   loading: false,
@@ -12,7 +13,7 @@ const initialState = {
 export const signupUser = createAsyncThunk("signup/signupUser", async (input, { dispatch }) => {
     // console.log(input,'this is the body');
     // console.log(process.env.IPV_IP,"logged");
-   const response = await axios.post(`http://172.20.10.3:1128/api/user/addUser`, input);
+   const response = await axios.post(`http://${config}:1128/api/user/addUser`, input);
    console.log(response.data,"this is from the store");
 return response.data
   }

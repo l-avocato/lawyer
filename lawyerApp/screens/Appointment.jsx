@@ -12,6 +12,7 @@ const Appointment = ({navigation ,route}) => {
   const [selectedTime, setSelectedTime] = useState(null);
   const [selectedDate, setSelectedDate] = useState(null);
   
+  console.log(item,"item appointment");
   
   const customStyles = {
     selected: {

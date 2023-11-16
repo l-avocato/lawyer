@@ -17,6 +17,8 @@ import { QuerySnapshot, collection, getDocs } from "firebase/firestore";
 import axios from "axios";
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import config from "./ipv";
+
 const ManageFilters = ({navigation}) => {
   const buttonLabels = ["Proprety", "Criminal", "Tax"];
   const [inputValue, setInputValue] = useState("");

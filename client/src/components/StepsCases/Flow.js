@@ -195,6 +195,7 @@ function Flow() {
       });
       setRefresh(!refresh);
 
+      // console.log("Node updated:", response.data);
     } catch (error) {
       console.error("Error updating node:", error);
     }

@@ -27,6 +27,7 @@ import Appointments from "./components/Appointments/Appointments.jsx";
 
 
 
+
 const App = () => {
   return (
     <Provider store={store}>
@@ -57,6 +58,8 @@ const App = () => {
           <Route path="/CaseProfile" element={< CaseProfile/>} />
           <Route path="/Chat" element={< Chat/>} />
           <Route path="/Appointments" element={< Appointments/>} />
+          <Route path="/informations" element={<InformationPhase/>} />
+          <Route path="/stat" element={<Statestique/>} />
         </Routes>
       </Router>
     </div>
