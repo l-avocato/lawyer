@@ -6,6 +6,7 @@ module.exports=(connection,DataTypes)=>{
    time: DataTypes.TIME,
    reason: DataTypes.STRING,
    accepted: DataTypes.ENUM("pending","accepted","declined"),
+   state: DataTypes.ENUM("upcoming","cancelled","completed"),
     } )
     return appointment
     }
