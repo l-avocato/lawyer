@@ -8,6 +8,8 @@ import {
   Text,
   TextInput,
   Alert,
+  Modal,
+  TouchableWithoutFeedback,
 } from "react-native";
 import { FontAwesome } from "react-native-vector-icons";
 import { Colors } from "../components/styles";
@@ -15,23 +17,20 @@ import axios from "axios";
 
 import checkImage from "../assets/check.png";
 
-
 const { primary, tertiary } = Colors;
 
 const ProfilDetails = ({ navigation, route }) => {
   const { item } = route.params;
   const { lawyer } = route.params;
 
-
   const law = item ? item : lawyer;
 
   const [stars, setStars] = useState(0);
   const [review, setReview] = useState("");
   const [reviews, setReviews] = useState([]);
-  const [rating, setRating] = useState([]  );
+  const [rating, setRating] = useState([]);
 
-  // useEffect(() => {
-  // }, []);
+  const [showReviewsModal, setShowReviewsModal] = useState(false);
 
   const addRating = async () => {
     try {
@@ -69,20 +68,25 @@ const ProfilDetails = ({ navigation, route }) => {
   };
 
   const getLawyerRating = async () => {
-    console.log("this is the lawyer id ",law.id);
+    console.log("this is the lawyer id ", law.id);
     try {
-      const response = await axios.get(`http://${config}:1128/api/rating/getRatingByLawyer/${law?.id}`)
-      console.log("this is the response of the rating",response.data)
-      setRating(response.data)
-
+      const response = await axios.get(
+        `http://${config}:1128/api/rating/getRatingByLawyer/${law?.id}`
+      );
+      console.log("this is the response of the rating", response.data);
+      setRating(response.data);
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
-  useEffect(()=>{
-    getLawyerRating()
-  },[])
+  useEffect(() => {
+    getLawyerRating();
+  }, []);
+
+  const toggleReviewsModal = () => {
+    setShowReviewsModal(!showReviewsModal);
+  };
 
   return (
     <View style={styles.body}>
@@ -105,7 +109,7 @@ const ProfilDetails = ({ navigation, route }) => {
                 <Text style={styles.infoText}>
                   {rating.length > 0
                     ? `Average Rating: ${(
-                        rating.reduce((acc,curr) => acc + curr.stars, 0) /
+                        rating.reduce((acc, curr) => acc + curr.stars, 0) /
                         rating.length
                       ).toFixed(1)}/5`
                     : "No Ratings Yet"}
@@ -114,9 +118,7 @@ const ProfilDetails = ({ navigation, route }) => {
 
               <View style={{ display: "flex", flexDirection: "row" }}>
                 <FontAwesome name="dollar" style={styles.icon} />
-
                 <Text style={styles.infoText}>${law.Price}/H</Text>
-
                 <Text style={styles.infoText}>{item.price}/H</Text>
               </View>
             </View>
@@ -229,7 +231,42 @@ const ProfilDetails = ({ navigation, route }) => {
             <Text style={{ color: "white" }}>Submit</Text>
           </TouchableOpacity>
         </View>
+
+        <TouchableOpacity
+          style={styles.viewAllButton}
+          onPress={toggleReviewsModal}
+        >
+          <Text style={styles.viewAllButtonText}>View All Reviews</Text>
+        </TouchableOpacity>
       </View>
+
+      <Modal
+        transparent={true}
+        animationType="slide"
+        visible={showReviewsModal}
+        onRequestClose={toggleReviewsModal}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.overlay} />
+
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>All Reviews</Text>
+            <ScrollView>
+              {reviews.map((review, index) => (
+                <View key={index} style={styles.review}>
+                  <Text>{`Review ${index + 1}: ${review.review}`}</Text>
+                </View>
+              ))}
+            </ScrollView>
+            <TouchableOpacity
+              style={styles.closeButton}
+              onPress={toggleReviewsModal}
+            >
+              <Text style={styles.closeButtonText}>Close</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
 
       <TouchableOpacity
         style={styles.bookButton}
@@ -344,7 +381,6 @@ const styles = StyleSheet.create({
     display: "flex",
     flex3Direction: "row",
     gap: 5,
-
     marginTop: 10,
   },
   infoBlock: {
@@ -433,6 +469,47 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
     justifyContent: "center",
+  },
+  viewAllButton: {
+    backgroundColor: "black",
+    padding: 10,
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 10,
+  },
+  viewAllButtonText: {
+    color: "white",
+  },
+  overlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  modalContainer: {
+    flex: 1,
+    backgroundColor: "white",
+  },
+  modalContent: {
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    padding: 20,
+    maxHeight: "80%",
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  closeButton: {
+    backgroundColor: "black",
+    padding: 10,
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 10,
+  },
+  closeButtonText: {
+    color: "white",
   },
 });
 
