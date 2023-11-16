@@ -15,17 +15,20 @@ import axios from "axios";
 
 import checkImage from "../assets/check.png";
 
+
 const { primary, tertiary } = Colors;
 
 const ProfilDetails = ({ navigation, route }) => {
   const { item } = route.params;
   const { lawyer } = route.params;
 
+
   const law = item ? item : lawyer;
 
   const [stars, setStars] = useState(0);
   const [review, setReview] = useState("");
   const [reviews, setReviews] = useState([]);
+  const [rating, setRating] = useState([]  );
 
   // useEffect(() => {
   // }, []);
@@ -65,6 +68,22 @@ const ProfilDetails = ({ navigation, route }) => {
     setStars(value);
   };
 
+  const getLawyerRating = async () => {
+    console.log("this is the lawyer id ",law.id);
+    try {
+      const response = await axios.get(`http://${config}:1128/api/rating/getRatingByLawyer/${law?.id}`)
+      console.log("this is the response of the rating",response.data)
+      setRating(response.data)
+
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(()=>{
+    getLawyerRating()
+  },[])
+
   return (
     <View style={styles.body}>
       <View style={styles.block2}>
@@ -84,10 +103,10 @@ const ProfilDetails = ({ navigation, route }) => {
               <View style={{ display: "flex", flexDirection: "row" }}>
                 <FontAwesome name="star" style={styles.icon} />
                 <Text style={styles.infoText}>
-                  {reviews.length > 0
+                  {rating.length > 0
                     ? `Average Rating: ${(
-                        reviews.reduce((acc, curr) => acc + curr.stars, 0) /
-                        reviews.length
+                        rating.reduce((acc,curr) => acc + curr.stars, 0) /
+                        rating.length
                       ).toFixed(1)}/5`
                     : "No Ratings Yet"}
                 </Text>
@@ -171,16 +190,13 @@ const ProfilDetails = ({ navigation, route }) => {
 
         {reviews.map((review, index) => (
           <View key={index} style={styles.singleReview}>
-            {[1, 2, 3, 4, 5].map((star) => {
-              setStars(star);
-              return (
-                <FontAwesome
-                  key={star}
-                  name={star <= review.stars ? "star" : "star-o"}
-                  style={styles.starIcon}
-                />
-              );
-            })}
+            {[1, 2, 3, 4, 5].map((star) => (
+              <FontAwesome
+                key={star}
+                name={star <= review.stars ? "star" : "star-o"}
+                style={styles.starIcon}
+              />
+            ))}
             <Text style={{ marginLeft: 10, fontSize: 16 }}>
               {review.review}
             </Text>
