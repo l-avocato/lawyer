@@ -31,7 +31,13 @@ const connection = new Sequelize('lavocato', 'root', 'root', {
   const TaskList = require("./tasklist.model")(connection,DataTypes)
   const User_Lawyer= require("./user_lawyer")(connection,DataTypes)
   const Edge= require("./edge.model")(connection,DataTypes)
-
+  const Process= require("./process.model")(connection,DataTypes)
+  const Note= require("./note.model")(connection,DataTypes)
+  const Files= require("./Files.model")(connection,DataTypes)
+  const Folder= require("./Folder.model")(connection,DataTypes)
+  
+  
+  
   
     
   User.belongsToMany(Lawyer,{through:User_Lawyer})
@@ -55,6 +61,21 @@ const connection = new Sequelize('lavocato', 'root', 'root', {
   User.hasMany(Case)
   Case.belongsTo(User)
 
+  Process.hasMany(Payment)
+  Payment.belongsTo(Process)
+
+  Lawyer.hasMany(Payment)
+  Payment.belongsTo(Lawyer)
+ 
+  Phase.hasMany(Process)
+  Process.belongsTo(Phase)
+ 
+   Lawyer.hasMany(Note)
+   Note.belongsTo(Lawyer)
+
+   User.hasMany(Note)
+   Note.belongsTo(User)
+
   User.hasMany(Conversation)
   Conversation.belongsTo(User)
   
@@ -73,6 +94,9 @@ const connection = new Sequelize('lavocato', 'root', 'root', {
 
   Lawyer.hasMany(Media)
   Media.belongsTo(Lawyer)
+
+  Note.hasMany(Media)
+  Media.belongsTo(Note)
 
   Lawyer.hasMany(Category)
   Category.belongsTo(Lawyer)
@@ -120,10 +144,13 @@ const connection = new Sequelize('lavocato', 'root', 'root', {
   Phase.hasMany(Edge)
   Edge.belongsTo(Phase)
 
+  Folder.hasMany(Files)
+  Files.belongsTo(Folder)
 
 
 
-  // connection.sync({ force: true })
+
+  // connection.sync({ alter: true })
   // .then(() => console.log("tables are created"))
   // .catch((err) => console.log(err))
 
@@ -148,6 +175,10 @@ const connection = new Sequelize('lavocato', 'root', 'root', {
   db.TaskList=TaskList
   db.User_Lawyer=User_Lawyer
   db.Edge = Edge
+  db.Note = Note
+  db.Process = Process
+  db.Files=Files
+  db.Folder=Folder
   
  
 
