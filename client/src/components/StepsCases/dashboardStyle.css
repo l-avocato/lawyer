@@ -27,7 +27,7 @@
 .side_agenda {
     height: 76.5vh;
     width: 14vw;
-    background-color: rgb(204, 204, 204);
+    background-color: rgb(255, 255, 255);
     border-radius: 1rem;
     box-shadow: rgba(255, 255, 255, 0.19) 0px 10px 20px, rgba(255, 255, 255, 0.23) 0px 6px 6px;
     margin-top: 5rem;
@@ -312,7 +312,9 @@
 
 
 }
-
+.color-modal {
+  background-color: goldenrod !important;
+}
 
 
 
