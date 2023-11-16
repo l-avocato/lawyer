@@ -106,13 +106,18 @@ const CaseDetails = ({navigation}) => {
         </>
       )}
 
-      {selectedTab === 'payment' && (
+{selectedTab === 'payment' && (
         <View style={styles.paymentHistoryContainer}>
           <Text style={styles.paymentHistoryTitle}>Payment History</Text>
           {paymentHistory.map((payment) => (
             <View key={payment.id} style={styles.paymentItem}>
-              <Text style={{color:"black",fontWeight:"600"}} >{`Date: ${payment.date}`}</Text>
-              <Text style={{color:"black",fontWeight:"600"}}>{`Amount: $${payment.amount}`}</Text>
+              <View style={styles.paymentItemHeader}>
+                <Text style={styles.paymentDate}>{payment.date}</Text>
+                <Text style={styles.paymentAmount}>{`$${payment.amount}`}</Text>
+              </View>
+              <View style={styles.paymentItemDetails}>
+                {/* Add more payment details as needed */}
+              </View>
             </View>
           ))}
         </View>
@@ -217,9 +222,25 @@ const styles = StyleSheet.create({
   },
   paymentItem: {
     backgroundColor: '#D5B278',
-    padding: 10,
-    borderRadius: 10,
+    padding: 15,
+    borderRadius: 15,
+    marginBottom: 15,
+  },
+  paymentItemHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     marginBottom: 10,
+  },
+  paymentDate: {
+    fontSize: 16,
+    color: 'black',
+    fontWeight: 'bold',
+  },
+  paymentAmount: {
+    fontSize: 18,
+    color: 'black',
+    fontWeight: 'bold',
   },
 });
 
