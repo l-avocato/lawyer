@@ -23,6 +23,7 @@ import CaseProfile from "./components/CaseProfile/CaseProfile.jsx"
 import Chat  from "./components/Chat/Chat.js";
 import InformationPhase from "./components/StepsCases/InformationPhase.jsx";
 import Statestique from "./components/Statestique/Statestique.jsx";
+import Appointments from "./components/Appointments/Appointments.jsx";
 
 
 
@@ -55,6 +56,7 @@ const App = () => {
           <Route path="/CaseHistory" element={< CaseHistory/>} />
           <Route path="/CaseProfile" element={< CaseProfile/>} />
           <Route path="/Chat" element={< Chat/>} />
+          <Route path="/Appointments" element={< Appointments/>} />
         </Routes>
       </Router>
     </div>
