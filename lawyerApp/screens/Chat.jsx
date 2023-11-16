@@ -60,19 +60,21 @@ const Chat = ({route}) => {
         _id: FIREBASE_AUTH?.currentUser?.email,
         avatar: 'https://i.pravatar.cc/300',
       },
-      recipient: {
-        _id: item.email, 
-        avatar: item.imageUrl,
-      },
     }));
   
-    await Promise.all(
-      formattedMessages.map((message) =>
-        addDoc(collection(FIREBASE_DB, 'chats'), message)
-      )
-    );
+    const newConversation = {
+      lawyerName: item.fullName, // Add the lawyer's name
+      otherUserDetails: item,
+      lastMessage: newMessages[0].text,
+      createdAt: serverTimestamp(),
+    };
+  
+    await Promise.all(formattedMessages.map((message) => addDoc(collection(FIREBASE_DB, 'chats'), message)));
+    await addDoc(collection(FIREBASE_DB, 'conversations'), newConversation);
   };
   
+  
+
   useEffect(() => {
     const collectionRef = collection(FIREBASE_DB , 'chats');
     const q = query(collectionRef, orderBy('createdAt', 'desc'));
