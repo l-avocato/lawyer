@@ -22,14 +22,12 @@ const AddClient = ({refrech, setRefrech}) => {
       .then((response) => {
         setPapers(response.data["secure_url"]);
       })
-      
       .catch((error) => {
         throw error;
       });
   };
 
   
-
  
   const creacteUser = async () => {
     try {
