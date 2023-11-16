@@ -1,12 +1,14 @@
 const sequalize =require('sequelize')
-const {Payment}= require('../models/index')
+const {Payment,User,Lawyer}= require('../models/index')
 
 
 module.exports = {
 
     getAllPayments: async (req,res)=>{
         try {
-            const allPayments= await Payment.findAll()
+            const allPayments= await Payment.findAll({
+                include:[User,Lawyer]
+            })
             res.status(200).send(allPayments)
         } catch (error) {
             throw error
@@ -16,7 +18,8 @@ module.exports = {
     getPaymentId: async (req,res)=>{
         try {
             const onePayment= await Payment.findOne({
-               where :{id: req.params.id }
+               where :{id: req.params.id },
+               include:[User,Lawyer]
             })
             res.status(200).send(onePayment)
         } catch (error) {
@@ -37,7 +40,7 @@ module.exports = {
             const paymentDeleted= await Payment.destroy({
           where:{  id:req.params.id }
             })
-            res.send(paymentDeleted)
+            res.json(paymentDeleted)
         } catch (error) {
             throw error
         }
