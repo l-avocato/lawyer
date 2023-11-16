@@ -245,6 +245,7 @@ const ProfilDetails = ({ navigation, route }) => {
         animationType="slide"
         visible={showReviewsModal}
         onRequestClose={toggleReviewsModal}
+        style={{ height: 100 }}
       >
         <View style={styles.modalContainer}>
           <View style={styles.overlay} />
@@ -493,7 +494,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     padding: 20,
-    maxHeight: "80%",
+    maxHeight: 500,
   },
   modalTitle: {
     fontSize: 18,
