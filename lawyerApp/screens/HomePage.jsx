@@ -24,6 +24,7 @@ import config from "./ipv";
 const { width, height } = Dimensions.get("window");
 
 const HomePage = ({ navigation }) => {
+  const config = "192.168.103.17";
   const [selectedTab, setSelectedTab] = useState("Home");
 
   // Function to handle photo click
