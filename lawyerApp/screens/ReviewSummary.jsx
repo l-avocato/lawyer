@@ -9,6 +9,9 @@ import {
   Image,
   TextInput,
 } from "react-native";
+import { FIREBASE_AUTH, FIREBASE_DB } from "../firebaseConfig";
+import config from './ipv'
+import axios from "axios";
 
 const ReviewSummary = ({route}) => {
   const [category, setCategory] = useState("Category Type");
@@ -22,7 +25,7 @@ const ReviewSummary = ({route}) => {
   const {selected}=route.params;
   const {selectedTime}=route.params;
   
-console.log(item,"item");
+console.log(selectedTime.split(" ")[0],"item");
 
   console.log("this is law",selected);
   const handleConfirmPayment = () => {
@@ -33,7 +36,21 @@ console.log(item,"item");
   const closeModal = () => {
     setIsModalVisible(false);
   };
+  const setAppointmentHandler = async () => {
+    const email = FIREBASE_AUTH.currentUser.email;
+    const obj= {email,lawyerId:item.id,time:selectedTime.split(" ")[0],date:selected,reason:message}
+    console.log(obj,"this is the obj")
+    try {
+      // Use Axios instead of fetch
+      const response = await axios.post(`http://${config}:1128/api/appointment/addAppointment`,obj);
+      console.log(response.data,"this is the response")
+      // setAppointments(response.data)
 
+     
+    } catch (error) {
+      console.error('Error setting appointment:', error);
+    }
+  };
   return (
     <View style={styles.container}>
       <View style={styles.profileSection}>
@@ -62,8 +79,9 @@ console.log(item,"item");
       <TextInput
         style={styles.messageInput}
         value={message}
-        multiline
-        editable={false}
+        onChangeText={(text) => setMessage(text)} 
+        multiline={true}
+       
       />
       <ScrollView style={styles.whiteBackground}>
         <Text style={styles.title}>Online consultation</Text>
@@ -94,7 +112,7 @@ console.log(item,"item");
             styles.confirmButton,
             { backgroundColor: isConfirmed ? "black" : "black" },
           ]}
-          onPress={isConfirmed ? null : handleConfirmPayment}
+          onPress={setAppointmentHandler}
         >
           <Text style={styles.confirmButtonText}>
             {isConfirmed ? "Payment Confirmed" : "Confirm Booking"}

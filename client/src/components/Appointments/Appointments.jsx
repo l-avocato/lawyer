@@ -1,10 +1,39 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import NavbarDashboard from "../NavbarDashboard/NavbarDashboard";
 import Aziz from "../Aziz/Aziz";
 import Appointment from "./Appointments.css";
 import Example from "../Example/Example";
+import axios from 'axios'
 
 const Appointments = () => {
+  const [appointments,setAppointments] = useState([])
+  const [id,setId]=useState("")
+  const [refrech, setRefrech] = useState(false);
+
+  const deleteAppointment = async (id) => {
+    console.log(id,"this is the id")
+    // /deleteAppointment
+    try {
+      const x = await axios.delete(`http://localhost:1128/api/appointment/deleteAppointment/${id}`);
+      setRefrech(!refrech);
+      console.log("deleted");
+    } catch (error) {
+      console.error("Error deleting user:", error);
+    }
+  };
+  
+  const getAppointments = async () => {
+    try {
+      const response = await axios.get('http://localhost:1128/api/appointment/getAppointments');
+      console.log("this is the response", response.data);
+      setAppointments(response.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+  useEffect(()=>{
+    getAppointments();
+  },[])
   return (
     <div>
       <div>
@@ -12,7 +41,7 @@ const Appointments = () => {
       </div>
       <div className="apointment">
         <div className="table">
-          <Aziz />
+          <Aziz appointments={appointments} deleteAppointment={deleteAppointment} setId={setId}  />
         </div>
         <div className="extra">
           <div className="upcoming">
