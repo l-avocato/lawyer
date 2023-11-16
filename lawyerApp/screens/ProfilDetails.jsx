@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   StyleSheet,
@@ -6,39 +6,71 @@ import {
   TouchableOpacity,
   ScrollView,
   Text,
+  TextInput,
+  Alert,
 } from "react-native";
 import { FontAwesome } from "react-native-vector-icons";
 import { Colors } from "../components/styles";
-import { color } from "react-native-elements/dist/helpers";
+import axios from "axios";
 
-import LinearGradient from "react-native-linear-gradient";
+import checkImage from "../assets/check.png";
 
+const { primary, tertiary } = Colors;
 
-const { primary, tertinary } = Colors;
+const ProfilDetails = ({ navigation, route }) => {
+  const { item } = route.params;
+  const { lawyer } = route.params;
 
-const ProfilDetails = ({ navigation , route}) => {
-const {item} = route.params;
-const {lawyer} = route.params
-console.log("this is item profile ",item);
+  const law = item ? item : lawyer;
 
-const law = item?item:lawyer
-  const galleryImages = [
-    require("../Photos/lawyer-or-judge-in-simple-flat-personal-profile-icon-or-symbol-people-concept-illustration-vector.jpg"),
-    require("../Photos/lawyer-or-judge-in-simple-flat-personal-profile-icon-or-symbol-people-concept-illustration-vector.jpg"),
-    require("../Photos/lawyer-or-judge-in-simple-flat-personal-profile-icon-or-symbol-people-concept-illustration-vector.jpg"),
-    require("../Photos/lawyer-or-judge-in-simple-flat-personal-profile-icon-or-symbol-people-concept-illustration-vector.jpg"),
-  ];
-console.log("this item",lawyer);
+  const [stars, setStars] = useState(0);
+  const [review, setReview] = useState("");
+  const [reviews, setReviews] = useState([]);
+
+  // useEffect(() => {
+  // }, []);
+
+  const addRating = async () => {
+    try {
+      console.log("this is the body for the rating", {
+        lawyerId: law.id,
+        stars,
+        review,
+      });
+      const response = await axios.post(
+        `http://${config}:1128/api/rating/addRating`,
+        {
+          lawyerId: law.id,
+          stars,
+          review,
+        }
+      );
+      console.log("this is the res of rating", response);
+
+      Alert.alert(
+        "Thank You!",
+        "Your review has been submitted.",
+        [{ text: "OK", onPress: () => console.log("OK Pressed") }],
+        { customImage: checkImage }
+      );
+
+      setReview("");
+      setStars("");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleStarPress = (value) => {
+    setStars(value);
+  };
+
   return (
     <View style={styles.body}>
       <View style={styles.block2}>
-        <View style={styles.photoLowyer}>
+        <View style={styles.photoLawyer}>
           <View style={styles.blockPhoto}>
-            <Image
-              source={{uri: item.ImageUrl}}
-              // source={{uri: law.imageUrl}}
-              style={styles.photoo}
-            />
+            <Image source={{ uri: item.ImageUrl }} style={styles.photo} />
             <View style={{ position: "relative", top: 110 }}>
               <Text style={styles.nameText}>{item.fullName}</Text>
               <Text style={styles.specialtyText}>{item.field}</Text>
@@ -51,22 +83,39 @@ console.log("this item",lawyer);
             <View style={{ display: "flex", flexDirection: "row" }}>
               <View style={{ display: "flex", flexDirection: "row" }}>
                 <FontAwesome name="star" style={styles.icon} />
-                <Text style={styles.infoText}> 4.5</Text>
+                <Text style={styles.infoText}>
+                  {reviews.length > 0
+                    ? `Average Rating: ${(
+                        reviews.reduce((acc, curr) => acc + curr.stars, 0) /
+                        reviews.length
+                      ).toFixed(1)}/5`
+                    : "No Ratings Yet"}
+                </Text>
               </View>
 
               <View style={{ display: "flex", flexDirection: "row" }}>
                 <FontAwesome name="dollar" style={styles.icon} />
-{/* <<<<<<< HEAD
+
                 <Text style={styles.infoText}>${law.Price}/H</Text>
-======= */}
+
                 <Text style={styles.infoText}>{item.price}/H</Text>
-{/* >>>>>>> 3e3aa7e74b98fb159a6a5156acf1d95fccc1edbb */}
               </View>
             </View>
-            <TouchableOpacity style={{ display: "flex", flexDirection: "row" }} onPress={()=>{
-              navigation.navigate("Chat", {item})
-            }}>
-              <FontAwesome name="comment" style={{fontSize: 20, marginRight: 30,color: "black",marginLeft: 10}} />
+            <TouchableOpacity
+              style={{ display: "flex", flexDirection: "row" }}
+              onPress={() => {
+                navigation.navigate("Chat", { item });
+              }}
+            >
+              <FontAwesome
+                name="comment"
+                style={{
+                  fontSize: 20,
+                  marginRight: 30,
+                  color: "black",
+                  marginLeft: 10,
+                }}
+              />
               <Text style={styles.infoText}></Text>
             </TouchableOpacity>
           </View>
@@ -83,42 +132,103 @@ console.log("this item",lawyer);
           }}
         >
           <View style={styles.infoBlock}>
-            <FontAwesome name="briefcase" style={{  fontSize: 20,marginRight: 10,color: "black",marginLeft: 10}} />
-            <Text style={{fontSize: 16,fontFamily: "normal" ,marginLeft:20}}>Number of Cases: 100</Text>
+            <FontAwesome
+              name="briefcase"
+              style={{
+                fontSize: 20,
+                marginRight: 10,
+                color: "black",
+                marginLeft: 10,
+              }}
+            />
+            <Text
+              style={{ fontSize: 16, fontFamily: "normal", marginLeft: 20 }}
+            >
+              Number of Cases: 100
+            </Text>
           </View>
           <View style={styles.infoBlock}>
-            <FontAwesome name="check-circle" style={{  fontSize: 20,marginRight: 40,color: "black",marginLeft: 10}} />
-            <Text style={{   fontSize: 16,fontFamily: "normal" ,marginRight:20}}>Success Rate: 85%</Text>
+            <FontAwesome
+              name="check-circle"
+              style={{
+                fontSize: 20,
+                marginRight: 40,
+                color: "black",
+                marginLeft: 10,
+              }}
+            />
+            <Text
+              style={{ fontSize: 16, fontFamily: "normal", marginRight: 20 }}
+            >
+              Success Rate: 85%
+            </Text>
           </View>
         </View>
-
-        {/* <Text style={styles.infoText}>
-          Additional information about the lawyer goes here...
-        </Text> */}
       </View>
 
-      <View style={{ padding: 10 }}>
-        <Text style={styles.galleryTitle}>Lawyer's Photo Gallery</Text>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          {galleryImages.map((image, index) => (
-            <Image key={index} source={image} style={styles.galleryImage} />
+      <View style={styles.reviewContainer}>
+        <Text style={styles.reviewTitle}>Client Reviews</Text>
+
+        {reviews.map((review, index) => (
+          <View key={index} style={styles.singleReview}>
+            {[1, 2, 3, 4, 5].map((star) => {
+              setStars(star);
+              return (
+                <FontAwesome
+                  key={star}
+                  name={star <= review.stars ? "star" : "star-o"}
+                  style={styles.starIcon}
+                />
+              );
+            })}
+            <Text style={{ marginLeft: 10, fontSize: 16 }}>
+              {review.review}
+            </Text>
+          </View>
+        ))}
+
+        <View style={styles.starsContainer}>
+          {[1, 2, 3, 4, 5].map((index) => (
+            <TouchableOpacity
+              key={index}
+              onPress={() => handleStarPress(index)}
+            >
+              <FontAwesome
+                name={index <= stars ? "star" : "star-o"}
+                style={styles.starIcon}
+              />
+            </TouchableOpacity>
           ))}
-        </ScrollView>
-      </View>
-      <TouchableOpacity 
-  style={styles.bookButton}
-  onPress={() => navigation.navigate("Appintment", {law,item})}>
+          <Text style={styles.starsText}>{stars}/5</Text>
+        </View>
 
-  <Text style={styles.bookButtonText}>Book Appointment</Text>
-</TouchableOpacity>
+        <View style={styles.newReviewContainer}>
+          <TextInput
+            style={styles.commentInput}
+            placeholder="Write your review here"
+            value={review}
+            onChangeText={(text) => setReview(text)}
+          />
+          <TouchableOpacity style={styles.submitButton} onPress={addRating}>
+            <Text style={{ color: "white" }}>Submit</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+
+      <TouchableOpacity
+        style={styles.bookButton}
+        onPress={() => navigation.navigate("Appintment", { lawyer: law, item })}
+      >
+        <Text style={styles.bookButtonText}>Book Appointment</Text>
+      </TouchableOpacity>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  body : {
-  backgroundColor : "#E5E4E2",
-  height : 800
+  body: {
+    backgroundColor: "#E5E4E2",
+    height: 800,
   },
   nameLawyer: {
     display: "flex",
@@ -140,6 +250,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     marginTop: 35,
   },
+
   block1: {
     backgroundColor: "#D5B278",
     height: 100,
@@ -147,19 +258,22 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+
   lawyersDetails: {
     fontSize: 25,
     marginTop: 40,
     marginRight: 80,
   },
+
   block2: {
-    backgroundColor: '#292929',
+    backgroundColor: "#292929",
     height: 250,
     width: 370,
     marginTop: 90,
     marginLeft: 30,
     borderRadius: 20,
   },
+
   blockBlueGhamak: {
     backgroundColor: "#D5B278",
     height: 80,
@@ -167,7 +281,8 @@ const styles = StyleSheet.create({
     marginTop: 170,
     borderRadius: 10,
   },
-  photoo: {
+
+  photo: {
     width: 150,
     height: 150,
     borderRadius: 100,
@@ -176,7 +291,6 @@ const styles = StyleSheet.create({
   },
   blockPhoto: {
     borderRadius: 100,
-
     height: 130,
     position: "absolute",
     bottom: -65,
@@ -189,7 +303,7 @@ const styles = StyleSheet.create({
     color: "#cca01d",
     fontFamily: "Roboto",
     fontWeight: "700",
-    marginLeft: 20
+    marginLeft: 20,
   },
   galleryImage: {
     width: 130,
@@ -197,7 +311,7 @@ const styles = StyleSheet.create({
     margin: 10,
     borderRadius: 30,
   },
-  photoLowyer: {
+  photoLawyer: {
     alignItems: "center",
     display: "flex",
     justifyContent: "center",
@@ -208,7 +322,7 @@ const styles = StyleSheet.create({
     color: "#cca01d",
     fontFamily: "Roboto",
     fontWeight: "700",
-    marginLeft: 20
+    marginLeft: 20,
   },
   infoContainer: {
     display: "flex",
@@ -218,7 +332,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   infoBlock: {
-    // flexDirection: "row",
     alignItems: "center",
     marginBottom: 10,
   },
@@ -227,8 +340,8 @@ const styles = StyleSheet.create({
     color: "black",
     fontFamily: "normal",
     fontWeight: "500",
-
   },
+
   nameText: {
     color: "white",
     fontSize: 25,
@@ -254,6 +367,56 @@ const styles = StyleSheet.create({
   bookButtonText: {
     fontSize: 20,
     color: "white",
+  },
+  reviewContainer: {
+    backgroundColor: "white",
+    padding: 20,
+    marginVertical: 25,
+    marginHorizontal: 20.032,
+    borderRadius: 10,
+  },
+  reviewTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  starsContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  starIcon: {
+    fontSize: 24,
+    color: "#FFD700",
+    marginRight: 5,
+  },
+  ratingText: {
+    fontSize: 18,
+    marginLeft: 5,
+  },
+  singleReview: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 10,
+  },
+  newReviewContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 10,
+  },
+  commentInput: {
+    flex: 1,
+    borderWidth: 1,
+    borderColor: "black",
+    borderRadius: 10,
+    padding: 10,
+    marginRight: 10,
+  },
+  submitButton: {
+    backgroundColor: "black",
+    padding: 10,
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
 
