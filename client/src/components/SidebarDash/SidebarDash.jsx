@@ -13,11 +13,11 @@ import SettingsSystemDaydreamOutlinedIcon from "@mui/icons-material/SettingsSyst
 import PsychologyOutlinedIcon from "@mui/icons-material/PsychologyOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
-import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
+import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
 import { Link } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
 import { useNavigate } from "react-router-dom";
-import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
+import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import CaseHistory from "../CaseHistory/CaseHistory";
 
 const SidebarDash = () => {
@@ -47,14 +47,22 @@ const SidebarDash = () => {
             </span>
           </li>
           <li>
-          <span className="side-title" onClick={() => navigate("/CaseHistory")}>
-          <BusinessCenterIcon className="new-icon" />
+            <span
+              className="side-title"
+              onClick={() => navigate("/CaseHistory")}>
+              <BusinessCenterIcon className="new-icon" />
               My Cases
             </span>
           </li>
           <li>
+            <NotificationsNoneIcon className="new-icon" />
+            <span className="side-title">Appointments</span>
+          </li>
+          <li>
             <InsertChartIcon className="new-icon" />
-            <span className="side-title"  onClick={() => navigate("/stat")}>Stats</span>
+            <span className="side-title" onClick={() => navigate("/stat")}>
+              Stats
+            </span>
           </li>
           <li>
             <NotificationsNoneIcon className="new-icon" />
@@ -62,7 +70,9 @@ const SidebarDash = () => {
           </li>
           <li>
             <AssignmentTurnedInIcon className="new-icon" />
-            <span className="side-title" onClick={() => navigate("/task")}>Tasks</span>
+            <span className="side-title" onClick={() => navigate("/task")}>
+              Tasks
+            </span>
           </li>
           <li onClick={toggleSettings}>
             <SettingsApplicationsIcon className="new-icon" />
@@ -80,8 +90,7 @@ const SidebarDash = () => {
                     color: isHoveredProfile ? "black" : "white",
                   }}
                   onMouseEnter={() => setIsHoveredProfile(true)}
-                  onMouseLeave={() => setIsHoveredProfile(false)}
-                >
+                  onMouseLeave={() => setIsHoveredProfile(false)}>
                   Edit Profile
                 </Link>
               </li>
@@ -95,8 +104,7 @@ const SidebarDash = () => {
                     color: isHoveredSecurity ? "black" : "white",
                   }}
                   onMouseEnter={() => setIsHoveredSecurity(true)}
-                  onMouseLeave={() => setIsHoveredSecurity(false)}
-                >
+                  onMouseLeave={() => setIsHoveredSecurity(false)}>
                   Edit Security
                 </Link>
               </li>

@@ -47,23 +47,30 @@ const Chat = ({route}) => {
     }
   };
 
-  const handleFileIconPress = async () => {
-    // File upload logic
-    // ... (implementation for file upload)
-  };
+ 
 
   const onSend = async (newMessages = []) => {
     const formattedMessages = newMessages.map((message) => ({
       ...message,
-      createdAt:  serverTimestamp(),
+      createdAt: serverTimestamp(),
       user: {
         _id: FIREBASE_AUTH?.currentUser?.email,
         avatar: 'https://i.pravatar.cc/300',
       },
     }));
-
-    await Promise.all(formattedMessages.map((message) => addDoc(collection(FIREBASE_DB , 'chats'), message)));
+  
+    const newConversation = {
+      lawyerName: item.fullName, // Add the lawyer's name
+      otherUserDetails: item,
+      lastMessage: newMessages[0].text,
+      createdAt: serverTimestamp(),
+    };
+  
+    await Promise.all(formattedMessages.map((message) => addDoc(collection(FIREBASE_DB, 'chats'), message)));
+    await addDoc(collection(FIREBASE_DB, 'conversations'), newConversation);
   };
+  
+  
 
   useEffect(() => {
     const collectionRef = collection(FIREBASE_DB , 'chats');

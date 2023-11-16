@@ -461,26 +461,28 @@ const dummyLawyersData = [
       amount: 1000,
       rest: 500,
       paid: 500,
+      userId:1,
+      lawyerId:1
     },
     {
       amount: 1500,
       rest: 1000,
-      paid: 500,
+      paid: 500
     },
     {
       amount: 800,
       rest: 300,
-      paid: 500,
+      paid: 500
     },
     {
       amount: 2000,
       rest: 1500,
-      paid: 500,
+      paid: 500
     },
     {
       amount: 1200,
       rest: 700,
-      paid: 500,
+      paid: 500
     },
   ];
 
@@ -720,14 +722,7 @@ Availavility.bulkCreate(dummyAvailabilityData)
 .catch((error) => {
     console.error('Error creating dummy data:', error);
   });
-  
-  Payment.bulkCreate(dummyPaymentData)
-.then(() => {
-    console.log('Payment data created successfully.');
-  })
-.catch((error) => {
-    console.error('Error creating dummy data:', error);
-  });
+ 
   
   Phase.bulkCreate(dummyPhaseData)
 .then(() => {
@@ -777,4 +772,13 @@ Availavility.bulkCreate(dummyAvailabilityData)
     console.error('Error creating dummy data:', error);
   });
 
+
+   
+  Payment.bulkCreate(dummyPaymentData)
+.then(() => {
+    console.log('Payment data created successfully.');
+  })
+.catch((error) => {
+    console.error('Error creating dummy data:', error);
+  });
   

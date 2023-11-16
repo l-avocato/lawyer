@@ -5,7 +5,14 @@ module.exports=(connection,DataTypes)=>{
    date: DataTypes.DATE,
    time: DataTypes.TIME,
    reason: DataTypes.STRING,
-   accepted: DataTypes.ENUM("pending","accepted","declined"),
+   accepted: {
+    type: DataTypes.ENUM("pending", "accepted", "declined"),
+    defaultValue: "pending"
+  },
+  state: {
+    type: DataTypes.ENUM("upcoming", "cancelled", "completed"),
+    defaultValue: "upcoming"
+  },
     } )
     return appointment
     }

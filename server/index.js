@@ -22,6 +22,10 @@ const routerReport = require('./routes/report.route')
 const routerMedia = require('./routes/media.route')
 const routerNotification = require('./routes/notification.route')
 const routerEdge = require("./routes/edges.route")
+const routerProcess = require("./routes/process.route") 
+const routerNote = require("./routes/note.route")
+const routeFile = require("./routes/files.route")
+const routeFolder = require("./routes/folder.route")
 
 
 
@@ -68,6 +72,15 @@ app.use("/api/media",routerMedia);
 app.use("/api/notification",routerNotification);
 
 app.use("/api/edge", routerEdge);
+
+app.use("/api/process", routerProcess);
+
+app.use("/api/note", routerNote)
+
+app.use("/api/file", routeFile)
+
+app.use("/api/folder", routeFolder)
+
 
 
 
