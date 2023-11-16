@@ -47,10 +47,7 @@ const Chat = ({route}) => {
     }
   };
 
-  const handleFileIconPress = async () => {
-    // File upload logic
-    // ... (implementation for file upload)
-  };
+ 
 
   const onSend = async (newMessages = []) => {
     const formattedMessages = newMessages.map((message) => ({
