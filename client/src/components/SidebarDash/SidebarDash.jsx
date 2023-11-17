@@ -31,6 +31,24 @@ const SidebarDash = () => {
     setIsSettingsOpen(!isSettingsOpen);
   };
 
+  const clearToken = () => {
+    try {
+      localStorage.removeItem("userToken"); //clearing token when you sign out
+      console.log("Token cleared");
+    } catch (error) {
+      console.error("Error clearing token:", error);
+    }
+  };
+
+  const logOut = async () => {
+    try {
+      await clearToken();
+      navigate("/");
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
+  };
+
   return (
     <div className="new-sidebar">
       <div className="top-section">
@@ -49,7 +67,8 @@ const SidebarDash = () => {
           <li>
             <span
               className="side-title"
-              onClick={() => navigate("/CaseHistory")}>
+              onClick={() => navigate("/CaseHistory")}
+            >
               <BusinessCenterIcon className="new-icon" />
               My Cases
             </span>
@@ -90,7 +109,8 @@ const SidebarDash = () => {
                     color: isHoveredProfile ? "black" : "white",
                   }}
                   onMouseEnter={() => setIsHoveredProfile(true)}
-                  onMouseLeave={() => setIsHoveredProfile(false)}>
+                  onMouseLeave={() => setIsHoveredProfile(false)}
+                >
                   Edit Profile
                 </Link>
               </li>
@@ -104,7 +124,8 @@ const SidebarDash = () => {
                     color: isHoveredSecurity ? "black" : "white",
                   }}
                   onMouseEnter={() => setIsHoveredSecurity(true)}
-                  onMouseLeave={() => setIsHoveredSecurity(false)}>
+                  onMouseLeave={() => setIsHoveredSecurity(false)}
+                >
                   Edit Security
                 </Link>
               </li>
@@ -116,7 +137,7 @@ const SidebarDash = () => {
           </li>
           <li>
             <PowerSettingsNewIcon className="new-icon" />
-            <span className="side-title" onClick={() => navigate("/")}>
+            <span className="side-title" onClick={logOut}>
               Logout
             </span>
           </li>
