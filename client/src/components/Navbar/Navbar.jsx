@@ -29,15 +29,20 @@ function Navbar() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSignIn = () => {
+  const handleSignIn = (event) => {
+    event.preventDefault();
     signInWithEmailAndPassword(auth, email, password)
       .then((res) => {
         console.log(res);
+        if (res.user) {
+          console.log("this is access token", res.user.accessToken);
+          localStorage.setItem('userToken', res.user.accessToken);
+        }
+        navigate("/allClient");
       })
-      .catch((err) => {
-        console.log(err);
+      .catch((error) => {
+        console.error(error);
       });
-    navigate("/allClient");
   };
 
   const [fullName, setFullName] = useState("");
@@ -181,8 +186,7 @@ function Navbar() {
                      <Button
                         variant="primary"
                         type="submit"
-                        style={{ fontSize: "1.2rem" }}
-                      >
+                        style={{ fontSize: "1.2rem" }}                      >
                         Submit
                       </Button>
                      </div>
