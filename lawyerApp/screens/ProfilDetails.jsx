@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -7,17 +7,12 @@ import {
   ScrollView,
   Text,
   TextInput,
-  Alert,
   Modal,
-  TouchableWithoutFeedback,
 } from "react-native";
 import { FontAwesome } from "react-native-vector-icons";
-import { Colors } from "../components/styles";
 import axios from "axios";
 
 import checkImage from "../assets/check.png";
-
-const { primary, tertiary } = Colors;
 
 const ProfilDetails = ({ navigation, route }) => {
   const { item } = route.params;
@@ -31,14 +26,10 @@ const ProfilDetails = ({ navigation, route }) => {
   const [rating, setRating] = useState([]);
 
   const [showReviewsModal, setShowReviewsModal] = useState(false);
+  const [showOtherModal, setShowOtherModal] = useState(false);
 
   const addRating = async () => {
     try {
-      console.log("this is the body for the rating", {
-        lawyerId: law.id,
-        stars,
-        review,
-      });
       const response = await axios.post(
         `http://${config}:1128/api/rating/addRating`,
         {
@@ -47,17 +38,12 @@ const ProfilDetails = ({ navigation, route }) => {
           review,
         }
       );
-      console.log("this is the res of rating", response);
-
-      Alert.alert(
-        "Thank You!",
-        "Your review has been submitted.",
-        [{ text: "OK", onPress: () => console.log("OK Pressed") }],
-        { customImage: checkImage }
-      );
 
       setReview("");
       setStars("");
+
+      // Set the modal state to true after submitting the rating
+      setShowReviewsModal(true);
     } catch (error) {
       console.log(error);
     }
@@ -68,12 +54,11 @@ const ProfilDetails = ({ navigation, route }) => {
   };
 
   const getLawyerRating = async () => {
-    console.log("this is the lawyer id ", law.id);
     try {
       const response = await axios.get(
         `http://${config}:1128/api/rating/getRatingByLawyer/${law?.id}`
       );
-      console.log("this is the response of the rating", response.data);
+      setReview(response.data);
       setRating(response.data);
     } catch (error) {
       console.log(error);
@@ -86,6 +71,10 @@ const ProfilDetails = ({ navigation, route }) => {
 
   const toggleReviewsModal = () => {
     setShowReviewsModal(!showReviewsModal);
+  };
+
+  const toggleOtherModal = () => {
+    setShowOtherModal(!showOtherModal);
   };
 
   return (
@@ -230,44 +219,40 @@ const ProfilDetails = ({ navigation, route }) => {
           <TouchableOpacity style={styles.submitButton} onPress={addRating}>
             <Text style={{ color: "white" }}>Submit</Text>
           </TouchableOpacity>
-        </View>
 
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={showReviewsModal}
+            onRequestClose={() => setShowReviewsModal(!showReviewsModal)}
+          >
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <Image
+                  source={require("../../lawyerApp/assets/check.png")}
+                  style={styles.modalImage}
+                />
+                <Text style={styles.modalTitle}>Successful!</Text>
+                <Text style={styles.modalText}>
+                  You have successfully added a review.
+                </Text>
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                  <FontAwesome name="comment-o" size={30} color="#fff" />
+                  <Text style={{ color: "#fff", marginLeft: 10 }}>
+                    Message Worker
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </Modal>
+        </View>
         <TouchableOpacity
           style={styles.viewAllButton}
-          onPress={toggleReviewsModal}
+          onPress={toggleOtherModal} // Updated to trigger the second modal
         >
           <Text style={styles.viewAllButtonText}>View All Reviews</Text>
         </TouchableOpacity>
       </View>
-
-      <Modal
-        transparent={true}
-        animationType="slide"
-        visible={showReviewsModal}
-        onRequestClose={toggleReviewsModal}
-        style={{ height: 100 }}
-      >
-        <View style={styles.modalContainer}>
-          <View style={styles.overlay} />
-
-          <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>All Reviews</Text>
-            <ScrollView>
-              {reviews.map((review, index) => (
-                <View key={index} style={styles.review}>
-                  <Text>{`Review ${index + 1}: ${review.review}`}</Text>
-                </View>
-              ))}
-            </ScrollView>
-            <TouchableOpacity
-              style={styles.closeButton}
-              onPress={toggleReviewsModal}
-            >
-              <Text style={styles.closeButtonText}>Close</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
 
       <TouchableOpacity
         style={styles.bookButton}
@@ -275,6 +260,36 @@ const ProfilDetails = ({ navigation, route }) => {
       >
         <Text style={styles.bookButtonText}>Book Appointment</Text>
       </TouchableOpacity>
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={showOtherModal}
+        onRequestClose={() => setShowOtherModal(!showOtherModal)}
+      >
+        <ScrollView style={styles.scrollView}>
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              {/* Updated to include ScrollView */}
+              <ScrollView
+                contentContainerStyle={styles.scrollContent}
+              ></ScrollView>
+              {reviews.map((e, index) => (
+                <Text key={index}>{e.review}nnnnn</Text>
+              ))}
+              {/* Add your scrollable content here */}
+              {/* For example: */}
+              {/* <Text>Scrollable content goes here...</Text> */}
+              <TouchableOpacity
+                style={styles.modalButton}
+                onPress={toggleOtherModal}
+              >
+                <Text style={{ color: "#fff" }}>Close Second Modal</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </ScrollView>
+      </Modal>
     </View>
   );
 };
@@ -283,6 +298,12 @@ const styles = StyleSheet.create({
   body: {
     backgroundColor: "#E5E4E2",
     height: 800,
+  },
+  scrollView: {
+    flex: 1,
+  },
+  scrollContent: {
+    padding: 16,
   },
   nameLawyer: {
     display: "flex",
@@ -455,6 +476,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginTop: 10,
+    justifyContent: "space-between",
   },
   commentInput: {
     flex: 1,
@@ -482,35 +504,52 @@ const styles = StyleSheet.create({
   viewAllButtonText: {
     color: "white",
   },
-  overlay: {
+  centeredView: {
     flex: 1,
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 0,
+    position: "relative",
+    top: -160,
   },
-  modalContainer: {
-    flex: 1,
+  modalView: {
+    top: 170,
+    margin: 20,
     backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
   },
-  modalContent: {
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    padding: 20,
-    maxHeight: 500,
+  modalImage: {
+    width: 200,
+    height: 200,
+    marginBottom: 20,
   },
   modalTitle: {
-    fontSize: 18,
+    fontSize: 24,
     fontWeight: "bold",
+    color: "#C69D3F",
     marginBottom: 10,
+    textAlign: "center",
   },
-  closeButton: {
-    backgroundColor: "black",
-    padding: 10,
-    borderRadius: 10,
+  modalText: {
+    fontSize: 18,
+    color: "black",
+    marginBottom: 20,
+    textAlign: "center",
+  },
+  modalButton: {
+    paddingHorizontal: 100,
+    paddingVertical: 11,
     alignItems: "center",
-    justifyContent: "center",
-    marginTop: 10,
-  },
-  closeButtonText: {
-    color: "white",
   },
 });
 
