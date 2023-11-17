@@ -12,12 +12,11 @@ import { Card, Button, Icon } from "react-native-elements";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import * as DocumentPicker from "expo-document-picker";
 import { Linking } from "react-native";
-import * as WebBrowser from "expo-web-browser";
 import axios from "axios";
 const ProcessNotesTab = () => {
   // Initialize comments state as an object with noteId as keys
   const [comments, setComments] = useState({});
-  const [commentInput, setCommentInput] = useState("");
+  const [commentInput, setCommentInput] = useState({});
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploadedFile, setUploadedFile] = useState(null);
 
@@ -31,7 +30,7 @@ const ProcessNotesTab = () => {
     }
   };
 
-  const handleFile = async (noteId) => {
+  const handleFile = async () => {
     if (!selectedFile) {
       console.error("No file selected");
       return;
@@ -39,28 +38,27 @@ const ProcessNotesTab = () => {
 
     const formData = new FormData();
     formData.append("file", {
-      uri: selectedFile.uri,
+      uri: selectedFile.assets[0].uri,
       type: selectedFile.type,
-      name: selectedFile.name || "file",
+      name: selectedFile.assets[0].name || "file",
     });
     formData.append("upload_preset", "xhqp21a0");
-    formData.append("resource_type", "raw");
+    console.log(selectedFile);
 
     try {
       const response = await axios.post(
-        "https://api.cloudinary.com/v1_1/dgztaxbvi/upload", 
+        "https://api.cloudinary.com/v1_1/dgztaxbvi/upload",
         formData
       );
-      console.log(response.data);
       const newComment = {
-        name: "John Doe",
-        text: commentInput,
+        name: "Ahmed Irmani",
+        text: commentInput, // replace with the actual text
         file: {
           uri: response.data.secure_url,
-          name: selectedFile.name,
+          name: selectedFile.assets[0].name,
         },
       };
-      console.log(newComment.file, "open this");
+      console.log("open this", newComment.file);
       setUploadedFile(newComment.file);
       setComments({
         ...comments,
@@ -71,14 +69,14 @@ const ProcessNotesTab = () => {
     }
   };
 
-
   const addComment = (noteId, name, text) => {
-    const newComment = { name, text, file: selectedFile };
+    const newComment = { name, text: commentInput[noteId], file: selectedFile };
     setComments({
       ...comments,
       [noteId]: [...(comments[noteId] || []), newComment],
     });
     setSelectedFile(null); // Reset the selected file
+    setCommentInput({ ...commentInput, [noteId]: "" });
   };
 
   const renderComments = (noteId) => {
@@ -87,14 +85,20 @@ const ProcessNotesTab = () => {
       <View style={styles.commentsContainer}>
         {noteComments.map((comment, index) => (
           <Card key={index} containerStyle={styles.commentCard}>
+            <Image
+              source={require("../assets/ahmed.png")}
+              style={{ width: 70, height: 70, top: 5, left: 0,borderRadius: 50}}
+            />
             <Card.Title style={styles.commentTitle}>{comment.name}</Card.Title>
-            <Text style={styles.commentText}>{comment.text}</Text>
+            <Text style={styles.commentText} numberOfLines={3}>
+              {comment.text}
+            </Text>
             {comment.file && (
               <Text
-                style={{ color: "blue" }}
-                onPress={() => Linking.openURL(comment.file.uri)}
+                style={{ color: "blue", left: 84, fontSize: 12 ,top: -40}}
+                onPress={() => Linking.openURL(uploadedFile.uri)}
               >
-                Attached file: {comment.file.name}
+                Attached file: {comment.file.assets[0].name.slice(0, 10)}...
               </Text>
             )}
           </Card>
@@ -108,7 +112,7 @@ const ProcessNotesTab = () => {
     icon={<Icon name="add" color="#ffffff" />}
     buttonStyle={styles.addCommentButton}
     title="Add Comment"
-    onPress={() => addComment(note.id, "John Doe")} // Replace 'John Doe' with the actual name
+    onPress={() => addComment(note.id, "Ahmed Irmani")} // Replace 'John Doe' with the actual name
   />;
 
   const processNotes = [
@@ -127,8 +131,10 @@ const ProcessNotesTab = () => {
             <TextInput
               style={styles.commentInput}
               placeholder="Add a comment"
-              value={commentInput}
-              onChangeText={(text) => setCommentInput(text)}
+              value={commentInput[note.id] || ""}
+              onChangeText={(text) =>
+                setCommentInput({ ...commentInput, [note.id]: text })
+              }
             />
             <Ionicons
               name="document-attach-outline"
@@ -141,7 +147,7 @@ const ProcessNotesTab = () => {
               buttonStyle={styles.addCommentButton}
               title="Send"
               onPress={() => {
-                addComment(note.id, "John Doe", commentInput);
+                addComment(note.id, "Ahmed Irmani", commentInput);
                 handleFile(note.id);
                 setCommentInput("");
               }}
@@ -180,8 +186,13 @@ const DocumentsTab = () => {
               onPress={() => handleFolderClick(folder)}
             >
               <Card containerStyle={styles.folderCard}>
-                  <MaterialIcons name="folder" style={{position:"absolute",top:10,right:60}} size={40} color="#FFD700" />
-                 <Text style={styles.folderTitle}>{folder.name}</Text> 
+                <MaterialIcons
+                  name="folder"
+                  style={{ position: "absolute", top: 10, right: 60 }}
+                  size={40}
+                  color="#FFD700"
+                />
+                <Text style={styles.folderTitle}>{folder.name}</Text>
               </Card>
             </TouchableOpacity>
           ))}
@@ -202,7 +213,7 @@ const DocumentsTab = () => {
                   type="feather"
                   color="#292929"
                   size={30}
-                  style={{top:10,zIndex:10}}
+                  style={{ top: 10, zIndex: 10 }}
                 />
                 <Text style={styles.fileText}>{file}</Text>
               </Card>
@@ -313,22 +324,31 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   commentCard: {
-    backgroundColor: "white",
-    borderRadius: 8,
+    backgroundColor: "#f0f2f5",
+    borderRadius: 80,
     marginBottom: 8,
     padding: 15,
     left: -15,
+    width: "100%",
   },
   commentTitle: {
     fontSize: 16,
-    color: "black", // Change text color to improve readability
-    marginBottom: 5,
-    fontWeight: "700", // Bold the commenter's name
+    color: "black",
+    marginBottom: -5,
+    fontWeight: "700",
+    top: -55,
+    left: 80,
+    alignSelf: "flex-start",
+
   },
   commentText: {
     fontSize: 15,
     color: "black",
-    fontWeight: "500",
+    fontWeight: "400",
+    left: 83,
+    top: -45,
+    flexWrap: 'wrap',
+    maxWidth: '80%', 
   },
   commentInputContainer: {
     flexDirection: "row",
@@ -355,7 +375,7 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: "space-between",
     padding: 10,
-  }, 
+  },
   folderCard: {
     backgroundColor: "#292929",
     marginBottom: 20,
@@ -369,11 +389,11 @@ const styles = StyleSheet.create({
   folderTitle: {
     fontSize: 18,
     fontWeight: "bold",
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     color: "white",
-    top:20,
-    left:20
+    top: 20,
+    left: 20,
   },
   backButton: {
     backgroundColor: "#292929",
@@ -399,8 +419,8 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: "#292929",
     fontWeight: "600",
-    left:60,
-    top:-15
+    left: 60,
+    top: -15,
   },
 });
 
