@@ -15,7 +15,8 @@ import Flickity from "react-flickity-component";
 import ReactDOM from "react-dom";
 import "./style.css";
 import "./flickity.css";
-
+import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
+import CachedRoundedIcon from '@mui/icons-material/CachedRounded';
 const InformationPhase = () => {
   const [path, setPath] = useState("document");
   const [folders, setFolders] = useState([]);
@@ -28,10 +29,10 @@ const InformationPhase = () => {
   const [folderId, setFolderId] = useState(1);
   const [pdfName, setPdfName] = useState(1);
   /////////state note ////////////
-  const [notes, setNotes]= useState([])
-  const [title, setTitle]= useState("");
-  const [comment, setComment]= useState("")
-  const [type, setType]= useState('')
+  const [notes, setNotes] = useState([]);
+  const [title, setTitle] = useState("");
+  const [comment, setComment] = useState("");
+  const [type, setType] = useState("");
 
   const getFile = async (e) => {
     const formData = new FormData();
@@ -84,18 +85,18 @@ const InformationPhase = () => {
     }
   };
   const flickityRef = useRef(null);
- 
-    const fetchNote = async () => {
-      try {
-         const response = await axios.get("http://localhost:1128/api/note/allNotes")
-         setNotes(response.data)
-         console.log(response.data)
-      } catch (error) {
-        console.log(error)
-      }
 
+  const fetchNote = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:1128/api/note/allNotes"
+      );
+      setNotes(response.data);
+    } catch (error) {
+      console.log(error);
     }
-   
+  };
+
   useEffect(() => {
     if (flickityRef.current) {
       new Flickity(flickityRef.current, {});
@@ -103,7 +104,7 @@ const InformationPhase = () => {
 
     fetchFolder();
     fetchFileByFolder();
-    fetchNote()
+    fetchNote();
   }, [refrech, folderId]);
 
   const addFolder = async (folderName) => {
@@ -153,24 +154,51 @@ const InformationPhase = () => {
     document.body.removeChild(link);
   };
 
-  const addNotes = async ()=>{
-    try {
-       await axios.post("http://localhost:1128/api/note/addNote", 
+  const addNotes = async (title, comment, type) => {
+    console.log(
       {
-        title:title,
-        comment:comment,
+        title: title,
+        comment: comment,
         type: type,
-      }
-      
-      )
+      },
+      "this is the body"
+    );
+    try {
+      await axios.post("http://localhost:1128/api/note/addNote", {
+        title: title,
+        comment: comment,
+        type: type,
+      });
       setRefrech(!refrech);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
+   const handleDelete = async (id) =>{
+   try {
+     const response = await axios.delete(`http://localhost:1128/api/note/note/${id}`)
+     setRefrech(!refrech)
+   } catch (error) {
+    console.log(error)
+   }
+   }
+
+   const updateNote = async (id)=>{
+    try {
+     await axios.put(`http://localhost:1128/api/note/note/${id}`,  {
+        title:document.getElementById("swal-input1").value,
+        
+                                    
+        comment:document.getElementById("swal-input2").value
+      });
+      setRefrech(!refrech)
     } catch (error) {
       console.log(error)
     }
-  }
+   }
 
-  const progress = 70;
+  const progress = 93;
   return (
     <div
       style={{
@@ -514,84 +542,125 @@ const InformationPhase = () => {
                     const { value: result } = await Swal.fire({
                       title: "Enter your Note",
                       html:
-                        '<input id="swal-input1" class="swal2-input" style="width: 350px;" placeholder="Title note" >' +
-                        '<input id="swal-input3" class="swal2-input" style="width: 350px;" placeholder="Add your Note" >' +
+                        `<input id="swal-input1" class="swal2-input" style="width: 350px;" placeholder="Title note"  >` +
+                        '<input id="swal-input3" class="swal2-input" style="width: 350px;" placeholder="Add your Note">' +
                         '<select id="swal-input2" class="swal2-input">' +
                         '<option value="">Select...</option>' +
-                        '<option value="option1">urgent</option>' +
-                        '<option value="option3">Personnel</option>' +
-                        '<option value="option4">Notes</option>' +
-                        '</select>',
+                        '<option value="urgent">urgent</option>' +
+                        '<option value="personnel">Personnel</option>' +
+                        '<option value="notes">Notes</option>' +
+                        "</select>",
                       focusConfirm: false,
                       preConfirm: () => {
+                        setTitle(document.getElementById("swal-input1").value);
+                        setComment(
+                          document.getElementById("swal-input3").value
+                        );
+                        setType(document.getElementById("swal-input2").value);
+
                         return [
-                          document.getElementById("swal-input1").value,
-                          document.getElementById("swal-input3").value,
-                          document.getElementById("swal-input2").value,
+                          addNotes(
+                            document.getElementById("swal-input1").value,
+                            document.getElementById("swal-input3").value,
+                            document.getElementById("swal-input2").value
+                          ),
                         ];
                       },
                       customClass: { confirmButton: "color-modal" },
                     });
-                    
-                  
-                    if  (result.value) {
-                      const [text, anotherText, select] = result.value;  
-                      setTitle(text);
-                      setComment(anotherText);
-                      setType(select);
-                      await addNotes(result.value);
-                      setRefrech(!refrech);
-
-                    }
                   }}
                 >
                   Add note
                 </button>
               </div>
               <Flickity>
-
-              {notes.map((notes,i)=>{
-                return(
-                  <div
-                    style={{ display: "flex", gap: "3rem", marginRight: "2rem" }}
-                  >
+                {notes.map((notes, i) => {
+                  return (
                     <div
-                      className="card"
                       style={{
-                        width: "22rem",
-                        height: "22rem",
-                        backgroundColor: notes.type=== 'urgent' ? "white" : notes.type === 'personnel' ? "gold" : notes.type === 'notes' ? "yellow" : null ,
-                        borderRadius: "2rem 0 2rem 0",
+                        display: "flex",
+                        gap: "3rem",
+                        marginRight: "2rem",
                       }}
                     >
-                      <div className="card-body">
-                        <h5 className="card-title">{notes.title}</h5>
-                        <p className="card-text">
-                        {notes.comment}
-                        </p>
-                      </div>
-                      <div>
-                        <p>{notes.createdAt}</p>
-                      </div>
                       <div
+                        className="card"
                         style={{
-                          borderTop: "1px solid #ccc",
-                          padding: "1rem",
-                          // marginTop: "1rem",
-                          display:'flex',
-                          justifyContent:'center'
+                          width: "22rem",
+                          height: "22rem",
+                          backgroundColor:
+                            notes.type === "urgent"
+                              ? "grey	"
+                              : notes.type === "personnel"
+                              ? "grey"
+                              : notes.type === "notes"
+                              ? "grey	"
+                              : null,
+                          borderRadius: "2rem 0 2rem 0",
                         }}
                       >
-                        <p style={{fontSize:'15px' , border:"solid 1px grey" , borderRadius:'4rem', width:'6rem'}}>{notes.type}</p>
+                        <div className="card-body">
+                          <div style={{display:'flex', justifyContent:'space-between'}}>
+                        
+                          <CachedRoundedIcon style={{color:'white'}}  onClick= { async()=>{
+                            await Swal.fire({
+                              title: "Update Note",
+                              html: `
+                                <input id="swal-input1" class="swal2-input" placeHolder='update title'>
+                                <input id="swal-input2" class="swal2-input" placeHolder='update the note'>
+                              `,
+                              focusConfirm: false,
+                              preConfirm: () => {
+                                setTitle(document.getElementById("swal-input1").value);
+                                setComment(
+                                  document.getElementById("swal-input2").value
+                                );
+                                return [
+                                  updateNote(notes.id)
+                               
+                                ];
+                                
+                              },
+                              customClass: { confirmButton: "color-modal" },
+
+                            });
+                         
+                          }}/> 
+                          <DeleteOutlineRoundedIcon style={{color:'white'}} onClick={()=>{console.log("this is id", notes.id); handleDelete(notes.id)}} />
+
+                          </div>
+                         
+                          <h5 className="card-title">{notes.title}</h5>
+                          <p className="card-text">{notes.comment}</p>
+                        </div>
+                        <div>
+                          <p>{notes.createdAt.slice(0,10)}</p>
+                        </div>
+                        <div
+                          style={{
+                            borderTop: "1px solid #ccc",
+                            padding: "1rem",
+                            // marginTop: "1rem",
+                            display: "flex",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <p
+                            style={{
+                              fontSize: "15px",
+                              border: "solid 1px grey",
+                              borderRadius: "4rem",
+                              width: "6rem",
+                            }}
+                          >
+                            {notes.type}
+                          </p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-              
-                )
-              })}
-                              </Flickity>
-
-             
+                  );
+                })}
+              </Flickity>
             </div>
 
             ///////////////// / //////////////////////////////////////////////
