@@ -9,8 +9,10 @@ const Appointments = () => {
   const [appointments,setAppointments] = useState([])
   const [id,setId]=useState("")
   const [refrech, setRefrech] = useState(false);
+  const [acceptedAppointments, setAcceptedAppointments] = useState([]);
 
-  const deleteAppointment = async (id) => {
+
+const deleteAppointment = async (id) => {
     console.log(id,"this is the id")
     // /deleteAppointment
     try {
@@ -20,6 +22,10 @@ const Appointments = () => {
     } catch (error) {
       console.error("Error deleting user:", error);
     }
+  };
+
+  const acceptAppointment = (appointment) => {
+    setAcceptedAppointments((prevAppointments) => [...prevAppointments, appointment]);
   };
   
   const getAppointments = async () => {
@@ -34,7 +40,6 @@ const Appointments = () => {
   };
   useEffect(()=>{
     getAppointments();
-    deleteAppointment()
   },[refrech])
   return (
     <div>
@@ -43,7 +48,7 @@ const Appointments = () => {
       </div>
       <div className="apointment">
         <div className="table">
-          <Aziz appointments={appointments} deleteAppointment={deleteAppointment} setId={setId}  />
+          <Aziz appointments={appointments} deleteAppointment={deleteAppointment} setId={setId}   acceptAppointment={acceptAppointment} />
         </div>
         <div className="extra">
           <div className="upcoming">
@@ -51,30 +56,21 @@ const Appointments = () => {
               {/* Add your text or other content here */}
               <p className="upcoming-title">Upcoming Appointments</p>
               <div className="cardAndBorder">
-                <div
-                  className="appointment-item1 border-black p-1"
-                  style={{ borderRadius: "3%" }}>
-                  <div className="imageWithTitle flex g-10 ">
-                    <img
-                      src={require("../../assets/images/user11.avif")}
-                      alt="Appointment 1"
-                      style={{ marginTop: "0.1rem" }}
-                    />{" "}
-                    <div className="appointment1-text">
-                      <p>Farouk Mestiri</p>
-                      <p> 15-08-2023 Monday</p>
+              {acceptedAppointments.map((appointment) => (
+                  <div key={appointment.id} className="appointment-item1 border-black p-1" style={{ borderRadius: "3%" }}>
+                    <div className="imageWithTitle flex g-10">
+                      <img
+                        src={require("../../assets/images/user11.avif")}
+                        alt="Appointment"
+                        style={{ marginTop: "0.1rem" }}
+                      />
+                      <div className="appointment1-text">
+                        <p>{appointment.user?.fullName}</p>
+                        <p>{appointment.date} {appointment.time}</p>
+                      </div>
                     </div>
                   </div>
-                  <p
-                    className=" flex jcc align-center"
-                    style={{
-                      width: "40%",
-                      height: "3rem",
-                      flexDirection: "row",
-                    }}>
-                    11h:30 || 11h:45
-                  </p>
-                </div>
+                ))}
                 <div
                   className="borderBlack"
                   style={{

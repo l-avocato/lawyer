@@ -49,7 +49,7 @@ module.exports = {
                     id: req.params.id
                 }
             })
-            res.status(200).send(appointment)
+            res.json(appointment)
         } catch (error) {
            console.log(error);
         }

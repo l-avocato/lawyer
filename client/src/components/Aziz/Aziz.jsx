@@ -4,77 +4,11 @@ import "./aziz.css";
 import axios from 'axios'
 
 
-const App = ({ appointments, deleteAppointment, setId }) => {
+const App = ({ appointments, deleteAppointment, setId,acceptAppointment }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // const columns = [
-  //   {
-  //     title: "Name",
-  //     dataIndex: "name",
-  //     key: "name",
-  //     render: (text) => <a>{text}</a>,
-  //   },
-  //   {
-  //     title: "Age",
-  //     dataIndex: "age",
-  //     key: "age",
-  //   },
-  //   {
-  //     title: "Address",
-  //     dataIndex: "Address",
-  //     key: "Address",
-  //   },
-  //   {
-  //     title: "Reasons",
-  //     key: "Reasons",
-  //     dataIndex: "Reasons",
-  //     render: (_, { tags }) => (
-  //       <>
-  //         {tags?.map((tag) => {
-  //           let color = tag.length > 5 ? "geekblue" : "green";
-  //           if (tag === "loser") {
-  //             color = "volcano";
-  //           }
-  //           return (
-  //             <Tag color={color} key={tag}>
-  //               {tag.toUpperCase()}
-  //             </Tag>
-  //           );
-  //         })}
-  //       </>
-  //     ),
-  //   },
-  //   {
-  //     title: "Action",
-  //     key: "action",
-  //     render: (_, record) => (
-  //       <Space size="middle">
-  //         <button
-  //           className="btnA"
-  //           style={{
-  //             width: "5rem",
-  //             backgroundColor: "green",
-  //             color: "white",
-  //             borderRadius: "2rem",
-  //             border: "none",
-  //           }}>
-  //           Accept
-  //         </button>
-  //         <button
-  //           className="btnB"
-  //           style={{
-  //             width: "5rem",
-  //             backgroundColor: "red",
-  //             color: "white",
-  //             borderRadius: "2rem",
-  //             border: "none",
-  //           }}>
-  //           Delete
-  //         </button>
-  //       </Space>
-  //     ),
-  //   },
-  // ];
+  
+
 
 
   const openNotification = (placement, userName) => {
@@ -103,7 +37,6 @@ const App = ({ appointments, deleteAppointment, setId }) => {
       title: "Name",
       dataIndex: "name",
       key: "name",
-      // render: (text) => <a>{text}</a>,
     },
     {
       title: "Time",
@@ -114,21 +47,6 @@ const App = ({ appointments, deleteAppointment, setId }) => {
       title: "Reason",
       dataIndex: "Reason",
       key: "Reason",
-      // render: (_, { tags }) => (
-      //   <>
-      //     {tags?.map((tag) => {
-      //       let color = tag.length > 5 ? "geekblue" : "green";
-      //       if (tag === "loser") {
-      //         color = "volcano";
-      //       }
-      //       return (
-      //         <Tag color={color} key={tag}>
-      //           {tag.toUpperCase()}
-      //         </Tag>
-      //       );
-      //     })}
-      //   </>
-      // ),
     },
     {
       title: "Action",
@@ -143,6 +61,9 @@ const App = ({ appointments, deleteAppointment, setId }) => {
               color: "white",
               borderRadius: "2rem",
               border: "none",
+            }}
+            onClick={() => {
+              acceptAppointment(record);
             }}
           >
             Accept
@@ -227,10 +148,6 @@ const App = ({ appointments, deleteAppointment, setId }) => {
       tags: ["criminal"],
     },
   ];
-
-
-
-
   const appointmentData = appointments.map((e, i) => {
     return (
       {
@@ -246,7 +163,6 @@ const App = ({ appointments, deleteAppointment, setId }) => {
 
   return (
     <Table
-
       className="table10"
       columns={columns}
       dataSource={appointmentData}
