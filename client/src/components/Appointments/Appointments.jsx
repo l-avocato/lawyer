@@ -24,6 +24,7 @@ const Appointments = () => {
   
   const getAppointments = async () => {
     try {
+
       const response = await axios.get('http://localhost:1128/api/appointment/getAppointments');
       console.log("this is the response", response.data);
       setAppointments(response.data);
@@ -33,7 +34,8 @@ const Appointments = () => {
   };
   useEffect(()=>{
     getAppointments();
-  },[])
+    deleteAppointment()
+  },[refrech])
   return (
     <div>
       <div>

@@ -77,13 +77,13 @@ const App = ({ appointments, deleteAppointment, setId }) => {
   // ];
 
 
-  // const openNotification = (placement, userName) => {
-  //   notification.success({
-  //     message: ``,
-  //     description: `User ${userName} has been deleted successfully.`,
-  //     placement,
-  //   });
-  // };
+  const openNotification = (placement, userName) => {
+    notification.success({
+      message: ``,
+      description: `User ${userName} has been deleted successfully.`,
+      placement,
+    });
+  };
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -170,7 +170,7 @@ const App = ({ appointments, deleteAppointment, setId }) => {
               deleteAppointment(record.id);
               handleOk();
               console.log(record.id, "this is idddddddddddddddddddddddddddddddddddddd");
-              // openNotification("topRight", record.fullName);
+              openNotification("topRight", record.fullName);
             }}
             onCancel={handleCancel}
             mask={false}

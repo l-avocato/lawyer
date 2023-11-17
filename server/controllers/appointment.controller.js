@@ -51,7 +51,7 @@ module.exports = {
             })
             res.status(200).send(appointment)
         } catch (error) {
-           throw new Error(error)
+           console.log(error);
         }
     },
     updateAppointment: async function (req, res) {
