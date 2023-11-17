@@ -7,7 +7,11 @@ module.exports=(connection,DataTypes)=>{
               type: DataTypes.BOOLEAN,
               defaultValue: true
               
-            }
+            },
+            title : {type: DataTypes.STRING},
+            type : {type: DataTypes.ENUM ("notes", "personnel", "urgent" )}
+
+
     } )
     return note
     }

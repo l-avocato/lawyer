@@ -1,43 +1,51 @@
 import "./dashboardStyle.css";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import SidebarDash from "../SidebarDash/SidebarDash";
 import NavbarDashboard from "../NavbarDashboard/NavbarDashboard";
-
 import axios from "axios";
 import FolderIcon from "@mui/icons-material/Folder";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 import ControlPointIcon from "@mui/icons-material/ControlPoint";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
-import DeleteIcon from "@mui/icons-material/Delete";
 import Swal from "sweetalert2";
 import "react-circular-progressbar/dist/styles.css";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
-import SearchIcon from '@mui/icons-material/Search';
-import FindInPageSharpIcon from '@mui/icons-material/FindInPageSharp';
+import SearchIcon from "@mui/icons-material/Search";
+import Flickity from "react-flickity-component";
+import ReactDOM from "react-dom";
+import "./style.css";
+import "./flickity.css";
 
 const InformationPhase = () => {
-  // const [files, setFiles] = useState("")
   const [path, setPath] = useState("document");
   const [folders, setFolders] = useState([]);
   const [files, setFiles] = useState([]);
   const [newName, setNewName] = useState("");
   const [nameFile, setNameFile] = useState("");
   const [refrech, setRefrech] = useState(false);
+  const [search, setSearch] = useState("");
+  const [pdf, setPdf] = useState("");
+  const [folderId, setFolderId] = useState(1);
+  const [pdfName, setPdfName] = useState(1);
+  /////////state note ////////////
+  const [notes, setNotes]= useState([])
+  const [title, setTitle]= useState("");
+  const [comment, setComment]= useState("")
+  const [type, setType]= useState('')
 
   const getFile = async (e) => {
     const formData = new FormData();
     formData.append("file", e.target.files[0]);
     formData.append("upload_preset", "xhqp21a0");
-    console.log(formData);
-    // formData.append("cloud_name", "dkcwqbl9d");
     console.log(e);
     try {
       const data = await axios.post(
         "https://api.cloudinary.com/v1_1/dgztaxbvi/upload",
         formData
       );
-      console.log(data.data.secure_url);
-      setFiles(data.data.secure_url);
+      console.log(data.data);
+      setPdf(data.data.secure_url);
+      setPdfName(data.data.original_filename);
     } catch (error) {
       console.log(error);
     }
@@ -48,7 +56,6 @@ const InformationPhase = () => {
       const response = await axios.get(
         "http://localhost:1128/api/folder/getAll/folder"
       );
-      console.log(response.data);
       setFolders(response.data);
     } catch (error) {
       console.log(error);
@@ -61,28 +68,43 @@ const InformationPhase = () => {
         `http://localhost:1128/api/folder/getAll/${name}`
       );
       setFolders(response.data);
-      console.log("filterFolderByName", setFolders);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const fetchFile = async () => {
+  const fetchFileByFolder = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:1128/api/file/getAll/files"
+        `http://localhost:1128/api/file/getFolder/${folderId}`
       );
-      console.log(response.data);
       setFiles(response.data);
     } catch (error) {
       console.log(error);
     }
   };
+  const flickityRef = useRef(null);
+ 
+    const fetchNote = async () => {
+      try {
+         const response = await axios.get("http://localhost:1128/api/note/allNotes")
+         setNotes(response.data)
+         console.log(response.data)
+      } catch (error) {
+        console.log(error)
+      }
 
+    }
+   
   useEffect(() => {
+    if (flickityRef.current) {
+      new Flickity(flickityRef.current, {});
+    }
+
     fetchFolder();
-    fetchFile();
-  }, [refrech]);
+    fetchFileByFolder();
+    fetchNote()
+  }, [refrech, folderId]);
 
   const addFolder = async (folderName) => {
     try {
@@ -97,18 +119,57 @@ const InformationPhase = () => {
       console.log(error);
     }
   };
-  // const addFile = async ()=>{
-  //   try {
-  //      const response = await axios.post("http://localhost:1128/api/file/add" , {
-  //       name:nameFile,
-  //      })
-  //      setRefrech(!refrech)
 
-  //   } catch (error) {
-  //     console.log(error)
+  const addFile = async (e) => {
+    const formData = new FormData();
+    formData.append("file", e.target.files[0]);
+    formData.append("upload_preset", "xhqp21a0");
 
-  //   }
-  // }
+    try {
+      const data = await axios.post(
+        "https://api.cloudinary.com/v1_1/dgztaxbvi/upload",
+        formData
+      );
+      console.log(data.data);
+
+      await axios.post("http://localhost:1128/api/file/add", {
+        name: data.data.original_filename + ".pdf",
+        folderId: folderId,
+        link: data.data.secure_url,
+      });
+      setRefrech(!refrech);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const onButtonClick = (pdfLink) => {
+    const pdfUrl = pdfLink;
+    const link = document.createElement("a");
+    link.href = pdfUrl;
+    link.download = pdfName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const addNotes = async ()=>{
+    try {
+       await axios.post("http://localhost:1128/api/note/addNote", 
+      {
+        title:title,
+        comment:comment,
+        type: type,
+      }
+      
+      )
+      setRefrech(!refrech);
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const progress = 70;
   return (
     <div
@@ -134,11 +195,7 @@ const InformationPhase = () => {
         }}
       >
         <p
-          style={{
-            fontFamily: "initial",
-            fontSize: "30px",
-            fontWeight: "bold",
-          }}
+          style={{ fontSize: "25px", fontWeight: "bold", fontFamily: "serif" }}
         >
           Welcome Lawyer Name{" "}
         </p>
@@ -162,173 +219,34 @@ const InformationPhase = () => {
             }}
           >
             <div className="dashboard_box_leith">
-              {" "}
               <a
-                className="documents-container"
+                className="documents-container1"
                 onClick={(e) => {
                   setPath("document");
                 }}
               >
-                {" "}
                 Documents
-              </a>{" "}
+              </a>
             </div>
-            {/* <div className="dashboard_box_leith"> <a className='documents-container' > Notes</a> </div> */}
             <div className="dashboard_box_leith">
-              {" "}
               <a
-                className="documents-container"
+                className="documents-container1"
                 onClick={(e) => {
                   setPath("process");
                 }}
               >
-                {" "}
-                Process
+                Notes
               </a>{" "}
             </div>
           </div>
           {path === "document" ? (
             <div className="dashboard_container_leith">
-              {/* <div>
-              <div className="block1-container">     
-                <div className="card">
-                  <div className="search-container">
-                    <svg
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      height="20"
-                      width="20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        stroke-linejoin="round"
-                        stroke-linecap="round"
-                        stroke-width="2"
-                        stroke="#171718"
-                        d="M17.5 17.5L22 22"
-                      ></path>
-                      <path
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        stroke="#171718"
-                        d="M20 11C20 6.02944 15.9706 2 11 2C6.02944 2 2 6.02944 2 11C2 15.9706 6.02944 20 11 20C15.9706 20 20 15.9706 20 11Z"
-                      ></path>
-                    </svg>
-                    <input
-                      placeholder="Search for a quick action"
-                      type="search"
-                    />
-                  </div>
-
-                  <div className="categories">
-                    <button type="button">Note</button>
-                    <button type="button">File</button>
-                    <button type="button">Email</button>
-                    <button type="button">Others</button>
-                  </div>
-
-                  <div className="results">
-                    <p className="label">Best Results</p>
-
-                    <div className="results-list">
-                      <div className="entry">
-                        <div className="icon">
-                          <svg
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            height="20"
-                            width="20"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              stroke-linejoin="round"
-                              stroke-linecap="round"
-                              stroke-width="2"
-                              stroke="#171718"
-                              d="M13 2H13.2727C16.5339 2 18.1645 2 19.2969 2.79784C19.6214 3.02643 19.9094 3.29752 20.1523 3.60289C21 4.66867 21 6.20336 21 9.27273V11.8182C21 14.7814 21 16.2629 20.5311 17.4462C19.7772 19.3486 18.1829 20.8491 16.1616 21.5586C14.9044 22 13.3302 22 10.1818 22C8.38275 22 7.48322 22 6.76478 21.7478C5.60979 21.3424 4.69875 20.4849 4.26796 19.3979C4 18.7217 4 17.8751 4 16.1818V12"
-                            ></path>
-                            <path
-                              stroke-linejoin="round"
-                              stroke-linecap="round"
-                              stroke-width="2"
-                              stroke="#171718"
-                              d="M21 12C21 13.8409 19.5076 15.3333 17.6667 15.3333C17.0009 15.3333 16.216 15.2167 15.5686 15.3901C14.9935 15.5442 14.5442 15.9935 14.3901 16.5686C14.2167 17.216 14.3333 18.0009 14.3333 18.6667C14.3333 20.5076 12.8409 22 11 22"
-                            ></path>
-                            <path
-                              stroke-linecap="round"
-                              stroke-width="2"
-                              stroke="#171718"
-                              d="M11 6L3 6M7 2V10"
-                            ></path>
-                          </svg>
-                        </div>
-                        <div className="desc">
-                          <label>Create a new File</label>
-                          <span>Add a new file to your library list</span>
-
-                        </div>
-                      </div>
-                      <div className="entry">
-                        <div className="icon">
-                          <svg
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            height="20"
-                            width="20"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              stroke-linejoin="round"
-                              stroke-linecap="round"
-                              stroke-width="2"
-                              stroke="#171718"
-                              d="M17.4776 9.01106C17.485 9.01102 17.4925 9.01101 17.5 9.01101C19.9853 9.01101 22 11.0294 22 13.5193C22 15.8398 20.25 17.7508 18 18M17.4776 9.01106C17.4924 8.84606 17.5 8.67896 17.5 8.51009C17.5 5.46695 15.0376 3 12 3C9.12324 3 6.76233 5.21267 6.52042 8.03192M17.4776 9.01106C17.3753 10.1476 16.9286 11.1846 16.2428 12.0165M6.52042 8.03192C3.98398 8.27373 2 10.4139 2 13.0183C2 15.4417 3.71776 17.4632 6 17.9273M6.52042 8.03192C6.67826 8.01687 6.83823 8.00917 7 8.00917C8.12582 8.00917 9.16474 8.38194 10.0005 9.01101"
-                            ></path>
-                            <path
-                              stroke-linejoin="round"
-                              stroke-linecap="round"
-                              stroke-width="2"
-                              stroke="#171718"
-                              d="M12 13L12 21M12 13C11.2998 13 9.99153 14.9943 9.5 15.5M12 13C12.7002 13 14.0085 14.9943 14.5 15.5"
-                            ></path>
-                          </svg>
-                        </div>
-                        <div className="desc">
-                          <label>Upload a file</label>
-                          <span>
-                            Use your one of your system files to save and edit
-                          </span>
-                          <input type="file" name="leith" className="filesInput" onChange={(e)=>getFile(e)} accept=".pdf"/>
-                        </div>
-                    
-                      </div>
-                      <a href="https://res.cloudinary.com/dgztaxbvi/image/upload/c_pad,b_auto:predominant,fl_preserve_transparency/v1699982811/Sae_1_j9ocrg.jpg?_s=public-apps"  download="Example-PDF-document"
-  target="_blank"
-  rel="noopener noreferrer">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/1667px-PDF_file_icon.svg.png" alt="W3Schools" width="104" height="142" />
-</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div> */}
-
               <div
                 style={{
                   display: "flex",
-                  justifyContent: "space-between",
-                  padding: "1rem",
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
-              >
-                <p style={{ fontSize: "22px", fontWeight: "bold" }}>
-                  {" "}
-                  File Storage
-                </p>
-                <button className="btn-files">Uplode files</button>
-              </div>
-
-              <div
-                style={{ display: "flex", flexDirection: "row", gap: "1rem" }}
               >
                 <div
                   style={{
@@ -342,15 +260,43 @@ const InformationPhase = () => {
                       style={{
                         display: "flex",
                         justifyContent: "space-between",
-                        padding: "1rem",
+                        padding: "2rem",
                         overflowY: "scrol",
                       }}
                     >
-                      <p style={{ fontSize: "20px" }}> Folder Storage </p>
-                      <input type="search" id="site-search" name="q" style={{height:'4vh', borderRadius:'0.5rem', border :'none', width:'220px' }} onChange={(e)=>{setNewName(e.target.value)}}/>
-                    <SearchIcon style={{display:'flex', alignItems:'center', fontSize:'35px' , color:'goldenrod'}} onClick={()=>{filterFolderByName(newName)}}/>
-                    {/* <FindInPageSharpIcon style={{display:'flex', alignItems:'center', fontSize:'35px' , color:'gold'}}/> */}
-                   
+                      <p
+                        style={{
+                          fontSize: "23px",
+                          fontWeight: 1000,
+                          fontFamily: "revert",
+                        }}
+                      >
+                        {" "}
+                        Folder Storage{" "}
+                      </p>
+                      <input
+                        type="search"
+                        id="site-search"
+                        name="q"
+                        style={{
+                          height: "4vh",
+                          borderRadius: "0.5rem",
+
+                          width: "220px",
+                        }}
+                        onChange={(e) => {
+                          setNewName(e.target.value);
+                        }}
+                      />
+                      <SearchIcon
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          fontSize: "35px",
+                          color: "goldenrod",
+                        }}
+                      />
+
                       <button
                         style={{
                           border: "none",
@@ -394,155 +340,49 @@ const InformationPhase = () => {
                         paddingLeft: "2rem",
                       }}
                     >
-                      {folders.map((folder, i) => {
-                        return (
-                          <>
-                            <div
-                              style={{
-                                display: "flex",
-                                flexDirection: "row",
-                                alignItems: "center",
-                                alignText: "center",
-                                height: "3rem",
-                              }}
-                              key={i}
-                            >
-                              <FolderIcon
+                      {folders
+                        .filter((el) =>
+                          el.name.toLowerCase().includes(newName.toLowerCase())
+                        )
+                        .map((folder, i) => {
+                          return (
+                            <>
+                              <div
                                 style={{
-                                  color: "goldenrod",
-                                  height: "100%",
-                                  width: "20%",
+                                  display: "flex",
+                                  flexDirection: "row",
+                                  alignItems: "center",
+                                  alignText: "center",
+                                  height: "3rem",
                                 }}
-                              />
-                              <p style={{ height: "50%", margin: 0 }}>
-                                {folder.name}{" "}
-                              </p>
-                            </div>
-                            <div
-                              style={{
-                                height: ".01rem",
-                                width: "80%",
-                                backgroundColor: "grey",
-                              }}
-                            ></div>
-                          </>
-                        );
-                      })}
-                    </div>
-                  </div>
-                  <div className="block-note">
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        padding: "1rem",
-                      }}
-                    >
-                      <p style={{ fontSize: "20px", fontWeight: "bold" }}>
-                        Add Notes
-                      </p>
-                      <button
-                        style={{
-                          border: "none",
-                          borderRadius: "50%",
-                          backgroundColor: "goldenrod",
-                          width: "40px",
-                          fontSize: "30px",
-                        }}
-                      >
-                        {" "}
-                        +{" "}
-                      </button>
-                    </div>
-                    <div style={{ display: "flex", justifyContent: "center" }}>
-                      <div
-                        style={{
-                          width: "47vh",
-                          height: "15vh",
-                          display: "flex",
-                        }}
-                      >
-                        <div class="card">
-                          <div class="comments">
-                            <div class="comment-container">
-                              <div class="user">
-                                <div class="user-pic">
-                                  <svg
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    height="20"
-                                    width="20"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                  >
-                                    <path
-                                      stroke-linejoin="round"
-                                      fill="#707277"
-                                      stroke-linecap="round"
-                                      stroke-width="2"
-                                      stroke="#707277"
-                                      d="M6.57757 15.4816C5.1628 16.324 1.45336 18.0441 3.71266 20.1966C4.81631 21.248 6.04549 22 7.59087 22H16.4091C17.9545 22 19.1837 21.248 20.2873 20.1966C22.5466 18.0441 18.8372 16.324 17.4224 15.4816C14.1048 13.5061 9.89519 13.5061 6.57757 15.4816Z"
-                                    ></path>
-                                    <path
-                                      stroke-width="2"
-                                      fill="#707277"
-                                      stroke="#707277"
-                                      d="M16.5 6.5C16.5 8.98528 14.4853 11 12 11C9.51472 11 7.5 8.98528 7.5 6.5C7.5 4.01472 9.51472 2 12 2C14.4853 2 16.5 4.01472 16.5 6.5Z"
-                                    ></path>
-                                  </svg>
-                                </div>
-                                <div class="user-info">
-                                  <span>Yassine Zanina</span>
-                                </div>
-                              </div>
-                              <p class="comment-content">
-                                I've been using this product for a few days now
-                                and I'm really impressed! The interface is
-                                intuitive and easy to
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="text-box">
-                      <div class="box-container">
-                        <textarea placeholder="Add Notes"></textarea>
-                        <div>
-                          <div
-                            class="formatting"
-                            style={{
-                              display: "flex",
-                              justifyContent: "flex-end",
-                            }}
-                          >
-                            <button type="submit" class="send" title="Send">
-                              <svg
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                height="18"
-                                width="18"
-                                xmlns="http://www.w3.org/2000/svg"
+                                key={i}
                               >
-                                <path
-                                  stroke-linejoin="round"
-                                  stroke-linecap="round"
-                                  stroke-width="2.5"
-                                  stroke="#ffffff"
-                                  d="M12 5L12 20"
-                                ></path>
-                                <path
-                                  stroke-linejoin="round"
-                                  stroke-linecap="round"
-                                  stroke-width="2.5"
-                                  stroke="#ffffff"
-                                  d="M7 9L11.2929 4.70711C11.6262 4.37377 11.7929 4.20711 12 4.20711C12.2071 4.20711 12.3738 4.37377 12.7071 4.70711L17 9"
-                                ></path>
-                              </svg>
-                            </button>
-                            <AttachFileIcon />
-                          </div>
-                        </div>
-                      </div>
+                                <FolderIcon
+                                  style={{
+                                    color: "goldenrod",
+                                    height: "100%",
+                                    width: "20%",
+                                    cursor: "pointer",
+                                  }}
+                                  onClick={() => {
+                                    console.log("this is folderId", folder.id);
+                                    setFolderId(folder.id);
+                                  }}
+                                />
+                                <p style={{ height: "50%", margin: 0 }}>
+                                  {folder.name}{" "}
+                                </p>
+                              </div>
+                              <div
+                                style={{
+                                  height: ".01rem",
+                                  width: "80%",
+                                  backgroundColor: "grey",
+                                }}
+                              ></div>
+                            </>
+                          );
+                        })}
                     </div>
                   </div>
                 </div>
@@ -555,6 +395,7 @@ const InformationPhase = () => {
                         padding: "1rem",
                         flexDirection: "column",
                         overflowY: "scrol",
+                        gap: "1.5rem",
                       }}
                     >
                       <div
@@ -564,7 +405,13 @@ const InformationPhase = () => {
                           justifyContent: "space-between",
                         }}
                       >
-                        <p style={{ fontSize: "20px", margin: 0 }}>
+                        <p
+                          style={{
+                            fontSize: "23px",
+                            fontWeight: 1000,
+                            fontFamily: "revert",
+                          }}
+                        >
                           {" "}
                           File Storage{" "}
                         </p>
@@ -575,6 +422,7 @@ const InformationPhase = () => {
                             borderRadius: "50%",
                             fontSize: "30px",
                             backgroundColor: "goldenrod",
+                            cursor: "pointer",
                           }}
                         >
                           {" "}
@@ -589,7 +437,8 @@ const InformationPhase = () => {
                             opacity: 0,
                           }}
                           onChange={(e) => {
-                            getFile(e);
+                            // getFile(e);
+                            addFile(e);
                           }}
                           accept=".pdf"
                         />
@@ -613,6 +462,10 @@ const InformationPhase = () => {
                                     color: "goldenrod",
                                     height: "100%",
                                     width: "20%",
+                                    cursor: "pointer",
+                                  }}
+                                  onClick={() => {
+                                    onButtonClick(files.link);
                                   }}
                                 />
                                 <p style={{ height: "50%", margin: 0 }}>
@@ -638,9 +491,110 @@ const InformationPhase = () => {
               </div>
             </div>
           ) : (
+            ///////////////note /////////////////////
             <div className="dashboard_container_leith">
-              <h1>alah yehdik ya leith</h1>
+              <div
+                style={{
+                  fontSize: "20px",
+                  padding: "1rem",
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
+                <p style={{ fontSize: "25px" }}>My Notes</p>
+                <button
+                  style={{
+                    border: "none",
+                    width: "7rem",
+                    height: "4rem",
+                    borderRadius: "1rem",
+                    backgroundColor: "goldenrod",
+                  }}
+                  onClick={async () => {
+                    const { value: result } = await Swal.fire({
+                      title: "Enter your Note",
+                      html:
+                        '<input id="swal-input1" class="swal2-input" style="width: 350px;" placeholder="Title note" >' +
+                        '<input id="swal-input3" class="swal2-input" style="width: 350px;" placeholder="Add your Note" >' +
+                        '<select id="swal-input2" class="swal2-input">' +
+                        '<option value="">Select...</option>' +
+                        '<option value="option1">urgent</option>' +
+                        '<option value="option3">Personnel</option>' +
+                        '<option value="option4">Notes</option>' +
+                        '</select>',
+                      focusConfirm: false,
+                      preConfirm: () => {
+                        return [
+                          document.getElementById("swal-input1").value,
+                          document.getElementById("swal-input3").value,
+                          document.getElementById("swal-input2").value,
+                        ];
+                      },
+                      customClass: { confirmButton: "color-modal" },
+                    });
+                    
+                  
+                    if  (result.value) {
+                      const [text, anotherText, select] = result.value;  
+                      setTitle(text);
+                      setComment(anotherText);
+                      setType(select);
+                      await addNotes(result.value);
+                      setRefrech(!refrech);
+
+                    }
+                  }}
+                >
+                  Add note
+                </button>
+              </div>
+              <Flickity>
+
+              {notes.map((notes,i)=>{
+                return(
+                  <div
+                    style={{ display: "flex", gap: "3rem", marginRight: "2rem" }}
+                  >
+                    <div
+                      className="card"
+                      style={{
+                        width: "22rem",
+                        height: "22rem",
+                        backgroundColor: notes.type=== 'urgent' ? "white" : notes.type === 'personnel' ? "gold" : notes.type === 'notes' ? "yellow" : null ,
+                        borderRadius: "2rem 0 2rem 0",
+                      }}
+                    >
+                      <div className="card-body">
+                        <h5 className="card-title">{notes.title}</h5>
+                        <p className="card-text">
+                        {notes.comment}
+                        </p>
+                      </div>
+                      <div>
+                        <p>{notes.createdAt}</p>
+                      </div>
+                      <div
+                        style={{
+                          borderTop: "1px solid #ccc",
+                          padding: "1rem",
+                          // marginTop: "1rem",
+                          display:'flex',
+                          justifyContent:'center'
+                        }}
+                      >
+                        <p style={{fontSize:'15px' , border:"solid 1px grey" , borderRadius:'4rem', width:'6rem'}}>{notes.type}</p>
+                      </div>
+                    </div>
+                  </div>
+              
+                )
+              })}
+                              </Flickity>
+
+             
             </div>
+
+            ///////////////// / //////////////////////////////////////////////
           )}
         </div>
         <div className="side_agenda">
@@ -654,9 +608,9 @@ const InformationPhase = () => {
           >
             <p
               style={{
-                fontFamily: "initial",
+                fontFamily: "revert",
                 fontSize: "25px",
-                fontWeight: "bold",
+                fontWeight: 1000,
               }}
             >
               Progress Case

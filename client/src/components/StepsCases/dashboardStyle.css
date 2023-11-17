@@ -5,12 +5,12 @@
     border-radius: 1rem;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     transition: 0.5s ease; 
-    margin-left: 1rem;
+  
 
 }
 
 .dashboard_box_leith:hover {
-    background-color: rgb(31, 30, 30); 
+    background-color: rgb(0, 0, 0); 
     cursor: pointer;
     
 }
@@ -21,6 +21,9 @@
     background-color: rgb(255, 255, 255);
     border-radius: 1rem;
     box-shadow: rgba(232, 230, 230, 0.19) 0px 10px 20px, rgba(232, 230, 230, 0.23) 0px 6px 6px;
+    padding: 10px;
+  
+    
 
 }
 
@@ -30,25 +33,24 @@
     background-color: rgb(255, 255, 255);
     border-radius: 1rem;
     box-shadow: rgba(255, 255, 255, 0.19) 0px 10px 20px, rgba(255, 255, 255, 0.23) 0px 6px 6px;
-    margin-top: 5rem;
+    margin-top: 6rem;
 }
 
 .dashboard_main_container_leith {
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    margin-left: 10px;
     
 }
-.documents-container {
+.documents-container1 {
     color : rgb(255, 255, 255);
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 0.6rem;
     font-size: 25px;
     text-decoration: none;
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin-top: 1rem;
 }
 
 
@@ -263,28 +265,26 @@
 
 
   .block-folder {
-    height: 32.5vh;
-    width: 60vh;
-    background-color: #c9c6c6;
-    border-radius: 1.5rem;
+    height: 76vh;
+    width: 73vh;
+    background-color: #ffffff;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
     overflow-y: scroll;
     
-    
-    
-    
-  }
-  .block-note {
-    height: 32.5vh;
-    width: 60vh;
-    background-color: rgb(238, 238, 238) ;
-    border-radius: 1.5rem;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  } 
+  .block-file {
+    width: 73vh; 
+    height: 76vh;
+   background-color: #ffffff;
+   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+   overflow-y: scroll;
  
-
-
  
-  }
+ }
+    
+    
+  
+  
   .btn-files{
     border-radius: 1rem;
     background-color: goldenrod;
@@ -302,29 +302,13 @@
   cursor: pointer;
   
 }
-.block-file {
-   width: 77vh; 
-   height: 66.8vh;
-  background-color: #e6e6e6;
-  border-radius: 1.5rem;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
-  overflow-y: scroll;
 
-
-}
 .color-modal {
   background-color: goldenrod !important;
 }
 
 
 
-.card {
-  width: 450px;
-  height: fit-content;
-  background-color: white;
-  box-shadow: 0px 187px 75px rgba(0, 0, 0, 0.01), 0px 105px 63px rgba(0, 0, 0, 0.05), 0px 47px 47px rgba(0, 0, 0, 0.09), 0px 12px 26px rgba(0, 0, 0, 0.1), 0px 0px 0px rgba(0, 0, 0, 0.1);
-  border-radius: 17px 17px 27px 27px;
-}
 
 .title {
   width: 100%;
@@ -337,6 +321,7 @@
   font-weight: 700;
   font-size: 13px;
   color: #47484b;
+
 }
 
 .title::after {
@@ -353,6 +338,7 @@
   grid-template-columns: 35px;
   gap: 20px;
   padding: 8px;
+  
   
 }
 
@@ -509,8 +495,9 @@
 .text-box .box-container {
   background-color: #ffffff;
   border-radius: 20px ;
-  padding: 8px;
-  height: 85px;
+  padding: 5px;
+  height: 90px;
+  margin-top: 2.rem;
   
 }
 
@@ -521,7 +508,7 @@
   border: 0;
   /* border-radius: 6px; */
   padding: 12px 12px 10px 12px;
-  font-size: 13px;
+  font-size: 17px;
   outline: none;
   caret-color: goldenrod;
 }
@@ -570,3 +557,41 @@
     opacity: 0;
   }
 }
+.input-select {
+  width: 80px;
+}
+/* .addNote {
+  height: 20vh ;
+  width: 7vh;
+  background-color: #000000;
+  border-radius: 2rem;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+}
+
+
+
+.haut-card {
+  background-color : goldenrod;
+  height: 8vh;
+  width: 40vh;
+  border-radius: 0.5rem;
+
+}
+.west-card {
+  width: 40vh;
+  height: 30vh;
+  background-color: #ffffff;
+  padding: 1rem;
+  border: solid 1px #000000;
+}
+
+.finishCard {
+  width: 20vh;
+  height: 5vh;
+  background-color: rgb(191, 119, 119);
+  border-radius: 3rem;
+ display: flex;
+ justify-content: center;
+ 
+} */
