@@ -23,23 +23,20 @@ function Signup() {
   const lawyerCollectionRef = collection(db, "lawyers");
 
   const handleSiginUp = async () => {
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((res) => {
-        addDoc(lawyerCollectionRef, {
-          localId: res.user.reloadUserInfo.localId,
-          email: res.user.reloadUserInfo.email,
-          password: res.user.reloadUserInfo.passwordHash,
-        })
-          .then((res) => {
-            console.log(res);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+   const addUser= createUserWithEmailAndPassword(auth, email, password)
+   if(addUser){
+    const obj={
+      email,
+      password,
+      phoneNumber,
+      gender,
+      ImageUrl:papers,
+      fullName
+    }
+    await axios.post("http://localhost:1128/api/lawyers/add",)
+
+   }
+  
     navigate("/Signin");
   };
 

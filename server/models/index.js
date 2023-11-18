@@ -51,7 +51,10 @@ const connection = new Sequelize('lavocato', 'root', 'root', {
 
   User.hasMany(Appointment)
   Appointment.belongsTo(User)
-  
+
+  Lawyer.hasMany(Appointment)
+  Appointment.belongsTo(Lawyer)
+
   User.hasMany(Rating)
   Rating.belongsTo(User)
 

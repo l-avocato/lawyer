@@ -1,12 +1,14 @@
 const sequalize =require('sequelize')
-const {Appointment}= require('../models/index')
+const {Appointment,User}= require('../models/index')
 
 
 module.exports = {
 
     getAllAppointments: async function (req, res) {
         try {
-            const appointment = await Appointment.findAll()
+            const appointment = await Appointment.findAll({
+                include:User
+            })
             res.status(200).send(appointment)
         } catch (error) {
             res.status(500).send({
@@ -29,8 +31,10 @@ module.exports = {
         }
     },  
     addAppointment: async function (req, res) {
+
         try {
-            const appointment = await Appointment.create(req.body)
+            const findUser = await User.findOne({where:{email:req.body.email}})
+            const appointment = await Appointment.create({...req.body,userId:findUser.id})
             res.status(200).send(appointment)
         } catch (error) {
             res.status(500).send({
@@ -45,11 +49,9 @@ module.exports = {
                     id: req.params.id
                 }
             })
-            res.status(200).send(appointment)
+            res.json(appointment)
         } catch (error) {
-            res.status(500).send({
-                error: error.message
-            })
+           console.log(error);
         }
     },
     updateAppointment: async function (req, res) {
