@@ -105,6 +105,8 @@
   color: white;
   border: none;
   cursor: pointer;
+  background-color: rgb(212,175,55);
+  border: solid 1px grey;
 }
 .btn1:hover {
   transform: scale(1.1);

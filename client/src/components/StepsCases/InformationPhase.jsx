@@ -17,6 +17,7 @@ import "./style.css";
 import "./flickity.css";
 import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
 import CachedRoundedIcon from '@mui/icons-material/CachedRounded';
+import { Nav } from "react-bootstrap";
 const InformationPhase = () => {
   const [path, setPath] = useState("document");
   const [folders, setFolders] = useState([]);
@@ -59,7 +60,6 @@ const InformationPhase = () => {
       );
       setFolders(response.data);
     } catch (error) {
-      console.log(error);
     }
   };
 
@@ -154,20 +154,16 @@ const InformationPhase = () => {
     document.body.removeChild(link);
   };
 
+
+
   const addNotes = async (title, comment, type) => {
-    console.log(
-      {
-        title: title,
-        comment: comment,
-        type: type,
-      },
-      "this is the body"
-    );
+   
     try {
       await axios.post("http://localhost:1128/api/note/addNote", {
         title: title,
         comment: comment,
         type: type,
+        
       });
       setRefrech(!refrech);
     } catch (error) {
@@ -205,16 +201,15 @@ const InformationPhase = () => {
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
-        gap: "1rem",
         width: "100%",
-        overflowX: "hidden",
-        backgroundColor: "grey",
+        
       }}
     >
-      <div style={{ width: "100%" }}>
-        <NavbarDashboard />
-      </div>
-      <div
+
+     
+       <div>
+       <NavbarDashboard/>
+           {/* <div
         style={{
           display: "flex",
           justifyContent: "flex-start",
@@ -222,20 +217,24 @@ const InformationPhase = () => {
           color: "black",
         }}
       >
+
         <p
           style={{ fontSize: "25px", fontWeight: "bold", fontFamily: "serif" }}
         >
           Welcome Lawyer Name{" "}
         </p>
-      </div>
-      <div
+      </div> */}
+<div style={{display:'flex'}}>
+<SidebarDash/>
+
+<div
         style={{
           display: "flex",
           justifyContent: "center",
-          gap: "2rem",
           width: "100%",
-          marginLeft: "8.9rem",
+          gap:'4rem'
         }}
+
       >
         <div className="dashboard_main_container_leith">
           <div
@@ -243,7 +242,7 @@ const InformationPhase = () => {
               display: "flex",
               alignItems: "center",
               justifyContent: "flex-start",
-              gap: "2rem",
+              gap: "5rem",
             }}
           >
             <div className="dashboard_box_leith">
@@ -288,8 +287,9 @@ const InformationPhase = () => {
                       style={{
                         display: "flex",
                         justifyContent: "space-between",
-                        padding: "2rem",
+                        padding: "1rem",
                         overflowY: "scrol",
+                        
                       }}
                     >
                       <p
@@ -299,8 +299,7 @@ const InformationPhase = () => {
                           fontFamily: "revert",
                         }}
                       >
-                        {" "}
-                        Folder Storage{" "}
+                        Folder Storage
                       </p>
                       <input
                         type="search"
@@ -309,8 +308,7 @@ const InformationPhase = () => {
                         style={{
                           height: "4vh",
                           borderRadius: "0.5rem",
-
-                          width: "220px",
+                          width: "120px",
                         }}
                         onChange={(e) => {
                           setNewName(e.target.value);
@@ -320,15 +318,17 @@ const InformationPhase = () => {
                         style={{
                           display: "flex",
                           alignItems: "center",
-                          fontSize: "35px",
+                          fontSize: "30px",
                           color: "goldenrod",
+                          
                         }}
                       />
 
                       <button
                         style={{
                           border: "none",
-                          width: "40px",
+                          width: "45px",
+                          height: "45px",
                           borderRadius: "50%",
                           fontSize: "30px",
                           backgroundColor: "goldenrod",
@@ -446,11 +446,11 @@ const InformationPhase = () => {
                         <button
                           style={{
                             border: "none",
-                            width: "40px",
+                            width: "45px",
+                            height: "45px",
                             borderRadius: "50%",
                             fontSize: "30px",
                             backgroundColor: "goldenrod",
-                            cursor: "pointer",
                           }}
                         >
                           {" "}
@@ -534,7 +534,7 @@ const InformationPhase = () => {
                   style={{
                     border: "none",
                     width: "7rem",
-                    height: "4rem",
+                    height: "2.5rem",
                     borderRadius: "1rem",
                     backgroundColor: "goldenrod",
                   }}
@@ -544,6 +544,7 @@ const InformationPhase = () => {
                       html:
                         `<input id="swal-input1" class="swal2-input" style="width: 350px;" placeholder="Title note"  >` +
                         '<input id="swal-input3" class="swal2-input" style="width: 350px;" placeholder="Add your Note">' +
+                        '<input type="file", id="swal-input4" class="swal2-input" style="width: 350px;" placeholder="Add your Note">' +
                         '<select id="swal-input2" class="swal2-input">' +
                         '<option value="">Select...</option>' +
                         '<option value="urgent">urgent</option>' +
@@ -590,11 +591,11 @@ const InformationPhase = () => {
                           height: "22rem",
                           backgroundColor:
                             notes.type === "urgent"
-                              ? "grey	"
+                              ? "#5F9EA0		"
                               : notes.type === "personnel"
-                              ? "grey"
+                              ? "#8FBC8F	"
                               : notes.type === "notes"
-                              ? "grey	"
+                              ? "#FFD700		"
                               : null,
                           borderRadius: "2rem 0 2rem 0",
                         }}
@@ -697,8 +698,28 @@ const InformationPhase = () => {
           </div>
         </div>
       </div>
+</div>
+
+     
+   
+     
+       </div>
     </div>
   );
 };
 
 export default InformationPhase;
+
+
+
+
+
+
+
+
+
+
+
+
+
+

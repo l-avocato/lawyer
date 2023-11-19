@@ -51,55 +51,56 @@ const SidebarDash = () => {
 
   return (
     <div className="new-sidebar">
-      <div className="top-section">
+      <div className="top-section" style={{display:"flex", justifyContent:"center"}}>
         <img className="new-logo" src={logo} />
       </div>
-      <hr className="new-separator" />
+      <div className="new-separator"></div>
+      <div className="line"></div>
       <div className="center-section">
         <ul className="new-menu-list">
-          <li>
-            <PersonOutlineIcon className="new-icon" />
+          <li className="g-1">
+            <PersonOutlineIcon className="new-icon" style={{fontSize:'30px'}} />
 
             <span className="side-title" onClick={() => navigate("/allClient")}>
               My Clients
             </span>
           </li>
-          <li>
+          <li className="g-1">
+            <BusinessCenterIcon className="new-icon" />
             <span
               className="side-title"
               onClick={() => navigate("/CaseHistory")}
             >
-              <BusinessCenterIcon className="new-icon" />
               My Cases
             </span>
           </li>
-          <li>
+          <li className="g-1">
             <NotificationsNoneIcon className="new-icon" />
             <span className="side-title">Appointments</span>
           </li>
-          <li>
+          <li className="g-1">
             <InsertChartIcon className="new-icon" />
             <span className="side-title" onClick={() => navigate("/stat")}>
               Stats
             </span>
           </li>
-          <li>
+          <li className="g-1">
             <NotificationsNoneIcon className="new-icon" />
             <span className="side-title">Notifications</span>
           </li>
-          <li>
+          <li className="g-1">
             <AssignmentTurnedInIcon className="new-icon" />
             <span className="side-title" onClick={() => navigate("/task")}>
               Tasks
             </span>
           </li>
-          <li onClick={toggleSettings}>
+          <li onClick={toggleSettings} className="g-1">
             <SettingsApplicationsIcon className="new-icon" />
             <span className="side-title">Settings</span>
           </li>
           {isSettingsOpen && (
             <ul className="settings-dropdown">
-              <li>
+              <li className="g-1">
                 <SettingsApplicationsIcon className="new-icon" />
 
                 <Link
@@ -114,7 +115,7 @@ const SidebarDash = () => {
                   Edit Profile
                 </Link>
               </li>
-              <li>
+              <li className="g-1">
                 <SettingsApplicationsIcon className="new-icon" />
 
                 <Link
@@ -131,11 +132,11 @@ const SidebarDash = () => {
               </li>
             </ul>
           )}
-          <li>
+          <li className="g-1">
             <AccountCircleOutlinedIcon className="new-icon" />
             <span className="side-title">Profile</span>
           </li>
-          <li>
+          <li className="g-1">
             <PowerSettingsNewIcon className="new-icon" />
             <span className="side-title" onClick={logOut}>
               Logout
@@ -143,10 +144,7 @@ const SidebarDash = () => {
           </li>
         </ul>
       </div>
-      <div className="new-bottom">
-        <div className="new-color-option"></div>
-        <div className="new-color-option"></div>
-      </div>
+      
     </div>
   );
 };
