@@ -120,13 +120,12 @@ const deleteAppointment = async (id) => {
         <div className="extra">
           <div className="upcoming">
             <div className="scrollable-content">
-              {/* Add your text or other content here */}
               <p className="upcoming-title">Upcoming Appointments</p>
               <div className="cardAndBorder">
               {upcomingAppointments.map((appointment) => (
-                  <div key={appointment.id} className="appointment-item1 border-black p-1" style={{ borderRadius: "3%", justifyContent:"flex-start" }}>
+                  <div key={appointment.id} className="appointment-item1 border-black p-1" style={{ borderRadius: "3%", justifyContent:"center" }}>
                       <div className="appointment1-text">
-                        <img className="appointment-image" src={appointment?.user.ImageUrl} style={{height:50,width:50}}></img>
+                        <img className="appointment-image" src={appointment?.user.ImageUrl}></img>
                         <p className="appointment-username">{appointment?.user.fullName}</p>
                         <p className="appointment-date">Date: {appointment.date.slice(0,10)} Time: {appointment.time.slice(0,5)}</p>
                       </div>
