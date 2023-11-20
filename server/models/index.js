@@ -39,6 +39,7 @@ const connection = new Sequelize('lavocato', 'root', 'root', {
   
   
   
+  
     
   User.belongsToMany(Lawyer,{through:User_Lawyer})
   Lawyer.belongsToMany(User,{through:User_Lawyer})

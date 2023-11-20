@@ -42,11 +42,28 @@ const deleteAppointment = async (id) => {
     }
   };
 
-  const acceptAppointment = async (id) => {
-    console.log(id);
+  const acceptAppointment = async (appointmentId, userId, lawyerId) => {
+    console.log(appointmentId, "this is the appointmenttttt");
+    console.log(userId, "this is the user id");
+    console.log(lawyerId, "this is the lawyer id");
     try {
-      const response= await axios.put(`http://localhost:1128/api/appointment/updateAppointment/${id}`,{accepted:"accepted"})
+      const response = await axios.put(`http://localhost:1128/api/appointment/updateAppointment/${appointmentId}`, {accepted: "accepted"});
       console.log(response.data);
+      
+      const addUserAndLawyerId = async () => {
+        try {
+          const response = await axios.post('http://localhost:1128/api/user_lawyer/addUser_Lawyer', {
+            userId: userId,
+            lawyerId: lawyerId
+          });
+          console.log(response.data);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+  
+      addUserAndLawyerId();
+  
     } catch (error) {
       console.log(error);
     }

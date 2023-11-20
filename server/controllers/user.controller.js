@@ -23,6 +23,16 @@ getAllUsers : async (req,res) => {
       throw error
   }
 },
+ getUsersByLawyerId: async (req,res)=>{
+  try {
+      const Users= await User.findAll({
+         where :{lawyerId: req.params.lawyerId }
+      })
+      res.status(200).send(Users)
+  } catch (error) {
+      throw error
+  }
+},
 
  add: async (req,res)=>{
     try {

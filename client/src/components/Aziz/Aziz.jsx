@@ -156,7 +156,9 @@ const App = ({ appointments, deleteAppointment, setId,acceptAppointment }) => {
         name: e?.userName,
         time: e?.time,
         Reason: e.reason,
-        id: e.id
+        id: e.id,
+        userId: e?.userId, 
+        lawyerId: e?.lawyerId 
       }
     )
   })
