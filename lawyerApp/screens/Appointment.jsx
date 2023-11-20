@@ -1,8 +1,9 @@
-import React, { useState,useMemo } from "react";
+import React, { useState,useMemo,useEffect } from "react";
 import { Calendar } from "react-native-calendars";
+import config from './ipv'
 
 import { View, StyleSheet, Image, TouchableOpacity, ScrollView, Text, SafeAreaView, Button } from "react-native";
-
+import axios from "axios";
 const Appointment = ({navigation ,route}) => {
   const minDate = "2023-01-01";
   const maxDate = "2024-12-31";
@@ -10,20 +11,23 @@ const Appointment = ({navigation ,route}) => {
   const initDate = '2023-11-08';
   const [selected, setSelected] = useState(initDate);
   const [selectedTime, setSelectedTime] = useState(null);
-  const [selectedDate, setSelectedDate] = useState(null);
-  
-  console.log(item,"item appointment");
-  
-  const customStyles = {
-    selected: {
-      backgroundColor: '#D5B278',
-      borderRadius: 10,
-    },
-    highlighted: {
-      backgroundColor: 'red', 
-      borderRadius: 10,
-    },
-  };
+  const [selectedDate, setSelectedDate] =  useState(new Date().toISOString().split('T')[0]);;
+  const [unavailableTimes, setUnavailableTimes] = useState([]);
+  const [bookedTime, setBookedTime] = useState(null);
+
+console.log("this the a time",item.id);
+const customStyles = {
+  selected: {
+    backgroundColor: '#D5B278',
+    borderRadius: 10,
+  },
+  unavailable: {
+    backgroundColor: 'grey',
+  },
+};
+
+
+
 
   const dayPressHandler = date => {
     setSelected(date.dateString);
@@ -32,9 +36,29 @@ const Appointment = ({navigation ,route}) => {
 
   const timePressHandler = time => {
     setSelectedTime(time);
+    setBookedTime(null); 
+
 
     console.log("Selected Time:", time);
   };
+
+  const fetchUnavailableTimes = async () => {
+    try {
+      const response = await axios.get(
+        `http://${config}:1128/api/availability/unavaibleTime/${item.id}/${selected}`
+      );
+      setUnavailableTimes(response.data);
+    } catch (error) {
+      console.error("Error fetching unavailable times:", error);
+    }
+  };
+  useEffect(() => {
+  
+
+    fetchUnavailableTimes();
+  }, [ selected,item.lawyerId]);
+
+
 
   // const markedDates = {
   //   [selectedDate]: { selected: true, selectedColor: customStyles.selected.backgroundColor },
@@ -50,7 +74,7 @@ const Appointment = ({navigation ,route}) => {
   }), [selected]);
 
   const timeSlots = [
-    "10:00 AM", "11:00 AM", "12:00 PM", "01:00 PM", "02:00 PM", "03:00 PM", "04:00 PM", "05:00 PM",
+    "10:00:00", "11:00:00", "12:00:00", "01:00:00", "02:00:00", "03:00:00", "04:00:00", "05:00:00",
   ];
 
   return (
@@ -79,23 +103,69 @@ const Appointment = ({navigation ,route}) => {
         <Text style={styles.title}>Available Time Slots</Text>
       </View>
       <ScrollView horizontal style={{ marginTop: 10 }}>
-        {timeSlots.map((time, index) => (
+      {/* {timeSlots.map((time, index) => (
           <TouchableOpacity
             key={index}
             style={[
               styles.timeSlot,
               selectedTime === time ? { backgroundColor: customStyles.selected.backgroundColor } : {},
+              unavailableTimes.includes(time) ? customStyles.unavailable : {},
             ]}
             onPress={() => timePressHandler(time)}
+            disabled={unavailableTimes.includes(time)}
           >
             <Text style={styles.timeSlotText}>{time}</Text>
           </TouchableOpacity>
-        ))}
+        ))} */}
+        {timeSlots.map((time, index) => (
+  <TouchableOpacity
+    key={index}
+    style={[
+      styles.timeSlot,
+      selectedTime === time ? { backgroundColor: customStyles.selected.backgroundColor } : {},
+      unavailableTimes.includes(time) ? customStyles.unavailable : {},
+      bookedTime === time ?  disabled=true  : {},
+    ]}
+    onPress={() => timePressHandler(time)}
+    disabled={unavailableTimes.includes(time)}
+  >
+    <Text style={styles.timeSlotText}>{time}</Text>
+  </TouchableOpacity>
+))}
       </ScrollView>
-      <TouchableOpacity style={styles.bookButton}
-      onPress={()=>{navigation.navigate("reviewSummary",{
-        item,
-        selected,selectedTime})}}>
+      <TouchableOpacity
+        // style={styles.bookButton}
+        // onPress={() => {
+        //   if (!unavailableTimes.includes(selectedTime.slice(0, 5))) {
+        //     navigation.navigate("reviewSummary", {
+        //       item,
+        //       selected,
+        //       selectedTime,
+        //     });
+        //   } else {
+        //     console.warn("Selected time is unavailable.");
+        //   }
+        // }}
+        // style={
+        //   unavailableTimes.includes(selectedTime)
+        //     ? { backgroundColor: 'red' }
+        //     : styles.bookButton
+        // }
+        onPress={() => {
+          if (!unavailableTimes.includes(selectedTime.slice(0, 5))) {
+            setBookedTime(selectedTime);
+            navigation.navigate("reviewSummary", {
+              item,
+              selected,
+              selectedTime,
+            });
+          } else {
+            console.warn("Selected time is unavailable.");
+          }
+        }}
+        
+        // disabled={unavailableTimes.includes(selectedTime)}
+      >
         <Text style={styles.bookButtonText}>Set Appointment</Text>
       </TouchableOpacity>
     </View>
