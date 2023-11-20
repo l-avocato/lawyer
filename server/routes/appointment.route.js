@@ -1,8 +1,8 @@
 const express = require('express')
 const routerAppointment = express.Router()
-const {getAllAppointments,getAppointmentById,addAppointment,deleteAppointment,updateAppointment,getAppointmentByLawyerId,getAppointmentByUserId,getAppointmentByCaseId,getAppointmentByDate,getAppointmentByTime,getAppointmentByStatus,getAppointmentByReason} = require('../controllers/appointment.controller')
+const {getAllAppointments,getAppointmentById,addAppointment,deleteAppointment,updateAppointment,getAppointmentByLawyerId,getAppointmentByUserId,getAppointmentByCaseId,getAppointmentByDate,getAppointmentByTime,getAppointmentByStatus,getAppointmentByReason,getAppointmentUpcoming} = require('../controllers/appointment.controller')
 
-
+routerAppointment.get('/appointment/upcoming/:id',getAppointmentUpcoming)
 routerAppointment.get('/getAppointments',getAllAppointments)
 routerAppointment.get('/appointment/:id', getAppointmentById)
 routerAppointment.post('/addAppointment', addAppointment)

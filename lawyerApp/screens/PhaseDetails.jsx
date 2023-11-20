@@ -59,6 +59,7 @@ const ProcessNotesTab = () => {
         "https://api.cloudinary.com/v1_1/dgztaxbvi/upload",
         formData
       );
+      console.log("this is response",response.data);
     } catch (error) {
       console.error(error);
     }
@@ -78,11 +79,14 @@ const ProcessNotesTab = () => {
 
   return (
     <ScrollView style={styles.tabContent}>
-      {processNotes.map((note) => (
-        <Card key={note.id} containerStyle={styles.noteCard}>
-          <Card.Title style={styles.noteTitle}>{note.note}</Card.Title>
-        </Card>
-      ))}
+     {processNotes.map((note) => (
+  <Card key={note.id} containerStyle={styles.noteCard}>
+    <Card.Image source={require("../assets/ahmed.png")}
+     style={{ width: 40, height: 40,borderRadius:50}} />
+    <Card.Title style={styles.noteTitle}>{note.note}</Card.Title>
+    <Text>{note.writer}</Text>
+  </Card>
+))}
 
       {/* Floating Add Note Button */}
       <TouchableOpacity style={styles.floatingButton} onPress={openModal}>
@@ -267,7 +271,7 @@ const styles = StyleSheet.create({
   },
   noteCard: {
     backgroundColor: "#D5B278",
-    marginBottom: 20,
+    marginBottom: 10,
     borderRadius: 10,
     elevation: 5,
     padding: 26,
@@ -275,12 +279,15 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 6,
+    height:"35%",
   },
   noteTitle: {
     fontSize: 19,
     color: "white",
     fontWeight: "700",
-    marginBottom: 10,
+    marginBottom: 5,
+    left: 20,
+    top: -25,
   },
   commentsContainer: {
     marginTop: 10,
@@ -359,7 +366,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     elevation: 5,
-    bottom:215,
+    bottom:290,
   },
   modalInput: {
     backgroundColor: "#F0F0F0",

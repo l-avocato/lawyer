@@ -76,7 +76,7 @@ const SidebarDash = () => {
           </li>
           <li className="g-1">
             <NotificationsNoneIcon className="new-icon" />
-            <span className="side-title">Appointments</span>
+            <span className="side-title" onClick={() => navigate("/Appointments")}>Appointments</span>
           </li>
           <li className="g-1">
             <InsertChartIcon className="new-icon" />
