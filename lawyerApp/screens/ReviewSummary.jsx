@@ -27,11 +27,31 @@ const ReviewSummary = ({route}) => {
   
 console.log(selectedTime.split(" ")[0],"item");
 
-  console.log("this is law",selected);
+  console.log(item.id,"item appointment");
   const handleConfirmPayment = () => {
     setIsConfirmed(false);
     setIsModalVisible(true);
   };
+
+   
+  const addAvailebility = async () => {
+    try {
+      const response = await axios.post(
+        `http://192.168.103.27:1128/api/availability/addAvailability`,{
+          lawyerId: item.id,
+          date: selected,
+          time: selectedTime,
+          reason:message
+        }
+      
+      );
+      console.log(response.data);
+    return response.data
+    } catch (error) {
+      console.error( error);
+    }
+  };
+
 
   const closeModal = () => {
     setIsModalVisible(false);
@@ -51,6 +71,7 @@ console.log(selectedTime.split(" ")[0],"item");
       console.error('Error setting appointment:', error);
     }
   };
+
   return (
     <View style={styles.container}>
       <View style={styles.profileSection}>
@@ -112,7 +133,10 @@ console.log(selectedTime.split(" ")[0],"item");
             styles.confirmButton,
             { backgroundColor: isConfirmed ? "black" : "black" },
           ]}
-          onPress={setAppointmentHandler}
+          onPress={()=>{
+            addAvailebility()
+            setAppointmentHandler()
+          }}
         >
           <Text style={styles.confirmButtonText}>
             {isConfirmed ? "Payment Confirmed" : "Confirm Booking"}
@@ -136,7 +160,7 @@ console.log(selectedTime.split(" ")[0],"item");
               You have successfully Booked ! 
             </Text>
             <View style={styles.modalButtons}>
-              <TouchableOpacity style={[styles.modalButton, { backgroundColor: "#D5B278" }]} onPress={closeModal}>
+              <TouchableOpacity style={[styles.modalButtons, { backgroundColor: "#D5B278" }]} onPress={closeModal}>
                 <Text style={styles.modalButtonText}>Back home</Text>
               </TouchableOpacity>
             </View>
