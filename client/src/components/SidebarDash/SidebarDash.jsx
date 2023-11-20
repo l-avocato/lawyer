@@ -19,7 +19,8 @@ import logo from "../../assets/images/logo.png";
 import { useNavigate } from "react-router-dom";
 import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import CaseHistory from "../CaseHistory/CaseHistory";
-
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import Calender from "../Calander/Calender"
 const SidebarDash = () => {
   const navigate = useNavigate();
 
@@ -52,6 +53,14 @@ const SidebarDash = () => {
               onClick={() => navigate("/CaseHistory")}>
               <BusinessCenterIcon className="new-icon" />
               My Cases
+            </span>
+          </li>
+          <li>
+            <span
+              className="side-title"
+              onClick={() => navigate("/Calender")}>
+              <CalendarMonthIcon className="new-icon" />
+              My Calender
             </span>
           </li>
           <li>
