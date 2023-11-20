@@ -3,6 +3,8 @@ import NavbarDashboard from "../NavbarDashboard/NavbarDashboard";
 import Aziz from "../Aziz/Aziz";
 import Appointment from "./Appointments.css";
 import Example from "../Example/Example";
+import { FIREBASE_AUTH , db } from "../../firebaseconfig";
+
 import axios from 'axios'
 
 const Appointments = () => {
@@ -10,6 +12,22 @@ const Appointments = () => {
   const [id,setId]=useState("")
   const [refrech, setRefrech] = useState(false);
   const [acceptedAppointments, setAcceptedAppointments] = useState([]);
+  const [lawyer, setLawyer] = useState({});
+  const [upcomingAppointments,setUpcomingAppointments]=useState([])
+
+
+
+
+const getUpcomingAppointments= async () => {
+  try {
+    const response = await axios.get(`http://localhost:1128/api/appointment/appointment/upcoming/${lawyer.id}`)
+    setUpcomingAppointments(response.data)
+  }catch (error) {
+    console.log(error);
+  }
+
+
+}
 
 
 const deleteAppointment = async (id) => {
@@ -24,23 +42,72 @@ const deleteAppointment = async (id) => {
     }
   };
 
-  const acceptAppointment = (appointment) => {
-    setAcceptedAppointments((prevAppointments) => [...prevAppointments, appointment]);
+  const acceptAppointment = async (id) => {
+    console.log(id);
+    try {
+      const response= await axios.put(`http://localhost:1128/api/appointment/updateAppointment/${id}`,{accepted:"accepted"})
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getAcceptedAppointments= async () => {
+    try {
+      const response = await axios.get(`http://localhost:1128/api/appointment/appointment/lawyer/${lawyer.id}`)
+      setAcceptedAppointments(response.data)
+    }catch (error) {
+      console.log(error);
+    }
+  }
+  const getLawyer = async () => {
+    try {
+      const loggedInLawyer = FIREBASE_AUTH.currentUser.email;
+      console.log(loggedInLawyer);
+      const res = await axios.get(`http://localhost:1128/api/lawyer/getLawyerByEmail/${loggedInLawyer}`);
+      console.log("this is lawyer",res.data);
+      setLawyer(res.data);
+    } catch(err) {
+      console.log(err);
+    }
+  };
+  const getUserById = async (userId) => {
+    try {
+      const response = await axios.get(`http://localhost:1128/api/user/getUserId/${userId}`);
+      console.log("this is user",response.data.fullName);
+      return response.data.fullName;
+    } catch (error) {
+      console.error("Error fetching user:", error);
+    }
   };
   
   const getAppointments = async () => {
+    if (!lawyer.id) {
+      return;
+    }
+  
     try {
-
-      const response = await axios.get('http://localhost:1128/api/appointment/getAppointments');
-      console.log("this is the response", response.data);
-      setAppointments(response.data);
+      const response = await axios.get(`http://localhost:1128/api/appointment/appointment/lawyer/${lawyer.id}`);
+      const appointmentsWithUserNames = await Promise.all(response.data.map(async (appointment) => {
+        const userName = await getUserById(appointment.userId);
+        return { ...appointment, userName };
+      }));
+      console.log("this is the lawyer appointments", appointmentsWithUserNames);
+      setAppointments(appointmentsWithUserNames);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
-  useEffect(()=>{
+  
+  useEffect(() => {
+    getLawyer();
+  }, []);
+  
+  useEffect(() => {
     getAppointments();
-  },[refrech])
+    getUpcomingAppointments()
+    getAcceptedAppointments()
+  }, [lawyer]);
   return (
     <div>
       <div>
@@ -48,36 +115,22 @@ const deleteAppointment = async (id) => {
       </div>
       <div className="apointment">
         <div className="table">
-          <Aziz appointments={appointments} deleteAppointment={deleteAppointment} setId={setId}   acceptAppointment={acceptAppointment} />
+          <Aziz appointments={appointments} deleteAppointment={deleteAppointment} setId={setId}    acceptAppointment={acceptAppointment} />
         </div>
         <div className="extra">
           <div className="upcoming">
             <div className="scrollable-content">
-              {/* Add your text or other content here */}
               <p className="upcoming-title">Upcoming Appointments</p>
               <div className="cardAndBorder">
-              {acceptedAppointments.map((appointment) => (
-                  <div key={appointment.id} className="appointment-item1 border-black p-1" style={{ borderRadius: "3%" }}>
-                    <div className="imageWithTitle flex g-10">
-                      <img
-                        src={require("../../assets/images/user11.avif")}
-                        alt="Appointment"
-                        style={{ marginTop: "0.1rem" }}
-                      />
+              {upcomingAppointments.map((appointment) => (
+                  <div key={appointment.id} className="appointment-item1 border-black p-1" style={{ borderRadius: "3%", justifyContent:"center" }}>
                       <div className="appointment1-text">
-                        <p>{appointment.user?.fullName}</p>
-                        <p>{appointment.date} {appointment.time}</p>
+                        <img className="appointment-image" src={appointment?.user.ImageUrl}></img>
+                        <p className="appointment-username">{appointment?.user.fullName}</p>
+                        <p className="appointment-date">Date: {appointment.date.slice(0,10)} Time: {appointment.time.slice(0,5)}</p>
                       </div>
                     </div>
-                  </div>
                 ))}
-                <div
-                  className="borderBlack"
-                  style={{
-                    width: "100%",
-                    background: "gray",
-                    height: "0.1px",
-                  }}></div>
               </div>
             </div>
           </div>

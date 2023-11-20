@@ -18,13 +18,19 @@
   gap: 1rem;
   margin-right: 0.56rem;
 }
+.cardAndBorder {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
 .upcoming {
-  width: 50vh;
-  height: 40vh;
-  background-color: rgb(243, 241, 238);
-  border-radius: 2rem;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  overflow-y: auto;
+  background-color: #f3f1ee;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
 }
 .statistics {
   width: 50vh;
@@ -34,17 +40,65 @@
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 .scrollable-content {
+  overflow-y: auto;
+  height: 400px;
   padding: 10px;
 }
 .upcoming-title {
-  font-size: 1.3rem;
-  font-family: cursive;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
 }
+
 .appointment-item1 {
   display: flex;
-  gap: 1rem;
-  justify-content: space-between;
   align-items: center;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+.appointment-image {
+  margin-right: 20px;
+  border-radius: 50%;
+  margin-left: 20px;
+  width: 3rem;
+  height: 3rem;
+}
+.appointment-item1:hover {
+  transform: scale(1.02);
+  transition: 0.5s;
+}
+.imageWithTitle {
+  display: flex;
+  align-items: center;
+}
+
+.appointment1-text  {
+  margin: 0;
+  font-size: 18px;
+  color: #333;
+  font-weight: 600;
+  /* margin-right: 50px; */
+}
+.appointment-username {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 0px;
+}
+
+.appointment-date {
+  font-size: 16px;
+  color: #666;
+}
+.borderBlack {
+  border-top: 1px solid #ddd;
+  margin-top: 15px;
+}
+@media (max-width: 768px) {
+  .upcoming {
+    max-width: 100%;
+  }
 }
 .appointment-item2 {
   display: flex;
@@ -57,8 +111,8 @@
 .appointment-item1 img,
 .appointment-item2 img,
 .appointment-item3 img {
-  width: 4rem; /* Adjust the width as needed */
-  height: 4rem;
+  width: 3rem; /* Adjust the width as needed */
+  height: 3rem;
   border-radius: 50%; /* Add border radius if desired */
 }
 
@@ -73,14 +127,14 @@
   gap: 2rem;
 }
 
-.p-1 {
+/* .p-1 {
   padding: 5px;
-}
+} */
 
 .border-r-50 {
   border-radius: 50%;
 }
 
-.align-center {
+/* .align-center {
   align-items: center;
-}
+} */

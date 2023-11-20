@@ -130,6 +130,8 @@ const connection = new Sequelize('lavocato', 'root', 'root', {
   Case.hasMany(Media)
   Media.belongsTo(Case)
 
+  Case.hasMany(Note)
+  Note.belongsTo(Case)
 
 
   Phase.hasMany(Media)
