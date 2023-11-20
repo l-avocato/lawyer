@@ -7,6 +7,7 @@ import axios from 'axios'
 const App = ({ appointments, deleteAppointment, setId,acceptAppointment }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  console.log("this",appointments);
   
 
 
@@ -63,7 +64,7 @@ const App = ({ appointments, deleteAppointment, setId,acceptAppointment }) => {
               border: "none",
             }}
             onClick={() => {
-              acceptAppointment(record);
+              acceptAppointment(record.id);
             }}
           >
             Accept
@@ -152,7 +153,7 @@ const App = ({ appointments, deleteAppointment, setId,acceptAppointment }) => {
     return (
       {
         key: i,
-        name: e.user?.fullName,
+        name: e?.userName,
         time: e?.time,
         Reason: e.reason,
         id: e.id

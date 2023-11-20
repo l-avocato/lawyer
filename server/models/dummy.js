@@ -460,9 +460,7 @@ const dummyLawyersData = [
     {
       amount: 1000,
       rest: 500,
-      paid: 500,
-      userId:1,
-      lawyerId:1
+      paid: 500
     },
     {
       amount: 1500,
@@ -690,37 +688,50 @@ const notesDummy=[
     seen: true,
     title: "Meeting Notes",
     type: "notes",
+    attachedFile: "https://res.cloudinary.com/dgztaxbvi/image/upload/v1700154211/bey_balkis_dvaoj4.pdf",
 },
 {
     comment: "Reminder to submit the report by Friday",
     seen: false,
     title: "Report Submission",
     type: "urgent",
+    attachedFile: null,
 },
 {
     comment: "Call John regarding the project",
     seen: true,
     title: "Project Discussion",
     type: "personnel",
+    attachedFile: "https://res.cloudinary.com/dgztaxbvi/image/upload/v1700141612/Gentle_Reminder_-_Your_Emirates_Group_Application_1015909848_for_Cabin_Crew_Oppo_x6gluc.pdf",
 },
 {
     comment: "Shopping list for the week",
     seen: false,
     title: "Grocery Shopping",
     type: "notes",
+    attachedFile: null,
 },
 {
     comment: "Emergency contact numbers",
     seen: true,
     title: "Emergency Contacts",
     type: "urgent",
+    attachedFile: "https://res.cloudinary.com/dgztaxbvi/image/upload/v1700073668/IMG_1404_v9t8k9.heic",
 },
 ]
 
 
 
-  module.exports = {dummyFolders,filesDummyData,dummyLawyerTaskListData,dummyComplaintReportData,dummyLegalReceiptData,dummyRatingData,dummyPaymentData,dummyPhaseData,dummyNotificationData,dummyMediaData,dummyConversationData,dummyChatsData,dummyLawyersData,dummyUserData,dummyTaskListData,dummyAdminData,dummyAppointmentData,dummyAvailabilityData,dummyCasesData,dummyCategoryData};
+  module.exports = {notesDummy,dummyFolders,filesDummyData,dummyLawyerTaskListData,dummyComplaintReportData,dummyLegalReceiptData,dummyRatingData,dummyPaymentData,dummyPhaseData,dummyNotificationData,dummyMediaData,dummyConversationData,dummyChatsData,dummyLawyersData,dummyUserData,dummyTaskListData,dummyAdminData,dummyAppointmentData,dummyAvailabilityData,dummyCasesData,dummyCategoryData};
   
+  Note.bulkCreate(notesDummy)
+  .then(() => {
+    console.log('Notes data created successfully.');
+  })
+  .catch((error) => {
+    console.error('Error creating dummy data:', error);
+  });
+
 
   Files.bulkCreate(filesDummyData)
   .then(() => {
