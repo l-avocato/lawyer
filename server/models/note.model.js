@@ -18,6 +18,11 @@ module.exports=(connection,DataTypes)=>{
               defaultValue: null,
               allowNull: true
             },
+            attachedFileName : {
+              type: DataTypes.STRING,
+              defaultValue: null,
+              allowNull: true
+            }
     } )
     return note
     }

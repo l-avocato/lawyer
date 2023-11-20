@@ -34,6 +34,7 @@ const InformationPhase = () => {
   const [title, setTitle] = useState("");
   const [comment, setComment] = useState("");
   const [type, setType] = useState("");
+  const [fileNote, setFileNote] = useState(null);
 
   const getFile = async (e) => {
     const formData = new FormData();
@@ -145,6 +146,9 @@ const InformationPhase = () => {
     }
   };
 
+
+
+
   const onButtonClick = (pdfLink) => {
     const pdfUrl = pdfLink;
     const link = document.createElement("a");
@@ -157,13 +161,23 @@ const InformationPhase = () => {
 
 
 
-  const addNotes = async () => {
-  
+  const addNotes = async (title, comment, type,file) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "xhqp21a0");
     try {
+
+      const data = await axios.post(
+        "https://api.cloudinary.com/v1_1/dgztaxbvi/upload",
+        formData
+      );
+
       await axios.post("http://localhost:1128/api/note/addNote", {
-        title:title,
-        comment:comment,
-        type:type
+        title: title,
+        comment: comment,
+        type: type,
+        attachedFile : data.data.secure_url ,
+        attachedFileName : data.data.original_filename + ".pdf"
       });
       setRefrech(!refrech);
     } catch (error) {
@@ -171,29 +185,6 @@ const InformationPhase = () => {
     }
   };
  
-  // const addFile = async (e) => {
-  //   const formData = new FormData();
-  //   formData.append("file", e.target.files[0]);
-  //   formData.append("upload_preset", "xhqp21a0");
-
-  //   try {
-  //     const data = await axios.post(
-  //       "https://api.cloudinary.com/v1_1/dgztaxbvi/upload",
-  //       formData
-  //     );
-  //     console.log(data.data);
-
-  //     await axios.post("http://localhost:1128/api/file/add", {
-  //       name: data.data.original_filename + ".pdf",
-  //       folderId: folderId,
-  //       link: data.data.secure_url,
-  //     });
-  //     setRefrech(!refrech);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
 
    const handleDelete = async (id) =>{
    try {
@@ -219,7 +210,6 @@ const InformationPhase = () => {
    }
 
   const progress = 93;
-  // console.log('this is notes', notes );
 
   return (
     <div
@@ -409,6 +399,7 @@ const InformationPhase = () => {
                                   alignText: "center",
                                   height: "3rem",
                                 }}
+                                className="fixed"
                                 key={i}
                               >
                                 <FolderIcon
@@ -545,7 +536,7 @@ const InformationPhase = () => {
               </div>
             </div>
           ) : (
-            ///////////////note /////////////////////
+            ////////////////// note ///////////////////////
             <div className="dashboard_container_leith">
               <div
                 style={{
@@ -570,36 +561,40 @@ const InformationPhase = () => {
                       html:
                         `<input id="swal-input1" class="swal2-input" style="width: 350px;" placeholder="Title note"  >` +
                         '<input id="swal-input3" class="swal2-input" style="width: 350px;" placeholder="Add your Note">' +
+                        '<input type="file" id="swal-input4" class="swal2-input" style="width: 350px;" placeholder="Add your File">'+
                         '<select id="swal-input2" class="swal2-input">' +
                         '<option value="">Select...</option>' +
-                        '<option value="urgent">Urgent</option>' +
+                        '<option value="urgent">urgent</option>' +
                         '<option value="personnel">Personnel</option>' +
                         '<option value="notes">Notes</option>' +
-                        "</select>",
+                        '</select>',
                       focusConfirm: false,
                       preConfirm: () => {
                         setTitle(document.getElementById("swal-input1").value);
-                        setComment(
-                          document.getElementById("swal-input3").value
-                        );
+                        setComment(document.getElementById("swal-input3").value);
                         setType(document.getElementById("swal-input2").value);
-
+                        setFileNote(document.getElementById("swal-input4").value)                  
                         return [
                           addNotes(
                             document.getElementById("swal-input1").value,
                             document.getElementById("swal-input3").value,
-                            document.getElementById("swal-input2").value
+                            document.getElementById("swal-input2").value,
+                            document.getElementById("swal-input4").files[0]
                           ),
                         ];
                       },
                       customClass: { confirmButton: "color-modal" },
-                    }); 
+                    });
                   }}
+                  
                 >
                   Add note
                 </button>
               </div>
-              <Flickity>
+              <div style={{marginTop:"6.1rem"}}>
+              <Flickity 
+               options={{initialIndex: 1}}
+              >
 
                 {
                  notes.map((notes, i) => {
@@ -610,6 +605,7 @@ const InformationPhase = () => {
                         display: "flex",
                         gap: "3rem",
                         marginRight: "2rem",
+                        alignItems:"center"
                       }}
                     >
                       <div
@@ -631,30 +627,31 @@ const InformationPhase = () => {
                         <div className="card-body">
                           <div style={{display:'flex', justifyContent:'space-between'}}>
                         
-                          <CachedRoundedIcon style={{color:'white'}}  onClick= { async()=>{
+                          <CachedRoundedIcon style={{color:'white'}} 
+                          onClick={async () => {
                             await Swal.fire({
                               title: "Update Note",
                               html: `
-                                <input id="swal-input1" class="swal2-input" placeHolder='update title'>
-                                <input id="swal-input2" class="swal2-input" placeHolder='update the note'>
+                                <input id="swal-input1" class="swal2-input" placeholder='update title'>
+                                <input id="swal-input2" class="swal2-input" placeholder='update the note'>
                               `,
                               focusConfirm: false,
                               preConfirm: () => {
-                                setTitle(document.getElementById("swal-input1").value);
-                                setComment(
-                                  document.getElementById("swal-input2").value
-                                );
-                                return [
-                                  updateNote(notes.id)
-                               
-                                ];
-                                
+                                const titleValue = document.getElementById("swal-input1").value;
+                                const commentValue = document.getElementById("swal-input2").value; 
+                                const typeValue = document.getElementById("swal-input3").value;
+                          
+                                setTitle(titleValue);
+                                setComment(commentValue);
+                                setType(typeValue);
+                              
+                                return addNotes(titleValue, commentValue, typeValue);
                               },
                               customClass: { confirmButton: "color-modal" },
-
                             });
-                         
-                          }}/> 
+                          }}
+                          
+                          /> 
                           <DeleteOutlineRoundedIcon style={{color:'white'}} onClick={()=>{handleDelete(notes.id)}} />
 
                           </div>
@@ -662,16 +659,48 @@ const InformationPhase = () => {
                           <h5 className="card-title">{notes.title}</h5>
                           <p className="card-text">{notes.comment}</p>
                         </div>
-                        <div>
-                          <p>{notes.createdAt.slice(0,10)}</p>
+                       {notes.attachedFile && <div style={{ height: "auto" }}>
+                            <div>
+                              <div
+                                style={{
+                                  display: "flex",
+                                  flexDirection: "row",
+                                  alignItems: "center",
+                                  alignText: "center",
+                                  height: "3rem",
+                                }}
+                              >
+                                <InsertDriveFileIcon
+                                  style={{
+                                    color: "goldenrod",
+                                    height: "100%",
+                                    width: "20%",
+                                    cursor: "pointer",
+                                  }}
+                                  onClick={() => {
+                                    onButtonClick(notes.attachedFile);
+                                  }}
+                                />
+                                <p style={{ height: "50%", margin: 0 }}>
+                                  {notes.attachedFileName}{" "}
+                                </p>
+                                {/* <DeleteIcon /> */}
+                              </div>
+                           
+                            </div>
+                            <br />
+                          </div>}
+                        <div style={{}}>
+                        
                         </div>
+
                         <div
                           style={{
                             borderTop: "1px solid #ccc",
                             padding: "1rem",
                             // marginTop: "1rem",
                             display: "flex",
-                            justifyContent: "center",
+                            justifyContent: "space-between",
                           }}
                         >
                           <p
@@ -684,12 +713,14 @@ const InformationPhase = () => {
                           >
                             {notes.type}
                           </p>
+                          <p>{notes.createdAt.slice(0,10)}</p>
                         </div>
                       </div>
                     </div>
                   );
                 })}
               </Flickity>
+              </div>
             </div>
 
             ///////////////// / //////////////////////////////////////////////

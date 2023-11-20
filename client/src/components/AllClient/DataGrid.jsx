@@ -92,7 +92,10 @@ const App = ({ user, deleteUser }) => {
             style={{
               backgroundColor: "grey",
               color: "white",
-              padding: "0.4rem 0.8rem",
+              height: "32px",
+              width:'64px',
+              border: "none",
+              borderRadius: "5px"
             }}
             onClick={() => {
               navigate("/clientDetails", { state: { user: record } });

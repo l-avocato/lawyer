@@ -6,6 +6,7 @@ import image from "../../assets/images/dev.png";
 import  Avatar  from "./avatar.jpg";
 import banner from "./lawyer77.avif"
 import { useLocation } from "react-router-dom";
+import NavbarDashboard from "../NavbarDashboard/NavbarDashboard";
 
 
 const ClientDetails = () => {
@@ -21,6 +22,7 @@ const date = new Date(record.user.birthDate)
 
   return (
     <div className="profileDetails">
+      <NavbarDashboard/>
       <SidebarDash />
       <div className="client-details-container" >
       <div className="profile-header-main-container">
