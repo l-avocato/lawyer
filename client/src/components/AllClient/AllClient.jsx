@@ -36,10 +36,10 @@ const AllClient = () => {
   }, [refrech]);
 
   return (
-     <div style={{display:'flex', flexDirection:'column'}}>
-      <NavbarDashboard />
-      <div style={{display:'flex'}}>
+     <div style={{display:'flex', }}>
       <SidebarDash/>
+      <div style={{display:'flex',flexDirection:'column',width:'100%'}}>
+      <NavbarDashboard />
 
       <div className="allPage">
         <div className="firstDiv">

@@ -29,9 +29,12 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import SidebarDash from '../SidebarDash/SidebarDash';
+import { getAuth } from 'firebase/auth';
+import axios from 'axios';
 
 const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+
 
 
 
@@ -111,9 +114,11 @@ const NavbarDashboard = () => {
   //   };
   // }, []); 
 
-
+  const auth = getAuth();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [user,setUser] = React.useState({})
+  const [currentUser,setCurrentUser] = React.useState({});
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -130,7 +135,7 @@ const NavbarDashboard = () => {
     setAnchorElUser(null);
   };
 
-
+ 
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -230,10 +235,21 @@ const NavbarDashboard = () => {
   );
 
 
+const handleGetUser = async (user) =>{
+  console.log(user.email);
+    setUser(user);
+  await axios.get(`http://localhost:1128/api/lawyer/getLawyerByEmail/${user.email}`)
+  .then((res)=>{
+    setCurrentUser(res.data);
+  })
+  .catch((err)=>{
+    console.log(err)
+  })
+}
 
-
-
-
+React.useEffect(()=>{
+  handleGetUser(auth.currentUser)
+},[])
 
 
   return (
@@ -304,7 +320,7 @@ const NavbarDashboard = () => {
     // </div>
 
   
-      <div>
+      <div style={{width:'100%',marginLeft:'0%'}}>
       <Box sx={{ flexGrow: 1   }}>
         
 
@@ -340,7 +356,7 @@ const NavbarDashboard = () => {
                 </Badge>
               </IconButton>
               <span style={{width:"8rem" , backgroundColor:"white",color:"black",alignItems:"center",borderRadius:"5%",height:"5vh",display:"flex",justifyContent:"center",alignSelf:"center"}}>
-           Hi,Maitre Ayadi
+           Hi,Maitre {currentUser.fullName}
           </span>
               {/* <IconButton  sx={{ p: 0 }} onClick={handleOpenUserMenu}>
                   <Avatar alt="Remy Sharp" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIdnbpLPcyWkaN4kk6F6rvvgHxBJkDnxjQ9UnabCIPmA&s" />
@@ -348,7 +364,7 @@ const NavbarDashboard = () => {
                  <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIdnbpLPcyWkaN4kk6F6rvvgHxBJkDnxjQ9UnabCIPmA&s" />
+                  <Avatar alt="Remy Sharp" src={currentUser.ImageUrl} />
                 </IconButton>
               </Tooltip>
               <Menu

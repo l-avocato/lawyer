@@ -68,7 +68,7 @@ function Navbar() {
         const formData = {
           email: email,
           password: password,
-          imageUrl: papers,
+          ImageUrl: papers,
           fullName: fullName,
           gender: gender,
           phoneNumber: phoneNumber,

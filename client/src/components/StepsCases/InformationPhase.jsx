@@ -215,16 +215,13 @@ const InformationPhase = () => {
     <div
       style={{
         display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        width: "100%",
+       width:'100%'
         
       }}
     >
 
      
-       <div>
-       <NavbarDashboard/>
+       <div style={{display:'flex',width:'100%'}} >
            {/* <div
         style={{
           display: "flex",
@@ -235,13 +232,14 @@ const InformationPhase = () => {
       >
 
         <p
-          style={{ fontSize: "25px", fontWeight: "bold", fontFamily: "serif" }}
+        style={{ fontSize: "25px", fontWeight: "bold", fontFamily: "serif" }}
         >
-          Welcome Lawyer Name{" "}
+        Welcome Lawyer Name{" "}
         </p>
       </div> */}
-<div style={{display:'flex'}}>
 <SidebarDash/>
+<div style={{display:'flex',flexDirection:'column',width:'100%'}}>
+      <NavbarDashboard/>
 
 <div
         style={{
@@ -559,7 +557,6 @@ const InformationPhase = () => {
                     const { value: result } = await Swal.fire({
                       title: "Enter your Note",
                       html:
-                        `<input id="swal-input1" class="swal2-input" style="width: 350px;" placeholder="Title note"  >` +
                         '<input id="swal-input3" class="swal2-input" style="width: 350px;" placeholder="Add your Note">' +
                         '<input type="file" id="swal-input4" class="swal2-input" style="width: 350px;" placeholder="Add your File">'+
                         '<select id="swal-input2" class="swal2-input">' +
@@ -568,9 +565,11 @@ const InformationPhase = () => {
                         '<option value="personnel">Personnel</option>' +
                         '<option value="notes">Notes</option>' +
                         '</select>',
+                        cancelButtonText: 'Cancel',
+                        showCancelButton: true, 
+
                       focusConfirm: false,
                       preConfirm: () => {
-                        setTitle(document.getElementById("swal-input1").value);
                         setComment(document.getElementById("swal-input3").value);
                         setType(document.getElementById("swal-input2").value);
                         setFileNote(document.getElementById("swal-input4").value)                  
@@ -584,6 +583,7 @@ const InformationPhase = () => {
                         ];
                       },
                       customClass: { confirmButton: "color-modal" },
+                      
                     });
                   }}
                   
@@ -591,14 +591,16 @@ const InformationPhase = () => {
                   Add note
                 </button>
               </div>
-              <div style={{marginTop:"6.1rem"}}>
+              <div >
               <Flickity 
                options={{initialIndex: 1}}
               >
 
                 {
                  notes.map((notes, i) => {
-
+                  console.log(
+                    notes
+                  )
                   return (
                     <div
                       style={{
@@ -656,7 +658,7 @@ const InformationPhase = () => {
 
                           </div>
                          
-                          <h5 className="card-title">{notes.title}</h5>
+                          <h5 className="card-title">Name of lawyers </h5>
                           <p className="card-text">{notes.comment}</p>
                         </div>
                        {notes.attachedFile && <div style={{ height: "auto" }}>
@@ -690,7 +692,7 @@ const InformationPhase = () => {
                             </div>
                             <br />
                           </div>}
-                        <div style={{}}>
+                        <div >
                         
                         </div>
 

@@ -11,7 +11,6 @@ import { useNavigate } from "react-router-dom";
 
 const App = ({ user, deleteUser }) => {
   const navigate = useNavigate();
-  console.log(user);
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [api, contextHolder] = notification.useNotification();
