@@ -16,6 +16,7 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import AddIcon from '@mui/icons-material/Add';
 import { useNavigate } from "react-router-dom";
+import SidebarDash from "../SidebarDash/SidebarDash.jsx";
 
 
 const rfStyle = {
@@ -219,6 +220,7 @@ function Flow() {
     <div>
       
       <NavbarDashboard />
+      <SidebarDash/>
 
       <div
         style={{

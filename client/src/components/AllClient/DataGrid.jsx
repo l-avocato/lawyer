@@ -161,12 +161,12 @@ const App = ({ user, deleteUser }) => {
         {contextHolder}
         <div
           style={{
-            marginBottom: 16,
+            // marginBottom: 16,
           }}
         >
           <span
             style={{
-              marginLeft: 8,
+              // marginLeft: 8,
             }}
           >
             {hasSelected ? `Selected ${selectedRowKeys.length} items` : ""}

@@ -84,6 +84,7 @@ const InformationPhase = () => {
       console.log(error);
     }
   };
+
   const flickityRef = useRef(null);
 
   const fetchNote = async () => {
@@ -156,20 +157,43 @@ const InformationPhase = () => {
 
 
 
-  const addNotes = async (title, comment, type) => {
-   
+  const addNotes = async () => {
+  
     try {
       await axios.post("http://localhost:1128/api/note/addNote", {
-        title: title,
-        comment: comment,
-        type: type,
-        
+        title:title,
+        comment:comment,
+        type:type
       });
       setRefrech(!refrech);
     } catch (error) {
       console.log(error);
     }
   };
+ 
+  // const addFile = async (e) => {
+  //   const formData = new FormData();
+  //   formData.append("file", e.target.files[0]);
+  //   formData.append("upload_preset", "xhqp21a0");
+
+  //   try {
+  //     const data = await axios.post(
+  //       "https://api.cloudinary.com/v1_1/dgztaxbvi/upload",
+  //       formData
+  //     );
+  //     console.log(data.data);
+
+  //     await axios.post("http://localhost:1128/api/file/add", {
+  //       name: data.data.original_filename + ".pdf",
+  //       folderId: folderId,
+  //       link: data.data.secure_url,
+  //     });
+  //     setRefrech(!refrech);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
 
    const handleDelete = async (id) =>{
    try {
@@ -195,6 +219,8 @@ const InformationPhase = () => {
    }
 
   const progress = 93;
+  // console.log('this is notes', notes );
+
   return (
     <div
       style={{
@@ -544,10 +570,9 @@ const InformationPhase = () => {
                       html:
                         `<input id="swal-input1" class="swal2-input" style="width: 350px;" placeholder="Title note"  >` +
                         '<input id="swal-input3" class="swal2-input" style="width: 350px;" placeholder="Add your Note">' +
-                        '<input type="file", id="swal-input4" class="swal2-input" style="width: 350px;" placeholder="Add your Note">' +
                         '<select id="swal-input2" class="swal2-input">' +
                         '<option value="">Select...</option>' +
-                        '<option value="urgent">urgent</option>' +
+                        '<option value="urgent">Urgent</option>' +
                         '<option value="personnel">Personnel</option>' +
                         '<option value="notes">Notes</option>' +
                         "</select>",
@@ -568,14 +593,17 @@ const InformationPhase = () => {
                         ];
                       },
                       customClass: { confirmButton: "color-modal" },
-                    });
+                    }); 
                   }}
                 >
                   Add note
                 </button>
               </div>
               <Flickity>
-                {notes.map((notes, i) => {
+
+                {
+                 notes.map((notes, i) => {
+
                   return (
                     <div
                       style={{
@@ -627,7 +655,7 @@ const InformationPhase = () => {
                             });
                          
                           }}/> 
-                          <DeleteOutlineRoundedIcon style={{color:'white'}} onClick={()=>{console.log("this is id", notes.id); handleDelete(notes.id)}} />
+                          <DeleteOutlineRoundedIcon style={{color:'white'}} onClick={()=>{handleDelete(notes.id)}} />
 
                           </div>
                          
