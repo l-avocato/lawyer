@@ -18,13 +18,20 @@
   gap: 1rem;
   margin-right: 0.56rem;
 }
+.cardAndBorder {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+  max-width: 100%;
+}
 .upcoming {
-  width: 50vh;
-  height: 40vh;
-  background-color: rgb(243, 241, 238);
-  border-radius: 2rem;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  overflow-y: auto;
+  background-color: #f3f1ee;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
 }
 .statistics {
   width: 50vh;
@@ -37,14 +44,48 @@
   padding: 10px;
 }
 .upcoming-title {
-  font-size: 1.3rem;
-  font-family: cursive;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
 }
 .appointment-item1 {
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 15px;
+  padding: 10px;
+  border-radius: 20px;
+  transition: transform 0.3s ease-in-out;
+}
+.appointment-item1:hover {
+  transform: scale(1.02);
+}
+.imageWithTitle {
   display: flex;
-  gap: 1rem;
-  justify-content: space-between;
   align-items: center;
+}
+
+.appointment1-text  {
+  margin: 0;
+  font-size: 18px;
+  color: #333;
+  font-weight: 600;
+  /* margin-right: 50px; */
+}
+.appointment-username{
+  font-weight: 700;
+}
+.appointment-date{
+  font-weight: 500;
+}
+.borderBlack {
+  border-top: 1px solid #ddd;
+  margin-top: 15px;
+}
+@media (max-width: 768px) {
+  .upcoming {
+    max-width: 100%;
+  }
 }
 .appointment-item2 {
   display: flex;
@@ -73,14 +114,14 @@
   gap: 2rem;
 }
 
-.p-1 {
+/* .p-1 {
   padding: 5px;
-}
+} */
 
 .border-r-50 {
   border-radius: 50%;
 }
 
-.align-center {
+/* .align-center {
   align-items: center;
-}
+} */
