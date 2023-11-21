@@ -4,7 +4,9 @@ const { Note } = require("../models/index");
 module.exports = {
   getAllNote: async (req, res) => {
     try {
-      const allNotes = await Note.findAll({});
+      const allNotes = await Note.findAll({
+        order:[["createdAt","DESC"]]
+      });
       res.status(200).send(allNotes);
     } catch (error) {
       throw error;

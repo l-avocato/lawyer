@@ -7,6 +7,21 @@ module.exports=(connection,DataTypes)=>{
               type: DataTypes.BOOLEAN,
               defaultValue: true
               
+            },
+            title : {type: DataTypes.STRING},
+            type : {
+              type: DataTypes.ENUM ("notes", "personnel", "urgent" ),
+              defaultValue: "notes"
+            },
+            attachedFile: {
+              type: DataTypes.STRING,
+              defaultValue: null,
+              allowNull: true
+            },
+            attachedFileName : {
+              type: DataTypes.STRING,
+              defaultValue: null,
+              allowNull: true
             }
     } )
     return note

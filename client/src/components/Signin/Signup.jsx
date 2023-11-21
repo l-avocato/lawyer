@@ -24,23 +24,31 @@ function Signup() {
 
   const handleSiginUp = async () => {
     createUserWithEmailAndPassword(auth, email, password)
-      .then((res) => {
-        addDoc(lawyerCollectionRef, {
-          localId: res.user.reloadUserInfo.localId,
-          email: res.user.reloadUserInfo.email,
-          password: res.user.reloadUserInfo.passwordHash,
+    .then(async ()=>{
+      console.log('here',papers);
+       const obj={
+         email,
+         password,
+         phoneNumber,
+         gender,
+         imageUrl:papers,
+         fullName
+       }
+       await axios.post("http://localhost:1128/api/lawyers/addLawyer",obj)
+       .then(()=>{
+         console.log('done')
+       })
+       .catch((error)=>{
+         console.log(error)
         })
-          .then((res) => {
-            console.log(res);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    navigate("/Signin");
+        navigate("/Signin");
+      
+    })
+    .catch((error)=>{
+      console.log(error)
+    })
+
+  
   };
 
   const handleFile = async (e) => {

@@ -93,24 +93,34 @@ const HomePage = ({ navigation }) => {
     const categoryCollectionRef = collection(FIREBASE_DB, "category");
 
 
+    console.log(lawyers,"this is lawyers");
+
+
 
     const loggedInUser = FIREBASE_AUTH.currentUser.email;
 
-    const getUser = async () => {
-      const response = await axios.get(`http://${config}:1128/api/user/getUserByEmail/${loggedInUser}`)
+    const getUser = () => {
+       axios.get(`http://${config}:1128/api/user/getUserByEmail/${loggedInUser}`)
       .then((res) => {
           console.log("this is user",res.data);
           setUser(res.data);
+        }).catch(err=>{
+          console.log(err);
         })
       };
 
     const getLawyers = async () => {
-      const response = await axios.get(
+      try{
+         const response = await axios.get(
         `http://${config}:1128/api/lawyer/allLawyers`
       );
       setLawyers(response.data);
-      console.log("this is lawyers", lawyers);
+      console.log("this is lawyers", response.data);
       return response.data;
+      }
+     catch(err) {
+console.log(err);
+     }
     };
     const getCategories = async () => {
       console.log("this is the config", config);

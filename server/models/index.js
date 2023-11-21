@@ -18,7 +18,7 @@ const connection = new Sequelize('lavocato', 'root', 'root', {
   const Media=require("./media.model")(connection,DataTypes)
   const Admin=require("./admin.model")(connection,DataTypes)
   const Appointment=require("./appointment.model")(connection,DataTypes)
-  const Availavility= require("./availability.model")(connection,DataTypes)
+  const Availability= require("./availability.model")(connection,DataTypes)
   const Case= require("./cases.model")(connection,DataTypes)
   const Category= require("./category.model")(connection,DataTypes)
   const Chat= require("./chats.model")(connection,DataTypes)
@@ -51,7 +51,10 @@ const connection = new Sequelize('lavocato', 'root', 'root', {
 
   User.hasMany(Appointment)
   Appointment.belongsTo(User)
-  
+
+  Lawyer.hasMany(Appointment)
+  Appointment.belongsTo(Lawyer)
+
   User.hasMany(Rating)
   Rating.belongsTo(User)
 
@@ -83,8 +86,8 @@ const connection = new Sequelize('lavocato', 'root', 'root', {
   Notification.belongsTo(User)
 
 
-  Lawyer.hasMany(Availavility)
-  Availavility.belongsTo(Lawyer)
+  Lawyer.hasMany(Availability)
+  Availability.belongsTo(Lawyer)
 
   Lawyer.hasMany(Rating)
   Rating.belongsTo(Lawyer)
@@ -97,6 +100,7 @@ const connection = new Sequelize('lavocato', 'root', 'root', {
 
   Note.hasMany(Media)
   Media.belongsTo(Note)
+
 
   Lawyer.hasMany(Category)
   Category.belongsTo(Lawyer)
@@ -127,6 +131,8 @@ const connection = new Sequelize('lavocato', 'root', 'root', {
   Case.hasMany(Media)
   Media.belongsTo(Case)
 
+  Case.hasMany(Note)
+  Note.belongsTo(Case)
 
 
   Phase.hasMany(Media)
@@ -150,7 +156,7 @@ const connection = new Sequelize('lavocato', 'root', 'root', {
 
 
 
-  // connection.sync({ alter: true })
+  // connection.sync({ force: true })
   // .then(() => console.log("tables are created"))
   // .catch((err) => console.log(err))
 
@@ -162,7 +168,7 @@ const connection = new Sequelize('lavocato', 'root', 'root', {
   db.Media=Media
   db.Admin=Admin
   db.Appointment=Appointment
-  db.Availavility=Availavility
+  db.Availability=Availability
   db.Case=Case
   db.Category=Category
   db.Chat=Chat

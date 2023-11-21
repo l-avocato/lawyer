@@ -13,10 +13,14 @@ const initialState = {
 export const signupUser = createAsyncThunk("signup/signupUser", async (input, { dispatch }) => {
     // console.log(input,'this is the body');
     // console.log(process.env.IPV_IP,"logged");
+    try {
    const response = await axios.post(`http://${config}:1128/api/user/addUser`, input);
    console.log(response.data,"this is from the store");
 return response.data
+  } catch (error) {
+    console.log(error);
   }
+}
   );
   
 

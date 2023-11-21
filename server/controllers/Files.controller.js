@@ -10,6 +10,15 @@ module.exports = {
           throw error;
         }
       },
+      
+      getfolderFiles : async (req,res) =>{
+      try {
+     const response = await  Files.findAll({where: {folderId: req.params.folderId}})
+     res.json(response);
+}     catch (error) {
+    console.log(error);
+}
+      },
     
     addFile: async function (req, res) {
         try {

@@ -36,6 +36,14 @@ const NavTab = () => {
         </TouchableOpacity>
         <TouchableOpacity
           style={
+            selectedTab === "Map" ? styles.tabBarItemActive : styles.tabBarItem
+          }
+          onPress={() => navigation.navigate("LawyerProfile")}
+        >
+          <Ionicons name="calendar" size={24} color="black" />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={
             selectedTab === "ChatRooms" ? styles.tabBarItemActive : styles.tabBarItem
           }
           onPress={() => navigation.navigate("ChatRooms")}
