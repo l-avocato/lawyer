@@ -31,9 +31,11 @@ import Tooltip from '@mui/material/Tooltip';
 import SidebarDash from '../SidebarDash/SidebarDash';
 import { getAuth } from 'firebase/auth';
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
+
 
 const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = ['Setting Profil', 'Setting Security', 'Logout'];
 
 
 
@@ -89,6 +91,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 const NavbarDashboard = () => {
  
 
+
+  const navigate = useNavigate();
+
  
   // [isChatOpen, setChatOpen] = useState(false);
   // [isNotificationsOpen, setNotificationsOpen] = useState(false);
@@ -119,6 +124,9 @@ const NavbarDashboard = () => {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [user,setUser] = React.useState({})
   const [currentUser,setCurrentUser] = React.useState({});
+  
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -129,16 +137,27 @@ const NavbarDashboard = () => {
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
+    
+
   };
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
 
+  const handleSettingProfilClick = () => {
+    navigate('/SettingProfil');
+    handleCloseUserMenu(); 
+  };
+  
+  const handleSettingSecurityClick = () => {
+    navigate('/SettingSecurity');
+    handleCloseUserMenu(); 
+  };
+  const handleLogOut = ()=>{
+    logOut()
+  }
  
-
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -158,6 +177,24 @@ const NavbarDashboard = () => {
 
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
+  };
+
+  const clearToken = () => {
+    try {
+      localStorage.removeItem("userToken"); //clearing token when you sign out
+      console.log("Token cleared");
+    } catch (error) {
+      console.error("Error clearing token:", error);
+    }
+  };
+
+  const logOut = async () => {
+    try {
+      await clearToken();
+      navigate("/");
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
   };
 
   const menuId = 'primary-search-account-menu';
@@ -236,7 +273,7 @@ const NavbarDashboard = () => {
 
 
 const handleGetUser = async (user) =>{
-  console.log(user.email);
+  // console.log(user.email);
     setUser(user);
   await axios.get(`http://localhost:1128/api/lawyer/getLawyerByEmail/${user.email}`)
   .then((res)=>{
@@ -250,6 +287,8 @@ const handleGetUser = async (user) =>{
 React.useEffect(()=>{
   handleGetUser(auth.currentUser)
 },[])
+
+
 
 
   return (
@@ -340,7 +379,7 @@ React.useEffect(()=>{
               />
             </Search>
             <Box sx={{ flexGrow: 1 }} />
-            <Box sx={{ display: { xs: 'none', md: 'flex' },gap:"0.5rem" }}>
+            <Box sx={{ display: { xs: 'none', md: 'flex' },gap:"1rem" }}>
               <IconButton size="large" aria-label="show 4 new mails" color="inherit">
                 <Badge badgeContent={4} color="error">
                   <MailIcon />
@@ -364,7 +403,7 @@ React.useEffect(()=>{
                  <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src={currentUser.ImageUrl} />
+                  <Avatar alt="Remy Sharp" src={currentUser.ImageUrl} style={{width:'55px', height:'55px'}} />
                 </IconButton>
               </Tooltip>
               <Menu
@@ -382,10 +421,22 @@ React.useEffect(()=>{
                 }}
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
-              >
+
+                
+                >
                 {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
+                  <MenuItem key={setting} onClick={() => 
+                  setting === 'Setting Profil' ? handleSettingProfilClick() : 
+                 setting ===  'Setting Security' ? handleSettingSecurityClick() : 
+                   handleLogOut()
+                  
+                  }>
+                  
+                    <Typography
+                       
+                  
+                  textAlign="center">{setting}
+                  </Typography>
                   </MenuItem>
                 ))}
               </Menu>
