@@ -3,11 +3,12 @@ import { GiftedChat,Send,Bubble } from 'react-native-gifted-chat';
 import { TouchableOpacity, View, StyleSheet, Alert ,Image,Text,Linking} from 'react-native'; 
 import * as ImagePicker from 'expo-image-picker';
 import { MaterialIcons } from '@expo/vector-icons';
-import { collection, addDoc, orderBy, query, onSnapshot,serverTimestamp,Timestamp,getDocs } from 'firebase/firestore';
+import { collection, addDoc, orderBy, query, onSnapshot,serverTimestamp,Timestamp,getDocs,where } from 'firebase/firestore';
 import { FIREBASE_DB , FIREBASE_AUTH } from '../firebaseConfig';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { Icon } from 'react-native-elements';
 import * as DocumentPicker from 'expo-document-picker';
+import axios from 'axios';
 
 
 const Chat = ({route}) => {
@@ -15,6 +16,23 @@ const Chat = ({route}) => {
   console.log(item);
 
   const [messages, setMessages] = useState([]);
+  const [roomId, setRoomId] = useState('');
+
+
+  const fetchRoomId = async () => {
+    try {
+      const response = await axios.post(`http://${config}:1128/api/conversation/addConversation`, {});
+      setRoomId(response.data.roomId);
+    } catch (error) {
+      console.error('Error fetching roomId:', error);
+    }
+  };
+
+  useEffect(() => {
+ 
+
+    fetchRoomId();
+  }, []);
 
   const makePhoneCall = () => {
     if (item.phoneNumber) {
@@ -48,34 +66,76 @@ const Chat = ({route}) => {
   };
 
  
+  // const onSend = async (newMessages = []) => {
+  //   try {
+  //     const formattedMessages = newMessages.map((message) => ({
+  //       ...message,
+  //       createdAt: serverTimestamp(),
+  //       user: {
+  //         _id: FIREBASE_AUTH?.currentUser?.email,
+  //         avatar: 'https://i.pravatar.cc/300',
+  //       },
+  //       roomId: roomId,
+  //     }));
 
+  //     const newConversation = {
+  //       lawyerName: item.fullName,
+  //       otherUserDetails: item,
+  //       lastMessage: newMessages[0].text,
+  //       createdAt: serverTimestamp(),
+  //     };
+
+  //     await Promise.all(formattedMessages.map((message) => addDoc(collection(FIREBASE_DB, 'chats'), message)));
+  //     await axios.post(`http://${config}:1128/api/conversation/addConversation`, newConversation);
+
+  //   } catch (error) {
+  //     console.error('Error sending messages:', error);
+  //   }
+  // };
+  
   const onSend = async (newMessages = []) => {
-    const formattedMessages = newMessages.map((message) => ({
-      ...message,
-      createdAt: serverTimestamp(),
-      user: {
-        _id: FIREBASE_AUTH?.currentUser?.email,
-        avatar: 'https://i.pravatar.cc/300',
-      },
-    }));
-  
-    const newConversation = {
-      lawyerName: item.fullName, // Add the lawyer's name
-      otherUserDetails: item,
-      lastMessage: newMessages[0].text,
-      createdAt: serverTimestamp(),
-    };
-  
-    await Promise.all(formattedMessages.map((message) => addDoc(collection(FIREBASE_DB, 'chats'), message)));
-    await addDoc(collection(FIREBASE_DB, 'conversations'), newConversation);
+    try {
+      // Make sure roomId is defined before sending messages
+      if (!roomId) {
+        console.error('roomId is undefined');
+        return;
+      }
+
+      const formattedMessages = newMessages.map((message) => ({
+        ...message,
+        createdAt: serverTimestamp(),
+        user: {
+          _id: FIREBASE_AUTH?.currentUser?.email,
+          avatar: 'https://i.pravatar.cc/300',
+        },
+        roomId: roomId,
+      }));
+
+      const newConversation = {
+        lawyerName: item.fullName,
+        otherUserDetails: item,
+        lastMessage: newMessages[0].text,
+        createdAt: serverTimestamp(),
+      };
+
+      await Promise.all(formattedMessages.map((message) => addDoc(collection(FIREBASE_DB, 'chats'), message)));
+      await axios.post(`http://${config}:1128/api/conversation/addConversation`, newConversation);
+
+    } catch (error) {
+      console.error('Error sending messages:', error);
+    }
   };
   
   
 
   useEffect(() => {
-    const collectionRef = collection(FIREBASE_DB , 'chats');
-    const q = query(collectionRef, orderBy('createdAt', 'desc'));
-
+    const collectionRef = collection(FIREBASE_DB, 'chats');
+    const q = query(
+      collectionRef,
+      orderBy('createdAt', 'desc'),
+      where('roomId', '==', 'uniqueRoomIdHere') // Replace 'uniqueRoomIdHere' with the actual room ID
+    );
+  
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const updatedMessages = querySnapshot.docs.map((doc) => ({
         _id: doc.id,
@@ -83,9 +143,10 @@ const Chat = ({route}) => {
       }));
       setMessages(updatedMessages);
     });
-
+  
     return () => unsubscribe();
   }, []);
+  
 
 
  
