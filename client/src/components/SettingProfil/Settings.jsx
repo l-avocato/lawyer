@@ -162,13 +162,21 @@ const Settings = () => {
               }}
             />
             <label className="form-label" htmlFor="form6Example3"></label>
-          </div>      
-           <button
+          </div> 
+          <div style={{display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center', gap:'1rem'}}>
+          <button
             type="button"
             style={{
               backgroundColor: "gold",
               color: "black",
               fontSize: "1.3rem",
+              border: "none",
+              borderRadius: "8px",
+              cursor: "pointer",
+             width:'550px',
+             height: "40px"
+
+
             }}
             
           >
@@ -182,8 +190,10 @@ const Settings = () => {
               fontSize: "1.3rem", 
               border: "none",
               borderRadius: "8px",
-              padding: "10px 20px",
               cursor: "pointer",
+              width:'550px',
+              height: "40px"
+
             }}
             onClick={() => {
               showModal();
@@ -192,7 +202,8 @@ const Settings = () => {
           >
             Update Localisation
           </button>
-
+</div>     
+          
           {isModalVisible && (
             <div className="modal-map">
               <div className="modal-content">
