@@ -70,21 +70,20 @@ module.exports = {
     },
     getAppointmentByLawyerId: async function (req, res) {
         try {
-            
-            const appointment = await Appointment.findAll({
-                where: {
-                    lawyerId: req.params.id,
-                    accepted: "pending"
-                },
-                
-            })
-            res.status(200).send(appointment)
+          const appointment = await Appointment.findAll({
+            where: {
+              lawyerId: req.params.id,
+              accepted: "pending"
+            },
+          
+          })
+          res.status(200).send(appointment)
         } catch (error) {
-            res.status(500).send({
-                error: error.message
-            })
+          res.status(500).send({
+            error: error.message
+          })
         }
-    },
+      },
     getAppointmentUpcoming: async function (req, res) {
         try {
             
@@ -93,6 +92,10 @@ module.exports = {
                     lawyerId: req.params.id,
                     accepted: "accepted"
                 },
+                order: [
+                    ['date', 'DESC'],
+                    ['time', 'ASC']
+                  ],
                 include:User
                 
             })

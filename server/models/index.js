@@ -39,6 +39,7 @@ const connection = new Sequelize('lavocato', 'root', 'root', {
   
   
   
+  
     
   User.belongsToMany(Lawyer,{through:User_Lawyer})
   Lawyer.belongsToMany(User,{through:User_Lawyer})
@@ -156,7 +157,7 @@ const connection = new Sequelize('lavocato', 'root', 'root', {
 
 
 
-  // connection.sync({ force: true })
+  // connection.sync({ alter: true })
   // .then(() => console.log("tables are created"))
   // .catch((err) => console.log(err))
 
