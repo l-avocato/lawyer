@@ -5,7 +5,7 @@ const { Op } = require("sequelize");
 module.exports = {
   getAllLawyers: async (req, res) => {
     try {
-      const allLawyers = await Lawyer.findAll({ order:[["createdAt","DESC"]]});
+      const allLawyers = await Lawyer.findAll();
       res.status(200).send(allLawyers);
     } catch (error) {
       throw error;
