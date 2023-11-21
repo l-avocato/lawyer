@@ -58,18 +58,18 @@ const SidebarDash = () => {
       <div className="line"></div>
       <div className="center-section">
         <ul className="new-menu-list">
-          <li className="g-1">
-            <PersonOutlineIcon className="new-icon" style={{fontSize:'30px'}} />
+          <li className="g-1" onClick={() => navigate("/allClient")}>
+            <PersonOutlineIcon className="new-icon" />
 
-            <span className="side-title" onClick={() => navigate("/allClient")}>
+            <span className="side-title" >
               My Clients
             </span>
           </li>
-          <li className="g-1">
+          <li className="g-1"  onClick={() => navigate("/CaseHistory")}>
             <BusinessCenterIcon className="new-icon" />
             <span
               className="side-title"
-              onClick={() => navigate("/CaseHistory")}
+             
             >
               My Cases
             </span>
@@ -78,9 +78,9 @@ const SidebarDash = () => {
             <NotificationsNoneIcon className="new-icon" />
             <span className="side-title" onClick={() => navigate("/Appointments")}>Appointments</span>
           </li>
-          <li className="g-1">
+          <li className="g-1" onClick={() => navigate("/stat")}>
             <InsertChartIcon className="new-icon" />
-            <span className="side-title" onClick={() => navigate("/stat")}>
+            <span className="side-title" >
               Stats
             </span>
           </li>
@@ -88,9 +88,9 @@ const SidebarDash = () => {
             <NotificationsNoneIcon className="new-icon" />
             <span className="side-title">Notifications</span>
           </li>
-          <li className="g-1">
+          <li className="g-1"  onClick={() => navigate("/task")}>
             <AssignmentTurnedInIcon className="new-icon" />
-            <span className="side-title" onClick={() => navigate("/task")}>
+            <span className="side-title">
               Tasks
             </span>
           </li>

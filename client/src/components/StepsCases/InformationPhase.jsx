@@ -17,6 +17,7 @@ import "./style.css";
 import "./flickity.css";
 import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
 import CachedRoundedIcon from '@mui/icons-material/CachedRounded';
+import EditIcon from '@mui/icons-material/Edit';
 import { Nav } from "react-bootstrap";
 import { getAuth } from "firebase/auth";
 const InformationPhase = () => {
@@ -642,7 +643,7 @@ const InformationPhase = () => {
                         <div className="card-body">
                           <div style={{display:'flex', justifyContent:'space-between'}}>
                         
-                          <CachedRoundedIcon style={{color:'white'}} 
+                          <EditIcon style={{color:'white'}} 
                           onClick={async () => {
                             await Swal.fire({
                               title: "Update Note",
@@ -651,6 +652,7 @@ const InformationPhase = () => {
                                 <input id="swal-input2" class="swal2-input" placeholder='update the note'>
                               `,
                               focusConfirm: false,
+                              showCancelButton: true,
                               preConfirm: () => {
                                 const titleValue = document.getElementById("swal-input1").value;
                                 const commentValue = document.getElementById("swal-input2").value; 
@@ -662,7 +664,7 @@ const InformationPhase = () => {
                               
                                 return addNotes(titleValue, commentValue, typeValue);
                               },
-                              customClass: { confirmButton: "color-modal" },
+                              customClass: { confirmButton: "color-modal",cancelButton: "color-modal" },
                             });
                           }}
                           
@@ -670,9 +672,15 @@ const InformationPhase = () => {
                           <DeleteOutlineRoundedIcon style={{color:'white'}} onClick={()=>{handleDelete(notes.id)}} />
 
                           </div>
-                         
-                          <h5 className="card-title">{user.fullName}</h5>
-                          <p className="card-text">{notes.comment}</p>
+                          <div style={{display :'flex', justifyContent:'flex-start', gap:"2rem", padding:'1rem'}}>
+                          <img src={user.ImageUrl} alt=""  style={{width:'30px', width:'35px', borderRadius:'50%'}}/>
+                          <h5>{user.fullName}</h5>
+                          </div>
+                          <div style={{height:'0.5%', width:'100%', backgroundColor:'black'}}></div>
+                         <div>
+                           
+                          <p className="card-text" style={{marginTop:'2rem'}}>{notes.comment}</p>
+                         </div>
                         </div>
                        {notes.attachedFile && <div style={{ height: "auto" }}>
                             <div>
@@ -689,14 +697,14 @@ const InformationPhase = () => {
                                   style={{
                                     color: "goldenrod",
                                     height: "100%",
-                                    width: "20%",
+                                    width: "10%",
                                     cursor: "pointer",
                                   }}
                                   onClick={() => {
                                     onButtonClick(notes.attachedFile);
                                   }}
                                 />
-                                <p style={{ height: "50%", margin: 0 }}>
+                                <p style={{ height: "50%", margin: 0, fontSize:'0.9rem' }}>
                                   {notes.attachedFileName}{" "}
                                 </p>
                                 {/* <DeleteIcon /> */}
@@ -745,9 +753,9 @@ const InformationPhase = () => {
           <div
             style={{
               display: "flex",
-              padding: "3rem",
+              padding: "2rem",
               flexDirection: "column",
-              gap: "3rem",
+              gap: "1rem",
             }}
           >
             <p
@@ -769,6 +777,9 @@ const InformationPhase = () => {
                 trailColor: "#d6d6d6",
               })}
             />
+            <img src={require('../../assets/images/progress case.png')} alt="" style={{ width:'185px', height:'210px'}} />
+          </div>
+          <div>
           </div>
         </div>
       </div>

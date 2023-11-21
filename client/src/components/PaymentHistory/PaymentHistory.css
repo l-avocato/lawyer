@@ -31,8 +31,9 @@
 }
 .firstDiv {
   display: flex;
+  justify-content: flex-end;
   align-items: center; 
-  justify-content: space-between;  
+ margin-top: 1.3rem;
 
 }
 .table-wrapper {
@@ -40,7 +41,7 @@
   margin-right: 5rem;
 }
 .allPage {
-  height: 80vh;
+  height: 90vh;
   display: flex;
   align-items: center;
   justify-content: center;
