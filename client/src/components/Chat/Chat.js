@@ -1,126 +1,211 @@
-import React, { useState, useRef, useEffect } from "react";
-import "./chat.css";
+import React, { useState, useEffect } from "react";
+import NavbarDashboard from "../NavbarDashboard/NavbarDashboard";
 import SidebarDash from "../SidebarDash/SidebarDash";
+import css from "./chat.css";
 
 const Chat = () => {
-  const [messages, setMessages] = useState([]);
+  const [johnDoeMessages, setJohnDoeMessages] = useState([
+    {
+      sender: "John Doe",
+      text: "Hello, Are you there?",
+      timestamp: new Date(),
+    },
+  ]);
+
+  const [laraCroftMessages, setLaraCroftMessages] = useState([
+    {
+      sender: "Lara Croft",
+      text: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.",
+      timestamp: new Date(),
+    },
+  ]);
+
+  const [currentChat, setCurrentChat] = useState("John Doe");
   const [newMessage, setNewMessage] = useState("");
-  const messagesEndRef = useRef(null);
-
-  const scrollToBottom = () => {
-    messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
-  };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
-
+  const [messages, setMessages] = useState([]);
   const handleSendMessage = () => {
-    if (newMessage.trim()) {
-      const sender = "John Doe"; // Change the sender as needed
-      setMessages([...messages, { content: newMessage, sender }]);
-      setNewMessage("");
+    const newMessage = {
+      sender: "You",
+      text: "Your message here",
+      timestamp: new Date(),
+    };
+
+    // Update the messages for the current chat
+    if (currentChat === "John Doe") {
+      setJohnDoeMessages((prevMessages) => [...prevMessages, newMessage]);
+    } else if (currentChat === "Lara Croft") {
+      setLaraCroftMessages((prevMessages) => [...prevMessages, newMessage]);
     }
   };
-
   return (
-    <div className="aziz container">
+    <div style={{ display: "flex", height: "100vh", overflow: "hidden" }}>
       <SidebarDash />
-      <div className="chat-section">
-        {/* ChatRoom component */}
-        <h5 className="font-weight-bold mb-3 text-center text-white">
-          Member
-        </h5>
-        <div className="card mask-custom">
-          <div className="card-body">
-            <ul className="list-unstyled mb-0">
-              <li className="p-2 border-bottom">
-                <a href="#!" className="d-flex justify-content-between link-light">
-                  <div className="d-flex flex-row">
-                    <img
-                      src="https://placekitten.com/60/60"
-                      alt="avatar"
-                      className="rounded-circle d-flex align-self-center me-3 shadow-1-strong"
-                      width="60"
-                    />
-                    <div className="pt-1">
-                      <p className="fw-bold mb-0">John Doe</p>
-                      <p className="small text-white">Hello, Are you there?</p>
-                    </div>
-                  </div>
-                  <div className="pt-1">
-                    <p className="small text-white mb-1">Just now</p>
-                    <span className="badge bg-danger float-end">1</span>
-                  </div>
-                </a>
-              </li>
-              {/* Add more list items as needed */}
-            </ul>
-          </div>
-        </div>
-      </div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          width: "100%",
+          position: "relative",
+        }}>
+        <NavbarDashboard />
 
-      <div className="conversation-section">
-        {/* Conversation component */}
-        <div className="conversation-container">
-          <ul className="list-unstyled text-white">
-            {messages.map((message, index) => (
-              <li
-                key={index}
-                className={`d-flex justify-content-between mb-4 ${
-                  message.sender !== "John Doe" ? "blue-background" : ""
-                }`}
-              >
-                <img
-                  src="https://placekitten.com/60/60"
-                  alt="avatar"
-                  className="rounded-circle d-flex align-self-start me-3 shadow-1-strong"
-                  width="60"
-                />
-                <div className="card mask-custom">
-                  <div className="card-header d-flex justify-content-between p-3">
-                    <p className="fw-bold mb-0">{message.sender}</p>
-                    <p className="text-light small mb-0">
-                      <i className="far fa-clock"></i> Just now
-                    </p>
-                  </div>
+        <section
+          id="conversation-section"
+          style={{ backgroundColor: "#eee", flex: 1 }}>
+          <div
+            className="container py-5"
+            style={{ display: "flex", flexDirection: "column" }}>
+            <div className="row">
+              <div
+                className="col-md-6 col-lg-5 col-xl-4 mb-4 mb-md-0"
+                style={{
+                  display: "flex",
+                  justifyContent: "flex-start",
+                  flex: 1,
+                  overflow: "auto",
+                  marginBottom: "80px",
+                }}>
+                <div className="card">
                   <div className="card-body">
-                    <p className="mb-0">{message.content}</p>
+                    <ul className="list-unstyled mb-0">
+                      <li
+                        className="p-2 border-bottom"
+                        style={{ backgroundColor: "#eee" }}>
+                        <a href="#!" className="d-flex justify-content-between">
+                          <div className="d-flex flex-row">
+                            <img
+                              src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-8.webp"
+                              alt="avatar"
+                              className="rounded-circle d-flex align-self-center me-3 shadow-1-strong"
+                              width="60"
+                            />
+                            <div className="pt-1">
+                              <p className="fw-bold mb-0">John Doe</p>
+                              <p className="small text-muted">
+                                Hello, Are you there?
+                              </p>
+                            </div>
+                          </div>
+                          <div className="pt-1">
+                            <p className="small text-muted mb-1">Just now</p>
+                            <span className="badge bg-danger float-end">1</span>
+                          </div>
+                        </a>
+                      </li>
+                      <li className="p-2 border-bottom">
+                        <a href="#!" className="d-flex justify-content-between">
+                          <div className="d-flex flex-row">
+                            <img
+                              src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-1.webp"
+                              alt="avatar"
+                              className="rounded-circle d-flex align-self-center me-3 shadow-1-strong"
+                              width="60"
+                            />
+                            <div className="pt-1">
+                              <p className="fw-bold mb-0">Danny Smith</p>
+                              <p className="small text-muted">
+                                Lorem ipsum dolor sit.
+                              </p>
+                            </div>
+                          </div>
+                          <div className="pt-1">
+                            <p className="small text-muted mb-1">5 mins ago</p>
+                          </div>
+                        </a>
+                      </li>
+                      {/* Add the rest of your list items */}
+                    </ul>
                   </div>
                 </div>
-              </li>
-            ))}
-            <div ref={messagesEndRef}></div>
-            {/* Add more list items as needed */}
-          </ul>
-        </div>
-        {/* Input and Send button */}
-        <div className="input-container">
-          <div className="form-outline form-white flex-grow-1">
-            <textarea
-              className="form-control"
-              id="textAreaExample3"
-              rows="4"
-              value={newMessage}
-              onChange={(e) => setNewMessage(e.target.value)}
-            ></textarea>
-            <label className="form-label" htmlFor="textAreaExample3">
-              Message
-            </label>
+              </div>
+
+              <div className="col-md-6 col-lg-7 col-xl-8">
+                <div className="talking-bar"
+                  style={{
+                    backgroundColor: "#fff",
+                    borderBottom: "1px solid #ccc",
+                    padding: "10px",
+                    fontWeight: "bold",
+                  }}>
+                  Chatting with: {currentChat}
+                </div>
+                <ul className="list-unstyled">
+                  {currentChat === "John Doe"
+                    ? johnDoeMessages.map((msg, index) => (
+                        <li
+                          key={index}
+                          className="d-flex justify-content-between mb-4">
+                          <img
+                            src={`https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp`}
+                            alt="avatar"
+                            className="rounded-circle d-flex align-self-start me-3 shadow-1-strong"
+                            width="60"
+                          />
+                          <div className="card">
+                            <div className="card-header d-flex justify-content-between p-3">
+                              <p className="fw-bold mb-0">{msg.sender}</p>
+                              <p className="text-muted small mb-0">
+                                <i className="far fa-clock"></i>{" "}
+                                {msg.timestamp.toLocaleString()}
+                              </p>
+                            </div>
+                            <div className="card-body">
+                              <p className="mb-0">{msg.text}</p>
+                            </div>
+                          </div>
+                        </li>
+                      ))
+                    : currentChat === "Lara Croft"
+                    ? laraCroftMessages.map((msg, index) => (
+                        <li
+                          key={index}
+                          className="d-flex justify-content-between mb-4">
+                          <div className="card w-100">
+                            <div className="card-header d-flex justify-content-between p-3">
+                              <p className="fw-bold mb-0">{msg.sender}</p>
+                              <p className="text-muted small mb-0">
+                                <i className="far fa-clock"></i>{" "}
+                                {msg.timestamp.toLocaleString()}
+                              </p>
+                            </div>
+                            <div className="card-body">
+                              <p className="mb-0">{msg.text}</p>
+                            </div>
+                          </div>
+                          <img
+                            src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-5.webp"
+                            alt="avatar"
+                            className="rounded-circle d-flex align-self-start ms-3 shadow-1-strong"
+                            width="60"
+                          />
+                        </li>
+                      ))
+                    : null}
+                </ul>
+                <div id="container_send" className="form-outline">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="textAreaExample2"
+                    placeholder="send a message..."
+                    rows="4"
+                    value={newMessage}
+                    onChange={(e) => setNewMessage(e.target.value)}></input>
+                  <button
+                    type="button"
+                    className="btn btn-info btn-rounded send_button"
+                    onClick={handleSendMessage}>
+                    Send
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
-          <button
-            type="button"
-            className="btn btn-light btn-lg btn-rounded"
-            onClick={handleSendMessage}
-          >
-            Send
-          </button>
-        </div>
+          {/* </div> */}
+        </section>
       </div>
     </div>
   );
 };
 
 export default Chat;
-
-
