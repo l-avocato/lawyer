@@ -35,19 +35,11 @@ const AllClient = () => {
   };
 
 
-  // const getUsers = async () => {
-  //   try {
-  //     const response = await axios.get("http://localhost:1128/api/user/allUsers");
-  //     setUsers(response.data);
-  //   } catch (error) {
-  //     console.error("Error fetching data:", error);
-  //   }
-  // };
 
   const getLawyerClients= async()=>{
     try{
       const response= await axios.get(`http://localhost:1128/api/user_lawyer/getClientsByLawyerId/${lawyer.id}`)
-      setUsers(response.data[0].users)
+      setUsers(response.data[0].users.reverse())
       console.log("this is clients",response.data);
     }catch(error){
       console.error("Error fetching clients", error);
@@ -79,7 +71,7 @@ const AllClient = () => {
           >      
             +New Client{" "}
           </button>
-          <Modal refrech={refrech} setRefrech={setRefrech} />
+          <Modal lawyer={lawyer} refrech={refrech} setRefrech={setRefrech} />
         </div>
 
         <div
