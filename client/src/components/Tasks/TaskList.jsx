@@ -4,6 +4,8 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import './style.css';
 import SidebarDash from '../SidebarDash/SidebarDash';
+import NavbarDashboard from '../NavbarDashboard/NavbarDashboard';
+import { height } from '@mui/system';
 
 const TaskList = () => {
   const [tasks, setTasks] = useState([]);
@@ -42,10 +44,11 @@ const TaskList = () => {
   };
 
   return (
-    <div className="lawyers-task-list" style={{ marginTop: 100, marginLeft: 550 }}>
-      <div>
-        <SidebarDash />
-      </div>
+    <div style={{display:"flex"}}>
+      <SidebarDash/>
+    <div className="lawyers-task-list">
+      <NavbarDashboard/>
+      <div style={{width:'68%', padding:"2rem", alignSelf:'center' }}>
       <h1 className="task-list-title">Task List</h1>
       <div className="task-input-container">
         <input
@@ -65,6 +68,8 @@ const TaskList = () => {
           Add Task
         </button>
       </div>
+      </div>
+     
       {tasks.length > 0 ? (
         <div className="task-cards-container">
           {tasks.map((task) => (
@@ -98,6 +103,8 @@ const TaskList = () => {
       ) : (
         <p className="no-tasks-message">No tasks found.</p>
       )}
+
+    </div>
     </div>
   );
 };

@@ -1,21 +1,29 @@
 .new-sidebar {
-  width: 18rem;
+  width: 14rem;
   height: 100vh;
-  position: fixed;
-  left: 0;
-  top: 0;
+
   background-color: rgb(0, 0, 0);
   border-right: 0.03125rem solid rgb(230, 227, 227);
   transition: width 0.3s ease;
 }
 
 
+
+.g-1 {
+  gap:0.5rem
+}
+
+.line {
+  height: 1px;
+  background-color: white;
+  margin-top: "12rem";
+}
+
 .new-logo {
   width: 7rem;
   height: 6rem;
-  border-radius: 0.3125rem;
-  position: relative;
-  left: 3rem;
+
+
 }
 
 .center-section {
@@ -46,15 +54,17 @@
     color: black;
   }
     .new-separator {
-      height: 0;
-      border: 0.03125rem solid rgb(230, 227, 227);
+      height: 10rem;
+      width: 12px;
+      background-color: aliceblue;
     }
       .new-icon {
-        font-size: 1.125rem;
+        font-size: 1.2rem;
         color: #d4af37;
       }
       .side-title{
         cursor: pointer;
+        font-size: 17px;
       }
       span {
         font-size: 0.8125rem;

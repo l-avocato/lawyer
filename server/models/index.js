@@ -102,6 +102,7 @@ const connection = new Sequelize('lavocato', 'root', 'root', {
   Note.hasMany(Media)
   Media.belongsTo(Note)
 
+
   Lawyer.hasMany(Category)
   Category.belongsTo(Lawyer)
 

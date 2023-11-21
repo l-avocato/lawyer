@@ -11,7 +11,6 @@ import { useNavigate } from "react-router-dom";
 
 const App = ({ user, deleteUser }) => {
   const navigate = useNavigate();
-  console.log(user);
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [api, contextHolder] = notification.useNotification();
@@ -92,7 +91,10 @@ const App = ({ user, deleteUser }) => {
             style={{
               backgroundColor: "grey",
               color: "white",
-              padding: "0.4rem 0.8rem",
+              height: "32px",
+              width:'64px',
+              border: "none",
+              borderRadius: "5px"
             }}
             onClick={() => {
               navigate("/clientDetails", { state: { user: record } });
@@ -161,12 +163,12 @@ const App = ({ user, deleteUser }) => {
         {contextHolder}
         <div
           style={{
-            marginBottom: 16,
+            // marginBottom: 16,
           }}
         >
           <span
             style={{
-              marginLeft: 8,
+              // marginLeft: 8,
             }}
           >
             {hasSelected ? `Selected ${selectedRowKeys.length} items` : ""}

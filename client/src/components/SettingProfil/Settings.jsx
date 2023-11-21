@@ -5,6 +5,8 @@ import { db } from "../../firebaseconfig";
 import { updateDoc, doc } from "firebase/firestore";
 import { GoogleMap, Marker } from "@react-google-maps/api";
 import "./Style.css";
+import SidebarDash from "../SidebarDash/SidebarDash";
+import { getAuth } from "firebase/auth";
 
 const Settings = () => {
   const [papers, setPapers] = useState("");
@@ -13,10 +15,20 @@ const Settings = () => {
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
   const [isMenuOpen, setMenuOpen] = useState(false);
+  const [user,setUser] =  useState({});
   const position = { lat: parseFloat(latitude) || 51.505, lng: parseFloat(longitude) || -0.09 };
   const menuRef = useRef(null);
 
- 
+ const auth = getAuth();
+ const handleGetUser = async (user) =>{
+  await axios.get(`http://localhost:1128/api/lawyer/getLawyerByEmail/${user}`)
+  .then((res)=>{
+    setUser(res.data);
+  })
+  .catch((err)=>{
+    console.log(err)
+  })
+}
 
 
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -48,7 +60,7 @@ const Settings = () => {
         (error) => {
           console.error(error);
         }
-      );
+      ); 
     } else {
       console.error("Geolocation is not supported by this browser.");
     }
@@ -70,22 +82,28 @@ const Settings = () => {
       console.error("Error updating lawyer", error);
     }
   };
+
+  useEffect(()=>{
+    handleGetUser(auth.currentUser.email)
+    setPapers(user.ImageUrl)
+  },[])
   
 
-  return (
-    <div>
+  return ( 
+    <div style={{display:'flex'}}>
+      <SidebarDash/>
+      <div style={{ display:'flex',flexDirection:'column',width:'100%' }}>
       <NavbarDashboard />
-
-      <div style={{ flex: 1 }}>
+        <div style={{display:'flex',justifyContent:'center',alignItems:'center',width:'100%',height:'100%'}}>
         <form
           style={{
             width: "50%",
             display: "flex",
             flexDirection: "column",
             padding: "3rem",
-            marginLeft: "35rem",
+            // marginLeft: "35rem",
             gap: "0.5rem",
-            marginBottom: "2rem",
+            // marginBottom: "2rem",
             border: "0.1rem solid #ccc",
             borderRadius: "8px",
           }}
@@ -193,6 +211,7 @@ const Settings = () => {
             </div>
           )}
         </form>
+        </div>
       </div>
     </div>
   );

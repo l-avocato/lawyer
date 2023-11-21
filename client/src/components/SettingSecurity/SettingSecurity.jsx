@@ -5,6 +5,7 @@ import NavbarDashboard from "../NavbarDashboard/NavbarDashboard";
 import { db } from "../../firebaseconfig";
 import { doc, updateDoc } from "firebase/firestore";
 import { green } from "@mui/material/colors";
+import SidebarDash from "../SidebarDash/SidebarDash";
 
 const SettingSecurity = () => {
   const [oldPasswordVisible, setOldPasswordVisible] = useState(false);
@@ -52,15 +53,17 @@ const SettingSecurity = () => {
   };
 
   return (
-    <div>
-      <NavbarDashboard />
+    <div style={{display:'flex'}}>
+      <SidebarDash/>
       <div
         style={{
           display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
+          flexDirection: "column",
+          width: "100%",
         }}
       >
+        <NavbarDashboard />
+        <div style={{display:'flex',justifyContent:'center',alignItems:'center',width:'100%',height:'100%'}} >
         <form
           style={{
             width: "50%",
@@ -70,7 +73,7 @@ const SettingSecurity = () => {
             border: "0.1rem solid #ccc",
             borderRadius: "8px",
             padding: "3rem",
-            marginLeft: "20rem",
+            // marginLeft: "20rem",
           }}
           onSubmit={(e) => {
             e.preventDefault();
@@ -191,6 +194,7 @@ const SettingSecurity = () => {
             Update Password
           </button>
         </form>
+        </div>
       </div>
     </div>
   );

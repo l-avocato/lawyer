@@ -1,10 +1,12 @@
 .dashboard_box_leith {
-    height: 9vh;
-    width: 9vw;
+  
+    height: 7vh;
+    width: 8vw;
     background-color: goldenrod;
     border-radius: 1rem;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     transition: 0.5s ease; 
+    margin-top: 1rem;
   
 
 }
@@ -17,23 +19,20 @@
 
 .dashboard_container_leith {
     height: 76vh;
-    width: 67vw;
+    width: 64vw;
     background-color: rgb(255, 255, 255);
     border-radius: 1rem;
     box-shadow: rgba(232, 230, 230, 0.19) 0px 10px 20px, rgba(232, 230, 230, 0.23) 0px 6px 6px;
-    padding: 10px;
-  
-    
 
 }
 
 .side_agenda {
-    height: 76.5vh;
-    width: 14vw;
+    height: 77vh;
+    width: 14.5vw;
     background-color: rgb(255, 255, 255);
     border-radius: 1rem;
     box-shadow: rgba(255, 255, 255, 0.19) 0px 10px 20px, rgba(255, 255, 255, 0.23) 0px 6px 6px;
-    margin-top: 6rem;
+    margin-top: 5rem;
 }
 
 .dashboard_main_container_leith {
@@ -47,10 +46,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 25px;
+    font-size: 20px;
     text-decoration: none;
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    margin-top: 1rem;
+    margin-top: 0.5rem;
 }
 
 
@@ -265,20 +264,45 @@
 
 
   .block-folder {
-    height: 76vh;
-    width: 73vh;
+    height: 78vh;
+    width: 72vh;
     background-color: #ffffff;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
-    overflow-y: scroll;
-    
+    overflow-y:scroll;
+    border-radius: 1rem;
   } 
+  /* .fixed{
+    position: sticky;
+  } */
+
+  
+  *::-webkit-scrollbar{
+    width: 0.4rem;
+    /* height: 0.2rem; */
+    
+  }
+  *::-webkit-scrollbar-thumb{
+    max-height: 0.1rem;
+  }
+  *::-webkit-scrollbar-thumb:hover {
+    background:black;
+  }
+  *::-webkit-scrollbar-thumb {
+    background:goldenrod;
+  }
+  *::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  *::-webkit-scrollbar-button {
+    display: none;
+  }
   .block-file {
-    width: 73vh; 
-    height: 76vh;
+    width: 72vh; 
+    height: 78vh;
    background-color: #ffffff;
    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
    overflow-y: scroll;
- 
+ border-radius: 1rem;
  
  }
     
@@ -560,38 +584,3 @@
 .input-select {
   width: 80px;
 }
-/* .addNote {
-  height: 20vh ;
-  width: 7vh;
-  background-color: #000000;
-  border-radius: 2rem;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-
-}
-
-
-
-.haut-card {
-  background-color : goldenrod;
-  height: 8vh;
-  width: 40vh;
-  border-radius: 0.5rem;
-
-}
-.west-card {
-  width: 40vh;
-  height: 30vh;
-  background-color: #ffffff;
-  padding: 1rem;
-  border: solid 1px #000000;
-}
-
-.finishCard {
-  width: 20vh;
-  height: 5vh;
-  background-color: rgb(191, 119, 119);
-  border-radius: 3rem;
- display: flex;
- justify-content: center;
- 
-} */

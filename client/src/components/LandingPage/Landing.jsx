@@ -25,9 +25,7 @@ function Landing() {
         </div>
         <div className="left-section" data-aos="fade-left">
           <h1 className="heading-text">Level up your law work with Avocato</h1>
-          <div>
             <button className="btn2">Discover More</button>
-          </div>
         </div>
       </div>
       <div className="services" id="services">
@@ -59,14 +57,17 @@ function Landing() {
       <div className="team-name">
         <h1>Clients Feedback</h1>
       </div>
+      <div>
       <div className="picture1">
         <img className="image1" src={do1}></img>
         <div className="para1">Justice is not just a goal; it's a way of life. In the pursuit of truth, I stand as a beacon of hope, advocating for fairness and equality. Together, we navigate the complexities of law, ensuring righteousness prevails</div>
       </div>
+      </div>
+    
       <div className="picture2">
         <img className="image2" src={do2}></img>
         <div className="para2">
-        n the courtroom, I am the voice of the voiceless, a defender of truth and fairness. Every case is a journey, and I walk it with unwavering dedication, seeking justice, one client at a time 
+        In the courtroom, I am the voice of the voiceless, a defender of truth and fairness. Every case is a journey, and I walk it with unwavering dedication, seeking justice, one client at a time 
         </div>
       </div>
       <Footer />
