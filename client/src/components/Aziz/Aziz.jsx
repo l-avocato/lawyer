@@ -1,16 +1,19 @@
 import React, { useState } from "react";
 import { Space, notification, Table, Button, Modal } from "antd";
 import "./aziz.css";
-import axios from 'axios'
+import axios from "axios";
 
-
-const App = ({ appointments, deleteAppointment, setId,acceptAppointment }) => {
+const App = ({
+  appointments,
+  deleteAppointment,
+  setId,
+  acceptAppointment,
+  setUserId,
+  setLawyerId,
+}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  console.log("this",appointments);
-  
-
-
+  console.log("this", appointments);
 
   const openNotification = (placement, userName) => {
     notification.success({
@@ -31,7 +34,6 @@ const App = ({ appointments, deleteAppointment, setId,acceptAppointment }) => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-
 
   const columns = [
     {
@@ -64,6 +66,8 @@ const App = ({ appointments, deleteAppointment, setId,acceptAppointment }) => {
               border: "none",
             }}
             onClick={() => {
+              setUserId(record.userId);
+              setLawyerId(record.lawyerId);
               acceptAppointment(record.id);
             }}
           >
@@ -79,8 +83,8 @@ const App = ({ appointments, deleteAppointment, setId,acceptAppointment }) => {
               border: "none",
             }}
             onClick={() => {
-              setId(record.key)
-              showModal()
+              setId(record.key);
+              showModal();
             }}
           >
             Delete
@@ -91,7 +95,10 @@ const App = ({ appointments, deleteAppointment, setId,acceptAppointment }) => {
             onOk={() => {
               deleteAppointment(record.id);
               handleOk();
-              console.log(record.id, "this is idddddddddddddddddddddddddddddddddddddd");
+              console.log(
+                record.id,
+                "this is idddddddddddddddddddddddddddddddddddddd"
+              );
               openNotification("topRight", record.fullName);
             }}
             onCancel={handleCancel}
@@ -150,18 +157,16 @@ const App = ({ appointments, deleteAppointment, setId,acceptAppointment }) => {
     },
   ];
   const appointmentData = appointments.map((e, i) => {
-    return (
-      {
-        key: i,
-        name: e?.userName,
-        time: e?.time,
-        Reason: e.reason,
-        id: e.id,
-        userId: e?.userId, 
-        lawyerId: e?.lawyerId 
-      }
-    )
-  })
+    return {
+      key: i,
+      name: e?.userName,
+      time: e?.time,
+      Reason: e.reason,
+      id: e.id,
+      userId: e?.userId,
+      lawyerId: e?.lawyerId,
+    };
+  });
   console.log("fffffffffffffffffffff,", appointmentData);
 
   return (
@@ -172,9 +177,7 @@ const App = ({ appointments, deleteAppointment, setId,acceptAppointment }) => {
       pagination={{ pageSize: 8 }}
       size="large"
     />
-  )
-
-}
-
+  );
+};
 
 export default App;

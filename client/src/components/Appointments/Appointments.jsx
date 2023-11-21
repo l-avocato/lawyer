@@ -14,6 +14,9 @@ const Appointments = () => {
   const [acceptedAppointments, setAcceptedAppointments] = useState([]);
   const [lawyer, setLawyer] = useState({});
   const [upcomingAppointments,setUpcomingAppointments]=useState([])
+  const [lawyerId,setLawyerId]=useState(0)
+  const [userId,setUserId]=useState(0)
+
 
 
 
@@ -42,7 +45,7 @@ const deleteAppointment = async (id) => {
     }
   };
 
-  const acceptAppointment = async (appointmentId, userId, lawyerId) => {
+  const acceptAppointment = async (appointmentId) => {
     console.log(appointmentId, "this is the appointmenttttt");
     console.log(userId, "this is the user id");
     console.log(lawyerId, "this is the lawyer id");
@@ -51,6 +54,7 @@ const deleteAppointment = async (id) => {
       console.log(response.data);
       
       const addUserAndLawyerId = async () => {
+        console.log(userId);
         try {
           const response = await axios.post('http://localhost:1128/api/user_lawyer/addUser_Lawyer', {
             userId: userId,
@@ -132,7 +136,7 @@ const deleteAppointment = async (id) => {
       </div>
       <div className="apointment">
         <div className="table">
-          <Aziz appointments={appointments} deleteAppointment={deleteAppointment} setId={setId}    acceptAppointment={acceptAppointment} />
+          <Aziz appointments={appointments} deleteAppointment={deleteAppointment} setId={setId}    acceptAppointment={acceptAppointment} setLawyerId={setLawyerId} setUserId={setUserId} />
         </div>
         <div className="extra">
           <div className="upcoming">
