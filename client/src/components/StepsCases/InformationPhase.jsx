@@ -18,6 +18,7 @@ import "./flickity.css";
 import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
 import CachedRoundedIcon from '@mui/icons-material/CachedRounded';
 import { Nav } from "react-bootstrap";
+import { getAuth } from "firebase/auth";
 const InformationPhase = () => {
   const [path, setPath] = useState("document");
   const [folders, setFolders] = useState([]);
@@ -35,7 +36,7 @@ const InformationPhase = () => {
   const [comment, setComment] = useState("");
   const [type, setType] = useState("");
   const [fileNote, setFileNote] = useState(null);
-
+  const [user,setUser] = useState({})
   const getFile = async (e) => {
     const formData = new FormData();
     formData.append("file", e.target.files[0]);
@@ -107,6 +108,7 @@ const InformationPhase = () => {
     fetchFolder();
     fetchFileByFolder();
     fetchNote();
+    handleGetUser(auth.currentUser.email)
   }, [refrech, folderId]);
 
   const addFolder = async (folderName) => {
@@ -159,7 +161,18 @@ const InformationPhase = () => {
     document.body.removeChild(link);
   };
 
+  const auth = getAuth();
 
+  const handleGetUser = async (user) =>{
+    
+    await axios.get(`http://localhost:1128/api/lawyer/getLawyerByEmail/${user}`)
+    .then((res)=>{
+      setUser(res.data);
+    })
+    .catch((err)=>{
+      console.log(err)
+    })
+  }
 
   const addNotes = async (title, comment, type,file) => {
     const formData = new FormData();
@@ -658,7 +671,7 @@ const InformationPhase = () => {
 
                           </div>
                          
-                          <h5 className="card-title">Name of lawyers </h5>
+                          <h5 className="card-title">{user.fullName}</h5>
                           <p className="card-text">{notes.comment}</p>
                         </div>
                        {notes.attachedFile && <div style={{ height: "auto" }}>

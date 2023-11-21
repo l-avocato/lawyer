@@ -187,13 +187,14 @@ button:hover {
 }
 
 .services {
-  margin-left: 44%;
-  font-size: 30rem;
+  font-size: 20rem;
   margin-bottom: 3rem;
 }
 .team-name {
   margin-left: 43%;
-  margin-top: 7%;
+  margin-top: 7%; 
+  display: flex;
+  justify-content: center;
 }
 
 .picture1 {

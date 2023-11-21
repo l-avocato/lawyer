@@ -57,10 +57,13 @@ function Landing() {
       <div className="team-name">
         <h1>Clients Feedback</h1>
       </div>
+      <div>
       <div className="picture1">
         <img className="image1" src={do1}></img>
         <div className="para1">Justice is not just a goal; it's a way of life. In the pursuit of truth, I stand as a beacon of hope, advocating for fairness and equality. Together, we navigate the complexities of law, ensuring righteousness prevails</div>
       </div>
+      </div>
+    
       <div className="picture2">
         <img className="image2" src={do2}></img>
         <div className="para2">
