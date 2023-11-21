@@ -17,6 +17,9 @@ import "./style.css";
 import "./flickity.css";
 import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
 import CachedRoundedIcon from '@mui/icons-material/CachedRounded';
+import EditIcon from '@mui/icons-material/Edit';
+import { Nav } from "react-bootstrap";
+import { getAuth } from "firebase/auth";
 const InformationPhase = () => {
   const [path, setPath] = useState("document");
   const [folders, setFolders] = useState([]);
@@ -33,7 +36,8 @@ const InformationPhase = () => {
   const [title, setTitle] = useState("");
   const [comment, setComment] = useState("");
   const [type, setType] = useState("");
-
+  const [fileNote, setFileNote] = useState(null);
+  const [user,setUser] = useState({})
   const getFile = async (e) => {
     const formData = new FormData();
     formData.append("file", e.target.files[0]);
@@ -59,7 +63,6 @@ const InformationPhase = () => {
       );
       setFolders(response.data);
     } catch (error) {
-      console.log(error);
     }
   };
 
@@ -84,6 +87,7 @@ const InformationPhase = () => {
       console.log(error);
     }
   };
+
   const flickityRef = useRef(null);
 
   const fetchNote = async () => {
@@ -105,6 +109,7 @@ const InformationPhase = () => {
     fetchFolder();
     fetchFileByFolder();
     fetchNote();
+    handleGetUser(auth.currentUser.email)
   }, [refrech, folderId]);
 
   const addFolder = async (folderName) => {
@@ -144,6 +149,9 @@ const InformationPhase = () => {
     }
   };
 
+
+
+
   const onButtonClick = (pdfLink) => {
     const pdfUrl = pdfLink;
     const link = document.createElement("a");
@@ -154,26 +162,43 @@ const InformationPhase = () => {
     document.body.removeChild(link);
   };
 
-  const addNotes = async (title, comment, type) => {
-    console.log(
-      {
-        title: title,
-        comment: comment,
-        type: type,
-      },
-      "this is the body"
-    );
+  const auth = getAuth();
+
+  const handleGetUser = async (user) =>{
+    
+    await axios.get(`http://localhost:1128/api/lawyer/getLawyerByEmail/${user}`)
+    .then((res)=>{
+      setUser(res.data);
+    })
+    .catch((err)=>{
+      console.log(err)
+    })
+  }
+
+  const addNotes = async (title, comment, type,file) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "xhqp21a0");
     try {
+
+      const data = await axios.post(
+        "https://api.cloudinary.com/v1_1/dgztaxbvi/upload",
+        formData
+      );
+
       await axios.post("http://localhost:1128/api/note/addNote", {
         title: title,
         comment: comment,
         type: type,
+        attachedFile : data.data.secure_url ,
+        attachedFileName : data.data.original_filename + ".pdf"
       });
       setRefrech(!refrech);
     } catch (error) {
       console.log(error);
     }
   };
+ 
 
    const handleDelete = async (id) =>{
    try {
@@ -199,22 +224,19 @@ const InformationPhase = () => {
    }
 
   const progress = 93;
+
   return (
     <div
       style={{
         display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        gap: "1rem",
-        width: "100%",
-        overflowX: "hidden",
-        backgroundColor: "grey",
+       width:'100%'
+        
       }}
     >
-      <div style={{ width: "100%" }}>
-        <NavbarDashboard />
-      </div>
-      <div
+
+     
+       <div style={{display:'flex',width:'100%'}} >
+           {/* <div
         style={{
           display: "flex",
           justifyContent: "flex-start",
@@ -222,20 +244,25 @@ const InformationPhase = () => {
           color: "black",
         }}
       >
+
         <p
-          style={{ fontSize: "25px", fontWeight: "bold", fontFamily: "serif" }}
+        style={{ fontSize: "25px", fontWeight: "bold", fontFamily: "serif" }}
         >
-          Welcome Lawyer Name{" "}
+        Welcome Lawyer Name{" "}
         </p>
-      </div>
-      <div
+      </div> */}
+<SidebarDash/>
+<div style={{display:'flex',flexDirection:'column',width:'100%'}}>
+      <NavbarDashboard/>
+
+<div
         style={{
           display: "flex",
           justifyContent: "center",
-          gap: "2rem",
           width: "100%",
-          marginLeft: "8.9rem",
+          gap:'4rem'
         }}
+
       >
         <div className="dashboard_main_container_leith">
           <div
@@ -243,7 +270,7 @@ const InformationPhase = () => {
               display: "flex",
               alignItems: "center",
               justifyContent: "flex-start",
-              gap: "2rem",
+              gap: "5rem",
             }}
           >
             <div className="dashboard_box_leith">
@@ -288,8 +315,9 @@ const InformationPhase = () => {
                       style={{
                         display: "flex",
                         justifyContent: "space-between",
-                        padding: "2rem",
+                        padding: "1rem",
                         overflowY: "scrol",
+                        
                       }}
                     >
                       <p
@@ -299,8 +327,7 @@ const InformationPhase = () => {
                           fontFamily: "revert",
                         }}
                       >
-                        {" "}
-                        Folder Storage{" "}
+                        Folder Storage
                       </p>
                       <input
                         type="search"
@@ -309,8 +336,7 @@ const InformationPhase = () => {
                         style={{
                           height: "4vh",
                           borderRadius: "0.5rem",
-
-                          width: "220px",
+                          width: "120px",
                         }}
                         onChange={(e) => {
                           setNewName(e.target.value);
@@ -320,15 +346,17 @@ const InformationPhase = () => {
                         style={{
                           display: "flex",
                           alignItems: "center",
-                          fontSize: "35px",
+                          fontSize: "30px",
                           color: "goldenrod",
+                          
                         }}
                       />
 
                       <button
                         style={{
                           border: "none",
-                          width: "40px",
+                          width: "45px",
+                          height: "45px",
                           borderRadius: "50%",
                           fontSize: "30px",
                           backgroundColor: "goldenrod",
@@ -383,6 +411,7 @@ const InformationPhase = () => {
                                   alignText: "center",
                                   height: "3rem",
                                 }}
+                                className="fixed"
                                 key={i}
                               >
                                 <FolderIcon
@@ -446,11 +475,11 @@ const InformationPhase = () => {
                         <button
                           style={{
                             border: "none",
-                            width: "40px",
+                            width: "45px",
+                            height: "45px",
                             borderRadius: "50%",
                             fontSize: "30px",
                             backgroundColor: "goldenrod",
-                            cursor: "pointer",
                           }}
                         >
                           {" "}
@@ -519,7 +548,7 @@ const InformationPhase = () => {
               </div>
             </div>
           ) : (
-            ///////////////note /////////////////////
+            ////////////////// note ///////////////////////
             <div className="dashboard_container_leith">
               <div
                 style={{
@@ -534,7 +563,7 @@ const InformationPhase = () => {
                   style={{
                     border: "none",
                     width: "7rem",
-                    height: "4rem",
+                    height: "2.5rem",
                     borderRadius: "1rem",
                     backgroundColor: "goldenrod",
                   }}
@@ -542,45 +571,57 @@ const InformationPhase = () => {
                     const { value: result } = await Swal.fire({
                       title: "Enter your Note",
                       html:
-                        `<input id="swal-input1" class="swal2-input" style="width: 350px;" placeholder="Title note"  >` +
                         '<input id="swal-input3" class="swal2-input" style="width: 350px;" placeholder="Add your Note">' +
+                        '<input type="file" id="swal-input4" class="swal2-input" style="width: 350px;" placeholder="Add your File">'+
                         '<select id="swal-input2" class="swal2-input">' +
                         '<option value="">Select...</option>' +
                         '<option value="urgent">urgent</option>' +
                         '<option value="personnel">Personnel</option>' +
                         '<option value="notes">Notes</option>' +
-                        "</select>",
+                        '</select>',
+                        cancelButtonText: 'Cancel',
+                        showCancelButton: true, 
+
                       focusConfirm: false,
                       preConfirm: () => {
-                        setTitle(document.getElementById("swal-input1").value);
-                        setComment(
-                          document.getElementById("swal-input3").value
-                        );
+                        setComment(document.getElementById("swal-input3").value);
                         setType(document.getElementById("swal-input2").value);
-
+                        setFileNote(document.getElementById("swal-input4").value)                  
                         return [
                           addNotes(
                             document.getElementById("swal-input1").value,
                             document.getElementById("swal-input3").value,
-                            document.getElementById("swal-input2").value
+                            document.getElementById("swal-input2").value,
+                            document.getElementById("swal-input4").files[0]
                           ),
                         ];
                       },
                       customClass: { confirmButton: "color-modal" },
+                      
                     });
                   }}
+                  
                 >
                   Add note
                 </button>
               </div>
-              <Flickity>
-                {notes.map((notes, i) => {
+              <div >
+              <Flickity 
+               options={{initialIndex: 1}}
+              >
+
+                {
+                 notes.map((notes, i) => {
+                  console.log(
+                    notes
+                  )
                   return (
                     <div
                       style={{
                         display: "flex",
                         gap: "3rem",
                         marginRight: "2rem",
+                        alignItems:"center"
                       }}
                     >
                       <div
@@ -590,11 +631,11 @@ const InformationPhase = () => {
                           height: "22rem",
                           backgroundColor:
                             notes.type === "urgent"
-                              ? "grey	"
+                              ? "#5F9EA0		"
                               : notes.type === "personnel"
-                              ? "grey"
+                              ? "#8FBC8F	"
                               : notes.type === "notes"
-                              ? "grey	"
+                              ? "#FFD700		"
                               : null,
                           borderRadius: "2rem 0 2rem 0",
                         }}
@@ -602,47 +643,87 @@ const InformationPhase = () => {
                         <div className="card-body">
                           <div style={{display:'flex', justifyContent:'space-between'}}>
                         
-                          <CachedRoundedIcon style={{color:'white'}}  onClick= { async()=>{
+                          <EditIcon style={{color:'white'}} 
+                          onClick={async () => {
                             await Swal.fire({
                               title: "Update Note",
                               html: `
-                                <input id="swal-input1" class="swal2-input" placeHolder='update title'>
-                                <input id="swal-input2" class="swal2-input" placeHolder='update the note'>
+                                <input id="swal-input1" class="swal2-input" placeholder='update title'>
+                                <input id="swal-input2" class="swal2-input" placeholder='update the note'>
                               `,
                               focusConfirm: false,
+                              showCancelButton: true,
                               preConfirm: () => {
-                                setTitle(document.getElementById("swal-input1").value);
-                                setComment(
-                                  document.getElementById("swal-input2").value
-                                );
-                                return [
-                                  updateNote(notes.id)
-                               
-                                ];
-                                
+                                const titleValue = document.getElementById("swal-input1").value;
+                                const commentValue = document.getElementById("swal-input2").value; 
+                                const typeValue = document.getElementById("swal-input3").value;
+                          
+                                setTitle(titleValue);
+                                setComment(commentValue);
+                                setType(typeValue);
+                              
+                                return addNotes(titleValue, commentValue, typeValue);
                               },
-                              customClass: { confirmButton: "color-modal" },
-
+                              customClass: { confirmButton: "color-modal",cancelButton: "color-modal" },
                             });
-                         
-                          }}/> 
-                          <DeleteOutlineRoundedIcon style={{color:'white'}} onClick={()=>{console.log("this is id", notes.id); handleDelete(notes.id)}} />
+                          }}
+                          
+                          /> 
+                          <DeleteOutlineRoundedIcon style={{color:'white'}} onClick={()=>{handleDelete(notes.id)}} />
 
                           </div>
-                         
-                          <h5 className="card-title">{notes.title}</h5>
-                          <p className="card-text">{notes.comment}</p>
+                          <div style={{display :'flex', justifyContent:'flex-start', gap:"2rem", padding:'1rem'}}>
+                          <img src={user.ImageUrl} alt=""  style={{width:'30px', width:'35px', borderRadius:'50%'}}/>
+                          <h5>{user.fullName}</h5>
+                          </div>
+                          <div style={{height:'0.5%', width:'100%', backgroundColor:'black'}}></div>
+                         <div>
+                           
+                          <p className="card-text" style={{marginTop:'2rem'}}>{notes.comment}</p>
+                         </div>
                         </div>
-                        <div>
-                          <p>{notes.createdAt.slice(0,10)}</p>
+                       {notes.attachedFile && <div style={{ height: "auto" }}>
+                            <div>
+                              <div
+                                style={{
+                                  display: "flex",
+                                  flexDirection: "row",
+                                  alignItems: "center",
+                                  alignText: "center",
+                                  height: "3rem",
+                                }}
+                              >
+                                <InsertDriveFileIcon
+                                  style={{
+                                    color: "goldenrod",
+                                    height: "100%",
+                                    width: "10%",
+                                    cursor: "pointer",
+                                  }}
+                                  onClick={() => {
+                                    onButtonClick(notes.attachedFile);
+                                  }}
+                                />
+                                <p style={{ height: "50%", margin: 0, fontSize:'0.9rem' }}>
+                                  {notes.attachedFileName}{" "}
+                                </p>
+                                {/* <DeleteIcon /> */}
+                              </div>
+                           
+                            </div>
+                            <br />
+                          </div>}
+                        <div >
+                        
                         </div>
+
                         <div
                           style={{
                             borderTop: "1px solid #ccc",
                             padding: "1rem",
                             // marginTop: "1rem",
                             display: "flex",
-                            justifyContent: "center",
+                            justifyContent: "space-between",
                           }}
                         >
                           <p
@@ -655,12 +736,14 @@ const InformationPhase = () => {
                           >
                             {notes.type}
                           </p>
+                          <p>{notes.createdAt.slice(0,10)}</p>
                         </div>
                       </div>
                     </div>
                   );
                 })}
               </Flickity>
+              </div>
             </div>
 
             ///////////////// / //////////////////////////////////////////////
@@ -670,9 +753,9 @@ const InformationPhase = () => {
           <div
             style={{
               display: "flex",
-              padding: "3rem",
+              padding: "2rem",
               flexDirection: "column",
-              gap: "3rem",
+              gap: "1rem",
             }}
           >
             <p
@@ -694,11 +777,34 @@ const InformationPhase = () => {
                 trailColor: "#d6d6d6",
               })}
             />
+            <img src={require('../../assets/images/progress case.png')} alt="" style={{ width:'185px', height:'210px'}} />
+          </div>
+          <div>
           </div>
         </div>
       </div>
+</div>
+
+     
+   
+     
+       </div>
     </div>
   );
 };
 
 export default InformationPhase;
+
+
+
+
+
+
+
+
+
+
+
+
+
+

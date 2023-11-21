@@ -23,21 +23,32 @@ function Signup() {
   const lawyerCollectionRef = collection(db, "lawyers");
 
   const handleSiginUp = async () => {
-   const addUser= createUserWithEmailAndPassword(auth, email, password)
-   if(addUser){
-    const obj={
-      email,
-      password,
-      phoneNumber,
-      gender,
-      ImageUrl:papers,
-      fullName
-    }
-    await axios.post("http://localhost:1128/api/lawyers/add",)
+    createUserWithEmailAndPassword(auth, email, password)
+    .then(async ()=>{
+      console.log('here',papers);
+       const obj={
+         email,
+         password,
+         phoneNumber,
+         gender,
+         imageUrl:papers,
+         fullName
+       }
+       await axios.post("http://localhost:1128/api/lawyers/addLawyer",obj)
+       .then(()=>{
+         console.log('done')
+       })
+       .catch((error)=>{
+         console.log(error)
+        })
+        navigate("/Signin");
+      
+    })
+    .catch((error)=>{
+      console.log(error)
+    })
 
-   }
   
-    navigate("/Signin");
   };
 
   const handleFile = async (e) => {

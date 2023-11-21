@@ -36,24 +36,26 @@ const AllClient = () => {
   }, [refrech]);
 
   return (
-    <div>
+     <div style={{display:'flex', }}>
+      <SidebarDash/>
+      <div style={{display:'flex',flexDirection:'column',width:'100%'}}>
       <NavbarDashboard />
+
       <div className="allPage">
         <div className="firstDiv">
           <button
             className="btnAdd"
             data-bs-toggle="modal"
             data-bs-target="#staticBackdrop"
-          >
+          >      
             +New Client{" "}
           </button>
           <Modal refrech={refrech} setRefrech={setRefrech} />
-          <hr />
         </div>
 
         <div
           className="table-wrapper table1"
-          style={{ width: "70rem", display: "flex", flexDirection: "column", marginLeft: "21rem" }}
+          style={{ width: "70rem", display: "flex", flexDirection: "column"}}
         >
           <DataGrid user={users}
           
@@ -61,6 +63,7 @@ const AllClient = () => {
         </div>
       </div>
     </div>
+     </div>
   );
 };
 

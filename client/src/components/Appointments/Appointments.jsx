@@ -6,6 +6,7 @@ import Example from "../Example/Example";
 import { FIREBASE_AUTH , db } from "../../firebaseconfig";
 
 import axios from 'axios'
+import SidebarDash from "../SidebarDash/SidebarDash";
 
 const Appointments = () => {
   const [appointments,setAppointments] = useState([])
@@ -109,16 +110,17 @@ const deleteAppointment = async (id) => {
     getAcceptedAppointments()
   }, [lawyer]);
   return (
-    <div>
-      <div>
+      <div style={{display:'flex'}} >
+      <SidebarDash/>
+      <div style={{display:'flex',flexDirection:'column',width:'100%'}} >
         <NavbarDashboard />
-      </div>
       <div className="apointment">
         <div className="table">
           <Aziz appointments={appointments} deleteAppointment={deleteAppointment} setId={setId}    acceptAppointment={acceptAppointment} />
         </div>
         <div className="extra">
-          <div className="upcoming">
+          <div style={{ display:'flex', gap:'2rem',flexDirection:'column'}}>
+          <div className="upcoming" >
             <div className="scrollable-content">
               <p className="upcoming-title">Upcoming Appointments</p>
               <div className="cardAndBorder">
@@ -138,9 +140,11 @@ const deleteAppointment = async (id) => {
             {" "}
             <Example />{" "}
           </div>
+          </div>
         </div>
       </div>
-    </div>
+      </div>
+      </div>
   );
 };
 
