@@ -78,16 +78,18 @@ const CaseHistory = () => {
       field: "actions",
       headerName: "Actions",
       sortable: false,
-      width: 160,
+      width: 200,
       renderCell: (params) => (
         <Space size="middle">
           <Button
             type="primary"
-            onClick={() => navigate(`/CaseProfile/${params.row.id}`)}
+            onClick={() => navigate(`/CaseProfile`)}
+            style={{fontSize:'12px'}}
+
           >
-            View
+            View Phases
           </Button>
-          <Button type="danger"  style={{backgroundColor:'red',color:'white'}} onClick={() => handleDelete(params.row.id)}>
+          <Button type="danger"  style={{backgroundColor:'red',color:'white', fontSize:'12px'}} onClick={() => handleDelete(params.row.id)}>
             Delete
           </Button>
         </Space>
