@@ -46,16 +46,15 @@ const deleteAppointment = async (id) => {
     }
   };
 
-  const acceptAppointment = async (appointmentId) => {
+  const acceptAppointment = async (appointmentId,lawyerId,userId) => {
     console.log(appointmentId, "this is the appointmenttttt");
     console.log(userId, "this is the user id");
     console.log(lawyerId, "this is the lawyer id");
     try {
       const response = await axios.put(`http://localhost:1128/api/appointment/updateAppointment/${appointmentId}`, {accepted: "accepted"});
       console.log(response.data);
-      
+      setRefrech(!refrech);
       const addUserAndLawyerId = async () => {
-        console.log(userId);
         try {
           const response = await axios.post('http://localhost:1128/api/user_lawyer/addUser_Lawyer', {
             userId: userId,
@@ -66,18 +65,30 @@ const deleteAppointment = async (id) => {
           console.log(error);
         }
       };
-  
-      addUserAndLawyerId();
-  
+      
+      const checkUser= await axios.get(`http://localhost:1128/api/user_lawyer/getUserLawyerId/${userId}/${lawyerId}`);
+      console.log(checkUser.data);
+        if(!checkUser.data.length){
+          setRefrech(!refrech)
+          await addUserAndLawyerId();
+        } 
     } catch (error) {
       console.log(error);
     }
   };
-
   const getAcceptedAppointments= async () => {
     try {
       const response = await axios.get(`http://localhost:1128/api/appointment/appointment/lawyer/${lawyer.id}`)
-      setAcceptedAppointments(response.data)
+      let sortedAppointments = response.data;
+  
+      // Sort appointments by date and time
+      sortedAppointments = sortedAppointments.sort((a, b) => {
+        const dateA = new Date(a.date + 'T' + a.time);
+        const dateB = new Date(b.date + 'T' + b.time);
+        return dateA - dateB;
+      });
+  
+      setAcceptedAppointments(sortedAppointments)
     }catch (error) {
       console.log(error);
     }
@@ -107,7 +118,6 @@ const deleteAppointment = async (id) => {
     if (!lawyer.id) {
       return;
     }
-  
     try {
       const response = await axios.get(`http://localhost:1128/api/appointment/appointment/lawyer/${lawyer.id}`);
       const appointmentsWithUserNames = await Promise.all(response.data.map(async (appointment) => {
@@ -123,13 +133,13 @@ const deleteAppointment = async (id) => {
   
   useEffect(() => {
     getLawyer();
-  }, []);
+  }, [refrech]);
   
   useEffect(() => {
     getAppointments();
     getUpcomingAppointments()
     getAcceptedAppointments()
-  }, [lawyer]);
+  }, [lawyer,refrech]);
   return (
       <div style={{display:'flex'}} >
       <SidebarDash/>

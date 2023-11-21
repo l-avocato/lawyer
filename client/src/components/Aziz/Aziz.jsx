@@ -66,9 +66,7 @@ const App = ({
               border: "none",
             }}
             onClick={() => {
-              setUserId(record.userId);
-              setLawyerId(record.lawyerId);
-              acceptAppointment(record.id);
+              acceptAppointment(record.id, record.lawyerId, record.userId);
             }}
           >
             Accept
