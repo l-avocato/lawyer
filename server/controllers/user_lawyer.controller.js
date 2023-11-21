@@ -13,17 +13,15 @@ getUserLawyerId:async (req,res)=>{
     }
 },
 getClientsByLawyerId: async (req, res) => {
+    console.log("balkis said you are the ONE");
     try {
       const userLawyerRelations = await Lawyer.findAll({ where: { id: req.params.lawyerId },
         include: [{
-        model: User
-       }]
+        model: User,
+        order: [['id', 'ASC']], 
+       }],
       
     });
-    //   const clients = await Promise.all(userLawyerRelations.map(async (relation) => {
-    //     const user = await User.findById(relation.userId);
-    //     return user;
-    //   }));
       res.json(userLawyerRelations);
     } catch (error) {
       console.log(error);
