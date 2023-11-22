@@ -19,6 +19,7 @@ import logo from "../../assets/images/logo.png";
 import { useNavigate } from "react-router-dom";
 import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import CaseHistory from "../CaseHistory/CaseHistory";
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
 const SidebarDash = () => {
   const navigate = useNavigate();
@@ -31,28 +32,10 @@ const SidebarDash = () => {
     setIsSettingsOpen(!isSettingsOpen);
   };
 
-  const clearToken = () => {
-    try {
-      localStorage.removeItem("userToken"); //clearing token when you sign out
-      console.log("Token cleared");
-    } catch (error) {
-      console.error("Error clearing token:", error);
-    }
-  };
-
-  const logOut = async () => {
-    try {
-      await clearToken();
-      navigate("/");
-    } catch (error) {
-      console.error("Logout error:", error);
-    }
-  };
-
   return (
     <div className="new-sidebar">
       <div className="top-section" style={{display:"flex", justifyContent:"center"}}>
-        <img className="new-logo" src={logo} />
+        <img className="new-logo" src={logo} style={{width:'170px', height:'150px', display:'flex',justifyContent:'center'}} />
       </div>
       <div className="new-separator"></div>
       <div className="line"></div>
@@ -85,8 +68,8 @@ const SidebarDash = () => {
             </span>
           </li>
           <li className="g-1">
-            <NotificationsNoneIcon className="new-icon" />
-            <span className="side-title">Notifications</span>
+            <CalendarMonthIcon className="new-icon" />
+            <span className="side-title">Calendar</span>
           </li>
           <li className="g-1"  onClick={() => navigate("/task")}>
             <AssignmentTurnedInIcon className="new-icon" />
@@ -94,54 +77,15 @@ const SidebarDash = () => {
               Tasks
             </span>
           </li>
-          <li onClick={toggleSettings} className="g-1">
-            <SettingsApplicationsIcon className="new-icon" />
-            <span className="side-title">Settings</span>
+        
+          <li className="g-1"  onClick={() => navigate("/PaymentHistory")}>
+            <AssignmentTurnedInIcon className="new-icon" />
+            <span className="side-title">
+Payment             </span>
           </li>
-          {isSettingsOpen && (
-            <ul className="settings-dropdown">
-              <li className="g-1">
-                <SettingsApplicationsIcon className="new-icon" />
-
-                <Link
-                  to="../SettingProfil"
-                  style={{
-                    textDecoration: "none",
-                    color: isHoveredProfile ? "black" : "white",
-                  }}
-                  onMouseEnter={() => setIsHoveredProfile(true)}
-                  onMouseLeave={() => setIsHoveredProfile(false)}
-                >
-                  Edit Profile
-                </Link>
-              </li>
-              <li className="g-1">
-                <SettingsApplicationsIcon className="new-icon" />
-
-                <Link
-                  to="../SettingSecurity"
-                  style={{
-                    textDecoration: "none",
-                    color: isHoveredSecurity ? "black" : "white",
-                  }}
-                  onMouseEnter={() => setIsHoveredSecurity(true)}
-                  onMouseLeave={() => setIsHoveredSecurity(false)}
-                >
-                  Edit Security
-                </Link>
-              </li>
-            </ul>
-          )}
-          <li className="g-1">
-            <AccountCircleOutlinedIcon className="new-icon" />
-            <span className="side-title">Profile</span>
-          </li>
-          <li className="g-1">
-            <PowerSettingsNewIcon className="new-icon" />
-            <span className="side-title" onClick={logOut}>
-              Logout
-            </span>
-          </li>
+        
+         
+         
         </ul>
       </div>
       

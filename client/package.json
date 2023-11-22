@@ -21,6 +21,7 @@
     "@mui/x-charts": "^6.18.1",
     "@mui/x-data-grid": "^6.18.1",
     "@react-google-maps/api": "^2.19.2",
+    "@react-navigation/native": "^6.1.9",
     "@reduxjs/toolkit": "^1.9.7",
     "@syncfusion/ej2": "^19.4.48",
     "@syncfusion/ej2-react-calendars": "^19.4.48",

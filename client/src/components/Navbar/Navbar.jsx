@@ -28,6 +28,14 @@ function Navbar() {
   const auth = getAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [gender, setGender] = useState("");
+  const [papers, setPapers] = useState(
+    "https://www.shareicon.net/data/512x512/2016/02/26/724973_plus_512x512.png"
+  );
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const lawyerCollectionRef = collection(db, "lawyers");
 
   const handleSignIn = (event) => {
     event.preventDefault();
@@ -45,14 +53,6 @@ function Navbar() {
       });
   };
 
-  const [fullName, setFullName] = useState("");
-  const [gender, setGender] = useState("");
-  const [papers, setPapers] = useState(
-    "https://www.shareicon.net/data/512x512/2016/02/26/724973_plus_512x512.png"
-  );
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const lawyerCollectionRef = collection(db, "lawyers");
 
   const handleSignUp = (event) => {
     event.preventDefault();
@@ -151,14 +151,14 @@ function Navbar() {
                     />
                     <Form
                       onSubmit={handleSignIn}
-                      style={{ width: "100%", display: "flex", flexDirection: "column", gap: "1.3rem" , marginTop:'60px'}}
+                      style={{ width: "100%", display: "flex", flexDirection: "column", gap: "1.3rem" , marginTop:'50px'}}
                     >
                       <Form.Group controlId="formBasicEmail">
-                        <Form.Label>Email address</Form.Label>
+                        <Form.Label style={{fontSize:'1.2rem' , fontWeight:'bold'}}>Email address</Form.Label>
                         <Form.Control
                           type="email"
                           placeholder="Enter email"
-                          style={{ fontSize: "14px" }}
+                          style={{ fontSize: "15px" }}
                           onChange={(e) => {
                             setEmail(e.target.value);
                           }}
@@ -166,11 +166,11 @@ function Navbar() {
                       </Form.Group>
 
                       <Form.Group controlId="formBasicPassword">
-                        <Form.Label>Password</Form.Label>
+                        <Form.Label style={{fontSize:'1.2rem', fontWeight:'bold'}}>Password</Form.Label>
                         <Form.Control
                           type="password"
                           placeholder="Password"
-                          style={{ fontSize: "14px" }}
+                          style={{ fontSize: "1px" }}
                           onChange={(e) => {
                             setPassword(e.target.value);
                           }}
@@ -194,6 +194,8 @@ function Navbar() {
                   </div>
                 </Modal.Body>
               </Modal>
+
+
               <li onClick={handleShowSignup}>Sign Up</li>
 
               <Modal

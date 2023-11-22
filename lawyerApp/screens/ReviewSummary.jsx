@@ -37,7 +37,7 @@ console.log(selectedTime.split(" ")[0],"item");
   const addAvailebility = async () => {
     try {
       const response = await axios.post(
-        `http://192.168.103.27:1128/api/availability/addAvailability`,{
+        `http://${config}:1128/api/availability/addAvailability`,{
           lawyerId: item.id,
           date: selected,
           time: selectedTime,

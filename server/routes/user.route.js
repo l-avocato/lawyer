@@ -1,8 +1,10 @@
 const express = require('express')
 const routerUser = express.Router()
-const {getAllUsers,getUserId,add,deleteUser,update,searchUser,searchUserByCIN,blockUser,getUserByEmail}= require('../controllers/user.controller')
+const {getAllUsers,getUserId,add,deleteUser,update,searchUser,searchUserByCIN,blockUser,getUserByEmail,getUsersByLawyerId}= require('../controllers/user.controller')
 
 routerUser.get('/allUsers',getAllUsers)
+
+routerUser.get('/getUsersByLawyerId/:id',getUsersByLawyerId)
 
 routerUser.get('/getUserId/:id',getUserId)
 
