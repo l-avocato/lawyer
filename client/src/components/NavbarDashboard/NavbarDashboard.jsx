@@ -31,6 +31,9 @@ import Tooltip from '@mui/material/Tooltip';
 import SidebarDash from '../SidebarDash/SidebarDash';
 import { getAuth } from 'firebase/auth';
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
+
+
 
 const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -88,6 +91,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 // let isNotificationsOpen, setNotificationsOpen;
 const NavbarDashboard = () => {
  
+  const navigate = useNavigate();
 
  
   // [isChatOpen, setChatOpen] = useState(false);
@@ -342,8 +346,8 @@ React.useEffect(()=>{
             <Box sx={{ flexGrow: 1 }} />
             <Box sx={{ display: { xs: 'none', md: 'flex' },gap:"0.5rem" }}>
               <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-                <Badge badgeContent={4} color="error">
-                  <MailIcon />
+                <Badge badgeContent={4} color="error" >
+                  <MailIcon onClick={()=>{navigate('/chat')}}/>
                 </Badge>
               </IconButton>
               <IconButton
