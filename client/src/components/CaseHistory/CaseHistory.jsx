@@ -6,38 +6,43 @@ import Box from "@mui/system/Box";
 import { useNavigate } from "react-router-dom";
 import SidebarDash from "../SidebarDash/SidebarDash";
 import { DataGrid } from "@mui/x-data-grid";
-
+import NavbarDashboard from "../NavbarDashboard/NavbarDashboard";
+import { FIREBASE_AUTH , db } from "../../firebaseconfig";
 const CaseHistory = () => {
   const [cases, setCases] = useState([]);
   const [data, setData] = useState([]);
   const navigate = useNavigate();
+  const [lawyer,setLawyer]=useState({});
+  
+  
+
+
+  const fetchCasesData = async () => {
+    try {
+      const loggedInLawyer = FIREBASE_AUTH.currentUser.email;
+    
+      const response = await axios.get(`http://localhost:1128/api/case/case/lawyer/${loggedInLawyer}`);
+      setCases(response.data);
+
+      const data2 = response.data.map((data) => ({
+        id: data.id ,
+        fullName: data.user?.fullName,
+        imageUrl: data.user?.ImageUrl,
+        title: data.title,
+        number: data.number,
+        createdAt: data.createdAt.slice(0,10),
+        details: data.details,
+      }));
+      setData(data2);
+    } catch (error) {
+      console.error("Error fetching user data", error);
+    }
+  };
 
   useEffect(() => {
-    const fetchCasesData = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:1128/api/case/allCases"
-        );
-        setCases(response.data);
-        const data2 = response.data.map((data) => ({
-          id: data._id || Math.random().toString(36).substr(2, 9),
-          fullName: `${data.user?.fullName} (${data.details})`,
-          imageUrl: data.user?.ImageUrl,
-          title: data.title,
-          number: data.number,
-          createdAt: data.createdAt,
-          details: data.details,
-        }));
-        console.log("this is data 2 ", data2);
-        setData(data2);
-        console.log(response.data, "im cases");
-      } catch (error) {
-        console.error("Error fetching user data", error);
-      }
-    };
-
     fetchCasesData();
-  }, []);
+  }, []); // useEffect will now run whenever lawyer changes
+
 
   const handleView = (id) => {
     console.log("View case with ID:", id);
@@ -57,11 +62,6 @@ const CaseHistory = () => {
 
   const columns = [
     { field: "id", headerName: "ID", width: 90 },
-    { field: "fullName", headerName: "Full name", width: 200 },
-    { field: "title", headerName: "Title", width: 200 },
-    { field: "number", headerName: "Number", width: 150 },
-    { field: "createdAt", headerName: "Created At", width: 200 },
-    { field: "details", headerName: "Details", width: 200 },
     {
       field: "imageUrl",
       headerName: "Image",
@@ -75,20 +75,28 @@ const CaseHistory = () => {
         />
       ),
     },
+    { field: "fullName", headerName: "Full name", width: 150 },
+    { field: "title", headerName: "Title", width: 150 },
+    { field: "number", headerName: "Number", width: 150 },
+    { field: "createdAt", headerName: "Opened At", width: 150 },
+    { field: "details", headerName: "Details", width: 150 },
+   
     {
       field: "actions",
       headerName: "Actions",
       sortable: false,
-      width: 160,
+      width: 200,
       renderCell: (params) => (
         <Space size="middle">
           <Button
             type="primary"
-            onClick={() => navigate(`/CaseProfile/${params.row.id}`)}
+            onClick={() => navigate(`/CaseProfile`)}
+            style={{fontSize:'12px'}}
+
           >
-            View
+            View Phases
           </Button>
-          <Button type="danger" onClick={() => handleDelete(params.row.id)}>
+          <Button type="danger"  style={{backgroundColor:'red',color:'white', fontSize:'12px'}} onClick={() => handleDelete(params.row.id)}>
             Delete
           </Button>
         </Space>
@@ -97,30 +105,20 @@ const CaseHistory = () => {
   ];
 
   return (
-    <Box
-      sx={{
-        height: "100%",
-        width: "100%",
-        overflow: "hidden",
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
-      <Box
-        sx={{
-          height: "100%",
-          width: "80%",
-          display: "flex",
-          marginLeft: 38,
-          padding: 6,
-          minHeight: "600px",
-        }}
-      >
-        <SidebarDash />
-        <Box
+    <div style={{ display: "flex" }}>
+      <SidebarDash />
+      <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
+        <NavbarDashboard/>
+       <div style={{height:'100%',width:'100%',display:'flex',
+            justifyContent:'center',
+            alignItems:'center',}}>
+       <Box
           sx={{
-            flex: 1,
-            overflow: "hidden",
+            // flex: 1,
+            // overflow: "hidden",
+            width: "90%",
+            height: "60%",
+            
           }}
         >
           <DataGrid
@@ -130,8 +128,9 @@ const CaseHistory = () => {
             disableRowSelectionOnClick
           />
         </Box>
-      </Box>
-    </Box>
+       </div>
+      </div>
+    </div>
   );
 };
 

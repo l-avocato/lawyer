@@ -6,7 +6,7 @@ module.exports = {
 
 getAllUsers : async (req,res) => {
     try {
-        const allUsers= await User.findAll()
+        const allUsers= await User.findAll({ order:[["createdAt","DESC"]]})
         res.status(200).send(allUsers)
     } catch (error) {
         throw error
@@ -19,6 +19,16 @@ getAllUsers : async (req,res) => {
          where :{id: req.params.id }
       })
       res.status(200).send(oneUser)
+  } catch (error) {
+      throw error
+  }
+},
+ getUsersByLawyerId: async (req,res)=>{
+  try {
+      const Users= await User.findAll({
+         where :{lawyerId: req.params.lawyerId }
+      })
+      res.status(200).send(Users)
   } catch (error) {
       throw error
   }

@@ -9,6 +9,9 @@ import {
   Image,
   TextInput,
 } from "react-native";
+import { FIREBASE_AUTH, FIREBASE_DB } from "../firebaseConfig";
+import config from './ipv'
+import axios from "axios";
 
 const ReviewSummary = ({route}) => {
   const [category, setCategory] = useState("Category Type");
@@ -22,16 +25,51 @@ const ReviewSummary = ({route}) => {
   const {selected}=route.params;
   const {selectedTime}=route.params;
   
-console.log(item,"item");
+console.log(selectedTime.split(" ")[0],"item");
 
-  console.log("this is law",selected);
+  console.log(item.id,"item appointment");
   const handleConfirmPayment = () => {
     setIsConfirmed(false);
     setIsModalVisible(true);
   };
 
+   
+  const addAvailebility = async () => {
+    try {
+      const response = await axios.post(
+        `http://${config}:1128/api/availability/addAvailability`,{
+          lawyerId: item.id,
+          date: selected,
+          time: selectedTime,
+          reason:message
+        }
+      
+      );
+      console.log(response.data);
+    return response.data
+    } catch (error) {
+      console.error( error);
+    }
+  };
+
+
   const closeModal = () => {
     setIsModalVisible(false);
+  };
+  const setAppointmentHandler = async () => {
+    const email = FIREBASE_AUTH.currentUser.email;
+    const obj= {email,lawyerId:item.id,time:selectedTime.split(" ")[0],date:selected,reason:message}
+    console.log(obj,"this is the obj")
+    try {
+      // Use Axios instead of fetch
+      const response = await axios.post(`http://${config}:1128/api/appointment/addAppointment`,obj);
+      console.log(response.data,"this is the response")
+      // setAppointments(response.data)
+
+     
+    } catch (error) {
+      console.error('Error setting appointment:', error);
+    }
   };
 
   return (
@@ -62,8 +100,9 @@ console.log(item,"item");
       <TextInput
         style={styles.messageInput}
         value={message}
-        multiline
-        editable={false}
+        onChangeText={(text) => setMessage(text)} 
+        multiline={true}
+       
       />
       <ScrollView style={styles.whiteBackground}>
         <Text style={styles.title}>Online consultation</Text>
@@ -94,7 +133,10 @@ console.log(item,"item");
             styles.confirmButton,
             { backgroundColor: isConfirmed ? "black" : "black" },
           ]}
-          onPress={isConfirmed ? null : handleConfirmPayment}
+          onPress={()=>{
+            addAvailebility()
+            setAppointmentHandler()
+          }}
         >
           <Text style={styles.confirmButtonText}>
             {isConfirmed ? "Payment Confirmed" : "Confirm Booking"}
@@ -118,7 +160,7 @@ console.log(item,"item");
               You have successfully Booked ! 
             </Text>
             <View style={styles.modalButtons}>
-              <TouchableOpacity style={[styles.modalButton, { backgroundColor: "#D5B278" }]} onPress={closeModal}>
+              <TouchableOpacity style={[styles.modalButtons, { backgroundColor: "#D5B278" }]} onPress={closeModal}>
                 <Text style={styles.modalButtonText}>Back home</Text>
               </TouchableOpacity>
             </View>

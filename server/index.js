@@ -26,6 +26,7 @@ const routerProcess = require("./routes/process.route")
 const routerNote = require("./routes/note.route")
 const routeFile = require("./routes/files.route")
 const routeFolder = require("./routes/folder.route")
+const routerUser_Lawyer= require("./routes/user_lawyer.route")
 
 
 
@@ -80,6 +81,8 @@ app.use("/api/note", routerNote)
 app.use("/api/file", routeFile)
 
 app.use("/api/folder", routeFolder)
+
+app.use("/api/user_lawyer",routerUser_Lawyer)
 
 
 

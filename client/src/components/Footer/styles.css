@@ -60,6 +60,7 @@ footer .form-control {
     resize: none;
     color: #d1d2d2;
     padding: 0.7em 1em;
+    width: 450px;
 }
 footer ul > li {
   font-family: var(--open-sans);

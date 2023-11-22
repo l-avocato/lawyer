@@ -6,6 +6,7 @@ import image from "../../assets/images/dev.png";
 import  Avatar  from "./avatar.jpg";
 import banner from "./lawyer77.avif"
 import { useLocation } from "react-router-dom";
+import NavbarDashboard from "../NavbarDashboard/NavbarDashboard";
 
 
 const ClientDetails = () => {
@@ -20,8 +21,11 @@ const record = location.state
 const date = new Date(record.user.birthDate)
 
   return (
-    <div className="profileDetails">
-      <SidebarDash />
+   <div style={{display:'flex'}}>
+      <SidebarDash/>
+     <div style={{display:'flex',flexDirection:'column',width:'100%'}} >
+    <NavbarDashboard/>
+          <div className="profileDetails">
       <div className="client-details-container" >
       <div className="profile-header-main-container">
       <div className="profile-header">
@@ -124,6 +128,8 @@ const date = new Date(record.user.birthDate)
     </div>
       </div>
     </div>
+    </div>
+   </div>
   );
 };
 

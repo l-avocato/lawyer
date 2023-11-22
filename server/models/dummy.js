@@ -1,4 +1,4 @@
-const {User,Lawyer,Admin,Appointment,Case,Availavility,Category,Chat,Conversation,Media,Notification,Payment,Phase,Rating,Receipt,Report,TaskList,User_Lawyer}= require('./index')
+const {User,Lawyer,Admin,Appointment,Case,Availavility,Category,Chat,Conversation,Media,Notification,Payment,Phase,Rating,Receipt,Report,TaskList,User_Lawyer,Edge,Files,Folder,Note,Process}= require('./index')
 
 
 
@@ -13,7 +13,7 @@ const dummyLawyersData = [
       phoneNumber: 3456789012,
        ImageUrl: "https://img.freepik.com/free-photo/portrait-female-lawyer-formal-suit-with-clipboard_23-2148915797.jpg",
       gender: "Female",
-      birthDate: new Date("1988-07-22"),
+      birthDate:"1988-07-22",
       CIN: 456789012,
       langitude: 34.567,
       latitude: 78.901,
@@ -33,7 +33,7 @@ const dummyLawyersData = [
       phoneNumber: 5678901234,
        ImageUrl: "https://img.freepik.com/free-photo/portrait-expressive-young-man-wearing-formal-suit_273609-6942.jpg?size=626&ext=jpg&ga=GA1.1.1880011253.1699488000&semt=sph",
       gender: "Male",
-      birthDate: new Date("1980-03-10"),
+      birthDate: "1980-03-10",
       CIN: 123987456,
       langitude: 45.678,
       latitude: 90.123,
@@ -53,7 +53,7 @@ const dummyLawyersData = [
       phoneNumber: 6789012345,
        ImageUrl: "https://img.freepik.com/free-photo/confident-young-businesswoman-holding-clipboard-looking-camera_23-2147943416.jpg",
       gender: "Female",
-      birthDate: new Date("1995-12-05"),
+      birthDate: "1995-12-05",
       CIN: 789012345,
       langitude: 56.789,
       latitude: 12.345,
@@ -73,7 +73,7 @@ const dummyLawyersData = [
       phoneNumber: 8901234567,
        ImageUrl: "https://img.freepik.com/premium-photo/modern-business-man-formal-suit-standing-with-crossed-arms-isolated-grey-background-businesspeople-concept_533057-1641.jpg",
       gender: "Male",
-      birthDate: new Date("1983-09-15"),
+      birthDate: "1983-09-15",
       CIN: 234567890,
       langitude: 67.890,
       latitude: 23.456,
@@ -93,7 +93,7 @@ const dummyLawyersData = [
       phoneNumber: 9012345678,
        ImageUrl: "https://i.pinimg.com/474x/a0/b7/86/a0b786de4f3a4e874c464202b9650915.jpg",
       gender: "Female",
-      birthDate: new Date("1987-04-18"),
+      birthDate: "1987-04-18",
       CIN: 345678901,
       langitude: 78.901,
       latitude: 34.567,
@@ -116,7 +116,7 @@ const dummyLawyersData = [
       adress: "456 Pine St, Citytown",
        ImageUrl: "https://img.freepik.com/premium-photo/close-up-young-successful-man-smiling-front-standing-casual-outfit-against-blue-wall_1258-43431.jpg?size=626&ext=jpg&ga=GA1.1.1826414947.1699660800&semt=ais",
       gender: "Male",
-      birthDate: new Date("1992-03-15"),
+      birthDate: "1992-03-15",
       CIN: 123456789,
       langitude: 12.345,
       latitude: 45.678,
@@ -130,7 +130,7 @@ const dummyLawyersData = [
       adress: "789 Oak St, Villagetown",
        ImageUrl: "https://st.depositphotos.com/1770836/1372/i/450/depositphotos_13720689-stock-photo-young-businesswoman.jpg",
       gender: "Female",
-      birthDate: new Date("1985-08-22"),
+      birthDate: "1985-08-22",
       CIN: 987654321,
       langitude: 23.456,
       latitude: 67.890,
@@ -144,7 +144,7 @@ const dummyLawyersData = [
       adress: "234 Maple St, Hamletville",
        ImageUrl: "https://img.freepik.com/photos-gratuite/jeune-homme-barbu-chemise-rayee_273609-5677.jpg?size=626&ext=jpg&ga=GA1.1.386372595.1698364800&semt=ais",
       gender: "Male",
-      birthDate: new Date("1990-06-10"),
+      birthDate: "1990-06-10",
       CIN: 345678901,
       langitude: 34.567,
       latitude: 78.901,
@@ -158,7 +158,7 @@ const dummyLawyersData = [
       adress: "890 Elm St, Townsville",
        ImageUrl: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fHww",
       gender: "Female",
-      birthDate: new Date("1988-12-05"),
+      birthDate: "1988-12-05",
       CIN: 789012345,
       langitude: 45.678,
       latitude: 90.123,
@@ -172,7 +172,7 @@ const dummyLawyersData = [
       adress: "123 Birch St, Riverside",
        ImageUrl: "https://img.freepik.com/premium-photo/portrait-smiling-young-man-looking-camera_33839-1731.jpg",
       gender: "Male",
-      birthDate: new Date("1983-04-18"),
+      birthDate: "1983-04-18",
       CIN: 234567890,
       langitude: 56.789,
       latitude: 12.345,
@@ -185,31 +185,31 @@ const dummyLawyersData = [
       title: "Complete Project Proposal",
       description: "Prepare and submit the project proposal by the end of the week.",
       isCompleted: false,
-      deadline: new Date("2023-12-15"),
+      deadline: "2023-12-15",
     },
     {
       title: "Review Codebase",
       description: "Conduct a thorough review of the project's codebase and provide feedback.",
       isCompleted: true,
-      deadline: new Date("2023-11-30"),
+      deadline: "2023-11-30",
     },
     {
       title: "Client Meeting",
       description: "Schedule and attend a meeting with the client to discuss project updates.",
       isCompleted: false,
-      deadline: new Date("2023-12-10"),
+      deadline: "2023-12-10",
     },
     {
       title: "Bug Fixes",
       description: "Adress and fix reported bugs in the software.",
       isCompleted: false,
-      deadline: new Date("2023-12-05"),
+      deadline: "2023-12-05",
     },
     {
       title: "Documentation Update",
       description: "Update project documentation to reflect recent changes and improvements.",
       isCompleted: true,
-      deadline: new Date("2023-11-25"),
+      deadline: "2023-11-25",
     },
     
   ];
@@ -245,32 +245,32 @@ const dummyLawyersData = [
   
   const dummyAppointmentData = [
     {
-      date: new Date("2023-12-01"),
-      time: "10:00 AM",
+      date: "2023-12-01",
+      time: "10:00",
       reason: "Initial Consultation",
       accepted: "accepted",
     },
     {
-      date: new Date("2023-11-28"),
-      time: "02:30 PM",
+      date: "2023-11-28",
+      time: "02:30",
       reason: "Follow-up Meeting",
       accepted: "declined",
     },
     {
-      date: new Date("2023-12-05"),
-      time: "11:45 AM",
+      date: "2023-12-05",
+      time: "11:45",
       reason: "Legal Advice Session",
       accepted: "pending",
     },
     {
-      date: new Date("2023-11-29"),
-      time: "03:15 PM",
+      date: "2023-11-29",
+      time: "03:15",
       reason: "Contract Review",
       accepted: "accepted",
     },
     {
-      date: new Date("2023-12-08"),
-      time: "09:30 AM",
+      date: "2023-12-08",
+      time: "09:30",
       reason: "Mediation Session",
       accepted: "pending",
     },
@@ -279,28 +279,28 @@ const dummyLawyersData = [
   
   const dummyAvailabilityData = [
     {
-      date: new Date("2023-12-01"),
-      time: "10:00 AM",
+      date: "2023-12-01",
+      time: "10:00",
       available: true,
     },
     {
-      date: new Date("2023-11-28"),
-      time: "02:30 PM",
+      date: "2023-11-28",
+      time: "02:30",
       available: false,
     },
     {
-      date: new Date("2023-12-05"),
-      time: "11:45 AM",
+      date: "2023-12-05",
+      time: "11:45",
       available: true,
     },
     {
-      date: new Date("2023-11-29"),
-      time: "03:15 PM",
+      date: "2023-11-29",
+      time: "03:15",
       available: true,
     },
     {
-      date: new Date("2023-12-08"),
-      time: "09:30 AM",
+      date: "2023-12-08",
+      time: "09:30",
       available: false,
     },
 
@@ -460,9 +460,7 @@ const dummyLawyersData = [
     {
       amount: 1000,
       rest: 500,
-      paid: 500,
-      userId:1,
-      lawyerId:1
+      paid: 500
     },
     {
       amount: 1500,
@@ -613,36 +611,144 @@ const dummyLawyersData = [
       title: "Client Consultation",
       description: "Meet with the client to discuss the legal case and gather information.",
       isCompleted: false,
-      deadline: new Date("2023-12-10"),
+      deadline: "2023-12-10",
     },
     {
       title: "Legal Research",
       description: "Conduct research on relevant laws and precedents related to the case.",
       isCompleted: true,
-      deadline: new Date("2023-11-28"),
+      deadline: "2023-11-28",
     },
     {
       title: "Draft Legal Documents",
       description: "Prepare legal documents, including contracts, pleadings, or agreements.",
       isCompleted: false,
-      deadline: new Date("2023-12-05"),
+      deadline: "2023-12-05",
     },
     {
       title: "Court Appearance",
       description: "Appear in court on behalf of the client for case proceedings.",
       isCompleted: false,
-      deadline: new Date("2023-12-15"),
+      deadline: "2023-12-15",
     },
     {
       title: "Client Follow-up",
       description: "Follow up with the client to provide updates on the case and answer questions.",
       isCompleted: true,
-      deadline: new Date("2023-11-30"),
+      deadline: "2023-11-30",
     },
   ];
   
-  module.exports = {dummyLawyerTaskListData,dummyComplaintReportData,dummyLegalReceiptData,dummyRatingData,dummyPaymentData,dummyPhaseData,dummyNotificationData,dummyMediaData,dummyConversationData,dummyChatsData,dummyLawyersData,dummyUserData,dummyTaskListData,dummyAdminData,dummyAppointmentData,dummyAvailabilityData,dummyCasesData,dummyCategoryData};
+const filesDummyData=[
+
+  {
+    name: "Document1",
+    link: "https://res.cloudinary.com/dgztaxbvi/image/upload/v1700154211/bey_balkis_dvaoj4.pdf",
+},
+{
+    name: "Image2",
+    link: "https://res.cloudinary.com/dgztaxbvi/image/upload/v1700165405/IMG_1432_urnray.heic",
+},
+{
+    name: "Video3",
+    link: "https://res.cloudinary.com/dgztaxbvi/image/upload/v1700156945/IMG_1432_ef8jec_2_scc2mm.heic",
+},
+{
+    name: "File4",
+    link: "https://res.cloudinary.com/dgztaxbvi/image/upload/v1700141612/Gentle_Reminder_-_Your_Emirates_Group_Application_1015909848_for_Cabin_Crew_Oppo_x6gluc.pdf",
+},
+{
+    name: "Presentation5",
+    link: "https://res.cloudinary.com/dgztaxbvi/image/upload/v1700073668/IMG_1404_v9t8k9.heic",
+},
+
+]
+
+const dummyFolders=[
+  {
+    name: "Documents",
+},
+{
+    name: "Images",
+},
+{
+    name: "Videos",
+},
+{
+    name: "Files",
+},
+{
+    name: "Presentations",
+},
+];
+
+const notesDummy=[
+  {
+    comment: "This is a note about a meeting",
+    seen: true,
+    title: "Meeting Notes",
+    type: "notes",
+    attachedFile: "https://res.cloudinary.com/dgztaxbvi/image/upload/v1700154211/bey_balkis_dvaoj4.pdf",
+},
+{
+    comment: "Reminder to submit the report by Friday",
+    seen: false,
+    title: "Report Submission",
+    type: "urgent",
+    attachedFile: null,
+},
+{
+    comment: "Call John regarding the project",
+    seen: true,
+    title: "Project Discussion",
+    type: "personnel",
+    attachedFile: "https://res.cloudinary.com/dgztaxbvi/image/upload/v1700141612/Gentle_Reminder_-_Your_Emirates_Group_Application_1015909848_for_Cabin_Crew_Oppo_x6gluc.pdf",
+},
+{
+    comment: "Shopping list for the week",
+    seen: false,
+    title: "Grocery Shopping",
+    type: "notes",
+    attachedFile: null,
+},
+{
+    comment: "Emergency contact numbers",
+    seen: true,
+    title: "Emergency Contacts",
+    type: "urgent",
+    attachedFile: "https://res.cloudinary.com/dgztaxbvi/image/upload/v1700073668/IMG_1404_v9t8k9.heic",
+},
+]
+
+
+
+  module.exports = {notesDummy,dummyFolders,filesDummyData,dummyLawyerTaskListData,dummyComplaintReportData,dummyLegalReceiptData,dummyRatingData,dummyPaymentData,dummyPhaseData,dummyNotificationData,dummyMediaData,dummyConversationData,dummyChatsData,dummyLawyersData,dummyUserData,dummyTaskListData,dummyAdminData,dummyAppointmentData,dummyAvailabilityData,dummyCasesData,dummyCategoryData};
   
+  Note.bulkCreate(notesDummy)
+  .then(() => {
+    console.log('Notes data created successfully.');
+  })
+  .catch((error) => {
+    console.error('Error creating dummy data:', error);
+  });
+
+
+  Files.bulkCreate(filesDummyData)
+  .then(() => {
+    console.log('Files data created successfully.');
+  })
+  .catch((error) => {
+    console.error('Error creating dummy data:', error);
+  });
+
+  Folder.bulkCreate(dummyFolders)
+  .then(() => {
+    console.log('Folder data created successfully.');
+  })
+  .catch((error) => {
+    console.error('Error creating dummy data:', error);
+  })
+
   User.bulkCreate(dummyUserData)
   .then(() => {
     console.log('User data created successfully.');

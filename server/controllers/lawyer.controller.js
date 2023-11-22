@@ -21,6 +21,16 @@ module.exports = {
       throw error;
     }
   },
+  getLawyerByEmail:  async (req, res) => {
+    try {
+      const oneLawyer = await Lawyer.findOne({
+        where: { email: req.params.email },
+      });
+      res.status(200).send(oneLawyer);
+    } catch (error) {
+      throw error;
+    }
+  },
 
   add: async (req, res) => {
     try {

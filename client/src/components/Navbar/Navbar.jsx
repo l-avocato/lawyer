@@ -28,18 +28,6 @@ function Navbar() {
   const auth = getAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const handleSignIn = () => {
-    signInWithEmailAndPassword(auth, email, password)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    navigate("/allClient");
-  };
-
   const [fullName, setFullName] = useState("");
   const [gender, setGender] = useState("");
   const [papers, setPapers] = useState(
@@ -48,6 +36,23 @@ function Navbar() {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const lawyerCollectionRef = collection(db, "lawyers");
+
+  const handleSignIn = (event) => {
+    event.preventDefault();
+    signInWithEmailAndPassword(auth, email, password)
+      .then((res) => {
+        console.log(res);
+        if (res.user) {
+          console.log("this is access token", res.user.accessToken);
+          localStorage.setItem('userToken', res.user.accessToken);
+        }
+        navigate("/allClient");
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
 
   const handleSignUp = (event) => {
     event.preventDefault();
@@ -63,7 +68,7 @@ function Navbar() {
         const formData = {
           email: email,
           password: password,
-          imageUrl: papers,
+          ImageUrl: papers,
           fullName: fullName,
           gender: gender,
           phoneNumber: phoneNumber,
@@ -135,7 +140,7 @@ function Navbar() {
                   <Modal.Title style={{ marginLeft: 290 }}>Login</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                  <div style={{ display: "flex" , gap:'2rem' }}>
+                  <div style={{ display: "flex" , gap:'2rem',padding:-10 }}>
                     <img
                       src="https://i.pinimg.com/564x/03/b0/eb/03b0eb5b973e4a65d3a63fc0fe3cf7e1.jpg"
                       alt="Lawyer"
@@ -146,14 +151,14 @@ function Navbar() {
                     />
                     <Form
                       onSubmit={handleSignIn}
-                      style={{ width: "100%", display: "flex", flexDirection: "column", gap: "1.3rem" , marginTop:'60px'}}
+                      style={{ width: "100%", display: "flex", flexDirection: "column", gap: "1.3rem" , marginTop:'50px'}}
                     >
                       <Form.Group controlId="formBasicEmail">
-                        <Form.Label>Email address</Form.Label>
+                        <Form.Label style={{fontSize:'1.2rem' , fontWeight:'bold'}}>Email address</Form.Label>
                         <Form.Control
                           type="email"
                           placeholder="Enter email"
-                          style={{ fontSize: "14px" }}
+                          style={{ fontSize: "15px" }}
                           onChange={(e) => {
                             setEmail(e.target.value);
                           }}
@@ -161,11 +166,11 @@ function Navbar() {
                       </Form.Group>
 
                       <Form.Group controlId="formBasicPassword">
-                        <Form.Label>Password</Form.Label>
+                        <Form.Label style={{fontSize:'1.2rem', fontWeight:'bold'}}>Password</Form.Label>
                         <Form.Control
                           type="password"
                           placeholder="Password"
-                          style={{ fontSize: "14px" }}
+                          style={{ fontSize: "1px" }}
                           onChange={(e) => {
                             setPassword(e.target.value);
                           }}
@@ -181,8 +186,7 @@ function Navbar() {
                      <Button
                         variant="primary"
                         type="submit"
-                        style={{ fontSize: "1.2rem" }}
-                      >
+                        style={{ fontSize: "1.2rem" }}                      >
                         Submit
                       </Button>
                      </div>
@@ -190,6 +194,8 @@ function Navbar() {
                   </div>
                 </Modal.Body>
               </Modal>
+
+
               <li onClick={handleShowSignup}>Sign Up</li>
 
               <Modal
