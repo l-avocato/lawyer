@@ -10,6 +10,7 @@ import {
   Modal,
 } from "react-native";
 import { FontAwesome } from "react-native-vector-icons";
+import { FIREBASE_AUTH, FIREBASE_DB } from "../firebaseConfig";
 import axios from "axios";
 
 import checkImage from "../assets/check.png";
@@ -18,6 +19,7 @@ const ProfilDetails = ({ navigation, route }) => {
   const { item } = route.params;
   const { lawyer } = route.params;
 
+  const [user, setUser] = useState([]);
   const law = item ? item : lawyer;
 
   const [stars, setStars] = useState(0);
@@ -27,6 +29,20 @@ const ProfilDetails = ({ navigation, route }) => {
 
   const [showReviewsModal, setShowReviewsModal] = useState(false);
   const [showOtherModal, setShowOtherModal] = useState(false);
+
+  const loggedInUser = FIREBASE_AUTH.currentUser.email;
+
+  const getUser = () => {
+    axios
+      .get(`http://${config}:1128/api/user/getUserByEmail/${loggedInUser}`)
+      .then((res) => {
+        console.log("this is user", res.data[0]);
+        setUser(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const addRating = async () => {
     try {
@@ -42,7 +58,7 @@ const ProfilDetails = ({ navigation, route }) => {
       setReview("");
       setStars("");
 
-      // Set the modal state to true after submitting the rating
+      
       setShowReviewsModal(true);
     } catch (error) {
       console.log(error);
@@ -58,8 +74,15 @@ const ProfilDetails = ({ navigation, route }) => {
       const response = await axios.get(
         `http://${config}:1128/api/rating/getRatingByLawyer/${law?.id}`
       );
-      setReview(response.data);
-      setRating(response.data);
+      console.log(response.data.map((item) => item.review));
+      const extractedReviews = response.data.map((item) => item.review);
+      setReviews(extractedReviews);
+      console.log(
+        "rating: ",
+        response.data.map((item) => item.stars)
+      );
+      const extractedReviews2 = response.data.map((item) => item.stars);
+      setRating(extractedReviews2);
     } catch (error) {
       console.log(error);
     }
@@ -67,6 +90,7 @@ const ProfilDetails = ({ navigation, route }) => {
 
   useEffect(() => {
     getLawyerRating();
+    getUser();
   }, []);
 
   const toggleReviewsModal = () => {
@@ -75,6 +99,14 @@ const ProfilDetails = ({ navigation, route }) => {
 
   const toggleOtherModal = () => {
     setShowOtherModal(!showOtherModal);
+  };
+
+  const test = () => {
+    let rate =
+      rating.reduce((acc, curr) => {
+        return acc + curr;
+      }, 0) / rating.length;
+    console.log("rating from IIF: ", rate);
   };
 
   return (
@@ -98,8 +130,9 @@ const ProfilDetails = ({ navigation, route }) => {
                 <Text style={styles.infoText}>
                   {rating.length > 0
                     ? `Average Rating: ${(
-                        rating.reduce((acc, curr) => acc + curr.stars, 0) /
-                        rating.length
+                        rating.reduce((acc, curr) => {
+                          return acc + curr;
+                        }, 0) / rating.length
                       ).toFixed(1)}/5`
                     : "No Ratings Yet"}
                 </Text>
@@ -115,6 +148,7 @@ const ProfilDetails = ({ navigation, route }) => {
               style={{ display: "flex", flexDirection: "row" }}
               onPress={() => {
                 navigation.navigate("Chat", { item });
+                test();
               }}
             >
               <FontAwesome
@@ -178,22 +212,6 @@ const ProfilDetails = ({ navigation, route }) => {
 
       <View style={styles.reviewContainer}>
         <Text style={styles.reviewTitle}>Client Reviews</Text>
-
-        {reviews.map((review, index) => (
-          <View key={index} style={styles.singleReview}>
-            {[1, 2, 3, 4, 5].map((star) => (
-              <FontAwesome
-                key={star}
-                name={star <= review.stars ? "star" : "star-o"}
-                style={styles.starIcon}
-              />
-            ))}
-            <Text style={{ marginLeft: 10, fontSize: 16 }}>
-              {review.review}
-            </Text>
-          </View>
-        ))}
-
         <View style={styles.starsContainer}>
           {[1, 2, 3, 4, 5].map((index) => (
             <TouchableOpacity
@@ -248,7 +266,7 @@ const ProfilDetails = ({ navigation, route }) => {
         </View>
         <TouchableOpacity
           style={styles.viewAllButton}
-          onPress={toggleOtherModal} // Updated to trigger the second modal
+          onPress={toggleOtherModal}
         >
           <Text style={styles.viewAllButtonText}>View All Reviews</Text>
         </TouchableOpacity>
@@ -270,16 +288,12 @@ const ProfilDetails = ({ navigation, route }) => {
         <ScrollView style={styles.scrollView}>
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              {/* Updated to include ScrollView */}
               <ScrollView
                 contentContainerStyle={styles.scrollContent}
               ></ScrollView>
               {reviews.map((e, index) => (
-                <Text key={index}>{e.review}nnnnn</Text>
+                <Text key={index}>{e}</Text>
               ))}
-              {/* Add your scrollable content here */}
-              {/* For example: */}
-              {/* <Text>Scrollable content goes here...</Text> */}
               <TouchableOpacity
                 style={styles.modalButton}
                 onPress={toggleOtherModal}

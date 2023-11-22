@@ -147,7 +147,8 @@ const connection = new Sequelize('lavocato', 'root', 'root', {
   Folder.hasMany(Files)
   Files.belongsTo(Folder)
 
-
+  Category.hasOne(Lawyer)
+  Lawyer.belongsTo(Category)
 
 
   // connection.sync({ alter: true })

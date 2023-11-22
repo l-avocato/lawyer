@@ -10,8 +10,8 @@ module.exports=(connection,DataTypes)=>{
     gender: DataTypes.STRING,
     birthDate: DataTypes.DATE,
     CIN: DataTypes.INTEGER,
-    langitude: DataTypes.INTEGER,
-    latitude: DataTypes.INTEGER,
+    langitude: DataTypes.DOUBLE,
+    latitude: DataTypes.DOUBLE,
     IsBlocked: DataTypes.BOOLEAN,
     } )
     return user
