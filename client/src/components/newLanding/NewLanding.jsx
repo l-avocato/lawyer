@@ -187,7 +187,7 @@ const Home = (props) => {
           </div>
         </div>
       </div>
-      <div className="home-pricing">
+      {/* <div className="home-pricing">
         <div className="home-pricing1">
           <div className="home-container07">
             <span className="home-text12 sectionTitle">
@@ -342,9 +342,9 @@ const Home = (props) => {
             </div>
           </div>
         </div>
-      </div>
-      <div className="home-gallery"></div>
-      <div className="home-banner">
+      </div> */}
+      {/* <div className="home-gallery"></div> */}
+      {/* <div className="home-banner">
         <div className="home-banner1">
           <h1 className="home-banner-heading heading2">
             Empowering Lawyers with Efficiency
@@ -356,8 +356,8 @@ const Home = (props) => {
           </span>
           <button className="home-banner-button button">Learn More</button>
         </div>
-      </div>
-      <div className="home-faq"></div>
+      </div> */}
+      {/* <div className="home-faq"></div > */}
       <div className="home-footer">
         <footer className="home-footer1">
           <div className="home-container31">

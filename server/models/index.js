@@ -132,8 +132,8 @@ const connection = new Sequelize('lavocato', 'root', 'root', {
   Case.hasMany(Media)
   Media.belongsTo(Case)
 
-  Case.hasMany(Note)
-  Note.belongsTo(Case)
+  Phase.hasMany(Note)
+  Note.belongsTo(Phase)
 
 
   Phase.hasMany(Media)
@@ -155,9 +155,12 @@ const connection = new Sequelize('lavocato', 'root', 'root', {
   Files.belongsTo(Folder)
 
 
+  Phase.hasMany(Folder)
+  Folder.belongsTo(Phase)
 
 
-  // connection.sync({ alter: true })
+
+  // connection.sync({ force: true })
   // .then(() => console.log("tables are created"))
   // .catch((err) => console.log(err))
 

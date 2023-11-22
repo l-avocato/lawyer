@@ -1,4 +1,4 @@
-:root {
+/* :root {
     --dl-color-gray-500: #595959;
     --dl-color-gray-700: #999999;
     --dl-color-gray-800: #595959;
@@ -1216,7 +1216,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--dl-color-gray-black);
+    background-color: #292c2f;
   }
   .home-footer1 {
     width: 100%;
@@ -1432,8 +1432,7 @@
     .home-hero-sub-heading {
       padding-left: var(--dl-space-space-unit);
       padding-right: var(--dl-space-space-unit);
-    }
-    .home-details1 {
+    }*    .home-details1 {
       align-items: center;
       padding-left: var(--dl-space-space-twounits);
       padding-right: var(--dl-space-space-twounits);
@@ -1693,4 +1692,4 @@
       flex-direction: column;
     }
   }
-  
+   */
