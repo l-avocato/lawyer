@@ -221,8 +221,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   paymentItem: {
-    backgroundColor: '#D5B278',
-    padding: 15,
+    backgroundColor: '#fff',
+    padding: 25,
     borderRadius: 15,
     marginBottom: 15,
   },
@@ -236,6 +236,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: 'black',
     fontWeight: 'bold',
+    marginLeft:110
   },
   paymentAmount: {
     fontSize: 18,
