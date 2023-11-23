@@ -364,7 +364,7 @@ React.useEffect(()=>{
         
 
 
-        <AppBar position="static" style={{backgroundColor:"black",display:"flex",justifyContent:"flex-end",gap:"3rem",width:"100%",flexDirection:"row"}}>
+        <AppBar position="static" style={{backgroundColor:" black",display:"flex",justifyContent:"flex-end",gap:"3rem",width:"100%",flexDirection:"row"}}>
           <Toolbar style={{display:"flex",flexDirection:"row",gap:"10rem"}} >
             
             <Search  >

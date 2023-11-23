@@ -622,31 +622,38 @@ const InformationPhase = () => {
                       title: "Enter your Note",
                       html:
                         '<input id="swal-input3" class="swal2-input" style="width: 350px;" placeholder="Add your Note">' +
-                        '<input type="file" id="swal-input4" class="swal2-input" style="width: 350px;" placeholder="Add your File">'+
+                        '<input type="file" id="swal-input4" class="swal2-input" style="width: 350px;" placeholder="Add your File">' +
                         '<select id="swal-input2" class="swal2-input">' +
                         '<option value="">Select...</option>' +
                         '<option value="urgent">urgent</option>' +
                         '<option value="personnel">Personnel</option>' +
                         '<option value="notes">Notes</option>' +
                         '</select>',
-                        cancelButtonText: 'Cancel',
-                        showCancelButton: true, 
-
+                      cancelButtonText: 'Cancel',
+                      showCancelButton: true,
                       focusConfirm: false,
                       preConfirm: () => {
-                        setComment(document.getElementById("swal-input3").value);
-                        setType(document.getElementById("swal-input2").value);
-                        setFileNote(document.getElementById("swal-input4").value)                 
-                        return [
-                          addNotes(
-                          comment,type,fileNote
-                          ),
-                        ];
+                        const comment = document.getElementById("swal-input3").value;
+                        const type = document.getElementById("swal-input2").value;
+                        const fileNote = document.getElementById("swal-input4").value;
+                  
+                        return { comment, type, fileNote };
                       },
                       customClass: { confirmButton: "color-modal" },
-                      
                     });
+                  
+                    // Handle the result after the modal is closed
+                    if (result) {
+                      const { comment, type, fileNote } = result;
+                      setComment(comment);
+                      setType(type);
+                      setFileNote(fileNote);
+                  
+                      // Call your addNotes function with the updated state values
+                      addNotes(comment, type, fileNote);
+                    }
                   }}
+                  
                   
                 >
                   Add note

@@ -271,6 +271,7 @@ function Navbar() {
                           <Form.Label>Password</Form.Label>
                           <Form.Control
                             type="password"
+                            
                             placeholder="Enter password"
                             style={{ fontSize: "14px" }}
                             onChange={(e) => setPassword(e.target.value)}

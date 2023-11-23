@@ -20,6 +20,7 @@ import { useNavigate } from "react-router-dom";
 import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import CaseHistory from "../CaseHistory/CaseHistory";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
 const SidebarDash = () => {
   const navigate = useNavigate();
@@ -58,19 +59,17 @@ const SidebarDash = () => {
 
             <span className="side-title">My Clients</span>
           </li>
+
           <li className="g-1" onClick={() => navigate("/CaseHistory")}>
             <BusinessCenterIcon className="new-icon" />
             <span className="side-title">My Cases</span>
           </li>
-          <li>
-            <NotificationsNoneIcon className="new-icon" />
-            <span
-              className="side-title"
-              onClick={() => navigate("/Appointments")}
-            >
-              Appointments
-            </span>
+
+          <li  className="g-1" onClick={() => navigate("/Appointments")} >
+            <AccessTimeIcon className="new-icon" />
+            <span className="side-title">Appointments </span>
           </li>
+
           <li className="g-1" onClick={() => navigate("/stat")}>
             <InsertChartIcon className="new-icon" />
             <span className="side-title">Stats</span>
