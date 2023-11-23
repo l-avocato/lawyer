@@ -11,9 +11,12 @@ import {
 import Icon from "react-native-vector-icons/FontAwesome";
 import { FIREBASE_DB } from "../firebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
+import { useRoute } from "@react-navigation/native";
 
-const SearchListings = ({ route }) => {
-  const { filteredLawyers } = route.params;
+const SearchListings = () => {
+  const route = useRoute();
+  const filteredLawyers = route.params.filteredLawyers || [];
+  console.log(filteredLawyers, "params");
 
   const handleArrowClick = () => {
     // Handle arrow icon click here
@@ -26,52 +29,58 @@ const SearchListings = ({ route }) => {
   const [isHeartPressed, setIsHeartPressed] = useState(false);
   const lawyersCollectionRef = collection(FIREBASE_DB, "lawyers");
   const [lawyers, setLawyers] = useState([]);
-  const getLawyers = async () => {
-    try {
-      const result = await getDocs(lawyersCollectionRef);
-      const lawyers = result.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-      }));
-      setLawyers(lawyers);
-      console.log("this is lawyers", lawyers);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
+  // const getLawyers = async () => {
+  //   try {
+  //     const result = await getDocs(lawyersCollectionRef);
+  //     const lawyers = result.docs.map((doc) => ({
+  //       ...doc.data(),
+  //       id: doc.id,
+  //     }));
+  //     setLawyers(lawyers);
+  //     console.log("this is lawyers hhhhhhhh", lawyers);
+  //   } catch (error) {
+  //     console.error("Error fetching data:", error);
+  //   }
+  // };
+  // useEffect(() => {
+  //   console.log("filteredLawyers in useEffect:", filteredLawyers);
+  //   console.log("lawyers in useEffect:", lawyers);
+  //   getLawyers();
+  // }, [filteredLawyers]);
+  const renderItem = () => {
+    filteredLawyers.map((item) => console.log("itemmmmmmmmmmmmmmmm", item));
+    return filteredLawyers.map((item) => (
+      <View style={styles.lawyerView1}>
+        <Image source={{ uri: item.imageUrl }} style={styles.lawyerImage} />
+        <TouchableOpacity style={styles.button} onPress={handleButtonPress}>
+          <Text style={styles.buttonText}>{item.fullName}</Text>
+        </TouchableOpacity>
+        <Text style={styles.additionalText}>{item.category.name}</Text>
+        <View style={styles.starIcon}>
+          <Icon name="star" size={18} color="#D5B278" />
+          <Text style={styles.textt}>{4.5}</Text>
+        </View>
+        <View style={styles.locationIcon}>
+          <Icon name="map-marker" size={20} color="blue" />
+          <Text style={styles.textt}>1.5km</Text>
+        </View>
+        <View style={styles.priceIcon}>
+          <Icon name="dollar" size={18} color="green" />
+          <Text style={styles.textt}>{item.Price}</Text>
+        </View>
+        <TouchableOpacity
+          onPress={() => setIsHeartPressed(!isHeartPressed)}
+          style={styles.heartIcon}>
+          {isHeartPressed ? (
+            <Icon name="heart" size={20} color="red" />
+          ) : (
+            <Icon name="heart-o" size={20} color="red" />
+          )}
+        </TouchableOpacity>
+      </View>
+    ));
   };
-  useEffect(() => {
-    getLawyers();
-  }, []);
-  const renderItem = ({ item }) => (
-    <View style={styles.lawyerView1}>
-      <Image source={{ uri: item.imageUrl }} style={styles.lawyerImage} />
-      <TouchableOpacity style={styles.button} onPress={handleButtonPress}>
-        <Text style={styles.buttonText}>{item.fullName}</Text>
-      </TouchableOpacity>
-      <Text style={styles.additionalText}>{item.category}</Text>
-      <View style={styles.starIcon}>
-        <Icon name="star" size={18} color="#D5B278" />
-        <Text style={styles.textt}>{4.5}</Text>
-      </View>
-      <View style={styles.locationIcon}>
-        <Icon name="map-marker" size={20} color="blue" />
-        <Text style={styles.textt}>1.5km</Text>
-      </View>
-      <View style={styles.priceIcon}>
-        <Icon name="dollar" size={18} color="green" />
-        <Text style={styles.textt}>{item.Price}</Text>
-      </View>
-      <TouchableOpacity
-        onPress={() => setIsHeartPressed(!isHeartPressed)}
-        style={styles.heartIcon}>
-        {isHeartPressed ? (
-          <Icon name="heart" size={20} color="red" />
-        ) : (
-          <Icon name="heart-o" size={20} color="red" />
-        )}
-      </TouchableOpacity>
-    </View>
-  );
+
   return (
     <View>
       <View style={styles.header}>
@@ -81,15 +90,7 @@ const SearchListings = ({ route }) => {
         <Text style={styles.headerText}>Search Listings</Text>
       </View>
 
-      {/* Body View */}
-      <ScrollView contentContainerStyle={styles.body1}>
-        <FlatList
-          data={filteredLawyers ? filteredLawyers : lawyers}
-          keyExtractor={(item) => item.id}
-          renderItem={renderItem}
-          contentContainerStyle={styles.body1}
-        />
-      </ScrollView>
+      {renderItem()}
     </View>
   );
 };

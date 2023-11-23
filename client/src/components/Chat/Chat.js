@@ -1,120 +1,147 @@
-import React, { useState, useRef, useEffect } from "react";
+// ChatComponent.js
+
+import React, { useState } from "react";
 import "./chat.css";
-import SidebarDash from "../SidebarDash/SidebarDash";
+import johnDoeImage from "./client.jpg";
+import Sidebardash from "../SidebarDash/SidebarDash.jsx";
+import SidebarDash from "../SidebarDash/SidebarDash.jsx";
+import NavbarDashboard from "../NavbarDashboard/NavbarDashboard.jsx";
 
 const Chat = () => {
+  const [activeChat, setActiveChat] = useState(null);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
-  const messagesEndRef = useRef(null);
+  const [currentSender, setCurrentSender] = useState("Lawyer");
+  const [activeClient, setActiveClient] = useState(null);
 
-  const scrollToBottom = () => {
-    messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
-  };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
+  const dummyData = [
+    {
+      id: 1,
+      sender: "Lawyer",
+      content: "Hello! How can I assist you today?",
+      chatId: 1,
+    },
+    {
+      id: 2,
+      sender: "Client",
+      content: "Hi, I need legal advice regarding a contract.",
+      chatId: 1,
+    },
+    {
+      id: 3,
+      sender: "Lawyer",
+      content: "Sure, I'd be happy to help. Can you provide more details?",
+      chatId: 1,
+    },
+    // Add more messages as needed
+  ];
 
   const handleSendMessage = () => {
-    if (newMessage.trim()) {
-      const sender = "John Doe"; // Change the sender as needed
-      setMessages([...messages, { content: newMessage, sender }]);
-      setNewMessage("");
+    if (newMessage.trim() === "" || !activeChat) {
+      return;
     }
+
+    const sender = currentSender;
+    const receiver = activeClient.name;
+
+    const message = {
+      id: messages.length + 1,
+      sender: currentSender,
+      content: newMessage,
+      chatId: activeChat,
+    };
+
+    setMessages([...messages, message]);
+    setCurrentSender("Lawyer");
+    setNewMessage("");
+  };
+
+  const handleOpenChat = (client) => {
+    setActiveChat(client.id);
+    setActiveClient(client);
+  };
+
+  const renderChatList = () => {
+    const clients = [
+      { id: 1, name: "John Doe", image: johnDoeImage },
+      { id: 2, name: "Jane Smith", image: johnDoeImage },
+      { id: 3, name: "Jane Smith", image: johnDoeImage },
+      { id: 4, name: "Jane Smith", image: johnDoeImage },
+      { id: 5, name: "Jane Smith", image: johnDoeImage },
+      { id: 6, name: "Jane Smith", image: johnDoeImage },
+      { id: 7, name: "Jane Smith", image: johnDoeImage },
+      { id: 8, name: "Jane Smith", image: johnDoeImage },
+      { id: 9, name: "Jane Smith", image: johnDoeImage },
+      { id: 10, name: "Jane Smith", image: johnDoeImage },
+      { id: 11, name: "Jane Smith", image: johnDoeImage },
+      { id: 12, name: "Jane Smith", image: johnDoeImage },
+      { id: 13, name: "Jane Smith", image: johnDoeImage },
+      // Add more clients as needed
+    ];
+
+    return clients.map((client) => (
+      <div
+        key={client.id}
+        className={`chat-room ${activeChat === client.id ? "active" : ""}`}
+        onClick={() => handleOpenChat(client)}>
+        <img src={client.image} alt={`${client.name} Image`} />
+        {client.name}
+      </div>
+    ));
+  };
+
+  const renderMessages = () => {
+    const activeChatMessages = messages.filter(
+      (message) => message.chatId === activeChat,
+    );
+
+    return activeChatMessages.map((message) => (
+      <div
+        key={message.id}
+        className={
+          message.sender === "Lawyer" ? "lawyer-message" : "client-message"
+        }>
+        <img
+          src={
+            message.sender === "Lawyer"
+              ? "client.jpg"
+              : activeClient.image
+          }
+          alt={`${message.sender} Image`}
+          className="image"
+        />
+        <div className="message-content">
+          <strong>{message.sender}: </strong>
+          {message.content}
+        </div>
+      </div>
+    ));
   };
 
   return (
-    <div className="aziz container">
+    <div style={{ display: "flex" }}>
       <SidebarDash />
-      <div className="chat-section">
-        {/* ChatRoom component */}
-        <h5 className="font-weight-bold mb-3 text-center text-white">
-          Member
-        </h5>
-        <div className="card mask-custom">
-          <div className="card-body">
-            <ul className="list-unstyled mb-0">
-              <li className="p-2 border-bottom">
-                <a href="#!" className="d-flex justify-content-between link-light">
-                  <div className="d-flex flex-row">
-                    <img
-                      src="https://placekitten.com/60/60"
-                      alt="avatar"
-                      className="rounded-circle d-flex align-self-center me-3 shadow-1-strong"
-                      width="60"
-                    />
-                    <div className="pt-1">
-                      <p className="fw-bold mb-0">John Doe</p>
-                      <p className="small text-white">Hello, Are you there?</p>
-                    </div>
-                  </div>
-                  <div className="pt-1">
-                    <p className="small text-white mb-1">Just now</p>
-                    <span className="badge bg-danger float-end">1</span>
-                  </div>
-                </a>
-              </li>
-              {/* Add more list items as needed */}
-            </ul>
+      <div className="chat-container">
+        <NavbarDashboard />
+        <div className="client-chat">
+          <div className="chat">
+            <h2>Clients</h2>
+            <div className="chat-list">{renderChatList()}</div>
           </div>
-        </div>
-      </div>
-
-      <div className="conversation-section">
-        {/* Conversation component */}
-        <div className="conversation-container">
-          <ul className="list-unstyled text-white">
-            {messages.map((message, index) => (
-              <li
-                key={index}
-                className={`d-flex justify-content-between mb-4 ${
-                  message.sender !== "John Doe" ? "blue-background" : ""
-                }`}
-              >
-                <img
-                  src="https://placekitten.com/60/60"
-                  alt="avatar"
-                  className="rounded-circle d-flex align-self-start me-3 shadow-1-strong"
-                  width="60"
-                />
-                <div className="card mask-custom">
-                  <div className="card-header d-flex justify-content-between p-3">
-                    <p className="fw-bold mb-0">{message.sender}</p>
-                    <p className="text-light small mb-0">
-                      <i className="far fa-clock"></i> Just now
-                    </p>
-                  </div>
-                  <div className="card-body">
-                    <p className="mb-0">{message.content}</p>
-                  </div>
-                </div>
-              </li>
-            ))}
-            <div ref={messagesEndRef}></div>
-            {/* Add more list items as needed */}
-          </ul>
-        </div>
-        {/* Input and Send button */}
-        <div className="input-container">
-          <div className="form-outline form-white flex-grow-1">
-            <textarea
-              className="form-control"
-              id="textAreaExample3"
-              rows="4"
-              value={newMessage}
-              onChange={(e) => setNewMessage(e.target.value)}
-            ></textarea>
-            <label className="form-label" htmlFor="textAreaExample3">
-              Message
-            </label>
+          <div className="chat-divider" />
+          <div className="conversation">
+            {activeClient && <h2>{activeClient.name}</h2>}
+            <div className="conversation-messages">{renderMessages()}</div>
+            <div className="message-input">
+              <input
+                type="text"
+                placeholder="Type your message..."
+                value={newMessage}
+                onChange={(e) => setNewMessage(e.target.value)}
+              />
+              <button onClick={handleSendMessage}>Send</button>
+            </div>
           </div>
-          <button
-            type="button"
-            className="btn btn-light btn-lg btn-rounded"
-            onClick={handleSendMessage}
-          >
-            Send
-          </button>
         </div>
       </div>
     </div>
@@ -122,5 +149,3 @@ const Chat = () => {
 };
 
 export default Chat;
-
-
