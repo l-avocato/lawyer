@@ -45,6 +45,7 @@ const ProfilDetails = ({ navigation, route }) => {
   };
 
   const addRating = async () => {
+    const email =  FIREBASE_AUTH.currentUser.email
     try {
       const response = await axios.post(
         `http://${config}:1128/api/rating/addRating`,
@@ -52,6 +53,8 @@ const ProfilDetails = ({ navigation, route }) => {
           lawyerId: law.id,
           stars,
           review,
+          email
+
         }
       );
 
