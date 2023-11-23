@@ -30,7 +30,6 @@ import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import "./style.css";
 
-
 const PREFIX = "Demo";
 
 const classes = {
@@ -58,7 +57,6 @@ const classes = {
   titleContainer: `${PREFIX}-titleContainer`,
   container: `${PREFIX}-container`,
 };
-
 
 const getBorder = (theme) =>
   `1px solid ${
@@ -180,105 +178,6 @@ const StyledAppointmentsAppointmentContent = styled(
   },
 }));
 
-// const appointments1 = [
-//   {
-//     id: 0,
-//     title: "Watercolor Landscape",
-//     startDate: new Date(2018, 6, 23, 9, 30),
-//     endDate: new Date(2018, 6, 23, 11, 30),
-//     ownerId: 1,
-//   },
-//   {
-//     id: 1,
-//     title: "Monthly Planning",
-//     startDate: new Date(2018, 5, 28, 9, 30),
-//     endDate: new Date(2018, 5, 28, 11, 30),
-//     ownerId: 1,
-//   },
-//   {
-//     id: 2,
-//     title: "Recruiting students",
-//     startDate: new Date(2018, 6, 9, 12, 0),
-//     endDate: new Date(2018, 6, 9, 13, 0),
-//     ownerId: 2,
-//   },
-//   {
-//     id: 3,
-//     title: "Oil Painting",
-//     startDate: new Date(2018, 6, 18, 14, 30),
-//     endDate: new Date(2018, 6, 18, 15, 30),
-//     ownerId: 2,
-//   },
-//   {
-//     id: 4,
-//     title: "Open Day",
-//     startDate: new Date(2018, 6, 20, 12, 0),
-//     endDate: new Date(2018, 6, 20, 13, 35),
-//     ownerId: 6,
-//   },
-//   {
-//     id: 5,
-//     title: "Watercolor Landscape",
-//     startDate: new Date(2018, 6, 6, 13, 0),
-//     endDate: new Date(2018, 6, 6, 14, 0),
-//     rRule: "FREQ=WEEKLY;BYDAY=FR;UNTIL=20180816",
-//     exDate: "20180713T100000Z,20180727T100000Z",
-//     ownerId: 2,
-//   },
-//   {
-//     id: 6,
-//     title: "Meeting of Instructors",
-//     startDate: new Date(2018, 5, 28, 12, 0),
-//     endDate: new Date(2018, 5, 28, 12, 30),
-//     rRule: "FREQ=WEEKLY;BYDAY=TH;UNTIL=20180727",
-//     exDate: "20180705T090000Z,20180719T090000Z",
-//     ownerId: 5,
-//   },
-//   {
-//     id: 7,
-//     title: "Oil Painting for Beginners",
-//     startDate: new Date(2018, 6, 3, 11, 0),
-//     endDate: new Date(2018, 6, 3, 12, 0),
-//     rRule: "FREQ=WEEKLY;BYDAY=TU;UNTIL=20180801",
-//     exDate: "20180710T080000Z,20180724T080000Z",
-//     ownerId: 3,
-//   },
-//   {
-//     id: 8,
-//     title: "Watercolor Workshop",
-//     startDate: new Date(2018, 6, 9, 11, 0),
-//     endDate: new Date(2018, 6, 9, 12, 0),
-//     ownerId: 3,
-//   },
-//   {
-//     id: 9,
-//     title: "mouhib test",
-//     startDate: new Date(2023, 6, 9, 11, 30),
-//     endDate: new Date(2023, 6, 9, 12, 0),
-//     ownerId: 3,
-//   },
-//   {
-//     id: 10,
-//     title: "mouhib test 2",
-//     startDate: new Date(2023, 6, 9, 14, 30),
-//     endDate: new Date(2023, 6, 9, 16, 0),
-//     ownerId: 3,
-//   },
-// ];
-
-const WeatherIcon = ({ id }) => {
-  switch (id) {
-    case 0:
-      return <StyledOpacity className={classes.rain} fontSize="large" />;
-    case 1:
-      return <StyledWbSunny className={classes.sun} fontSize="large" />;
-    case 2:
-      return <StyledFilterDrama className={classes.cloud} fontSize="large" />;
-    default:
-      return null;
-  }
-};
-
 const CellBase = React.memo(({ startDate, formatDate, otherMonth }) => {
   const iconId = Math.abs(Math.floor(Math.sin(startDate.getDate()) * 10) % 3);
   const isFirstMonthDay = startDate.getDate() === 1;
@@ -296,9 +195,7 @@ const CellBase = React.memo(({ startDate, formatDate, otherMonth }) => {
         [classes.opacity]: otherMonth,
       })}
     >
-      <StyledDivContent className={classes.content}>
-        <WeatherIcon classes={classes} id={iconId} />
-      </StyledDivContent>
+      <StyledDivContent className={classes.content}></StyledDivContent>
       <StyledDivText className={classes.text}>
         {formatDate(startDate, formatOptions)}
       </StyledDivText>
@@ -332,19 +229,21 @@ const resources = [
 
 const Calendar = () => {
   const [data, setData] = useState([]);
+  const [today, setToday] = useState(new Date());
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const [Appointments,setAppointments]=useState([])
-
-
-const [addedAppo,setAddedAppo]=useState({
-    id:10,
-    title : "",
-    startDate : "",
-    endDate:"",
-    ownerId:3
-})
+  const [update, setUpdate] = useState(false);
+  const [tasks, setTasks] = useState([]);
+  const [appointments, setAppointments] = useState([]);
+  const [addedAppo, setAddedAppo] = useState({
+    id: 10,
+    title: "",
+    startDate: "",
+    endDate: "",
+    ownerId: 3,
+  });
+  console.log("im the tasks", tasks);
 
   const commitChanges = ({ added, changed, deleted }) => {
     setData((state) => {
@@ -398,45 +297,82 @@ const [addedAppo,setAddedAppo]=useState({
     p: 4,
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-  // console.log(appointments)
-
   const fetchData = async () => {
     try {
       const response = await axios.get(
         "http://127.0.0.1:1128/api/appointment/getAppointments"
       );
-  
+      const ress = response.data.map((el) => {
+        console.log("im the element", el);
+        return {
+          id: el.id,
+          title: el.user.fullName,
+          startDate: new Date(
+            el.date.slice(0, 4),
+            el.date.slice(5, 7) - 1,
+            el.date.slice(8, 10),
+            el.time.slice(0, 2),
+            el.time.slice(3, 5)
+          ),
+          endDate: new Date(
+            el.date.slice(0, 4),
+            el.date.slice(5, 7) - 1,
+            el.date.slice(8, 10),
+            el.time.slice(0, 2),
+            el.time.slice(3, 5) + 60
+          ),
+          ownerId: 2,
+        };
+      });
 
-      setAppointments(response.data.map(el=>{
-        return (
-          {
-            id : el.id+1 , 
-            title:el.reason,
-            startDate:new Date(el.date),
-            // endDate:new Date(el.date),
-            ownerId:3
-          }
-        )
-      }))
-      setData(response.data);
+      console.log("this are the res", ress);
+      setAppointments(ress);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
 
+  const getTasks = async () => {
+    try {
+      const response = await axios.get(
+        "http://127.0.0.1:1128/api/task/allTasks"
+      );
+      const reso = response.data.map((el) => {
+        return {
+          title: el.title,
+          description: el.description,
+          isCompleted: el.isCompleted,
+          deadline: el.deadline,
+        };
+      });
+
+      
+      console.log(reso, "this is the result");
+      setAppointments(reso);
+    } catch (error) {
+      console.error("Error fetching tasks:", error);
+
+      throw error;
+    }
+  };
+
+  useEffect(() => {
+    getTasks();
+    console.log(tasks, "those are tasks");
+    fetchData();
+    console.log(appointments, "those are appointements");
+  }, [update]);
+
   return (
     <Paper>
       <Grid container spacing={2}>
-        <Grid item xs={3}>
+        <Grid item xs={2.4}>
           <SidebarDash />
         </Grid>
         <Grid item xs={9}>
-          <Scheduler data={Appointments} onClick={(date) => console.log(date)}>
+          <Scheduler data={appointments} onClick={(date) => console.log(date)}>
             <EditingState onCommitChanges={commitChanges} />
-            <ViewState defaultCurrentDate="2023-07-17" />
+            <ViewState defaultCurrentDate={today} />
             <MonthView
               timeTableCellComponent={TimeTableCell}
               dayScaleCellComponent={DayScaleCell}
@@ -468,39 +404,58 @@ const [addedAppo,setAddedAppo]=useState({
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
             <div>
-            <div >
-            <label for="datetimepickerInline" class="form-label" > Type a title</label>
-              <input type="text"  onChange={(e)=>setAddedAppo(prev=>{return (
-    {...prev,title:e.target.value}
-  )})}/>
-  <label for="datetimepickerInline" class="form-label"  >
-    Select Start Date and Time</label>
-  <input type="datetime-local" class="form-control" id="datetimepickerInline"  onChange={(e)=>setAddedAppo(prev=>{return (
-    {...prev,startDate:new Date(e.target.value)}
-  )})}/>
-  <label for="datetimepickerInline" class="form-label" >
-    Select End Date and Time</label>
-  <input type="datetime-local" class="form-control" id="datetimepickerInline" 
-  
-  onChange={(e)=>setAddedAppo(prev=>{return (
-    {...prev,endDate:new Date(e.target.value)}
-  )})}
-  />
-</div>
-              <button className="confirm-button" style={{textAlign:"center", alignSelf:"center"}}
-              
-          onClick={
-            ()=>{
-              setAppointments(prev=>{
-                return (
-                  [...prev,addedAppo]
-                )
-              })
-            }
-          }
-            
-              
-              >Confirm</button>
+              <div>
+                <label for="datetimepickerInline" class="form-label">
+                  {" "}
+                  Type a title
+                </label>
+                <input
+                  type="text"
+                  onChange={(e) =>
+                    setAddedAppo((prev) => {
+                      return { ...prev, title: e.target.value };
+                    })
+                  }
+                />
+                <label for="datetimepickerInline" class="form-label">
+                  Select Start Date and Time
+                </label>
+                <input
+                  type="datetime-local"
+                  class="form-control"
+                  id="datetimepickerInline"
+                  onChange={(e) =>
+                    setAddedAppo((prev) => {
+                      return { ...prev, startDate: new Date(e.target.value) };
+                    })
+                  }
+                />
+                <label for="datetimepickerInline" class="form-label">
+                  Select End Date and Time
+                </label>
+                <input
+                  type="datetime-local"
+                  class="form-control"
+                  id="datetimepickerInline"
+                  onChange={(e) =>
+                    setAddedAppo((prev) => {
+                      return { ...prev, endDate: new Date(e.target.value) };
+                    })
+                  }
+                />
+              </div>
+              <button
+                className="confirm-button"
+                style={{ textAlign: "center", alignSelf: "center" }}
+                onClick={() => {
+                  setAppointments((prev) => {
+                    return [...prev, addedAppo];
+                  });
+                  handleClose();
+                }}
+              >
+                Confirm
+              </button>
             </div>
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}></Typography>

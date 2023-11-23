@@ -25,6 +25,7 @@ import InformationPhase from "./components/StepsCases/InformationPhase.jsx";
 import Statestique from "./components/Statestique/Statestique.jsx";
 import Appointments from "./components/Appointments/Appointments.jsx";
 import NewLanding from "./components/newLanding/NewLanding.jsx"
+import Calendar from "./components/Calander/Calender.jsx";
 
 
 
@@ -61,6 +62,7 @@ const App = () => {
           <Route path="/informations" element={<InformationPhase/>} />
           <Route path="/stat" element={<Statestique/>} />
           <Route path="/newLanding" element={<NewLanding/>} />
+          <Route path="/Calender" element={<Calendar/>} />
         </Routes>
       </Router>
     </div>
