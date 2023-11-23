@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import "../../components/Navbar/styles.css";
 import "./styles.css";
 import { useNavigate } from "react-router-dom";
@@ -11,10 +11,12 @@ import axios from "axios";
 import { Link } from "react-scroll";
 import { useDispatch } from "react-redux";
 import { signupLawyer } from "../../store/signUpLawyer";
+import e from "cors";
 
 function Navbar() {
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
+  const[categoryData,setCategoryData] = useState([])
   const dispatch = useDispatch();
 
   const handleClose = () => setShow(false);
@@ -35,9 +37,19 @@ function Navbar() {
   );
   const [phoneNumber, setPhoneNumber] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [speciality, setSpeciality]= useState("");
+  const [speciality, setSpeciality]= useState(0);
   const lawyerCollectionRef = collection(db, "lawyers");
+console.log("============================>",categoryData);
+const fetchCategory = async ()=>{
+  try {
+    const response = await axios.get("http://localhost:1128/api/category/allCategories")
+ setCategoryData(response.data)
+  } catch (error) {
+    throw new Error(error)
+  }
+}
 
+console.log("====>=====>======>======>=====>",speciality);
   const handleSignIn = (event) => {
     event.preventDefault();
     signInWithEmailAndPassword(auth, email, password)
@@ -74,6 +86,7 @@ function Navbar() {
           fullName: fullName,
           gender: gender,
           phoneNumber: phoneNumber,
+          categoryId:speciality
         };
 
         dispatch(signupLawyer(formData))
@@ -106,6 +119,10 @@ function Navbar() {
         throw error;
       });
   };
+
+useEffect(() => {
+  fetchCategory()
+},[])
 
   return (
     <div id="navBar">
@@ -313,20 +330,16 @@ function Navbar() {
                         <Form.Group controlId="formGender">
                           <Form.Label>Speciality</Form.Label>
                           <Form.Select
-                            style={{ fontSize: "14px" }}
-                            onChange={(e) => setSpeciality(e.target.value)}
-                          >
-                              <option>Select Speciality </option>
-                            <option>Tax</option>
-                            <option>Estate Planning</option>
-                            <option>Employment and Labor</option>
-                            <option>Criminal</option>
-                            <option>Business</option>
-                            <option>Family</option>
-                            <option>Intellectual Property</option>
-                            <option>Immigration</option>
-                            <option>Other</option>
-                          </Form.Select>
+  style={{ fontSize: "14px" }}
+  onChange={(e) => setSpeciality(e.target.value)}
+>
+  <option>Select Speciality</option>
+  {categoryData.map((e) => (
+    <option key={e.id} value={e.id}>
+      {e.name}
+    </option>
+  ))}
+</Form.Select>
                         </Form.Group>
                          <div style={{display:'flex', justifyContent:'center', padding:'1rem'}}>
                           
