@@ -9,7 +9,6 @@ module.exports=(connection,DataTypes)=>{
     corfirmedPassword:DataTypes.STRING,
     adress: DataTypes.STRING,
     phoneNumber: DataTypes.BIGINT,
-    adress: DataTypes.STRING,
     ImageUrl: DataTypes.STRING,
     gender: DataTypes.STRING,
     birthDate: DataTypes.DATE,

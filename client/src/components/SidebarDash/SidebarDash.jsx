@@ -19,8 +19,7 @@ import logo from "../../assets/images/logo.png";
 import { useNavigate } from "react-router-dom";
 import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import CaseHistory from "../CaseHistory/CaseHistory";
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 
 const SidebarDash = () => {
   const navigate = useNavigate();
@@ -29,7 +28,7 @@ const SidebarDash = () => {
   const [isHoveredProfile, setIsHoveredProfile] = useState(false);
   const [isHoveredSecurity, setIsHoveredSecurity] = useState(false);
 
-  const toggleSettings = () =>  {
+  const toggleSettings = () => {
     setIsSettingsOpen(!isSettingsOpen);
   };
 
