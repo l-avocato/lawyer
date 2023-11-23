@@ -19,7 +19,6 @@ import logo from "../../assets/images/logo.png";
 import { useNavigate } from "react-router-dom";
 import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import CaseHistory from "../CaseHistory/CaseHistory";
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
 const SidebarDash = () => {
   const navigate = useNavigate();
@@ -57,7 +56,7 @@ const SidebarDash = () => {
               My Cases
             </span>
           </li>
-          <li className="g-1">
+          <li>
             <NotificationsNoneIcon className="new-icon" />
             <span className="side-title" onClick={() => navigate("/Appointments")}>Appointments</span>
           </li>
