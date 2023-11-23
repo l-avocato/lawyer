@@ -19,6 +19,8 @@ import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
+import { FIREBASE_AUTH  } from "../../firebaseconfig";
+
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
@@ -119,7 +121,6 @@ const NavbarDashboard = () => {
   //   };
   // }, []); 
 
-  const auth = getAuth();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [user,setUser] = React.useState({})
@@ -274,8 +275,10 @@ const NavbarDashboard = () => {
 
 const handleGetUser = async (user) =>{
   // console.log(user.email);
+  const email=FIREBASE_AUTH.currentUser.email
+
     setUser(user);
-  await axios.get(`http://localhost:1128/api/lawyer/getLawyerByEmail/${user.email}`)
+  await axios.get(`http://localhost:1128/api/lawyer/getLawyerByEmail/${email}`)
   .then((res)=>{
     setCurrentUser(res.data);
   })
@@ -285,7 +288,7 @@ const handleGetUser = async (user) =>{
 }
 
 React.useEffect(()=>{
-  handleGetUser(auth.currentUser)
+  handleGetUser()
 },[])
 
 

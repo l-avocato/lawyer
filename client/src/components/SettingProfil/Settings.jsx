@@ -6,12 +6,15 @@ import { updateDoc, doc } from "firebase/firestore";
 import { GoogleMap, Marker } from "@react-google-maps/api";
 import "./Style.css";
 import SidebarDash from "../SidebarDash/SidebarDash";
-import { getAuth } from "firebase/auth";
+import { FIREBASE_AUTH  } from "../../firebaseconfig";
+import Swal from "sweetalert2";
+
 
 const Settings = () => {
   const [papers, setPapers] = useState("");
   const [fullName, setFullName] = useState("");
   const [adress, setAdress] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
   const [isMenuOpen, setMenuOpen] = useState(false);
@@ -19,16 +22,19 @@ const Settings = () => {
   const position = { lat: parseFloat(latitude) || 51.505, lng: parseFloat(longitude) || -0.09 };
   const menuRef = useRef(null);
 
- const auth = getAuth();
- const handleGetUser = async (user) =>{
-  await axios.get(`http://localhost:1128/api/lawyer/getLawyerByEmail/${user}`)
-  .then((res)=>{
-    setUser(res.data);
-  })
-  .catch((err)=>{
-    console.log(err)
-  })
-}
+// //  const auth = getAuth();
+//  const handleGetUser = async () =>{
+//   const email=FIREBASE_AUTH.currentUser.email
+
+//   await axios.get(`http://localhost:1128/api/lawyer/getLawyerByEmail/${email}`)
+//   .then((res)=>{
+//     setUser(res.data);
+//     console.log(res.data, 'this is data ');
+//   })
+//   .catch((err)=>{
+//     console.log(err)
+//   })
+// }
 
 
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -66,25 +72,46 @@ const Settings = () => {
     }
   };
 
-  const lawyersCollectionRef = doc(db, "lawyers", "EIKiyaY44S1xWenxPxVh");
+  const updateProfil = ()=>{
+    const email=FIREBASE_AUTH.currentUser.email
 
-  const updateLawyerData = async () => {
     try {
-      await updateDoc(lawyersCollectionRef, {
-        fullName: fullName,
-        adress: adress,
-        imageUrl: papers,
-        latitude: parseFloat(latitude),
-        longitude: parseFloat(longitude),
-      });
-      hideModal();
+      axios.put(`http://localhost:1128/api/lawyer/updateLawyer/${email}`, {
+   fullName: fullName,
+   ImageUrl: papers, 
+   adress: adress, 
+   phoneNumber: phoneNumber,
+   latitude: parseFloat(latitude),
+         longitude: parseFloat(longitude),
+           latitude: parseFloat(latitude),
+
+
+      })
     } catch (error) {
-      console.error("Error updating lawyer", error);
+      console.log(error)
     }
-  };
+
+  }
+
+  // const lawyersCollectionRef = doc(db, "lawyers", "EIKiyaY44S1xWenxPxVh");
+
+  // const updateLawyerData = async () => {
+  //   try {
+  //     await updateDoc(lawyersCollectionRef, {
+  //       fullName: fullName,
+  //       adress: adress,
+  //       imageUrl: papers,
+  //       latitude: parseFloat(latitude),
+  //       longitude: parseFloat(longitude),
+  //     });
+  //     hideModal();
+  //   } catch (error) {
+  //     console.error("Error updating lawyer", error);
+  //   }
+  // };
 
   useEffect(()=>{
-    handleGetUser(auth.currentUser.email)
+    // handleGetUser()
     setPapers(user.ImageUrl)
   },[])
   
@@ -94,17 +121,14 @@ const Settings = () => {
       <SidebarDash/>
       <div style={{ display:'flex',flexDirection:'column',width:'100%' }}>
       <NavbarDashboard />
-        <div style={{display:'flex',justifyContent:'center',alignItems:'center',width:'100%',height:'100%'}}>
+        <div style={{display:'flex',justifyContent:'center',alignItems:'center',width:'100%',height:'100%' }}>
         <form
           style={{
             width: "50%",
             display: "flex",
             flexDirection: "column",
-            padding: "3rem",
-            // marginLeft: "35rem",
-            gap: "0.5rem",
-            // marginBottom: "2rem",
-            border: "0.1rem solid #ccc",
+            padding: "2rem",
+            gap: "1rem",
             borderRadius: "8px",
           }}
         >
@@ -138,12 +162,13 @@ const Settings = () => {
           </div>
 
           <div className="form-outline mb-2">
+            <label htmlFor="">Full Name</label>
             <input
               type="text"
               placeholder="Full name"
               id="form6Example3"
               className="form-control"
-              style={{ fontSize: "18px" }}
+              style={{ fontSize: "18px", }}
               onChange={(e) => {
                 setFullName(e.target.value);
               }}
@@ -151,6 +176,7 @@ const Settings = () => {
             <label className="form-label" htmlFor="form6Example3"></label>
           </div>
           <div className="form-outline mb-2">
+            <label htmlFor=""> Adress </label>
             <input
               type="text"
               placeholder="Address"
@@ -163,6 +189,22 @@ const Settings = () => {
             />
             <label className="form-label" htmlFor="form6Example3"></label>
           </div> 
+        
+          <div className="form-outline mb-2">
+            <label htmlFor="">phone number</label>
+            <input
+              type="number"
+              placeholder="Phone number"
+              id="form6Example3"
+              className="form-control"
+              style={{ fontSize: "18px" }}
+              onChange={(e) => {
+                setPhoneNumber(e.target.value);
+              }}
+            />
+            <label className="form-label" htmlFor="form6Example3"></label>
+          </div>
+         
           <div style={{display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center', gap:'1rem'}}>
           <button
             type="button"
@@ -177,6 +219,15 @@ const Settings = () => {
              height: "40px"
 
 
+            }}
+            onClick={()=>{updateProfil()
+              Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Your Update has been saved",
+                showConfirmButton: false,
+                timer: 1500
+              });
             }}
             
           >

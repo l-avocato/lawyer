@@ -38,11 +38,10 @@ const InformationPhase = () => {
   const [refrech, setRefrech] = useState(false);
   const [search, setSearch] = useState("");
   const [pdf, setPdf] = useState("");
-  const [folderId, setFolderId] = useState(1);
+  const [folderId, setFolderId] = useState("");
   const [pdfName, setPdfName] = useState(1);
   /////////state note ////////////
   const [notes, setNotes] = useState([]);
-  const [title, setTitle] = useState("");
   const [comment, setComment] = useState("");
   const [type, setType] = useState("");
   const [fileNote, setFileNote] = useState(null);
@@ -124,7 +123,7 @@ const InformationPhase = () => {
     fetchFolder();
     fetchFileByFolder();
     fetchNote();
-    handleGetUser(auth.currentUser.email)
+    handleGetUser()
   }, [refrech, folderId]);
 
   const addFolder = async (folderName) => {
@@ -180,9 +179,10 @@ const InformationPhase = () => {
 
   const auth = getAuth();
 
-  const handleGetUser = async (user) =>{
+  const handleGetUser = async () =>{
+    const email=FIREBASE_AUTH.currentUser.email
     
-    await axios.get(`http://localhost:1128/api/lawyer/getLawyerByEmail/${user}`)
+    await axios.get(`http://localhost:1128/api/lawyer/getLawyerByEmail/${email}`)
     .then((res)=>{
       setUser(res.data);
     })
@@ -230,11 +230,8 @@ const InformationPhase = () => {
 
    const updateNote = async (id)=>{
     try {
-     await axios.put(`http://localhost:1128/api/note/note/${id}`,  {
-        title:document.getElementById("swal-input1").value,
-        
-                                    
-        comment:document.getElementById("swal-input2").value
+     await axios.put(`http://localhost:1128/api/note/note/${id}`,  {                                
+        comment: comment
       });
       setRefrech(!refrech)
     } catch (error) {
@@ -635,21 +632,19 @@ const InformationPhase = () => {
                       preConfirm: () => {
                         const comment = document.getElementById("swal-input3").value;
                         const type = document.getElementById("swal-input2").value;
-                        const fileNote = document.getElementById("swal-input4").value;
+                        const fileNote = document.getElementById("swal-input4").files[0];
                   
                         return { comment, type, fileNote };
                       },
                       customClass: { confirmButton: "color-modal" },
                     });
                   
-                    // Handle the result after the modal is closed
                     if (result) {
                       const { comment, type, fileNote } = result;
                       setComment(comment);
                       setType(type);
                       setFileNote(fileNote);
-                  
-                      // Call your addNotes function with the updated state values
+                
                       addNotes(comment, type, fileNote);
                     }
                   }}
@@ -699,21 +694,15 @@ const InformationPhase = () => {
                             await Swal.fire({
                               title: "Update Note",
                               html: `
-                                <input id="swal-input1" class="swal2-input" placeholder='update title'>
                                 <input id="swal-input2" class="swal2-input" placeholder='update the note'>
                               `,
                               focusConfirm: false,
                               showCancelButton: true,
                               preConfirm: () => {
-                                const titleValue = document.getElementById("swal-input1").value;
                                 const commentValue = document.getElementById("swal-input2").value; 
-                                const typeValue = document.getElementById("swal-input3").value;
-                          
-                                setTitle(titleValue);
                                 setComment(commentValue);
-                                setType(typeValue);
                               
-                                return addNotes(titleValue, commentValue, typeValue);
+                                return updateNote(notes.id);
                               },
                               customClass: { confirmButton: "color-modal",cancelButton: "color-modal" },
                             });
