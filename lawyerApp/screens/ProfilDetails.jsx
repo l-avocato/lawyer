@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -7,36 +7,45 @@ import {
   ScrollView,
   Text,
   TextInput,
-  Alert,
+  Modal,
 } from "react-native";
 import { FontAwesome } from "react-native-vector-icons";
-import { Colors } from "../components/styles";
+import { FIREBASE_AUTH, FIREBASE_DB } from "../firebaseConfig";
 import axios from "axios";
 
 import checkImage from "../assets/check.png";
-
-const { primary, tertiary } = Colors;
 
 const ProfilDetails = ({ navigation, route }) => {
   const { item } = route.params;
   const { lawyer } = route.params;
 
+  const [user, setUser] = useState([]);
   const law = item ? item : lawyer;
 
   const [stars, setStars] = useState(0);
   const [review, setReview] = useState("");
   const [reviews, setReviews] = useState([]);
+  const [rating, setRating] = useState([]);
 
-  // useEffect(() => {
-  // }, []);
+  const [showReviewsModal, setShowReviewsModal] = useState(false);
+  const [showOtherModal, setShowOtherModal] = useState(false);
+
+  const loggedInUser = FIREBASE_AUTH.currentUser.email;
+
+  const getUser = () => {
+    axios
+      .get(`http://${config}:1128/api/user/getUserByEmail/${loggedInUser}`)
+      .then((res) => {
+        console.log("this is user", res.data[0]);
+        setUser(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const addRating = async () => {
     try {
-      console.log("this is the body for the rating", {
-        lawyerId: law.id,
-        stars,
-        review,
-      });
       const response = await axios.post(
         `http://${config}:1128/api/rating/addRating`,
         {
@@ -45,17 +54,12 @@ const ProfilDetails = ({ navigation, route }) => {
           review,
         }
       );
-      console.log("this is the res of rating", response);
-
-      Alert.alert(
-        "Thank You!",
-        "Your review has been submitted.",
-        [{ text: "OK", onPress: () => console.log("OK Pressed") }],
-        { customImage: checkImage }
-      );
 
       setReview("");
       setStars("");
+
+      
+      setShowReviewsModal(true);
     } catch (error) {
       console.log(error);
     }
@@ -63,6 +67,46 @@ const ProfilDetails = ({ navigation, route }) => {
 
   const handleStarPress = (value) => {
     setStars(value);
+  };
+
+  const getLawyerRating = async () => {
+    try {
+      const response = await axios.get(
+        `http://${config}:1128/api/rating/getRatingByLawyer/${law?.id}`
+      );
+      console.log(response.data.map((item) => item.review));
+      const extractedReviews = response.data.map((item) => item.review);
+      setReviews(extractedReviews);
+      console.log(
+        "rating: ",
+        response.data.map((item) => item.stars)
+      );
+      const extractedReviews2 = response.data.map((item) => item.stars);
+      setRating(extractedReviews2);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getLawyerRating();
+    getUser();
+  }, []);
+
+  const toggleReviewsModal = () => {
+    setShowReviewsModal(!showReviewsModal);
+  };
+
+  const toggleOtherModal = () => {
+    setShowOtherModal(!showOtherModal);
+  };
+
+  const test = () => {
+    let rate =
+      rating.reduce((acc, curr) => {
+        return acc + curr;
+      }, 0) / rating.length;
+    console.log("rating from IIF: ", rate);
   };
 
   return (
@@ -84,10 +128,11 @@ const ProfilDetails = ({ navigation, route }) => {
               <View style={{ display: "flex", flexDirection: "row" }}>
                 <FontAwesome name="star" style={styles.icon} />
                 <Text style={styles.infoText}>
-                  {reviews.length > 0
+                  {rating.length > 0
                     ? `Average Rating: ${(
-                        reviews.reduce((acc, curr) => acc + curr.stars, 0) /
-                        reviews.length
+                        rating.reduce((acc, curr) => {
+                          return acc + curr;
+                        }, 0) / rating.length
                       ).toFixed(1)}/5`
                     : "No Ratings Yet"}
                 </Text>
@@ -95,9 +140,7 @@ const ProfilDetails = ({ navigation, route }) => {
 
               <View style={{ display: "flex", flexDirection: "row" }}>
                 <FontAwesome name="dollar" style={styles.icon} />
-
                 <Text style={styles.infoText}>${law.Price}/H</Text>
-
                 <Text style={styles.infoText}>{item.price}/H</Text>
               </View>
             </View>
@@ -105,6 +148,7 @@ const ProfilDetails = ({ navigation, route }) => {
               style={{ display: "flex", flexDirection: "row" }}
               onPress={() => {
                 navigation.navigate("Chat", { item });
+                test();
               }}
             >
               <FontAwesome
@@ -168,25 +212,6 @@ const ProfilDetails = ({ navigation, route }) => {
 
       <View style={styles.reviewContainer}>
         <Text style={styles.reviewTitle}>Client Reviews</Text>
-
-        {reviews.map((review, index) => (
-          <View key={index} style={styles.singleReview}>
-            {[1, 2, 3, 4, 5].map((star) => {
-              setStars(star);
-              return (
-                <FontAwesome
-                  key={star}
-                  name={star <= review.stars ? "star" : "star-o"}
-                  style={styles.starIcon}
-                />
-              );
-            })}
-            <Text style={{ marginLeft: 10, fontSize: 16 }}>
-              {review.review}
-            </Text>
-          </View>
-        ))}
-
         <View style={styles.starsContainer}>
           {[1, 2, 3, 4, 5].map((index) => (
             <TouchableOpacity
@@ -212,7 +237,39 @@ const ProfilDetails = ({ navigation, route }) => {
           <TouchableOpacity style={styles.submitButton} onPress={addRating}>
             <Text style={{ color: "white" }}>Submit</Text>
           </TouchableOpacity>
+
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={showReviewsModal}
+            onRequestClose={() => setShowReviewsModal(!showReviewsModal)}
+          >
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <Image
+                  source={require("../../lawyerApp/assets/check.png")}
+                  style={styles.modalImage}
+                />
+                <Text style={styles.modalTitle}>Successful!</Text>
+                <Text style={styles.modalText}>
+                  You have successfully added a review.
+                </Text>
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                  <FontAwesome name="comment-o" size={30} color="#fff" />
+                  <Text style={{ color: "#fff", marginLeft: 10 }}>
+                    Message Worker
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </Modal>
         </View>
+        <TouchableOpacity
+          style={styles.viewAllButton}
+          onPress={toggleOtherModal}
+        >
+          <Text style={styles.viewAllButtonText}>View All Reviews</Text>
+        </TouchableOpacity>
       </View>
 
       <TouchableOpacity
@@ -221,6 +278,32 @@ const ProfilDetails = ({ navigation, route }) => {
       >
         <Text style={styles.bookButtonText}>Book Appointment</Text>
       </TouchableOpacity>
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={showOtherModal}
+        onRequestClose={() => setShowOtherModal(!showOtherModal)}
+      >
+        <ScrollView style={styles.scrollView}>
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <ScrollView
+                contentContainerStyle={styles.scrollContent}
+              ></ScrollView>
+              {reviews.map((e, index) => (
+                <Text key={index}>{e}</Text>
+              ))}
+              <TouchableOpacity
+                style={styles.modalButton}
+                onPress={toggleOtherModal}
+              >
+                <Text style={{ color: "#fff" }}>Close Second Modal</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </ScrollView>
+      </Modal>
     </View>
   );
 };
@@ -229,6 +312,12 @@ const styles = StyleSheet.create({
   body: {
     backgroundColor: "#E5E4E2",
     height: 800,
+  },
+  scrollView: {
+    flex: 1,
+  },
+  scrollContent: {
+    padding: 16,
   },
   nameLawyer: {
     display: "flex",
@@ -328,7 +417,6 @@ const styles = StyleSheet.create({
     display: "flex",
     flex3Direction: "row",
     gap: 5,
-
     marginTop: 10,
   },
   infoBlock: {
@@ -402,6 +490,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginTop: 10,
+    justifyContent: "space-between",
   },
   commentInput: {
     flex: 1,
@@ -417,6 +506,64 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
     justifyContent: "center",
+  },
+  viewAllButton: {
+    backgroundColor: "black",
+    padding: 10,
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 10,
+  },
+  viewAllButtonText: {
+    color: "white",
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 0,
+    position: "relative",
+    top: -160,
+  },
+  modalView: {
+    top: 170,
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  modalImage: {
+    width: 200,
+    height: 200,
+    marginBottom: 20,
+  },
+  modalTitle: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#C69D3F",
+    marginBottom: 10,
+    textAlign: "center",
+  },
+  modalText: {
+    fontSize: 18,
+    color: "black",
+    marginBottom: 20,
+    textAlign: "center",
+  },
+  modalButton: {
+    paddingHorizontal: 100,
+    paddingVertical: 11,
+    alignItems: "center",
   },
 });
 

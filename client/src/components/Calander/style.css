@@ -1,0 +1,32 @@
+.input-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .title-input,
+  .start-date-input,
+  .end-date-input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .date-input-group {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .confirm-button {
+    padding: 8px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .confirm-button:hover {
+    background-color: #45a049;
+  }
+  

@@ -24,41 +24,46 @@ import Chat from "./components/Chat/Chat.js";
 import InformationPhase from "./components/StepsCases/InformationPhase.jsx";
 import Statestique from "./components/Statestique/Statestique.jsx";
 import Appointments from "./components/Appointments/Appointments.jsx";
+import Calender from "./components/Calander/Calender.jsx"
+
+
 
 const App = () => {
   return (
     <Provider store={store}>
-      <div className="App">
-        <Router>
-          <Routes>
-            <Route path="/PaymentHistory" element={<PaymentHistory />} />
-            <Route path="/" element={<Landing />} />
-            <Route path="/nav" element={<Navbar />} />
-            <Route path="/Signin" element={<Signin />} />
-            <Route path="/Signup" element={<Signup />} />
-            <Route path="/clientDetails" element={<ClientDetails />} />
-            <Route path="/PaymentReceipt" element={<PaymentReceipt />} />
-            <Route path="/allClient" element={<AllClient />} />
-            <Route path="/sidebar" element={<SidebarDash />} />
-            <Route path="/navbar" element={<NavbarDashboard />} />
-            <Route path="/settingSecurity" element={<SettingSecurity />} />
-            <Route path="/settingProfil" element={<SettingProfil />} />
-            <Route path="/stepsCases" element={<StepsCases />} />
-            <Route path="/diagramme" element={<Diagramme />} />
-            <Route path="/flow" element={<Flow />} />
-            <Route path="/chat" element={<Chat />} />
-            <Route path="/informations" element={<InformationPhase />} />
-            <Route path="/stat" element={<Statestique />} />
-            <Route path="/task" element={<TaskList />} />
-            <Route path="/CaseHistory" element={<CaseHistory />} />
-            <Route path="/CaseProfile" element={<CaseProfile />} />
-            <Route path="/Chat" element={<Chat />} />
-            <Route path="/Appointments" element={<Appointments />} />
-            <Route path="/informations" element={<InformationPhase />} />
-            <Route path="/stat" element={<Statestique />} />
-          </Routes>
-        </Router>
-      </div>
+    <div className="App">
+  
+      <Router>
+        <Routes>
+          <Route path="/PaymentHistory" element={<PaymentHistory />} />
+          <Route path="/" element={<Landing />} />
+          <Route path="/nav" element={<Navbar />} />
+          <Route path="/Signin" element={<Signin />} />
+          <Route path="/Signup" element={<Signup />} />
+          <Route path="/clientDetails" element={<ClientDetails />} />
+          <Route path="/PaymentReceipt" element={<PaymentReceipt />} />
+          <Route path="/allClient" element={<AllClient />} />
+          <Route path="/sidebar" element={<SidebarDash />} />
+          <Route path="/navbar" element={<NavbarDashboard />} />
+          <Route path="/settingSecurity" element={<SettingSecurity />} />
+          <Route path="/settingProfil" element={<SettingProfil />} />
+          <Route path="/stepsCases" element={<StepsCases />} />
+          <Route path="/diagramme" element={<Diagramme />} />
+          <Route path="/flow" element={<Flow />} />
+          <Route path="/chat" element={<Chat />} />
+          <Route path="/informations" element={<InformationPhase />} />
+          <Route path="/stat" element={<Statestique />} />
+          <Route path="/task" element={<TaskList />} />
+          <Route path="/CaseHistory" element={< CaseHistory/>} />
+          <Route path="/CaseProfile" element={< CaseProfile/>} />
+          <Route path="/Chat" element={< Chat/>} />
+          <Route path="/Appointments" element={< Appointments/>} />
+          <Route path="/informations" element={<InformationPhase/>} />
+          <Route path="/stat" element={<Statestique/>} />
+          <Route path="/Calender" element={<Calender/>} />
+        </Routes>
+      </Router>
+    </div>
     </Provider>
   );
 };

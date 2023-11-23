@@ -141,11 +141,8 @@ Media.belongsTo(Conversation);
 Conversation.hasMany(Notification);
 Notification.belongsTo(Conversation);
 
-Phase.hasMany(Edge);
-Edge.belongsTo(Phase);
-
-Folder.hasMany(Files);
-Files.belongsTo(Folder);
+  Category.hasOne(Lawyer)
+  Lawyer.belongsTo(Category)
 
 // connection
 //   .sync({ force: true })
@@ -177,4 +174,32 @@ db.Process = Process;
 db.Files = Files;
 db.Folder = Folder;
 
-module.exports = db;
+
+  const db={} 
+  db.User=User
+  db.Lawyer=Lawyer
+  db.Report=Report
+  db.Media=Media
+  db.Admin=Admin
+  db.Appointment=Appointment
+  db.Availability=Availability
+  db.Case=Case
+  db.Category=Category
+  db.Chat=Chat
+  db.Conversation=Conversation
+  db.Notification=Notification
+  db.Payment=Payment
+  db.Phase=Phase
+  db.Rating=Rating
+  db.Receipt=Receipt
+  db.TaskList=TaskList
+  db.User_Lawyer=User_Lawyer
+  db.Edge = Edge
+  db.Note = Note
+  db.Process = Process
+  db.Files=Files
+  db.Folder=Folder
+  
+ 
+
+  module.exports= db
