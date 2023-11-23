@@ -75,6 +75,7 @@ const CaseHistory = () => {
       console.error("Error fetching clients", error);
     }
   };
+  
   const getLawyer = async () => {
     try {
       const loggedInLawyer = FIREBASE_AUTH.currentUser.email;
