@@ -79,7 +79,7 @@ const AddClient = ({ lawyer, refrech, setRefrech }) => {
         aria-hidden="true"
       >
         <div className="modal-dialog">
-          <div className="modal-content">
+          <div className="modal-content-add">
             <div className="modal-header">
               <h1 className="modal-title fs-5" id="staticBackdropLabel">
                 Create a new clients
