@@ -6,12 +6,13 @@
   "scripts": {
     "start": "nodemon index.js",
     "seeds": "nodemon models/dummy.js",
-    "seed":"node models/seed.js"
+    "seed": "node models/seed.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.7",
+    "colors": "^1.4.0",
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "morgan": "^1.10.0",

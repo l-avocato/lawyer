@@ -134,7 +134,7 @@ function Navbar() {
                 show={show}
                 onHide={handleClose}
                 size="xl"
-                style={{ alignSelf: "center", left: 200, top: 50 }}
+                style={{ alignSelf: "center", left: 200, top: 50 , width: 450 }}
               >
                 <Modal.Header closeButton>
                   <Modal.Title style={{ marginLeft: 290 }}>Login</Modal.Title>
@@ -170,7 +170,7 @@ function Navbar() {
                         <Form.Control
                           type="password"
                           placeholder="Password"
-                          style={{ fontSize: "1px" }}
+                          style={{ fontSize: "15px" }}
                           onChange={(e) => {
                             setPassword(e.target.value);
                           }}

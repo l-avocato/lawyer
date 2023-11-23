@@ -1,15 +1,24 @@
 const sequalize = require("sequelize");
-const { Phase } = require("../models/index");
+const { Phase,Case, Lawyer } = require("../models/index");
 
 module.exports = {
   getAllPhases: async (req, res) => {
     try {
-      const allPhases = await Phase.findAll({});
+
+      const allPhases = await Case.findOne({where: {id: req.params.id},
+        include:[{
+        model:Phase
+
+      }]});
       res.status(200).send(allPhases);
     } catch (error) {
       throw error;
     }
   },
+    
+
+ 
+
   getPhaseId: async (req, res) => {
     try {
       const onePhase = await Phase.findOne({
@@ -42,12 +51,26 @@ module.exports = {
   },
   update: async function (req, res) {
     try {
-      const result = await Phase.update(req.body, {
+       if(req.body.price  ){
+         const result = await Phase.update({ IsPaid: false, ...req.body}, {
+   
+             where: {
+                 id: req.params.id
+             }
+         })
+        
+       return    res.status(200).send(result)
+       }
+       else {
+        const result = await Phase.update(req.body, {
           where: {
               id: req.params.id
           }
-      })
-      res.status(200).send(result)
+      }) 
+      return    res.status(200).send(result)
+       }
+
+
   } catch (error) {
       res.status(500).send({
           error: error.message
