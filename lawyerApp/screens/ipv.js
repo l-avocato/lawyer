@@ -1,4 +1,4 @@
 
 
 
-export default config = "192.168.11.233"
+export default config = "192.168.11.52"
