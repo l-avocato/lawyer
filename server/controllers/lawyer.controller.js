@@ -64,6 +64,19 @@ module.exports = {
     }
   },
 
+  updateLawyer: async (req, res) => {
+    try {
+      const lawyerEmail = await Lawyer.findOne({where: { email: req.params.emailUpdate}});
+        const result= await Lawyer.update(req.body, {
+        where: { id: lawyerEmail.id},
+      });
+
+      res.send(result);
+    } catch (error) {
+      throw error;
+    }
+  },
+
   searchLawyer: async (req, res) => {
     try {
       const searchLawyer = await Lawyer.findAll({

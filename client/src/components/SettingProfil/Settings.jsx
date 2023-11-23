@@ -81,7 +81,6 @@ const Settings = () => {
    ImageUrl: papers, 
    adress: adress, 
    phoneNumber: phoneNumber,
-   latitude: parseFloat(latitude),
          longitude: parseFloat(longitude),
            latitude: parseFloat(latitude),
 
@@ -191,7 +190,7 @@ const Settings = () => {
           </div> 
         
           <div className="form-outline mb-2">
-            <label htmlFor="">phone number</label>
+            <label htmlFor="">Phone Number</label>
             <input
               type="number"
               placeholder="Phone number"
@@ -215,7 +214,7 @@ const Settings = () => {
               border: "none",
               borderRadius: "8px",
               cursor: "pointer",
-             width:'550px',
+             width:'800px',
              height: "40px"
 
 
@@ -242,7 +241,7 @@ const Settings = () => {
               border: "none",
               borderRadius: "8px",
               cursor: "pointer",
-              width:'550px',
+              width:'800px',
               height: "40px"
 
             }}
