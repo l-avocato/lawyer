@@ -395,7 +395,7 @@ React.useEffect(()=>{
                   <NotificationsIcon />
                 </Badge>
               </IconButton>
-              <span style={{width:"8rem" , backgroundColor:"white",color:"black",alignItems:"center",borderRadius:"5%",height:"5vh",display:"flex",justifyContent:"center",alignSelf:"center"}}>
+              <span style={{width:"8rem" , backgroundColor:"white",color:"black",alignItems:"center",borderRadius:"5%",height:"6vh",display:"flex",justifyContent:"center",alignSelf:"center"}}>
            Hi,Maitre {currentUser.fullName}
           </span>
               {/* <IconButton  sx={{ p: 0 }} onClick={handleOpenUserMenu}>

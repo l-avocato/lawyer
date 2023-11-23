@@ -45,7 +45,7 @@ module.exports = {
       const lawyerDeleted = await Lawyer.destroy({
         where: { id: req.params.id },
       });
-      res.send(lawyerDeleted);
+      res.json(lawyerDeleted);
     } catch (error) {
       throw error;
     }
