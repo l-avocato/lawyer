@@ -160,7 +160,7 @@ const connection = new Sequelize('lavocato', 'root', 'root', {
 
 
 
-  // connection.sync({ force: true })
+  // connection.sync({ alter: true })
   // .then(() => console.log("tables are created"))
   // .catch((err) => console.log(err))
 
