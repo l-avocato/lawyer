@@ -6,8 +6,7 @@ import { useNavigate } from "react-router-dom";
 import SidebarDash from "../SidebarDash/SidebarDash";
 import { DataGrid } from "@mui/x-data-grid";
 import NavbarDashboard from "../NavbarDashboard/NavbarDashboard";
-import { FIREBASE_AUTH , db } from "../../firebaseconfig";
-// import { useLocation } from "react-router-dom";
+import { FIREBASE_AUTH } from "../../firebaseconfig";
 
 const CaseHistory = () => {
   const [cases, setCases] = useState([]);
@@ -15,6 +14,9 @@ const CaseHistory = () => {
   const navigate = useNavigate();
   const [lawyer, setLawyer] = useState({});
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [users, setUsers] = useState([]);
+
+  const [refrech, setRefrech] = useState(false);
 
   const getLawyer = async () => {
     try {
@@ -83,9 +85,9 @@ const CaseHistory = () => {
   };
 
   useEffect(() => {
-    Promise.all([fetchCasesData(), getLawyer(), getLawyerClients()]).catch(
-      console.error
-    );
+    fetchCasesData();
+    getLawyer();
+    getLawyerClients();
   }, []);
 
   const handleView = (id) => {
@@ -112,99 +114,118 @@ const CaseHistory = () => {
     setIsModalVisible(false);
   };
 
-  const NewCaseForm = React.memo(({ onFinish }) => {
-    const [form] = Form.useForm();
-    const [selectedOption, setSelectedOption] = useState("");
-    const [inputValue, setInputValue] = useState("");
+  const handleOk = async (values) => {
+    try {
+      const data = {
+        ...values,
+        client: values.type,
+        lawyerId: lawyer.id,
+      };
+      console.log("this is data", data);
+      const response = await axios.post(
+        "http://localhost:1128/api/case/addCase",
+        data
+      );
+      console.log("this is response", response.data);
+      setRefrech(!refrech);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const NewCaseForm = React.memo((props) => {
+    const [type, setType] = useState("plaintiff");
+    const [user, setUser] = useState({});
+    const [userId, setUserId] = useState(0);
     const [title, setTitle] = useState("");
     const [number, setNumber] = useState(0);
     const [details, setDetails] = useState("");
-    const [type, setType] = useState("plaintiff");
-    const [user, setUser] = useState({});
-    const [users, setUsers] = useState([]);
-    const [refrech, setRefrech] = useState(false);
-    const [userId, setUserId] = useState(0);
-    const options = users.map((user) => ({ value: user.fullName }));
-
-    const handleOk = async (values) => {
-      try {
-        const response = await axios.post(
-          "http://localhost:1128/api/case/addCase",
-          {
-            title,
-            details,
-            number,
-            client: type,
-            userId: userId,
-            lawyerId: lawyer.id,
-          }
-        );
-        setRefrech(!refrech);
-      } catch (error) {
-        console.log(error);
-      }
+    const handleSubmit = (obj) => {
+      props.onFinish({ ...obj, userId });
     };
 
     return (
-      <Form form={form} onFinish={onFinish} layout="vertical">
+      <Form
+        onFinish={(e) => {
+          handleSubmit(e);
+        }}
+        layout="vertical"
+      >
         <Form.Item
-          name="number"
-          label="Case Number"
-          rules={[{ required: true }]}
+          label="Title"
+          name="title"
+          rules={[{ required: true, message: "Please enter the title" }]}
         >
           <Input
-            type="number"
-            value={number}
-            onChange={(event) => {
-              setNumber(event.target.value);
+            name="title"
+            onChange={(e) => {
+              // setTitle(e.target.value);
+              setTitle(e.target.value);
             }}
           />
         </Form.Item>
+
         <Form.Item
+          label="Number"
+          name="number"
+          rules={[{ required: true, message: "Please enter the number" }]}
+        >
+          <Input
+            type="number"
+            name="number"
+            onChange={(e) => {
+              // setTitle(e.target.value);
+              setNumber(e.target.value);
+            }}
+          />
+        </Form.Item>
+
+        <Form.Item
+          label="Details"
+          name="details"
+          rules={[{ required: true, message: "Please enter the details" }]}
+        >
+          <Input.TextArea
+            name="details"
+            onChange={(e) => {
+              // setTitle(e.target.value);
+              setDetails(e.target.value);
+            }}
+          />
+        </Form.Item>
+
+        <Form.Item
+          label="Client"
           name="client"
-          label="Client Name"
-          rules={[{ required: false }]}
+          rules={[{ required: true, message: "Please select a client" }]}
         >
           <Select
-            value={inputValue}
-            style={{ width: 200 }}
-            onSelect={(value) => {
-              const selectedUser = users.find(
-                (user) => user.fullName === value
-              );
-              setUser(selectedUser);
-              form.setFieldsValue({ client: selectedUser.fullName });
-              setInputValue(selectedUser.fullName);
+            name="client"
+            onChange={(value) => {
+              const selectedUser = users.find((user) => user.id === value);
+              console.log(selectedUser.id);
               setUserId(selectedUser.id);
+              setUser(selectedUser.fullName);
             }}
+            defaultValue={user}
           >
-            {users.map((user) => (
-              <Select.Option key={user.id} value={user.fullName}>
+            {props.users.map((user) => (
+              <Select.Option key={user.id} value={user.id}>
                 {user.fullName}
               </Select.Option>
             ))}
           </Select>
         </Form.Item>
-        <Form.Item name="clientType" label="Client Type">
-          <Select
-            placeholder="Select client type"
-            onSelect={(selected) => {
-              setType(selected);
-            }}
-            allowClear
-          >
+
+        <Form.Item
+          label="Type"
+          name="type"
+          rules={[{ required: true, message: "Please select a type" }]}
+        >
+          <Select defaultValue={type} onChange={(value) => console.log(value)}>
             <Select.Option value="plaintiff">Plaintiff</Select.Option>
             <Select.Option value="defendant">Defendant</Select.Option>
           </Select>
-        </Form.Item>
-        <Form.Item name="title" label="Title" rules={[{ required: true }]}>
-          <Input
-            value={title}
-            onChange={(event) => setTitle(event.target.value)}
-          />
-        </Form.Item>
-        <Form.Item name="details" label="Details" rules={[{ required: true }]}>
-          <Input.TextArea style={{ height: 200 }} />
         </Form.Item>
 
         <Form.Item>
@@ -299,7 +320,7 @@ const CaseHistory = () => {
               // setDetails={setDetails}
               // type={type}
               // setType={setType}
-              // users={users}
+              users={users}
               // setUser={setUser}
               // setUserId={setUserId}
             />
