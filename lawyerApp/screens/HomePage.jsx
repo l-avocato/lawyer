@@ -19,8 +19,6 @@ import { collection, getDocs } from "firebase/firestore";
 import axios from "axios";
 import config from "./ipv";
 
-
-
 const { width, height } = Dimensions.get("window");
 
 const HomePage = ({ navigation }) => {
@@ -60,28 +58,28 @@ const HomePage = ({ navigation }) => {
   //   },
   // ];
 
-  const photoData4 = [
-    {
-      id: 1,
-      source: require("../Photos/avocat6.jpeg"),
-    },
-    {
-      id: 2,
-      source: require("../Photos/avocat7.jpeg"),
-    },
-    {
-      id: 3,
-      source: require("../Photos/avocat8.jpeg"),
-    },
-    {
-      id: 4,
-      source: require("../Photos/avocat9.jpeg"),
-    },
-    {
-      id: 5,
-      source: require("../Photos/avocat10.jpeg"),
-    },
-  ];
+  // const photoData4 = [
+  //   {
+  //     id: 1,
+  //     source: require("../Photos/avocat6.jpeg"),
+  //   },
+  //   {
+  //     id: 2,
+  //     source: require("../Photos/avocat7.jpeg"),
+  //   },
+  //   {
+  //     id: 3,
+  //     source: require("../Photos/avocat8.jpeg"),
+  //   },
+  //   {
+  //     id: 4,
+  //     source: require("../Photos/avocat9.jpeg"),
+  //   },
+  //   {
+  //     id: 5,
+  //     source: require("../Photos/avocat10.jpeg"),
+  //   },
+  // ];
 
   const renderTabContent = () => {
     const [user, setUser] = useState([]);
@@ -92,17 +90,15 @@ const HomePage = ({ navigation }) => {
     const lawyersCollectionRef = collection(FIREBASE_DB, "lawyers");
     const categoryCollectionRef = collection(FIREBASE_DB, "category");
 
-
-    console.log(lawyers,"this is lawyers");
-
-
+    console.log(lawyers, "this is lawyers");
 
     const loggedInUser = FIREBASE_AUTH.currentUser.email;
 
     const getUser = () => {
-       axios.get(`http://${config}:1128/api/user/getUserByEmail/${loggedInUser}`)
-      .then((res) => {
-          console.log("this is user",res.data);
+      axios
+        .get(`http://${config}:1128/api/user/getUserByEmail/${loggedInUser}`)
+        .then((res) => {
+          console.log("this is user", res.data);
           setUser(res.data);
           /*
           user is set correctly, inside an array because in the back you're using findAll instead of findone, it doesn't matter, u can set the
@@ -113,28 +109,28 @@ const HomePage = ({ navigation }) => {
            another comment to explain more
           
           */
-        }).catch(err=>{
-          console.log(err);
         })
-      };
+        .catch((err) => {
+          console.log(err);
+        });
+    };
 
     const getLawyers = async () => {
-      try{
-         const response = await axios.get(
-        `http://${config}:1128/api/lawyer/allLawyers`
-      );
-      setLawyers(response.data);
-      console.log("this is lawyers", response.data);
-      return response.data;
+      try {
+        const response = await axios.get(
+          `http://${config}:1128/api/lawyer/allLawyers`,
+        );
+        setLawyers(response.data);
+        console.log("this is lawyers", response.data);
+        return response.data;
+      } catch (err) {
+        console.log(err);
       }
-     catch(err) {
-console.log(err);
-     }
     };
     const getCategories = async () => {
       console.log("this is the config", config);
       const response = await axios.get(
-        `http://${config}:1128/api/category/allCategories`
+        `http://${config}:1128/api/category/allCategories`,
       );
       setCategories(response.data);
       console.log("this is lawyers", categories);
@@ -159,8 +155,7 @@ console.log(err);
                 marginBottom: 7,
                 left: -5,
                 color: "#D5B278",
-              }}
-            >
+              }}>
               {" "}
               Hi,{user[0]?.fullName}
             </Text>
@@ -171,14 +166,12 @@ console.log(err);
             <View style={styles.notificationContainer}>
               <TouchableOpacity
                 onPress={() => navigation.navigate("notifications")}
-                style={styles.notificationButton}
-              >
+                style={styles.notificationButton}>
                 <MaterialIcons name="notifications" size={24} color="white" />
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => handleFilterClick()}
-                style={styles.filterButton}
-              >
+                style={styles.filterButton}>
                 <Ionicons name="options" size={24} color="white" />
               </TouchableOpacity>
             </View>
@@ -201,8 +194,7 @@ console.log(err);
               <ScrollView
                 horizontal
                 showsHorizontalScrollIndicator={false}
-                contentContainerStyle={styles.buttonContainer1}
-              >
+                contentContainerStyle={styles.buttonContainer1}>
                 <FlatList
                   data={categories}
                   horizontal
@@ -210,8 +202,7 @@ console.log(err);
                   renderItem={({ item }) => (
                     <TouchableOpacity
                       style={[styles.button2, styles.buttonWithSpace]}
-                      onPress={() => handleButtonClick(2)}
-                    >
+                      onPress={() => handleButtonClick(2)}>
                       <Text style={styles.buttonText}>{item.name}</Text>
                     </TouchableOpacity>
                   )}
@@ -220,8 +211,7 @@ console.log(err);
               </ScrollView>
               <TouchableOpacity
                 style={styles.topRightButton}
-                onPress={() => handleTopRightButtonClick()}
-              >
+                onPress={() => handleTopRightButtonClick()}>
                 <Text style={styles.topRightButtonText}>See All</Text>
               </TouchableOpacity>
             </View>
@@ -248,8 +238,7 @@ console.log(err);
                         fontSize: 15,
                         fontWeight: "500",
                         alignSelf: "center",
-                      }}
-                    >
+                      }}>
                       {item.fullName}
                     </Text>
                   </TouchableOpacity>
@@ -258,8 +247,7 @@ console.log(err);
               />
               <TouchableOpacity
                 style={styles.topRightButton}
-                onPress={() => handleTopRightButtonClick()}
-              >
+                onPress={() => handleTopRightButtonClick()}>
                 <Text style={styles.topRightButtonText}>See All</Text>
               </TouchableOpacity>
             </View>
@@ -267,8 +255,7 @@ console.log(err);
               <View style={styles.buttonContainer}>
                 <TouchableOpacity
                   style={styles.singleButton}
-                  onPress={() => handleButtonClick(7)}
-                >
+                  onPress={() => handleButtonClick(7)}>
                   <View style={styles.textContainer}>
                     <Text style={styles.buttonText1}>
                       Can't find need help?
@@ -280,8 +267,7 @@ console.log(err);
                   <View style={styles.arrowContainer}>
                     <TouchableOpacity
                       style={styles.arrowButton}
-                      onPress={() => handleArrowClick()}
-                    >
+                      onPress={() => handleArrowClick()}>
                       <FontAwesome name="angle-right" size={24} color="white" />
                     </TouchableOpacity>
                   </View>
@@ -297,7 +283,10 @@ console.log(err);
                 renderItem={({ item }) => (
                   <TouchableOpacity onPress={() => handlePhotoClick(item)}>
                     <View style={styles.photoItem}>
-                      <Image source={{uri: item.ImageUrl}} style={styles.photoImage} />
+                      <Image
+                        source={{ uri: item.ImageUrl }}
+                        style={styles.photoImage}
+                      />
                     </View>
                     <Text
                       style={{
@@ -306,8 +295,7 @@ console.log(err);
                         fontSize: 15,
                         fontWeight: "500",
                         alignSelf: "center",
-                      }}
-                    >
+                      }}>
                       {item.fullName}
                     </Text>
                   </TouchableOpacity>
@@ -316,8 +304,7 @@ console.log(err);
               />
               <TouchableOpacity
                 style={styles.topRightButton}
-                onPress={() => handleTopRightButtonClick()}
-              >
+                onPress={() => handleTopRightButtonClick()}>
                 <Text style={styles.topRightButtonText}>See All</Text>
               </TouchableOpacity>
             </View>
@@ -539,7 +526,7 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 20,
     flexDirection: "row",
-    alignItems: "center", 
+    alignItems: "center",
     top: 10,
     marginBottom: 20,
     marginRight: 10,
@@ -547,7 +534,6 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     flex: 1,
-    
   },
   buttonText1: {
     color: "#D5B278",
