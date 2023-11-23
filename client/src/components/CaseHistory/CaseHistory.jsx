@@ -17,24 +17,30 @@ const CaseHistory = () => {
   const [users, setUsers] = useState([]);
   const [refrech, setRefrech] = useState(false);
 
-  // const handleAddCase = async () => {
-  //   try {
-  //     const response = await axios.post(
-  //       "http://localhost:1128/api/case/addCase",
-  //       {
-  //         title,
-  //         details,
-  //         number,
-  //         client: type,
-  //         userId: userId,
-  //         lawyerId: lawyer.id,
-  //       }
-  //     );
-  //     setRefrech(!refrech);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const getLawyer = async () => {
+    try {
+      const loggedInLawyer = FIREBASE_AUTH.currentUser.email;
+      console.log(loggedInLawyer);
+      const res = await axios.get(
+        `http://localhost:1128/api/lawyer/getLawyerByEmail/${loggedInLawyer}`
+      );
+      setLawyer(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const getLawyerClients = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:1128/api/user_lawyer/getClientsByLawyerId/${lawyer.id}`
+      );
+      setUsers(response.data[0].users);
+      console.log("this is clients", response.data[0].users);
+    } catch (error) {
+      console.error("Error fetching clients", error);
+    }
+  };
 
   const fetchCasesData = async () => {
     try {
@@ -59,44 +65,14 @@ const CaseHistory = () => {
     }
   };
 
-  const getLawyerClients = async () => {
-    try {
-      const response = await axios.get(
-        `http://localhost:1128/api/user_lawyer/getClientsByLawyerId/${lawyer.id}`
-      );
-      if (response.data[0]) {
-        setUsers(response.data[0].users);
-        console.log("this is users", users);
-      } else {
-        console.log("No data returned from API");
-        console.log("this is response", response.data);
-      }
-    } catch (error) {
-      console.error("Error fetching clients", error);
-    }
-  };
-  const getLawyer = async () => {
-    try {
-      const loggedInLawyer = FIREBASE_AUTH.currentUser.email;
-      console.log(loggedInLawyer);
-      const res = await axios.get(
-        `http://localhost:1128/api/lawyer/getLawyerByEmail/${loggedInLawyer}`
-      );
-      setLawyer(res.data);
-      getLawyerClients(res.data.id);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  useEffect(() => {
+    getLawyer();
+  }, [refrech]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      await getLawyer();
-      await fetchCasesData();
-    };
-
-    fetchData();
-  }, []);
+    fetchCasesData();
+    getLawyerClients();
+  }, [lawyer]);
 
   const handleView = (id) => {
     console.log("View case with ID:", id);
