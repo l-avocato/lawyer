@@ -90,9 +90,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 // let isNotificationsOpen, setNotificationsOpen;
 const NavbarDashboard = () => {
  
-
-
   const navigate = useNavigate();
+
+
+  
 
  
   // [isChatOpen, setChatOpen] = useState(false);
@@ -381,8 +382,8 @@ React.useEffect(()=>{
             <Box sx={{ flexGrow: 1 }} />
             <Box sx={{ display: { xs: 'none', md: 'flex' },gap:"1rem" }}>
               <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-                <Badge badgeContent={4} color="error">
-                  <MailIcon />
+                <Badge badgeContent={4} color="error" >
+                  <MailIcon onClick={()=>{navigate('/chat')}}/>
                 </Badge>
               </IconButton>
               <IconButton
@@ -394,7 +395,7 @@ React.useEffect(()=>{
                   <NotificationsIcon />
                 </Badge>
               </IconButton>
-              <span style={{width:"8rem" , backgroundColor:"white",color:"black",alignItems:"center",borderRadius:"5%",height:"5vh",display:"flex",justifyContent:"center",alignSelf:"center"}}>
+              <span style={{width:"8rem" , backgroundColor:"white",color:"black",alignItems:"center",borderRadius:"5%",height:"6vh",display:"flex",justifyContent:"center",alignSelf:"center"}}>
            Hi,Maitre {currentUser.fullName}
           </span>
               {/* <IconButton  sx={{ p: 0 }} onClick={handleOpenUserMenu}>

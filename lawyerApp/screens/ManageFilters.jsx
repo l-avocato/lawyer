@@ -15,36 +15,50 @@ import { FIREBASE_DB } from "../firebaseConfig";
 import { MaterialIcons } from "@expo/vector-icons";
 import { QuerySnapshot, collection, getDocs } from "firebase/firestore";
 import axios from "axios";
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { useNavigation } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 import config from "./ipv";
 
-const ManageFilters = ({navigation}) => {
-  const buttonLabels = ["Proprety", "Criminal", "Tax"];
+const ManageFilters = () => {
+  const navigation = useNavigation();
+  const [categories, setCategories] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [priceRange, setPriceRange] = useState(40);
   const [price, setPrice] = useState(0);
-  const [starRating, setStarRating] = useState(null);
+  const [starRating, setStarRating] = useState(0);
+  const [selectedCategory, setSelectedCategory] = useState(null);
   const ratings = [1, 2, 3, 4, 5];
   const [lawyers, setLawyers] = useState([]);
-  console.log(price, "price");
+  // console.log("selcted", selectedCategory);
   const handleArrowIconClick = () => {};
   const handleRefreshIconClick = () => {};
-  const filtredLawyer = async (body) => {
+  const handleGetCategories = async () => {
     try {
-      console.log(body);
-      const response = await axios.post(
-        "http://192.168.103.17:1128/api/lawyer/getByFilter",
-        {
-          price: body,
-        },
+      const response = await axios.get(
+        `http://${config}:1128/api/category/allCategories`,
       );
-      navigation.navigate('SearchListings', {
+      setCategories(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    handleGetCategories();
+  }, []);
+  const filtredLawyer = async () => {
+    console.log(
+      "selectedCategory inside the app manage filters",
+      selectedCategory,
+    );
+    console.log("selectedCategory inside the app manage filters", starRating);
+    try {
+      const response = await axios.get(
+        `http://${config}:1128/api/lawyer/getByFilter/${selectedCategory}/${starRating}`,
+      );
+      navigation.navigate("SearchListings", {
         filteredLawyers: response.data,
       });
       console.log(response.data, "data");
-
-      // return response.data;
     } catch (error) {
       throw error;
     }
@@ -60,6 +74,10 @@ const ManageFilters = ({navigation}) => {
   };
   const handleRatingButtonPress = (rating) => {
     setSelectedRating(rating);
+    console.log(rating);
+  };
+  const handleCategoryPress = (id) => {
+    setSelectedCategory(id);
   };
 
   return (
@@ -88,12 +106,17 @@ const ManageFilters = ({navigation}) => {
             horizontal
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={styles.buttonContainer}>
-            {buttonLabels.map((label, index) => (
+            {categories.map((category, index) => (
               <TouchableOpacity
                 key={index}
-                style={styles.button}
-                onPress={() => handleButtonPress(label)}>
-                <Text style={styles.buttonText}>{label}</Text>
+                style={[
+                  styles.button,
+                  selectedCategory === category.name && {
+                    backgroundColor: "blue",
+                  }, // Change the style based on selection
+                ]}
+                onPress={() => handleCategoryPress(category.id)}>
+                <Text style={styles.buttonText}>{category.name}</Text>
               </TouchableOpacity>
             ))}
           </ScrollView>
@@ -202,7 +225,7 @@ const ManageFilters = ({navigation}) => {
             />
             <TouchableOpacity
               style={styles.button5}
-              onPress={() => filtredLawyer([40, price])}>
+              onPress={() => filtredLawyer()}>
               <Text style={styles.buttonText5}>Apply Filters!</Text>
             </TouchableOpacity>
           </View>
