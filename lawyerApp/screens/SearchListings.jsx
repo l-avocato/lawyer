@@ -11,9 +11,12 @@ import {
 import Icon from "react-native-vector-icons/FontAwesome";
 import { FIREBASE_DB } from "../firebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
+import { useRoute } from "@react-navigation/native";
 
-const SearchListings = ({ route }) => {
-  const { filteredLawyers } = route.params;
+const SearchListings = () => {
+  const route=useRoute()
+  const  filteredLawyers  = route.params;
+  console.log(route.params, "params");
 
   const handleArrowClick = () => {
     // Handle arrow icon click here
@@ -26,22 +29,24 @@ const SearchListings = ({ route }) => {
   const [isHeartPressed, setIsHeartPressed] = useState(false);
   const lawyersCollectionRef = collection(FIREBASE_DB, "lawyers");
   const [lawyers, setLawyers] = useState([]);
-  const getLawyers = async () => {
-    try {
-      const result = await getDocs(lawyersCollectionRef);
-      const lawyers = result.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-      }));
-      setLawyers(lawyers);
-      console.log("this is lawyers", lawyers);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
-  useEffect(() => {
-    getLawyers();
-  }, []);
+  // const getLawyers = async () => {
+  //   try {
+  //     const result = await getDocs(lawyersCollectionRef);
+  //     const lawyers = result.docs.map((doc) => ({
+  //       ...doc.data(),
+  //       id: doc.id,
+  //     }));
+  //     setLawyers(lawyers);
+  //     console.log("this is lawyers hhhhhhhh", lawyers);
+  //   } catch (error) {
+  //     console.error("Error fetching data:", error);
+  //   }
+  // };
+  // useEffect(() => {
+  //   console.log("filteredLawyers in useEffect:", filteredLawyers);
+  //   console.log("lawyers in useEffect:", lawyers);
+  //   getLawyers();
+  // }, [filteredLawyers]);
   const renderItem = ({ item }) => (
     <View style={styles.lawyerView1}>
       <Image source={{ uri: item.imageUrl }} style={styles.lawyerImage} />
@@ -82,14 +87,12 @@ const SearchListings = ({ route }) => {
       </View>
 
       {/* Body View */}
-      <ScrollView contentContainerStyle={styles.body1}>
-        <FlatList
-          data={filteredLawyers ? filteredLawyers : lawyers}
-          keyExtractor={(item) => item.id}
-          renderItem={renderItem}
-          contentContainerStyle={styles.body1}
-        />
-      </ScrollView>
+      <FlatList
+      data={filteredLawyers ? filteredLawyers : lawyers}
+      keyExtractor={(item) => item.id}
+      renderItem={renderItem}
+      contentContainerStyle={styles.body1}
+    />
     </View>
   );
 };

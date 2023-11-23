@@ -31,7 +31,6 @@ import ChatRooms from "./screens/ChatRooms";
 import MyCases from "./screens/MyCases";
 import CaseDetails from "./screens/CaseDetails";
 import PhaseDetails from "./screens/PhaseDetails";
-
 export default function App() {
   const Stack = createNativeStackNavigator();
   return (

@@ -1,5 +1,5 @@
 const sequalize = require("sequelize");
-const { Lawyer, Category } = require("../models/index");
+const { Lawyer, Category, Rating } = require("../models/index");
 const { Op } = require("sequelize");
 
 module.exports = {
@@ -21,7 +21,7 @@ module.exports = {
       throw error;
     }
   },
-  getLawyerByEmail:  async (req, res) => {
+  getLawyerByEmail: async (req, res) => {
     try {
       const oneLawyer = await Lawyer.findOne({
         where: { email: req.params.email },
@@ -129,33 +129,28 @@ module.exports = {
       throw error;
     }
   },
-  filterLawyers: async (req, res) => {
+  getLawyersByCategoryAndRating: async (req, res) => {
     try {
-      const { category, price, rating, location } = req.body;
+      const { categoryName, minRating } = req.params;
 
-      // Build the filter object based on provided parameters
-      const filter = {};
-      if (category) {
-        filter.category = category;
-      }
-      if (price) {
-        filter.price = { [Op.between]: price };
-        console.log(filter.price, "price"); // Assuming hourlyRate is the field for price
-      }
-      if (rating) {
-        filter.rating = { [Op.gte]: rating }; // Assuming rating is the field for user ratings
-      }
-      if (location) {
-        filter.location = { [Op.iLike]: `%${location}%` }; // Case-insensitive search for location
-      }
-
-      // Perform the query with the applied filters
-      const filteredLawyers = await Lawyer.findAll({
-        where: filter,
-        include: [{ model: Category, as: "categories" }], // Assuming a many-to-many relationship between Lawyer and Category
+      const lawyersByCategoryAndRating = await Lawyer.findAll({
+        include: [
+          {
+            model: Category,
+            where: { name: categoryName },
+          },
+          {
+            model: Rating,
+            where: {
+              value: {
+                [Op.gte]: minRating,
+              },
+            },
+          },
+        ],
       });
 
-      res.status(200).send(filteredLawyers);
+      res.status(200).send(lawyersByCategoryAndRating);
     } catch (error) {
       console.error(error);
       res.status(500).send("Internal Server Error");
