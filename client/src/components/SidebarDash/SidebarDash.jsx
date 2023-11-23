@@ -19,7 +19,9 @@ import logo from "../../assets/images/logo.png";
 import { useNavigate } from "react-router-dom";
 import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import CaseHistory from "../CaseHistory/CaseHistory";
-
+import  Calendar from "../Calander/Calender";
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import Statestique from "../Statestique/Statestique";
 const SidebarDash = () => {
   const navigate = useNavigate();
 
@@ -27,14 +29,26 @@ const SidebarDash = () => {
   const [isHoveredProfile, setIsHoveredProfile] = useState(false);
   const [isHoveredSecurity, setIsHoveredSecurity] = useState(false);
 
-  const toggleSettings = () => {
+  const toggleSettings = () =>  {
     setIsSettingsOpen(!isSettingsOpen);
   };
 
   return (
     <div className="new-sidebar">
-      <div className="top-section" style={{display:"flex", justifyContent:"center"}}>
-        <img className="new-logo" src={logo} style={{width:'170px', height:'150px', display:'flex',justifyContent:'center'}} />
+      <div
+        className="top-section"
+        style={{ display: "flex", justifyContent: "center" }}
+      >
+        <img
+          className="new-logo"
+          src={logo}
+          style={{
+            width: "170px",
+            height: "150px",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        />
       </div>
       <div className="new-separator"></div>
       <div className="line"></div>
@@ -43,51 +57,40 @@ const SidebarDash = () => {
           <li className="g-1" onClick={() => navigate("/allClient")}>
             <PersonOutlineIcon className="new-icon" />
 
-            <span className="side-title" >
-              My Clients
-            </span>
+            <span className="side-title">My Clients</span>
           </li>
-          <li className="g-1"  onClick={() => navigate("/CaseHistory")}>
+          <li className="g-1" onClick={() => navigate("/CaseHistory")}>
             <BusinessCenterIcon className="new-icon" />
-            <span
-              className="side-title"
-             
-            >
-              My Cases
-            </span>
+            <span className="side-title">My Cases</span>
           </li>
           <li>
             <NotificationsNoneIcon className="new-icon" />
-            <span className="side-title" onClick={() => navigate("/Appointments")}>Appointments</span>
+            <span
+              className="side-title"
+              onClick={() => navigate("/Appointments")}
+            >
+              Appointments
+            </span>
           </li>
           <li className="g-1" onClick={() => navigate("/stat")}>
             <InsertChartIcon className="new-icon" />
-            <span className="side-title" >
-              Stats
-            </span>
+            <span className="side-title">Stats</span>
           </li>
-          <li className="g-1">
+          <li className="g-1" onClick={() => navigate("/Calender")}>
             <CalendarMonthIcon className="new-icon" />
             <span className="side-title">Calendar</span>
           </li>
-          <li className="g-1"  onClick={() => navigate("/task")}>
+          <li className="g-1" onClick={() => navigate("/task")}>
             <AssignmentTurnedInIcon className="new-icon" />
-            <span className="side-title">
-              Tasks
-            </span>
+            <span className="side-title">Tasks</span>
           </li>
-        
-          <li className="g-1"  onClick={() => navigate("/PaymentHistory")}>
+
+          <li className="g-1" onClick={() => navigate("/PaymentHistory")}>
             <AssignmentTurnedInIcon className="new-icon" />
-            <span className="side-title">
-        Payment             </span>
+            <span className="side-title">Payment </span>
           </li>
-        
-         
-         
         </ul>
       </div>
-      
     </div>
   );
 };
