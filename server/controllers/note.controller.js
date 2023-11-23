@@ -1,11 +1,20 @@
 const sequalize = require("sequelize");
-const { Note } = require("../models/index");
+const { Note,Phase,Lawyer,User} = require("../models/index");
 
 module.exports = {
   getAllNote: async (req, res) => {
     try {
-      const allNotes = await Note.findAll({
-        order:[["createdAt","DESC"]]
+      const allNotes = await Phase.findOne({where:{id:req.params.id},
+        include:[{
+          model:Note,
+          order:[["createdAt","DESC"]],
+          include:{
+            model:Lawyer
+          
+          },
+      
+        }]
+      
       });
       res.status(200).send(allNotes);
     } catch (error) {
@@ -25,7 +34,8 @@ module.exports = {
 
   add: async (req, res) => {
     try {
-      const newNote = await Note.create(req.body);
+      const getLawyer = await Lawyer.findOne({where: { email:req.body.email}})
+      const newNote = await Note.create({...req.body,lawyerId:getLawyer.id});
       res.status(201).send(newNote);
     } catch (error) {
       throw error;

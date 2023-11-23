@@ -14,16 +14,23 @@ import { useEffect } from "react";
 import axios from "axios";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditNoteIcon from "@mui/icons-material/EditNote";
-import AddIcon from '@mui/icons-material/Add';
+import AddIcon from "@mui/icons-material/Add";
 import { useNavigate } from "react-router-dom";
 import SidebarDash from "../SidebarDash/SidebarDash.jsx";
-
+import Swal from "sweetalert2";
+import { FIREBASE_AUTH , db } from "../../firebaseconfig";
+import { useLocation } from "react-router-dom";
 
 const rfStyle = {
   backgroundColor: "white",
 };
 
+
+
 function Flow() {
+  const location = useLocation()
+  const caseHistory =location?.state?.case
+  console.log("caseHistory flow components",caseHistory);
   const [nodes, setNodes] = useState([]);
   const [edges, setEdges] = useState([]);
   const [selectedEdge, setSelectedEdge] = useState(null);
@@ -33,9 +40,11 @@ function Flow() {
   const [newLabel, setNewLabel] = useState("");
   const [source, setSource] = useState("");
   const [target, setTarget] = useState("");
+  const [price, setPrice] = useState(0);
+  const [description, setDescription] = useState("");
+   console.log("this is nodes", nodes);
 
   const navigate = useNavigate();
-
 
   const onConnect = useCallback(
     (params) => {
@@ -61,15 +70,6 @@ function Flow() {
     [refresh]
   );
 
-  // const HoverModal = ({ nodeInfo, onClose }) => {
-  //   return (
-  //     <div className="hover-modal">
-  //       <h3>Node Information</h3>
-  //       <p>ID: {nodeInfo.id}</p>
-  //       <button onClick={onClose}>Close</button>
-  //     </div>
-  //   );
-  // };
 
   const onNodesChange = useCallback(
     (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
@@ -82,14 +82,17 @@ function Flow() {
       }),
     [setEdges]
   );
+  
   const fetchData = async () => {
     try {
-      const result = await axios.get(
-        "http://localhost:1128/api/phase/allPhase"
+   
+      const res = await axios.get(
+        `http://localhost:1128/api/phase/allPhase/${caseHistory.id}`
       );
-
-      if (result.data.length) {
-        const newNodes = result.data.map((data) => {
+ const result = res.data.phases
+ console.log( "this is res", result);
+      if (result.length) {
+        const newNodes = result.map((data) => {
           return {
             id: String(data.id),
             data: { label: data.label },
@@ -98,15 +101,18 @@ function Flow() {
               y: data.positionY,
             },
             style: {
-              background: "gold",
-              color: "#333",
-              border: "1px solid #222138",
-              width: 180,
-              borderRadius: "100px",
+              background:
+                "linear-gradient(to right, #b38728, #fbf5b7, #aa771c)",
+              color: "black",
+              border: "none",
+              width: 200,
+              borderRadius: "10px",
             },
+            
           };
         });
         setNodes((prev) => [...prev, ...newNodes]);
+        
       }
     } catch (error) {
       console.log(error);
@@ -126,6 +132,7 @@ function Flow() {
             source: String(data.source),
             target: String(data.target),
             label: data.label,
+            description:data.description,
             type: "step",
           };
         });
@@ -137,7 +144,7 @@ function Flow() {
   };
 
   useEffect(() => {
-    fetchData();
+    fetchData(1);
     fetchEdge();
   }, [refresh]);
 
@@ -166,6 +173,7 @@ function Flow() {
       border: "1px solid #222138",
       width: 180,
       borderRadius: "100px",
+      caseId:caseHistory.id
     };
 
     axios
@@ -193,9 +201,10 @@ function Flow() {
     try {
       await axios.put(`http://localhost:1128/api/phase/update/${id}`, {
         label: newLabel,
+        price: price,
+        description: description,
       });
       setRefresh(!refresh);
-      // console.log("Node updated:", response.data);
     } catch (error) {
       console.error("Error updating node:", error);
     }
@@ -217,264 +226,369 @@ function Flow() {
   };
 
   return (
-    <div style={{display:'flex'}} >
-      <SidebarDash/>
-      <div style={{display:'flex',flexDirection:'column',width:'100%'}}>
-      <NavbarDashboard />
+    <div style={{ display: "flex" }}>
+      <SidebarDash />
+      <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
+        <NavbarDashboard />
 
-<div
-  style={{
-    height: "85%",
-    width: "78%",
-    position: "absolute",
-    top: "12%",
-    display: "flex",
-    padding:'1rem',
-  }}
->
+        <div
+          style={{
+            height: "85%",
+            width: "78%",
+            position: "absolute",
+            top: "12%",
+            display: "flex",
+            padding: "1rem",
+          }}
+        >
+          <ReactFlow
+            nodes={nodes}
+            onNodesChange={onNodesChange}
+            onNodeClick={(event, edge) => {
+              setSelectedEdge(edge);
+              setShowEdgeModal(true);
+              // console.log(selectedEdge?.id)
+            }}
+            // nodeTypes={{ special: NodeWithIcon }} 
+            onNodeMouseEnter={() => {}}
+            edges={edges}
+            onEdgesChange={onEdgesChange}
+            onConnect={onConnect}
+            onNodeDragStop={onNodeDragStop}
+            fitView
+            style={rfStyle}
+          >
+            <Background />
 
-  <ReactFlow
-    nodes={nodes}
-    onNodesChange={onNodesChange}
-    onNodeClick={(event, edge) => {
-      setSelectedEdge(edge);
-      setShowEdgeModal(true);
-      // console.log(selectedEdge?.id)
-    }}
-    
-    onNodeMouseEnter={() => {}}
-    edges={edges}
-    onEdgesChange={onEdgesChange}
-    onConnect={onConnect}
-    onNodeDragStop={onNodeDragStop}
-    fitView
-    style={rfStyle}
-  >
-    <Background />
-
-
-    {showEdgeModal && (
-      <div
-        className="modal fade show"
-        style={{ display: "block", position: "relative" }}
-      >
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title">Edge Details</h5>
-              <button
-                type="button"
-                className="btn-close"
-                onClick={() => setShowEdgeModal(false)}
-              ></button>
-            </div>
-            <div className="modal-body">
-              <h6>Edge ID: {selectedEdge.id}</h6>
-              <input
-                name="text"
-                class="input"
-                placeholder="Update Edge Name"
-                style={{
-                  width: "500px",
-                  borderRadius: "0.75rem",
-                  padding: "0.5rem",
-                  marginLeft: "4rem",
-                  border: "2px solid #f0f0f0",
-                  transition: " all 0.2s ease-in-out",
-                }}
-                onChange={(e) => {
-                  setNewLabel(e.target.value);
-                }}
-              ></input>
-            </div>
-            <div
-              className="modal-footer"
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                marginLeft: "0.5rem",
-              }}
-            >
-              <DeleteForeverIcon
-                style={{
-                  color: "gold",
-                  height: "40px",
-                  width: "40px",
-                  borderRadius: "50%",
-                  cursor: "pointer",
-                }}
-                onClick={() => {
-                  deleteNode(selectedEdge.id);
-                  setShowEdgeModal(false);
-                }}
-              />
-              <EditNoteIcon
-                style={{
-                  color: "gold",
-                  height: "45px",
-                  width: "45px",
-                  cursor: "pointer",
-                }}
-                onClick={() => {
-                  updateNodeName(selectedEdge.id);
-                  setShowEdgeModal(false);
-                }}
-              />
-
-              <button
-                type="button"
-                style={{
-                  height: "45px",
-                  width: "120px",
-                  transition: "0.2s",
-                  border: "none",
-                  borderRadius:'1rem'
-                }}
-                onClick={() => navigate("/informations")}
+            {showEdgeModal && (
+              <div
+                className="modal fade show"
+                style={{ display: "block", position: "relative" }}
               >
-                See All details
-              </button>
-            </div>
-          </div>
+                <div className="modal-dialog">
+                  <div className="modal-content">
+                    <div
+                      className="modal-header"
+                      // style={{  background: "linear-gradient(to right, #b38728, #fbf5b7, #aa771c)"}}
+                    >
+                      <h5
+                        className="modal-title"
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        Phase Details
+                      </h5>
+                      <button
+                        type="button"
+                        className="btn-close"
+                        onClick={() => setShowEdgeModal(false)}
+                      ></button>
+                    </div>
+
+                    <div
+                      className="modal-body"
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        gap: "2rem",
+                      }}
+                    >
+                      {/* <h6>Edge ID: {selectedEdge.id}</h6> */}
+
+                      <input
+                        name="text"
+                        class="input"
+                        placeholder="Update Edge Name"
+                        style={{
+                          width: "140px",
+                          fontSize: "12px",
+                          
+                          borderRadius: "0.75rem",
+                          padding: "0.5rem",
+                          
+                          border: "2px solid #f0f0f0",
+                          transition: " all 0.2s ease-in-out",
+                        }}
+                        onChange={(e) => {
+                          setNewLabel(e.target.value);
+                        }}
+                      ></input>
+                      <input
+                        type="number"
+                        name="payment"
+                        class="input"
+                        placeholder="Payment (optional)"
+                        style={{
+                          width: "140px",
+                          fontSize: "12px",
+                          borderRadius: "0.75rem",
+                          padding: "0.5rem",
+                          
+                          border: "2px solid #f0f0f0",
+                          transition: " all 0.2s ease-in-out",
+                        }}
+                        onChange={(e) => setPrice(e.target.value)}
+                      ></input>
+                    </div>
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            marginTop: "1rem",
+                          }}
+                        >
+                          <input
+                            name="text"
+                            className="input"
+                            placeholder="Add description of the phase"
+                            style={{
+                              width: "380px",
+                              height: "100px",
+                              fontSize: "14px",
+                              borderRadius: "0.5rem",
+                              padding: "2rem",
+                              overflowY: "auto",
+                              // border: "1px solid grey",
+                              transition: "all 0.2s ease-in-out",
+                            }}
+                            onChange={(e) => {
+                              setDescription(e.target.value);
+                            }}
+                          />
+                        </div>
+                    <div
+                      className="modal-footer"
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        marginLeft: "0.5rem",
+                      }}
+                    >
+                      <DeleteForeverIcon
+                        style={{
+                          color: "goldenrod",
+                          height: "30px",
+                          width: "30px",
+                          borderRadius: "50%",
+                          cursor: "pointer",
+                        }}
+                        onClick={() => {
+                          deleteNode(selectedEdge.id);
+                          setShowEdgeModal(false);
+                          Swal.fire({
+                            title: "Are you sure to delete this phase ?",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#3085d6",
+                            cancelButtonColor: "#d33",
+                            confirmButtonText: "Yes, delete it!",
+                          }).then((result) => {
+                            if (result.isConfirmed) {
+                              Swal.fire({
+                                title: "Deleted!",
+                                text: "Your Phase has been deleted.",
+                                icon: "success",
+                              });
+                            }
+                          });
+                        }}
+                      />
+                      <EditNoteIcon
+                        style={{
+                          color: "goldenrod",
+                          height: "30px",
+                          width: "30px",
+                          cursor: "pointer",
+                        }}
+                        onClick={() => {
+                          updateNodeName(selectedEdge.id);
+                          setShowEdgeModal(false);
+                          Swal.fire({
+                            title: "Updated!",
+                            icon: "success",
+                            customClass: {
+                              confirmButton: "custom-ok-button-class",
+                            },
+                            showCancelButton: false,
+                            confirmButtonText: "OK",
+                          });
+                        }}
+                      />
+
+                      <button
+                        type="button"
+                        style={{
+                          height: "40px",
+                          width: "100px",
+                          transition: "0.5s",
+                          border: "none",
+                          borderRadius: "1rem",
+                          fontSize: "12px",
+                          color: "black",
+                          background: "goldenrod",
+                        }}
+                        onClick={() => navigate("/informations", {state:  {phase:selectedEdge}})}
+                      >
+                        See All details
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+            <MiniMap
+              nodeStrokeColor={(n) => {
+                if (n.style?.background) return n.style.background;
+                if (n.type === "input") return "#0041d0";
+                if (n.type === "output") return "#ff0072";
+                if (n.type === "default") return "#1a192b";
+                return "#eee";
+              }}
+              nodeColor={(n) => {
+                if (n.style?.background) return n.style.background;
+                return "#fff";
+              }}
+              nodeBorderRadius={2}
+            />
+
+            <Controls />
+          </ReactFlow>
         </div>
-      </div>
-    )}
-    <MiniMap
-      nodeStrokeColor={(n) => {
-        if (n.style?.background) return n.style.background;
-        if (n.type === "input") return "#0041d0";
-        if (n.type === "output") return "#ff0072";
-        if (n.type === "default") return "#1a192b";
-        return "#eee";
-      }}
-      nodeColor={(n) => {
-        if (n.style?.background) return n.style.background;
-        return "#fff";
-      }}
-      nodeBorderRadius={2}
-    />
 
-    <Controls />
-  </ReactFlow>
-</div>
-
-<div
-  style={{
-    position: "absolute",
-    right: 10,
-    display: "flex",
-    flexDirection: "column",
-    top: "20rem",
-  }}
->
-  <button onClick={addNode} style={{width:'7rem', height:'4rem', backgroundColor:'goldenrod', border:"none", borderRadius:'1rem'}}>Create Step </button>
-  {/* <button data-bs-toggle="modal" data-bs-target="#staticBackdrops">
+        <div
+          style={{
+            position: "absolute",
+            right: 10,
+            display: "flex",
+            flexDirection: "column",
+            top: "20rem",
+          }}
+        >
+          <button
+            onClick={addNode}
+            style={{
+              width: "7rem",
+              height: "4rem",
+              background:
+                "linear-gradient(to right, #b38728, #fbf5b7, #aa771c)",
+              border: "none",
+              borderRadius: "1rem",
+              transition: "0.5s",
+            }}
+          >
+            Create Step{" "}
+          </button>
+          {/* <button data-bs-toggle="modal" data-bs-target="#staticBackdrops">
     Edge
   </button> */}
- {/* <AddIcon onClick={addNode} style={{color:'green' , fontSize:'50px', display:'flex' , backgroundColor:'whi'}} /> */}
+          {/* <AddIcon onClick={addNode} style={{color:'green' , fontSize:'50px', display:'flex' , backgroundColor:'whi'}} /> */}
 
-  <div
-    class="modal fade"
-    id="staticBackdrops"
-    data-bs-backdrop="static"
-    data-bs-keyboard="false"
-    tabindex="-1"
-    aria-labelledby="staticBackdropLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="staticBackdropLabel">
-            {" "}
-            Insert Initial edge{" "}
-          </h1>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="modal-body">
           <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "1rem",
-            }}
+            class="modal fade"
+            id="staticBackdrops"
+            data-bs-backdrop="static"
+            data-bs-keyboard="false"
+            tabindex="-1"
+            aria-labelledby="staticBackdropLabel"
+            aria-hidden="true"
           >
-            <label for="name">Source:</label>
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="staticBackdropLabel">
+                    {" "}
+                    Insert Initial edge{" "}
+                  </h1>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "1rem",
+                    }}
+                  >
+                    <label for="name">Source:</label>
 
-            <input
-              style={{
-                display: "flex",
-                width: "35rem",
-                borderRadius: "0.5rem",
-                height: "2.5rem",
-              }}
-              type="string"
-              placeholder="Source"
-              onChange={(e) => {
-                setSource(e.target.value);
-              }}
-            />
-            <label for="name">target:</label>
+                    <input
+                      style={{
+                        display: "flex",
+                        width: "35rem",
+                        borderRadius: "0.5rem",
+                        height: "2.5rem",
+                      }}
+                      type="string"
+                      placeholder="Source"
+                      onChange={(e) => {
+                        setSource(e.target.value);
+                      }}
+                    />
+                    <label for="name">target:</label>
 
-            <input
-              style={{
-                display: "flex",
-                width: "35rem",
-                borderRadius: "0.5rem",
-                height: "2.5rem",
-              }}
-              type="number"
-              placeholder="Target"
-              onChange={(e) => {
-                setTarget(e.target.value);
-              }}
-            />
-            <label for="name">Label</label>
+                    <input
+                      style={{
+                        display: "flex",
+                        width: "35rem",
+                        borderRadius: "0.5rem",
+                        height: "2.5rem",
+                      }}
+                      type="number"
+                      placeholder="Target"
+                      onChange={(e) => {
+                        setTarget(e.target.value);
+                      }}
+                    />
+                    <label for="name">Label</label>
 
-            <input
-              style={{
-                display: "flex",
-                width: "35rem",
-                borderRadius: "0.5rem",
-                height: "2.5rem",
-              }}
-              type="text"
-              placeholder="Label"
-              onChange={(e) => {
-                setNewLabel(e.target.value);
-              }}
-            />
+                    <input
+                      style={{
+                        display: "flex",
+                        width: "35rem",
+                        borderRadius: "0.5rem",
+                        height: "2.5rem",
+                      }}
+                      type="text"
+                      placeholder="Label"
+                      onChange={(e) => {
+                        setNewLabel(e.target.value);
+                      }}
+                    />
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    onClick={() => {
+                      AddEdge();
+                    }}
+                  >
+                    Insert
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >
-            Close
-          </button>
-          <button
-            type="button"
-            class="btn btn-primary"
-            onClick={() => {
-              AddEdge();
-            }}
-          >
-            Insert
-          </button>
-        </div>
       </div>
-    </div>
-  </div>
-</div>
-      </div>
-
     </div>
   );
 }

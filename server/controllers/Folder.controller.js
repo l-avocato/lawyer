@@ -1,11 +1,19 @@
 const sequalize =require('sequelize')
-const {Folder}= require('../models/index')
+const {Folder, Phase, File}= require('../models/index')
 
 module.exports = {
     getAllFolder: async (req, res) => {
         try {
-          const allFolder = await Folder.findAll({});
-          res.status(200).send(allFolder);
+            const allFolder = await Phase.findOne({where:{id:req.params.id},
+                include:[{
+                  model:Folder,
+                  order:[["createdAt","DESC"]],
+          
+              
+                }]
+              
+              });
+              res.send(allFolder).status(200)
         } catch (error) {
           throw error;
         }
