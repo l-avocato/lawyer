@@ -20,7 +20,16 @@ import CachedRoundedIcon from '@mui/icons-material/CachedRounded';
 import EditIcon from '@mui/icons-material/Edit';
 import { Nav } from "react-bootstrap";
 import { getAuth } from "firebase/auth";
+import { useLocation } from "react-router-dom";
+import { FIREBASE_AUTH  } from "../../firebaseconfig";
+
+
 const InformationPhase = () => {
+  const location = useLocation()
+  const phase =location?.state?.phase
+  console.log('this is phase', phase);
+
+
   const [path, setPath] = useState("document");
   const [folders, setFolders] = useState([]);
   const [files, setFiles] = useState([]);
@@ -38,6 +47,8 @@ const InformationPhase = () => {
   const [type, setType] = useState("");
   const [fileNote, setFileNote] = useState(null);
   const [user,setUser] = useState({})
+
+
   const getFile = async (e) => {
     const formData = new FormData();
     formData.append("file", e.target.files[0]);
@@ -59,9 +70,10 @@ const InformationPhase = () => {
   const fetchFolder = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:1128/api/folder/getAll/folder"
+       `http://localhost:1128/api/folder/getAll/${phase.id}` 
       );
-      setFolders(response.data);
+      console.log( "this is folder",response.data);
+      setFolders(response.data.folders);
     } catch (error) {
     }
   };
@@ -83,6 +95,7 @@ const InformationPhase = () => {
         `http://localhost:1128/api/file/getFolder/${folderId}`
       );
       setFiles(response.data);
+      console.log();
     } catch (error) {
       console.log(error);
     }
@@ -90,22 +103,24 @@ const InformationPhase = () => {
 
   const flickityRef = useRef(null);
 
-  const fetchNote = async () => {
+  const fetchNote = async (id) => {
     try {
       const response = await axios.get(
-        "http://localhost:1128/api/note/allNotes"
+        `http://localhost:1128/api/note/allNotes/${phase.id}`
       );
-      setNotes(response.data);
+      console.log("this is note",response.data);
+      setNotes(response.data.notes);
+      console.log("this is notes ", setNotes);
     } catch (error) {
       console.log(error);
     }
   };
 
+
   useEffect(() => {
     if (flickityRef.current) {
       new Flickity(flickityRef.current, {});
     }
-
     fetchFolder();
     fetchFileByFolder();
     fetchNote();
@@ -118,6 +133,7 @@ const InformationPhase = () => {
         "http://localhost:1128/api/folder/add",
         {
           name: folderName,
+          phaseId:phase.id
         }
       );
       setRefrech(!refrech);
@@ -175,7 +191,8 @@ const InformationPhase = () => {
     })
   }
 
-  const addNotes = async (title, comment, type,file) => {
+  const addNotes = async (comment, type,file) => {
+    const email=FIREBASE_AUTH.currentUser.email
     const formData = new FormData();
     formData.append("file", file);
     formData.append("upload_preset", "xhqp21a0");
@@ -187,11 +204,13 @@ const InformationPhase = () => {
       );
 
       await axios.post("http://localhost:1128/api/note/addNote", {
-        title: title,
         comment: comment,
         type: type,
         attachedFile : data.data.secure_url ,
-        attachedFileName : data.data.original_filename + ".pdf"
+        attachedFileName : data.data.original_filename + ".pdf",
+        phaseId:phase.id,
+        email
+
       });
       setRefrech(!refrech);
     } catch (error) {
@@ -223,7 +242,6 @@ const InformationPhase = () => {
     }
    }
 
-  const progress = 93;
 
   return (
     <div
@@ -264,7 +282,39 @@ const InformationPhase = () => {
         }}
 
       >
+        
+        <div className="side_agenda">
+    
+          <div
+            style={{
+              display: "flex",
+              padding: "2rem",
+              flexDirection: "column",
+              gap: "1rem",
+            }}
+          >
+            
+            <p
+              style={{
+                fontFamily: "revert",
+                fontSize: "25px",
+                fontWeight: 1000,
+              }}
+            >
+              Name of the Phase : {phase.data.label}
+                  </p>
+                  <p> description of this casee 
+                  {phase.data.description}
+
+                  </p>
+           
+            <img src={require('../../assets/images/progress case.png')} alt="" style={{ width:'185px', height:'210px'}} />
+          </div>
+          <div>
+          </div>
+        </div>
         <div className="dashboard_main_container_leith">
+          
           <div
             style={{
               display: "flex",
@@ -489,7 +539,7 @@ const InformationPhase = () => {
                           type="file"
                           style={{
                             position: "absolute",
-                            right: "17rem",
+                            right: "2rem",
                             width: "10%",
                             opacity: 0,
                           }}
@@ -586,13 +636,10 @@ const InformationPhase = () => {
                       preConfirm: () => {
                         setComment(document.getElementById("swal-input3").value);
                         setType(document.getElementById("swal-input2").value);
-                        setFileNote(document.getElementById("swal-input4").value)                  
+                        setFileNote(document.getElementById("swal-input4").value)                 
                         return [
                           addNotes(
-                            document.getElementById("swal-input1").value,
-                            document.getElementById("swal-input3").value,
-                            document.getElementById("swal-input2").value,
-                            document.getElementById("swal-input4").files[0]
+                          comment,type,fileNote
                           ),
                         ];
                       },
@@ -612,9 +659,6 @@ const InformationPhase = () => {
 
                 {
                  notes.map((notes, i) => {
-                  console.log(
-                    notes
-                  )
                   return (
                     <div
                       style={{
@@ -705,9 +749,8 @@ const InformationPhase = () => {
                                   }}
                                 />
                                 <p style={{ height: "50%", margin: 0, fontSize:'0.9rem' }}>
-                                  {notes.attachedFileName}{" "}
+                                  {notes.attachedFileName}
                                 </p>
-                                {/* <DeleteIcon /> */}
                               </div>
                            
                             </div>
@@ -749,39 +792,7 @@ const InformationPhase = () => {
             ///////////////// / //////////////////////////////////////////////
           )}
         </div>
-        <div className="side_agenda">
-          <div
-            style={{
-              display: "flex",
-              padding: "2rem",
-              flexDirection: "column",
-              gap: "1rem",
-            }}
-          >
-            <p
-              style={{
-                fontFamily: "revert",
-                fontSize: "25px",
-                fontWeight: 1000,
-              }}
-            >
-              Progress Case
-            </p>
-            <CircularProgressbar
-              value={progress}
-              text={`${progress}%`}
-              styles={buildStyles({
-                textSize: "30px",
-                pathColor: "goldenrod",
-                textColor: "black",
-                trailColor: "#d6d6d6",
-              })}
-            />
-            <img src={require('../../assets/images/progress case.png')} alt="" style={{ width:'185px', height:'210px'}} />
-          </div>
-          <div>
-          </div>
-        </div>
+        
       </div>
 </div>
 

@@ -6,7 +6,8 @@ import { useNavigate } from "react-router-dom";
 import SidebarDash from "../SidebarDash/SidebarDash";
 import { DataGrid } from "@mui/x-data-grid";
 import NavbarDashboard from "../NavbarDashboard/NavbarDashboard";
-import { FIREBASE_AUTH } from "../../firebaseconfig";
+import { FIREBASE_AUTH , db } from "../../firebaseconfig";
+// import { useLocation } from "react-router-dom";
 
 const CaseHistory = () => {
   const [cases, setCases] = useState([]);
