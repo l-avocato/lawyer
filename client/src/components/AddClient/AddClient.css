@@ -1,5 +1,6 @@
 .modal-content {
-    width: 42em;
+    width: 35em;
+    height: 15em;
 }
 .form-floating {
     /* padding: 0.5rem; */
@@ -8,19 +9,18 @@
 .btn {
     background-color: black ;
     transition: 0.5s;
- font-size: 1.1rem;
+    font-size: 1.1rem;
     color: aliceblue;
     border-radius: 10px;
     border: none;
-    height: 45px;;
+    height: 40px;;
     width: 150px;
-    margin-right: 8rem;
 
 }
 .btn:hover {
-    background-color: #f8c844;
-    color: black;
-}
+    background-color: #f8c844; 
+     color: black;
+} 
 
 .modal-dialog {
     height: 200px;;
@@ -29,7 +29,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: gold;
+    background-color: goldenrod;
 }
 #staticBackdropLabel {
     font-weight: bold !important;

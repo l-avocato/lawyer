@@ -24,7 +24,7 @@ import Chat from "./components/Chat/Chat.js";
 import InformationPhase from "./components/StepsCases/InformationPhase.jsx";
 import Statestique from "./components/Statestique/Statestique.jsx";
 import Appointments from "./components/Appointments/Appointments.jsx";
-import Calender from "./components/Calander/Calender.jsx"
+import NewLanding from "./components/newLanding/NewLanding.jsx"
 
 
 
@@ -60,7 +60,7 @@ const App = () => {
           <Route path="/Appointments" element={< Appointments/>} />
           <Route path="/informations" element={<InformationPhase/>} />
           <Route path="/stat" element={<Statestique/>} />
-          <Route path="/Calender" element={<Calender/>} />
+          <Route path="/newLanding" element={<NewLanding/>} />
         </Routes>
       </Router>
     </div>

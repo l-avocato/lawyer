@@ -33,10 +33,15 @@ module.exports=(connection,DataTypes)=>{
           },
           price : {
             type: DataTypes.INTEGER,
-defaultValue: 0
+            defaultValue: 0
+          }, 
+          IsPaid : {
+            type:DataTypes.BOOLEAN,
+            defaultValue: true
+          },
+          description : {
+            type:DataTypes.STRING,
           }
-
-        
     } )
     return phase
     }

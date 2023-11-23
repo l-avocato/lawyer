@@ -117,8 +117,8 @@ Payment.belongsTo(Lawyer);
 Lawyer.hasMany(Receipt);
 Receipt.belongsTo(Lawyer);
 
-Lawyer.hasMany(Case);
-Case.belongsTo(Lawyer);
+  Phase.hasMany(Note)
+  Note.belongsTo(Phase)
 
 Case.hasMany(Phase);
 Phase.belongsTo(Case);
@@ -141,8 +141,9 @@ Media.belongsTo(Conversation);
 Conversation.hasMany(Notification);
 Notification.belongsTo(Conversation);
 
-  Category.hasOne(Lawyer)
-  Lawyer.belongsTo(Category)
+
+  Phase.hasMany(Folder)
+  Folder.belongsTo(Phase)
 
 // connection
 //   .sync({ force: true })

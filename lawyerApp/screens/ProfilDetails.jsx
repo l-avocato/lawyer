@@ -45,20 +45,18 @@ const ProfilDetails = ({ navigation, route }) => {
   };
 
   const addRating = async () => {
+    const email =  FIREBASE_AUTH.currentUser.email
     try {
-      const email = FIREBASE_AUTH.currentUser.email;
+      const response = await axios.post(
+        `http://${config}:1128/api/rating/addRating`,
+        {
+          lawyerId: law.id,
+          stars,
+          review,
+          email
 
-      const obj = {
-        lawyerId: law.id,
-        stars,
-        review,
-        email,
-      };
-      console.log("reviews", obj);
-      // const response = await axios.post(
-      //   `http://${config}:1128/api/rating/addRating`,
-
-      // );
+        }
+      );
 
       setReview("");
       setStars("");

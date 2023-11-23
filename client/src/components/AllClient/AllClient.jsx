@@ -28,7 +28,7 @@ const AllClient = () => {
   const deleteUser = async (id) => {
     try {
       await axios.delete(`http://localhost:1128/api/user/deleteUser/${id}`);
-      getUsers(); 
+      
     } catch (error) {
       console.error("Error deleting user:", error);
     }
@@ -48,7 +48,7 @@ const AllClient = () => {
 
 
   useEffect(() => {
-    getLawyer()
+    getLawyer() 
     
   }, [refrech]);
 

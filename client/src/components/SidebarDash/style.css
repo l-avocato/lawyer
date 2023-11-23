@@ -95,6 +95,7 @@
     height: 1.25rem;
     border-radius: 0.3125rem;
     margin-right: 0.3125rem;
+    background: linear-gradient(#BF953F, #fcf6ba, #b38728, #fbf5b7, #aa771c);
   }
   .new-icon {
     font-size: 1.125rem;

@@ -8,6 +8,8 @@ import SidebarDash from "../SidebarDash/SidebarDash";
 import { DataGrid } from "@mui/x-data-grid";
 import NavbarDashboard from "../NavbarDashboard/NavbarDashboard";
 import { FIREBASE_AUTH , db } from "../../firebaseconfig";
+// import { useLocation } from "react-router-dom";
+
 const CaseHistory = () => {
   const [cases, setCases] = useState([]);
   const [data, setData] = useState([]);
@@ -90,7 +92,7 @@ const CaseHistory = () => {
         <Space size="middle">
           <Button
             type="primary"
-            onClick={() => navigate(`/CaseProfile`)}
+            onClick={() => navigate(`/CaseProfile` ,{state:{case:params.row}})}
             style={{fontSize:'12px'}}
 
           >

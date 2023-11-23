@@ -1,10 +1,15 @@
 const sequalize =require('sequelize')
-const {Files}= require('../models/index')
+const {Files, Folder}= require('../models/index')
 
 module.exports = {
     getAllFiles: async (req, res) => {
         try {
-          const allEdges = await Files.findAll({});
+          const allEdges = await Folder.findOne({
+            where : {id: req.params.id},
+            include : [{
+                model:Files
+            }]
+          });
           res.status(200).send(allEdges);
         } catch (error) {
           throw error;

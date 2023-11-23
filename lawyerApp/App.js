@@ -22,7 +22,7 @@ import HelpCenter from "./screens/HelpCenter";
 import PrivacyPolicy from "./screens/PrivacyPolicy";
 import NavTab from "./screens/NavTab";
 import LawyerProfile from "./screens/LawyerProfile";
-import GoogleMapView from "./screens/GoogleMapView";
+// import GoogleMapView from "./screens/GoogleMapView";
 import Chat from "./screens/Chat";
 import SearchListings from "./screens/SearchListings";
 import { Provider } from "react-redux";
@@ -64,13 +64,13 @@ export default function App() {
           }}
         />
 
-        <Stack.Screen 
+        {/* <Stack.Screen 
         name="Map" 
         component={GoogleMapView}
         options={{
           headerShown : false,
         }}
-        />
+        /> */}
 
         <Stack.Screen
           name="Chat"
