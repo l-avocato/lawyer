@@ -205,8 +205,8 @@ const Settings = () => {
 </div>     
           
           {isModalVisible && (
-            <div className="modal-map">
-              <div className="modal-content">
+            <div className="modal-map2">
+              <div className="modal-content1">
                 <GoogleMap
                   center={position}
                   zoom={13}
