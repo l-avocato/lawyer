@@ -25,11 +25,11 @@ const ManageFilters = () => {
   const [inputValue, setInputValue] = useState("");
   const [priceRange, setPriceRange] = useState(40);
   const [price, setPrice] = useState(0);
-  const [starRating, setStarRating] = useState(null);
+  const [starRating, setStarRating] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const ratings = [1, 2, 3, 4, 5];
   const [lawyers, setLawyers] = useState([]);
-  console.log(price, "price");
+  // console.log("selcted", selectedCategory);
   const handleArrowIconClick = () => {};
   const handleRefreshIconClick = () => {};
   const handleGetCategories = async () => {
@@ -46,38 +46,38 @@ const ManageFilters = () => {
     handleGetCategories();
   }, []);
   const filtredLawyer = async () => {
-    
-    const response = await axios.get(
-      
-      `http://${config}:1128/api/lawyer/getByFilter/${selectedCategory}/${starRating}`,
+    console.log(
+      "selectedCategory inside the app manage filters",
+      selectedCategory,
+    );
+    console.log("selectedCategory inside the app manage filters", starRating);
+    try {
+      const response = await axios.get(
+        `http://${config}:1128/api/lawyer/getByFilter/${selectedCategory}/${starRating}`,
       );
-      try {
-        // navigation.navigate("SearchListings", {
-          // filteredLawyers: response.data,
-          // });:
-          console.log(response.data, "data");
-          
-          // return response.data;
-        } catch (error) {
-          throw error;
-        }
-      };
-      const handleButtonPress = () => {
-        console.log("Button pressed");
-      };
-      const handleInputChange = (text) => {
-        setInputValue(text);
-      };
-      const handlePriceRangeChange = (value) => {
-        setPrice(Math.floor(value));
-      };
-      const handleRatingButtonPress = (rating) => {
-        setSelectedRating(rating);
-        console.log(rating);
-      };
-      const handleCategoryPress = (category) => {
-    
-    setSelectedCategory(category);
+      navigation.navigate("SearchListings", {
+        filteredLawyers: response.data,
+      });
+      console.log(response.data, "data");
+    } catch (error) {
+      throw error;
+    }
+  };
+  const handleButtonPress = () => {
+    console.log("Button pressed");
+  };
+  const handleInputChange = (text) => {
+    setInputValue(text);
+  };
+  const handlePriceRangeChange = (value) => {
+    setPrice(Math.floor(value));
+  };
+  const handleRatingButtonPress = (rating) => {
+    setSelectedRating(rating);
+    console.log(rating);
+  };
+  const handleCategoryPress = (id) => {
+    setSelectedCategory(id);
   };
 
   return (
@@ -115,7 +115,7 @@ const ManageFilters = () => {
                     backgroundColor: "blue",
                   }, // Change the style based on selection
                 ]}
-                onPress={() => handleCategoryPress(category.name)}>
+                onPress={() => handleCategoryPress(category.id)}>
                 <Text style={styles.buttonText}>{category.name}</Text>
               </TouchableOpacity>
             ))}

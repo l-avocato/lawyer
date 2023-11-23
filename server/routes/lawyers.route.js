@@ -11,8 +11,9 @@ const {
   verifyLawyer,
   blockLawyer,
   updateAvailability,
-  getLawyersByCategoryAndRating,
+  getLawyersByCategory,
   getLawyerByEmail,
+  topRatedLawyer,
 } = require("../controllers/lawyer.controller");
 
 routerLawyer.get("/allLawyers", getAllLawyers);
@@ -37,9 +38,7 @@ routerLawyer.put("/blockLawyer/:id", blockLawyer);
 
 routerLawyer.put("/updateAvailability/:id", updateAvailability);
 
-routerLawyer.get(
-  "/getByFilter/:categoryName/:minRating",
-  getLawyersByCategoryAndRating,
-);
+routerLawyer.get("/getByFilter/:id/:rating", getLawyersByCategory);
+routerLawyer.get("/topRated", topRatedLawyer);
 
 module.exports = routerLawyer;

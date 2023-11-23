@@ -129,31 +129,117 @@ module.exports = {
       throw error;
     }
   },
-  getLawyersByCategoryAndRating: async (req, res) => {
+  getLawyersByCategory: async (req, res) => {
     try {
-      const { categoryName, minRating } = req.params;
-
-      const lawyersByCategoryAndRating = await Lawyer.findAll({
+      const lawyersByCategory = await Lawyer.findAll({
         include: [
           {
             model: Category,
-            where: { name: categoryName },
           },
+        ],
+        include: [
           {
             model: Rating,
-            where: {
-              value: {
-                [Op.gte]: minRating,
-              },
-            },
+          },
+        ],
+        where: { categoryId: req.params.id },
+      });
+
+      if (req.params.rating) {
+        const calculateRating = lawyersByCategory.map((lawyer) => {
+          const { id } = lawyer;
+          let rating = lawyer.ratings.reduce((acc, val) => {
+            return acc + val.stars;
+          }, 0);
+          const length = lawyer.ratings.length || 1;
+          rating = rating / length;
+          // lawyer.stars = rating;
+          return { id, rating };
+        });
+        const filterLawyer = calculateRating.filter((item) => {
+          return item.rating >= req.params.rating;
+        });
+
+        const finalData = await Promise.all(
+          filterLawyer.map(async (lawyer) => {
+            try {
+              const lawyers = await Lawyer.findOne({
+                include: [
+                  {
+                    model: Category,
+                  },
+                ],
+
+                where: { id: lawyer.id },
+              });
+              return lawyers;
+            } catch (error) {
+              throw error;
+            }
+          }),
+        );
+        return res.status(200).send(finalData);
+      }
+      return res.status(200).send(lawyersByCategory);
+    } catch (error) {
+      throw error;
+    }
+  },
+  topRatedLawyer: async (req, res) => {
+    try {
+      const lawyersByCategory = await Lawyer.findAll({
+        include: [
+          {
+            model: Category,
+          },
+        ],
+        include: [
+          {
+            model: Rating,
           },
         ],
       });
 
-      res.status(200).send(lawyersByCategoryAndRating);
+      const calculateRating = lawyersByCategory.map((lawyer) => {
+        const { id } = lawyer;
+        let rating = lawyer.ratings.reduce((acc, val) => {
+          return acc + val.stars;
+        }, 0);
+        const length = lawyer.ratings.length || 1;
+        rating = rating / length;
+        // lawyer.stars = rating;
+        return { id, rating };
+      });
+      const filterLawyer = calculateRating.sort((a, b) => {
+        return b.rating - a.rating;
+      });
+
+      const finalData = await Promise.all(
+        filterLawyer.map(async (lawyer) => {
+          try {
+            const lawyers = await Lawyer.findOne({
+              include: [
+                {
+                  model: Category,
+                },
+              ],
+              include: [
+                {
+                  model: Rating,
+                },
+              ],
+              where: { id: lawyer.id },
+            });
+            return lawyers;
+          } catch (error) {
+            throw error;
+          }
+        }),
+      );
+
+      return res.status(200).send(finalData);
     } catch (error) {
-      console.error(error);
-      res.status(500).send("Internal Server Error");
+      throw error;
     }
   },
 };

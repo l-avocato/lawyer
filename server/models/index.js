@@ -117,8 +117,8 @@ Payment.belongsTo(Lawyer);
 Lawyer.hasMany(Receipt);
 Receipt.belongsTo(Lawyer);
 
-  Phase.hasMany(Note)
-  Note.belongsTo(Phase)
+Phase.hasMany(Note);
+Note.belongsTo(Phase);
 
 Case.hasMany(Phase);
 Phase.belongsTo(Case);
@@ -141,12 +141,11 @@ Media.belongsTo(Conversation);
 Conversation.hasMany(Notification);
 Notification.belongsTo(Conversation);
 
-
-  Phase.hasMany(Folder)
-  Folder.belongsTo(Phase)
+Phase.hasMany(Folder);
+Folder.belongsTo(Phase);
 
 // connection
-//   .sync({ force: true })
+//   .sync({ alter: true })
 //   .then(() => console.log("tables are created"))
 //   .catch((err) => console.log(err));
 
@@ -175,5 +174,4 @@ db.Process = Process;
 db.Files = Files;
 db.Folder = Folder;
 
-
-  module.exports= db
+module.exports = db;
