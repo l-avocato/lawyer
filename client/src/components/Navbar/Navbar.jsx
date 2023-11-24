@@ -12,6 +12,10 @@ import { Link } from "react-scroll";
 import { useDispatch } from "react-redux";
 import { signupLawyer } from "../../store/signUpLawyer";
 import e from "cors";
+import EmailIcon from '@mui/icons-material/Email';
+import VpnKeyIcon from '@mui/icons-material/VpnKey';
+import PersonIcon from '@mui/icons-material/Person';
+import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 
 function Navbar() {
   const navigate = useNavigate();
@@ -39,7 +43,6 @@ function Navbar() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [speciality, setSpeciality]= useState(0);
   const lawyerCollectionRef = collection(db, "lawyers");
-console.log("============================>",categoryData);
 const fetchCategory = async ()=>{
   try {
     const response = await axios.get("http://localhost:1128/api/category/allCategories")
@@ -49,14 +52,13 @@ const fetchCategory = async ()=>{
   }
 }
 
-console.log("====>=====>======>======>=====>",speciality);
+
   const handleSignIn = (event) => {
     event.preventDefault();
     signInWithEmailAndPassword(auth, email, password)
       .then((res) => {
         console.log(res);
         if (res.user) {
-          console.log("this is access token", res.user.accessToken);
           localStorage.setItem('userToken', res.user.accessToken);
         }
         navigate("/allClient");
@@ -148,18 +150,24 @@ useEffect(() => {
                 Contact
                 <i className="fa fa-angle-down"></i>
               </li>
-              <li onClick={handleShow}>Login</li>
+              <li 
+              onClick={handleShow}
+              >Login</li>
               <Modal
                 show={show}
                 onHide={handleClose}
-                // size="xl"
-                style={{ display:'flex', width: '60rem', height: '40rem'}}
+                size= "large"
+                style={{  display:'flex', width: '100rem', height: '40rem', padding: '2rem'}}
               >
-                <Modal.Header closeButton style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
-                  <Modal.Title style={{fontSize:'30px', fontWeight:'bold', color:'white' }}>Login</Modal.Title>
-                </Modal.Header>
-                <Modal.Body style={{display:'flex', width:'470px', height:'350px'}}>
+                <Modal.Header closeButton style={{  background: "linear-gradient(to right, #b38728, #fbf5b7, #aa771c)"}} >
+                    <Modal.Title style={{fontSize:'30px', fontWeight:'bold', color:'white' , alignItems:'center'}}>
+                      Sigin
+                    </Modal.Title>
+                  </Modal.Header>
+                
+                <Modal.Body style={{display:'flex', width:'500px', height:'350px'}}>
                   <div style={{display:'flex', gap:'2rem' }}>
+                    
                     <img
                       src="https://i.pinimg.com/564x/03/b0/eb/03b0eb5b973e4a65d3a63fc0fe3cf7e1.jpg"
                       alt="Lawyer"
@@ -173,7 +181,9 @@ useEffect(() => {
                       style={{display:'flex', flexDirection:'column', gap:'2rem'}}
                     >
                       <Form.Group controlId="formBasicEmail">
-                        <Form.Label style={{ fontWeight:'bold'}}>Email address</Form.Label>
+                        <Form.Label>Email address</Form.Label>
+                        <div style={{display:'flex',flexDirection:'row', gap:'1rem' , justifyContent:'center', alignItems:'center'}}>
+                        <EmailIcon style={{width:'20px', height:'20px', color:'goldenrod'}}/>
                         <Form.Control
                           type="email"
                           placeholder="Enter email"
@@ -182,10 +192,14 @@ useEffect(() => {
                             setEmail(e.target.value);
                           }}
                         />
+                        </div>
+                    
                       </Form.Group>
 
                       <Form.Group controlId="formBasicPassword">
-                        <Form.Label style={{ fontWeight:'bold'}}>Password</Form.Label>
+                        <Form.Label style={{ }}>Password</Form.Label>
+                        <div style={{display:'flex', flexDirection:'row', gap:'1rem',justifyContent:'center', alignItems:'center'}}>
+                        <VpnKeyIcon style={{width:'20px', height:'20px', color:'goldenrod'}}/>
                         <Form.Control
                           type="password"
                           placeholder="Password"
@@ -194,6 +208,8 @@ useEffect(() => {
                             setPassword(e.target.value);
                           }}
                         />
+                        </div>
+                      
                       </Form.Group>
                       <Form.Group controlId="formBasicCheckbox">
                         <Form.Check
@@ -205,7 +221,7 @@ useEffect(() => {
                      <Button
                         variant="primary"
                         type="submit"
-                        style={{ fontSize: "1.2rem" }}  >
+                        style={{ fontSize: "1.2rem", background: "linear-gradient(to right, #b38728, #fbf5b7, #aa771c)", border:'none', color:'black' }}  >
                         Submit
                       </Button>
                      </div>
@@ -220,30 +236,29 @@ useEffect(() => {
               <Modal
                 show={showSignup}
                 onHide={handleCloseSignup}
-                size='lg'
+                size="lg"
+                style={{}}
               >
-                <Modal.Dialog
-                  className="custom-modal-dialog"
-                  style={{  border: "none" , width: "100%", height:'300px'}}
-                >
-                  <Modal.Header closeButton >
+              
+                  <Modal.Header closeButton style={{  background: "linear-gradient(to right, #b38728, #fbf5b7, #aa771c)"}} >
                     <Modal.Title style={{fontSize:'30px', fontWeight:'bold', color:'white' , alignItems:'center'}}>
                       Sign Up
                     </Modal.Title>
                   </Modal.Header>
                   <Modal.Body
-                  
+                  style={{borderRadius:'2rem'}}
                   >
-                    <div  style={{display:'flex', justifyContent:'center'}}>
+                    <div  style={{display:'flex', justifyContent:'center', padding:'1rem', gap:"1rem"}}>
 
                       <img
                         src="https://i.pinimg.com/564x/f1/8f/5c/f18f5c7c3a6d1208330de82a7f5489e7.jpg"
                         alt="Lawyer"
                         style={{
-                        height: "650px",
-                        width: "350px",
-                        padding: "2rem" 
-                         
+                          height: "500px",
+                          width: "300px",
+                          padding: "1rem",
+                          borderRadius: "4rem",
+                          boxShadow: "0px 3px 8px rgba(0, 0, 0, 0.24)"
                         }}
                       />
                      
@@ -253,67 +268,100 @@ useEffect(() => {
                         }}
                         style={{display: "flex", flexDirection:'column', width: "100%"}}
                       >
-                                            <img src={papers} alt="" style={{width:'80px', height:'80px', borderRadius:'50%', marginLeft:'9rem'}} />
+                                            <img src={papers} alt="" style={{width:'90px', height:'90px', borderRadius:'5%', marginLeft:'9rem'}} />
 
                         <Form.Group controlId="formImage">
                           
-                          <Form.Label>Profile Image</Form.Label>
+                          <Form.Label style={{fontSize:"15px"}}>*Profile Image</Form.Label>
                           <Form.Control type="file" onChange={handleFile} style={{opacity:1}} />
                           <div>
 
                           </div>
                         </Form.Group>
-                        
+                        <div style={{display:'flex', flexDirection:'row', justifyContent:'space-around'}}>
+
                         <Form.Group controlId="formFullName">
-                          <Form.Label>Full Name</Form.Label>
+
+                          <Form.Label style={{fontSize:"15px"}}>*Full Name</Form.Label>
+ <div style={{display:'flex', flexDirection:'row', gap:'1rem',justifyContent:'center', alignItems:'center'}}>
+ <PersonIcon style={{width:'18px', height:'18px', color:'goldenrod'}}/>
                           <Form.Control
                             type="text"
                             placeholder="Enter full name"
                             style={{ fontSize: "14px" }}
                             onChange={(e) => setFullName(e.target.value)}
                           />
+ </div>
+                      
                         </Form.Group>
 
                         <Form.Group controlId="formEmail">
-                          <Form.Label>Email</Form.Label>
+
+                          <Form.Label style={{fontSize:"15px"}}>*Email</Form.Label>
+   <div style={{display:'flex', flexDirection:'row', gap:'1rem',justifyContent:'center', alignItems:'center'}}>
+                          <EmailIcon style={{width:'18px', height:'18px', color:'goldenrod'}}/>
                           <Form.Control
                             type="email"
                             placeholder="Enter email"
                             style={{ fontSize: "14px" }}
                             onChange={(e) => setEmail(e.target.value)}
                           />
+                          </div>
+                         
                         </Form.Group>
+                       </div> 
+                       
+<           div style={{display:'flex', flexDirection:'row', justifyContent:'space-around'}}>
+<Form.Group controlId="formPassword">
+                          <Form.Label style={{fontSize:"15px"}}>*Password</Form.Label>
 
-                        <Form.Group controlId="formPassword">
-                          <Form.Label>Password</Form.Label>
-                          <Form.Control
-                            type="password"
-                            
-                            placeholder="Enter password"
-                            style={{ fontSize: "14px" }}
-                            onChange={(e) => setPassword(e.target.value)}
-                          />
+ <div style={{display:'flex', flexDirection:'row', gap:'1rem',justifyContent:'center', alignItems:'center'}}>
+                          <VpnKeyIcon style={{width:'18px', height:'18px', color:'goldenrod'}}/>
+
+<Form.Control
+  type="password"
+  
+  placeholder="Enter password"
+  style={{ fontSize: "14px" }}
+  onChange={(e) => setPassword(e.target.value)}
+/>
+                          </div>
+                         
                         </Form.Group>
 
                         <Form.Group controlId="formConfirmPassword">
-                          <Form.Label>Confirm Password</Form.Label>
+                          <Form.Label style={{fontSize:"15px"}}> *Confirm Password</Form.Label>
+
+                          <div style={{display:'flex', flexDirection:'row', gap:'1rem',justifyContent:'center', alignItems:'center'}}>
+                           <VpnKeyIcon style={{width:'18px', height:'18px', color:'goldenrod'}}/>
+
                           <Form.Control
                             type="password"
                             placeholder="Confirm password"
                             style={{ fontSize: "14px" }}
                             onChange={(e) => setConfirmPassword(e.target.value)}
-                          />
+                          />  
+                          </div>
+                         
                         </Form.Group>
-
+</div>
+                       
+<div style={{display:'flex', flexDirection:'row', justifyContent:'space-around'}}>
                         <Form.Group controlId="formPhoneNumber">
-                          <Form.Label>Phone Number</Form.Label>
+                          <Form.Label style={{fontSize:"15px"}}>*Phone Number</Form.Label>
+                          <div style={{display:'flex', flexDirection:'row', gap:'1rem',justifyContent:'center', alignItems:'center'}}>
+                            <LocalPhoneIcon style={{width:'18px', height:'18px', color:'goldenrod'}}/>
                           <Form.Control
-                            type="tel"
+                            type="number"
+
                             placeholder="Enter phone number"
                             style={{ fontSize: "14px" }}
                             onChange={(e) => setPhoneNumber(e.target.value)}
                           />
+                          </div>
+                          
                         </Form.Group>
+</div>
 
                         <Form.Group controlId="formGender">
                           <Form.Label>Gender</Form.Label>
@@ -341,12 +389,12 @@ useEffect(() => {
   ))}
 </Form.Select>
                         </Form.Group>
-                         <div style={{display:'flex', justifyContent:'center', padding:'1rem'}}>
+                         <div style={{display:'flex', justifyContent:'center', padding:'0.7rem'}}>
                           
                         <Button
                           variant="primary"
                           type="submit"
-                          style={{ fontSize: "1.3rem", backgroundColor:'goldenrod' }}
+                          style={{ fontSize: "1.6rem",background: "linear-gradient(to right, #b38728, #fbf5b7, #aa771c)", border: "none"}}
                         >
                           Submit
                         </Button>
@@ -354,7 +402,6 @@ useEffect(() => {
                       </Form>
                     </div>
                   </Modal.Body>
-                </Modal.Dialog>
               </Modal>
             </ul>
           </div>
