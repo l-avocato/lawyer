@@ -100,15 +100,6 @@ const HomePage = ({ navigation }) => {
         .then((res) => {
           console.log("this is user", res.data);
           setUser(res.data);
-          /*
-          user is set correctly, inside an array because in the back you're using findAll instead of findone, it doesn't matter, u can set the
-          user from res.data[0] because the response.data will be an array that contains one object which is the active user's object's (the user that just logged in),
-           you have to work on a new redux slice that will hold the active user, so you can fetch it in any component, for example, for the reviews, when i'm creating
-           a new review i have to post the UserId: activeUser.id inside the body, so the review can have an owner in the data base, for now when you create
-           a new review, it will have UserId: null, till you create that slice and fetch the active user in ProfileDetails.jsx, and go there you'll find
-           another comment to explain more
-          
-          */
         })
         .catch((err) => {
           console.log(err);
@@ -118,7 +109,7 @@ const HomePage = ({ navigation }) => {
     const getLawyers = async () => {
       try {
         const response = await axios.get(
-          `http://${config}:1128/api/lawyer/allLawyers`,
+          `http://${config}:1128/api/lawyer/allLawyers`
         );
         setLawyers(response.data);
         console.log("this is lawyers", response.data);
@@ -130,7 +121,7 @@ const HomePage = ({ navigation }) => {
     const getCategories = async () => {
       console.log("this is the config", config);
       const response = await axios.get(
-        `http://${config}:1128/api/category/allCategories`,
+        `http://${config}:1128/api/category/allCategories`
       );
       setCategories(response.data);
       console.log("this is lawyers", categories);
@@ -155,7 +146,8 @@ const HomePage = ({ navigation }) => {
                 marginBottom: 7,
                 left: -5,
                 color: "#D5B278",
-              }}>
+              }}
+            >
               {" "}
               Hi,{user[0]?.fullName}
             </Text>
@@ -166,12 +158,14 @@ const HomePage = ({ navigation }) => {
             <View style={styles.notificationContainer}>
               <TouchableOpacity
                 onPress={() => navigation.navigate("notifications")}
-                style={styles.notificationButton}>
+                style={styles.notificationButton}
+              >
                 <MaterialIcons name="notifications" size={24} color="white" />
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => handleFilterClick()}
-                style={styles.filterButton}>
+                style={styles.filterButton}
+              >
                 <Ionicons name="options" size={24} color="white" />
               </TouchableOpacity>
             </View>
@@ -194,7 +188,8 @@ const HomePage = ({ navigation }) => {
               <ScrollView
                 horizontal
                 showsHorizontalScrollIndicator={false}
-                contentContainerStyle={styles.buttonContainer1}>
+                contentContainerStyle={styles.buttonContainer1}
+              >
                 <FlatList
                   data={categories}
                   horizontal
@@ -202,7 +197,8 @@ const HomePage = ({ navigation }) => {
                   renderItem={({ item }) => (
                     <TouchableOpacity
                       style={[styles.button2, styles.buttonWithSpace]}
-                      onPress={() => handleButtonClick(2)}>
+                      onPress={() => handleButtonClick(2)}
+                    >
                       <Text style={styles.buttonText}>{item.name}</Text>
                     </TouchableOpacity>
                   )}
@@ -211,7 +207,8 @@ const HomePage = ({ navigation }) => {
               </ScrollView>
               <TouchableOpacity
                 style={styles.topRightButton}
-                onPress={() => handleTopRightButtonClick()}>
+                onPress={() => handleTopRightButtonClick()}
+              >
                 <Text style={styles.topRightButtonText}>See All</Text>
               </TouchableOpacity>
             </View>
@@ -238,7 +235,8 @@ const HomePage = ({ navigation }) => {
                         fontSize: 15,
                         fontWeight: "500",
                         alignSelf: "center",
-                      }}>
+                      }}
+                    >
                       {item.fullName}
                     </Text>
                   </TouchableOpacity>
@@ -247,7 +245,8 @@ const HomePage = ({ navigation }) => {
               />
               <TouchableOpacity
                 style={styles.topRightButton}
-                onPress={() => handleTopRightButtonClick()}>
+                onPress={() => handleTopRightButtonClick()}
+              >
                 <Text style={styles.topRightButtonText}>See All</Text>
               </TouchableOpacity>
             </View>
@@ -255,7 +254,8 @@ const HomePage = ({ navigation }) => {
               <View style={styles.buttonContainer}>
                 <TouchableOpacity
                   style={styles.singleButton}
-                  onPress={() => handleButtonClick(7)}>
+                  onPress={() => handleButtonClick(7)}
+                >
                   <View style={styles.textContainer}>
                     <Text style={styles.buttonText1}>
                       Can't find need help?
@@ -267,7 +267,8 @@ const HomePage = ({ navigation }) => {
                   <View style={styles.arrowContainer}>
                     <TouchableOpacity
                       style={styles.arrowButton}
-                      onPress={() => handleArrowClick()}>
+                      onPress={() => handleArrowClick()}
+                    >
                       <FontAwesome name="angle-right" size={24} color="white" />
                     </TouchableOpacity>
                   </View>
@@ -295,7 +296,8 @@ const HomePage = ({ navigation }) => {
                         fontSize: 15,
                         fontWeight: "500",
                         alignSelf: "center",
-                      }}>
+                      }}
+                    >
                       {item.fullName}
                     </Text>
                   </TouchableOpacity>
@@ -304,7 +306,8 @@ const HomePage = ({ navigation }) => {
               />
               <TouchableOpacity
                 style={styles.topRightButton}
-                onPress={() => handleTopRightButtonClick()}>
+                onPress={() => handleTopRightButtonClick()}
+              >
                 <Text style={styles.topRightButtonText}>See All</Text>
               </TouchableOpacity>
             </View>
