@@ -76,11 +76,11 @@ const CaseDetails = ({ navigation, route }) => {
   const overallProgress = 0.57;
 
   // Sample payment history data
-  const paymentHistory = [
-    { id: 1, date: "2023-01-01", amount: 500 },
-    { id: 2, date: "2023-02-15", amount: 300 },
-    { id: 3, date: "2023-03-30", amount: 700 },
-  ];
+  // const paymentHistory = [
+  //   { id: 1, date: "2023-01-01", amount: 500 },
+  //   { id: 2, date: "2023-02-15", amount: 300 },
+  //   { id: 3, date: "2023-03-30", amount: 700 },
+  // ];
 
   useEffect(() => {
     getPhases();
@@ -162,17 +162,23 @@ const CaseDetails = ({ navigation, route }) => {
       {selectedTab === "payment" && (
         <View style={styles.paymentHistoryContainer}>
           <Text style={styles.paymentHistoryTitle}>Payment History</Text>
-          {paymentHistory.map((payment) => (
-            <View key={payment.id} style={styles.paymentItem}>
-              <View style={styles.paymentItemHeader}>
-                <Text style={styles.paymentDate}>{payment.date}</Text>
-                <Text style={styles.paymentAmount}>{`$${payment.amount}`}</Text>
+          {casePhases
+            .filter((phase) => phase.price !== 0)
+            .map((phase) => (
+              <View key={phase.id} style={styles.paymentItem}>
+                <View style={styles.paymentItemHeader}>
+                  <Text style={styles.paymentDate}>{phase.label}</Text>
+                  <Text style={styles.paymentDate}>
+                    {phase.createdAt.slice(0, 10)}
+                  </Text>
+                  <Text style={styles.paymentAmount}>{`$${phase.price}`}</Text>
+                  <Text style={{ color: phase.IsPaid ? "green" : "red" }}>
+                    {phase.IsPaid ? "Paid" : "Not Paid"}
+                  </Text>
+                </View>
+                <View style={styles.paymentItemDetails}></View>
               </View>
-              <View style={styles.paymentItemDetails}>
-                {/* Add more payment details as needed */}
-              </View>
-            </View>
-          ))}
+            ))}
         </View>
       )}
     </ScrollView>
@@ -274,10 +280,15 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   paymentItem: {
-    backgroundColor: "#D5B278",
-    padding: 15,
-    borderRadius: 15,
+    backgroundColor: "white",
+    padding: 20,
+    borderRadius: 10,
     marginBottom: 15,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   paymentItemHeader: {
     flexDirection: "row",
@@ -287,12 +298,12 @@ const styles = StyleSheet.create({
   },
   paymentDate: {
     fontSize: 16,
-    color: "black",
+    color: "#292929",
     fontWeight: "bold",
   },
   paymentAmount: {
     fontSize: 18,
-    color: "black",
+    color: "#292929",
     fontWeight: "bold",
   },
 });
