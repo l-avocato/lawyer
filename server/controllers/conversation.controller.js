@@ -1,5 +1,6 @@
 const sequalize =require('sequelize')
 const {Conversation}= require('../models/index')
+const { v4: uuidv4 } = require('uuid');
 
 
 module.exports = {

@@ -12,6 +12,10 @@ module.exports = {
             model:Lawyer
           
           },
+          include:{
+            model:User
+          
+          },
       
         }]
       
