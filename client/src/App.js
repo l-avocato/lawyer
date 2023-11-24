@@ -14,17 +14,16 @@ import SettingSecurity from "./components/SettingSecurity/SettingSecurity.jsx";
 import SettingProfil from "./components/SettingProfil/Settings.jsx";
 import StepsCases from "./components/StepsCases/StepsCases.jsx";
 import Diagramme from "./components/Diagramme/Diagramme.jsx";
-import TaskList from "./components/Tasks/TaskList.jsx"
+import TaskList from "./components/Tasks/TaskList.jsx";
 import Flow from "./components/StepsCases/Flow.js";
 import { Provider } from "react-redux";
-import {store} from './store/index.jsx'
+import { store } from "./store/index.jsx";
 import CaseHistory from "./components/CaseHistory/CaseHistory.jsx";
-import CaseProfile from "./components/CaseProfile/CaseProfile.jsx"
-import Chat  from "./components/Chat/Chat.js";
+import CaseProfile from "./components/CaseProfile/CaseProfile.jsx";
+import Chat from "./components/Chat/Chat.js";
 import InformationPhase from "./components/StepsCases/InformationPhase.jsx";
 import Statestique from "./components/Statestique/Statestique.jsx";
 import Appointments from "./components/Appointments/Appointments.jsx";
-
 
 
 

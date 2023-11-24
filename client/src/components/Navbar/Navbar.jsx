@@ -28,6 +28,15 @@ function Navbar() {
   const auth = getAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [gender, setGender] = useState("");
+  const [papers, setPapers] = useState(
+    "https://www.shareicon.net/data/512x512/2016/02/26/724973_plus_512x512.png"
+  );
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [speciality, setSpeciality]= useState("");
+  const lawyerCollectionRef = collection(db, "lawyers");
 
   const handleSignIn = (event) => {
     event.preventDefault();
@@ -45,14 +54,6 @@ function Navbar() {
       });
   };
 
-  const [fullName, setFullName] = useState("");
-  const [gender, setGender] = useState("");
-  const [papers, setPapers] = useState(
-    "https://www.shareicon.net/data/512x512/2016/02/26/724973_plus_512x512.png"
-  );
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const lawyerCollectionRef = collection(db, "lawyers");
 
   const handleSignUp = (event) => {
     event.preventDefault();
@@ -60,6 +61,7 @@ function Navbar() {
       alert("Passwords do not match");
       return;
     }
+
 
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
@@ -133,32 +135,32 @@ function Navbar() {
               <Modal
                 show={show}
                 onHide={handleClose}
-                size="xl"
-                style={{ alignSelf: "center", left: 200, top: 50 }}
+                // size="xl"
+                style={{ display:'flex', width: '60rem', height: '40rem'}}
               >
-                <Modal.Header closeButton>
-                  <Modal.Title style={{ marginLeft: 290 }}>Login</Modal.Title>
+                <Modal.Header closeButton style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
+                  <Modal.Title style={{fontSize:'30px', fontWeight:'bold', color:'white' }}>Login</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
-                  <div style={{ display: "flex" , gap:'2rem',padding:-10 }}>
+                <Modal.Body style={{display:'flex', width:'470px', height:'350px'}}>
+                  <div style={{display:'flex', gap:'2rem' }}>
                     <img
                       src="https://i.pinimg.com/564x/03/b0/eb/03b0eb5b973e4a65d3a63fc0fe3cf7e1.jpg"
                       alt="Lawyer"
                       style={{
-                        width: "40%",
+                        width: "50%",
                       
                       }}
                     />
                     <Form
                       onSubmit={handleSignIn}
-                      style={{ width: "100%", display: "flex", flexDirection: "column", gap: "1.3rem" , marginTop:'60px'}}
+                      style={{display:'flex', flexDirection:'column', gap:'2rem'}}
                     >
                       <Form.Group controlId="formBasicEmail">
-                        <Form.Label>Email address</Form.Label>
+                        <Form.Label style={{ fontWeight:'bold'}}>Email address</Form.Label>
                         <Form.Control
                           type="email"
                           placeholder="Enter email"
-                          style={{ fontSize: "14px" }}
+                          style={{ fontSize: "16px" }}
                           onChange={(e) => {
                             setEmail(e.target.value);
                           }}
@@ -166,11 +168,11 @@ function Navbar() {
                       </Form.Group>
 
                       <Form.Group controlId="formBasicPassword">
-                        <Form.Label>Password</Form.Label>
+                        <Form.Label style={{ fontWeight:'bold'}}>Password</Form.Label>
                         <Form.Control
                           type="password"
                           placeholder="Password"
-                          style={{ fontSize: "14px" }}
+                          style={{ }}
                           onChange={(e) => {
                             setPassword(e.target.value);
                           }}
@@ -182,11 +184,11 @@ function Navbar() {
                           label="Remember me"
                         />
                       </Form.Group>
-                     <div style={{display:'flex' , alignItems:'center', justifyContent:'center', width:'135%'}}>
+                     <div style={{display:'flex' , alignItems:'center', justifyContent:'center', width:'100%'}}>
                      <Button
                         variant="primary"
                         type="submit"
-                        style={{ fontSize: "1.2rem" }}                      >
+                        style={{ fontSize: "1.2rem" }}  >
                         Submit
                       </Button>
                      </div>
@@ -194,44 +196,57 @@ function Navbar() {
                   </div>
                 </Modal.Body>
               </Modal>
-              <li onClick={handleShowSignup}>Sign Up</li>
+
+           <li onClick={handleShowSignup}>Sign Up</li>
+
 
               <Modal
                 show={showSignup}
                 onHide={handleCloseSignup}
-                size="xl"
-                style={{ alignSelf: "center", left: 200, top: 0, height: 750 }}
+                size='lg'
               >
                 <Modal.Dialog
                   className="custom-modal-dialog"
-                  style={{ marginTop: -20, border: "none" }}
+                  style={{  border: "none" , width: "100%", height:'300px'}}
                 >
-                  <Modal.Header closeButton>
-                    <Modal.Title style={{ marginLeft: 290 }}>
+                  <Modal.Header closeButton >
+                    <Modal.Title style={{fontSize:'30px', fontWeight:'bold', color:'white' , alignItems:'center'}}>
                       Sign Up
                     </Modal.Title>
                   </Modal.Header>
-                  <Modal.Body>
-                    <div style={{ display: "flex" , justifyContent:'space-between' , alignItems:'center'}}>
+                  <Modal.Body
+                  
+                  >
+                    <div  style={{display:'flex', justifyContent:'center'}}>
+
                       <img
                         src="https://i.pinimg.com/564x/f1/8f/5c/f18f5c7c3a6d1208330de82a7f5489e7.jpg"
                         alt="Lawyer"
                         style={{
-                          width: "45%",
-                          height:'450px',
+                        height: "650px",
+                        width: "350px",
+                        padding: "2rem" 
                          
                         }}
                       />
+                     
                       <Form
                         onSubmit={(event) => {
                           handleSignUp(event);
                         }}
-                        style={{ width: "50%", marginTop: 5, display: "flex", flexDirection: "column" , gap :'0.5rem'}}
+                        style={{display: "flex", flexDirection:'column', width: "100%"}}
                       >
+                                            <img src={papers} alt="" style={{width:'80px', height:'80px', borderRadius:'50%', marginLeft:'9rem'}} />
+
                         <Form.Group controlId="formImage">
+                          
                           <Form.Label>Profile Image</Form.Label>
-                          <Form.Control type="file" onChange={handleFile} />
+                          <Form.Control type="file" onChange={handleFile} style={{opacity:1}} />
+                          <div>
+
+                          </div>
                         </Form.Group>
+                        
                         <Form.Group controlId="formFullName">
                           <Form.Label>Full Name</Form.Label>
                           <Form.Control
@@ -294,12 +309,30 @@ function Navbar() {
                             <option>Other</option>
                           </Form.Select>
                         </Form.Group>
-                         <div style={{display:'flex', alignItems:'center', justifyContent:'center' , width:'138%'}}>
+                        <Form.Group controlId="formGender">
+                          <Form.Label>Speciality</Form.Label>
+                          <Form.Select
+                            style={{ fontSize: "14px" }}
+                            onChange={(e) => setSpeciality(e.target.value)}
+                          >
+                              <option>Select Speciality </option>
+                            <option>Tax</option>
+                            <option>Estate Planning</option>
+                            <option>Employment and Labor</option>
+                            <option>Criminal</option>
+                            <option>Business</option>
+                            <option>Family</option>
+                            <option>Intellectual Property</option>
+                            <option>Immigration</option>
+                            <option>Other</option>
+                          </Form.Select>
+                        </Form.Group>
+                         <div style={{display:'flex', justifyContent:'center', padding:'1rem'}}>
                           
                         <Button
                           variant="primary"
                           type="submit"
-                          style={{ fontSize: "1.3rem", }}
+                          style={{ fontSize: "1.3rem", backgroundColor:'goldenrod' }}
                         >
                           Submit
                         </Button>

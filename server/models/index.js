@@ -1,191 +1,177 @@
-const { Sequelize , DataTypes} = require('sequelize');
+const { Sequelize, DataTypes } = require("sequelize");
 
-const connection = new Sequelize('lavocato', 'root', 'root', {
-    host: 'localhost',
-    dialect: "mysql"
-  });
+const connection = new Sequelize("lavocato", "root", "root", {
+  host: "localhost",
+  dialect: "mysql",
+});
 
-  try {
-    connection.authenticate();
-    console.log('Connection has been established successfully.');
-  } catch (error) {
-    console.error('Unable to connect to the database:', error);
-  }
-  
-  const User=require("./user.model")(connection,DataTypes)
-  const Lawyer= require("./lawyers.model")(connection,DataTypes)
-  const Report=require("./report.model")(connection,DataTypes)
-  const Media=require("./media.model")(connection,DataTypes)
-  const Admin=require("./admin.model")(connection,DataTypes)
-  const Appointment=require("./appointment.model")(connection,DataTypes)
-  const Availability= require("./availability.model")(connection,DataTypes)
-  const Case= require("./cases.model")(connection,DataTypes)
-  const Category= require("./category.model")(connection,DataTypes)
-  const Chat= require("./chats.model")(connection,DataTypes)
-  const Conversation= require("./conversation.model")(connection,DataTypes)
-  const Notification= require("./notification.model")(connection,DataTypes)
-  const Payment = require("./payment.model")(connection,DataTypes)
-  const Phase= require("./phases.model")(connection,DataTypes)
-  const Rating= require("./rating.model")(connection,DataTypes)
-  const Receipt= require("./receipts.model")(connection,DataTypes)
-  const TaskList = require("./tasklist.model")(connection,DataTypes)
-  const User_Lawyer= require("./user_lawyer")(connection,DataTypes)
-  const Edge= require("./edge.model")(connection,DataTypes)
-  const Process= require("./process.model")(connection,DataTypes)
-  const Note= require("./note.model")(connection,DataTypes)
-  const Files= require("./Files.model")(connection,DataTypes)
-  const Folder= require("./Folder.model")(connection,DataTypes)
-  
-  
-  
-  
-    
-  User.belongsToMany(Lawyer,{through:User_Lawyer})
-  Lawyer.belongsToMany(User,{through:User_Lawyer})
-  
-  User.hasMany(Report)
-  Report.belongsTo(User)
+try {
+  connection.authenticate();
+  console.log("Connection has been established successfully.");
+} catch (error) {
+  console.error("Unable to connect to the database:", error);
+}
 
-  User.hasMany(Media)
-  Media.belongsTo(User)
+const User = require("./user.model")(connection, DataTypes);
+const Lawyer = require("./lawyers.model")(connection, DataTypes);
+const Report = require("./report.model")(connection, DataTypes);
+const Media = require("./media.model")(connection, DataTypes);
+const Admin = require("./admin.model")(connection, DataTypes);
+const Appointment = require("./appointment.model")(connection, DataTypes);
+const Availability = require("./availability.model")(connection, DataTypes);
+const Case = require("./cases.model")(connection, DataTypes);
+const Category = require("./category.model")(connection, DataTypes);
+const Chat = require("./chats.model")(connection, DataTypes);
+const Conversation = require("./conversation.model")(connection, DataTypes);
+const Notification = require("./notification.model")(connection, DataTypes);
+const Payment = require("./payment.model")(connection, DataTypes);
+const Phase = require("./phases.model")(connection, DataTypes);
+const Rating = require("./rating.model")(connection, DataTypes);
+const Receipt = require("./receipts.model")(connection, DataTypes);
+const TaskList = require("./tasklist.model")(connection, DataTypes);
+const User_Lawyer = require("./user_lawyer")(connection, DataTypes);
+const Edge = require("./edge.model")(connection, DataTypes);
+const Process = require("./process.model")(connection, DataTypes);
+const Note = require("./note.model")(connection, DataTypes);
+const Files = require("./Files.model")(connection, DataTypes);
+const Folder = require("./Folder.model")(connection, DataTypes);
 
-  User.hasMany(Appointment)
-  Appointment.belongsTo(User)
+User.belongsToMany(Lawyer, { through: User_Lawyer });
+Lawyer.belongsToMany(User, { through: User_Lawyer });
 
-  Lawyer.hasMany(Appointment)
-  Appointment.belongsTo(Lawyer)
+User.hasMany(Report);
+Report.belongsTo(User);
 
-  User.hasMany(Rating)
-  Rating.belongsTo(User)
+User.hasMany(Media);
+Media.belongsTo(User);
 
-  User.hasMany(Payment)
-  Payment.belongsTo(User)
+User.hasMany(Appointment);
+Appointment.belongsTo(User);
 
-  User.hasMany(Case)
-  Case.belongsTo(User)
+Lawyer.hasMany(Appointment);
+Appointment.belongsTo(Lawyer);
 
-  Process.hasMany(Payment)
-  Payment.belongsTo(Process)
+User.hasMany(Rating);
+Rating.belongsTo(User);
 
-  Lawyer.hasMany(Payment)
-  Payment.belongsTo(Lawyer)
- 
-  Phase.hasMany(Process)
-  Process.belongsTo(Phase)
- 
-   Lawyer.hasMany(Note)
-   Note.belongsTo(Lawyer)
+User.hasMany(Payment);
+Payment.belongsTo(User);
 
-   User.hasMany(Note)
-   Note.belongsTo(User)
+User.hasMany(Case);
+Case.belongsTo(User);
 
-  User.hasMany(Conversation)
-  Conversation.belongsTo(User)
-  
-  User.hasMany(Notification)
-  Notification.belongsTo(User)
+Process.hasMany(Payment);
+Payment.belongsTo(Process);
 
+Lawyer.hasMany(Payment);
+Payment.belongsTo(Lawyer);
 
-  Lawyer.hasMany(Availability)
-  Availability.belongsTo(Lawyer)
+Phase.hasMany(Process);
+Process.belongsTo(Phase);
 
-  Lawyer.hasMany(Rating)
-  Rating.belongsTo(Lawyer)
+Lawyer.hasMany(Note);
+Note.belongsTo(Lawyer);
 
-  Lawyer.hasMany(TaskList)
-  TaskList.belongsTo(Lawyer)
+User.hasMany(Note);
+Note.belongsTo(User);
 
-  Lawyer.hasMany(Media)
-  Media.belongsTo(Lawyer)
+User.hasMany(Conversation);
+Conversation.belongsTo(User);
 
-  Note.hasMany(Media)
-  Media.belongsTo(Note)
+User.hasMany(Notification);
+Notification.belongsTo(User);
 
+Lawyer.hasMany(Availability);
+Availability.belongsTo(Lawyer);
 
-  Lawyer.hasMany(Category)
-  Category.belongsTo(Lawyer)
+// Lawyer.hasOne(Lawyer);
+// Lawyer.belongsTo(Category);
 
-  Lawyer.hasMany(Chat)
-  Chat.belongsTo(Lawyer)
+Lawyer.hasMany(Rating);
+Rating.belongsTo(Lawyer);
 
-  Lawyer.hasMany(Conversation)
-  Conversation.belongsTo(Lawyer)
+Lawyer.hasMany(TaskList);
+TaskList.belongsTo(Lawyer);
 
-  Lawyer.hasMany(Notification)
-  Notification.belongsTo(Lawyer)
+Lawyer.hasMany(Media);
+Media.belongsTo(Lawyer);
 
-  Lawyer.hasMany(Payment)
-  Payment.belongsTo(Lawyer)
+Note.hasMany(Media);
+Media.belongsTo(Note);
 
-  Lawyer.hasMany(Receipt)
-  Receipt.belongsTo(Lawyer)
+Category.hasOne(Lawyer);
+Lawyer.belongsTo(Category);
 
-  Lawyer.hasMany(Case)
-  Case.belongsTo(Lawyer)
+Lawyer.hasMany(Chat);
+Chat.belongsTo(Lawyer);
 
+Lawyer.hasMany(Conversation);
+Conversation.belongsTo(Lawyer);
 
+Lawyer.hasMany(Notification);
+Notification.belongsTo(Lawyer);
 
-  Case.hasMany(Phase)
-  Phase.belongsTo(Case)
+Lawyer.hasMany(Payment);
+Payment.belongsTo(Lawyer);
 
-  Case.hasMany(Media)
-  Media.belongsTo(Case)
+Lawyer.hasMany(Receipt);
+Receipt.belongsTo(Lawyer);
 
-  Case.hasMany(Note)
-  Note.belongsTo(Case)
+Phase.hasMany(Note);
+Note.belongsTo(Phase);
 
+Case.hasMany(Phase);
+Phase.belongsTo(Case);
 
-  Phase.hasMany(Media)
-  Media.belongsTo(Phase)
+Case.hasMany(Media);
+Media.belongsTo(Case);
 
-  Conversation.hasMany(Chat)
-  Chat.belongsTo(Conversation)
+Case.hasMany(Note);
+Note.belongsTo(Case);
 
-  Conversation.hasMany(Media)
-  Media.belongsTo(Conversation)
+Phase.hasMany(Media);
+Media.belongsTo(Phase);
 
-  Conversation.hasMany(Notification)
-  Notification.belongsTo(Conversation)
+Conversation.hasMany(Chat);
+Chat.belongsTo(Conversation);
 
-  Phase.hasMany(Edge)
-  Edge.belongsTo(Phase)
+Conversation.hasMany(Media);
+Media.belongsTo(Conversation);
 
-  Folder.hasMany(Files)
-  Files.belongsTo(Folder)
+Conversation.hasMany(Notification);
+Notification.belongsTo(Conversation);
 
+Phase.hasMany(Folder);
+Folder.belongsTo(Phase);
 
+// connection
+//   .sync({ alter: true })
+//   .then(() => console.log("tables are created"))
+//   .catch((err) => console.log(err));
 
+const db = {};
+db.User = User;
+db.Lawyer = Lawyer;
+db.Report = Report;
+db.Media = Media;
+db.Admin = Admin;
+db.Appointment = Appointment;
+db.Availability = Availability;
+db.Case = Case;
+db.Category = Category;
+db.Chat = Chat;
+db.Conversation = Conversation;
+db.Notification = Notification;
+db.Payment = Payment;
+db.Phase = Phase;
+db.Rating = Rating;
+db.Receipt = Receipt;
+db.TaskList = TaskList;
+db.User_Lawyer = User_Lawyer;
+db.Edge = Edge;
+db.Note = Note;
+db.Process = Process;
+db.Files = Files;
+db.Folder = Folder;
 
-  // connection.sync({ force: true })
-  // .then(() => console.log("tables are created"))
-  // .catch((err) => console.log(err))
-
-
-  const db={}
-  db.User=User
-  db.Lawyer=Lawyer
-  db.Report=Report
-  db.Media=Media
-  db.Admin=Admin
-  db.Appointment=Appointment
-  db.Availability=Availability
-  db.Case=Case
-  db.Category=Category
-  db.Chat=Chat
-  db.Conversation=Conversation
-  db.Notification=Notification
-  db.Payment=Payment
-  db.Phase=Phase
-  db.Rating=Rating
-  db.Receipt=Receipt
-  db.TaskList=TaskList
-  db.User_Lawyer=User_Lawyer
-  db.Edge = Edge
-  db.Note = Note
-  db.Process = Process
-  db.Files=Files
-  db.Folder=Folder
-  
- 
-
-  module.exports= db
+module.exports = db;

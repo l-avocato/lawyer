@@ -154,7 +154,8 @@ const signUp = async () => {
                             icon="lock"
                             placeholder="* * * * * * * *"
                             placeholderTextColor={darkLight}
-                            onChangeText={(text)=>setPassword(text)}                            onBlur={handleBlur('password')}
+                            onChangeText={(text)=>setPassword(text)}                       
+                            onBlur={handleBlur('password')}
                             value={password}
                             secureTextEntry={hidePassword}
                             isPassword={true}

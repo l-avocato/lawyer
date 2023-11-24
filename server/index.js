@@ -26,7 +26,9 @@ const routerProcess = require("./routes/process.route")
 const routerNote = require("./routes/note.route")
 const routeFile = require("./routes/files.route")
 const routeFolder = require("./routes/folder.route")
-
+const routerUser_Lawyer= require("./routes/user_lawyer.route")
+const morgan = require("morgan")
+require('colors');
 
 
 
@@ -34,6 +36,32 @@ let app = express();
 app.use(cors({
   origin: "*"
 }));
+app.use(
+  morgan((tokens, req, res) => {
+    const method = tokens.method(req, res);
+    const status = tokens.status(req, res);
+    const coloredMethod =
+      method === 'GET'
+        ? method.green
+        : method === 'POST'
+        ? method.blue
+        : method === 'PUT'
+        ? method.yellow
+        : method === 'DELETE'
+        ? method.red
+        : method;
+
+    return [
+      coloredMethod,
+      tokens.url(req, res),
+      status.brightYellow,
+      tokens.res(req, res, 'content-length'),
+      '-',
+      tokens['response-time'](req, res),
+      'ms',
+    ].join(' ');
+  })
+);
 app.use(express.json())
 app.use(cors())
 
@@ -80,6 +108,8 @@ app.use("/api/note", routerNote)
 app.use("/api/file", routeFile)
 
 app.use("/api/folder", routeFolder)
+
+app.use("/api/user_lawyer",routerUser_Lawyer)
 
 
 

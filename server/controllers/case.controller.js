@@ -1,5 +1,5 @@
 const sequalize =require('sequelize')
-const {Case,User}= require('../models/index')
+const {Case,User, Lawyer}= require('../models/index')
 
 
 
@@ -32,10 +32,13 @@ module.exports = {
     },
     getCaseByLawyerId: async function (req, res) {
         try {
+            const findUser = await Lawyer.findOne({where:{email:req.params.id}})
+
             const cases = await Case.findAll({
                 where: {
-                    lawyerId: req.params.id
-                }
+                    lawyerId: findUser.id
+                },
+                include : User
             })
             res.status(200).send(cases)
         } catch (error) {

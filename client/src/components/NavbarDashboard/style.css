@@ -1,21 +1,19 @@
 .new-navbar {
-
-  height: 5rem;
-  
+  height: 5rem; 
   display: flex;
   align-items: center;
-
   font-size: 0.875rem; 
-  color: #555;
+  color: #000000;
   border-bottom: solid 1px black;
 }
 .new-wrapper {
-  width: 100%;
+  /* width: 100%; */
   padding: 20px;
   display: flex;
-  align-items: center;
+  /* align-items: flex-start; */
   justify-content: space-between;
-  z-index: 1;
+  align-self: flex-start;
+  /* z-index: 1; */
   /* margin-top: -50%;
   margin-left: 55%; */
 }

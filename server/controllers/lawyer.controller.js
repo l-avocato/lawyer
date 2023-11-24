@@ -1,5 +1,5 @@
 const sequalize = require("sequelize");
-const { Lawyer, Category } = require("../models/index");
+const { Lawyer, Category, Rating } = require("../models/index");
 const { Op } = require("sequelize");
 
 module.exports = {
@@ -21,7 +21,7 @@ module.exports = {
       throw error;
     }
   },
-  getLawyerByEmail:  async (req, res) => {
+  getLawyerByEmail: async (req, res) => {
     try {
       const oneLawyer = await Lawyer.findOne({
         where: { email: req.params.email },
@@ -45,7 +45,7 @@ module.exports = {
       const lawyerDeleted = await Lawyer.destroy({
         where: { id: req.params.id },
       });
-      res.send(lawyerDeleted);
+      res.json(lawyerDeleted);
     } catch (error) {
       throw error;
     }
@@ -129,36 +129,117 @@ module.exports = {
       throw error;
     }
   },
-  filterLawyers: async (req, res) => {
+  getLawyersByCategory: async (req, res) => {
     try {
-      const { category, price, rating, location } = req.body;
-
-      // Build the filter object based on provided parameters
-      const filter = {};
-      if (category) {
-        filter.category = category;
-      }
-      if (price) {
-        filter.price = { [Op.between]: price };
-        console.log(filter.price, "price"); // Assuming hourlyRate is the field for price
-      }
-      if (rating) {
-        filter.rating = { [Op.gte]: rating }; // Assuming rating is the field for user ratings
-      }
-      if (location) {
-        filter.location = { [Op.iLike]: `%${location}%` }; // Case-insensitive search for location
-      }
-
-      // Perform the query with the applied filters
-      const filteredLawyers = await Lawyer.findAll({
-        where: filter,
-        include: [{ model: Category, as: "categories" }], // Assuming a many-to-many relationship between Lawyer and Category
+      const lawyersByCategory = await Lawyer.findAll({
+        include: [
+          {
+            model: Category,
+          },
+        ],
+        include: [
+          {
+            model: Rating,
+          },
+        ],
+        where: { categoryId: req.params.id },
       });
 
-      res.status(200).send(filteredLawyers);
+      if (req.params.rating) {
+        const calculateRating = lawyersByCategory.map((lawyer) => {
+          const { id } = lawyer;
+          let rating = lawyer.ratings.reduce((acc, val) => {
+            return acc + val.stars;
+          }, 0);
+          const length = lawyer.ratings.length || 1;
+          rating = rating / length;
+          // lawyer.stars = rating;
+          return { id, rating };
+        });
+        const filterLawyer = calculateRating.filter((item) => {
+          return item.rating >= req.params.rating;
+        });
+
+        const finalData = await Promise.all(
+          filterLawyer.map(async (lawyer) => {
+            try {
+              const lawyers = await Lawyer.findOne({
+                include: [
+                  {
+                    model: Category,
+                  },
+                ],
+
+                where: { id: lawyer.id },
+              });
+              return lawyers;
+            } catch (error) {
+              throw error;
+            }
+          }),
+        );
+        return res.status(200).send(finalData);
+      }
+      return res.status(200).send(lawyersByCategory);
     } catch (error) {
-      console.error(error);
-      res.status(500).send("Internal Server Error");
+      throw error;
+    }
+  },
+  topRatedLawyer: async (req, res) => {
+    try {
+      const lawyersByCategory = await Lawyer.findAll({
+        include: [
+          {
+            model: Category,
+          },
+        ],
+        include: [
+          {
+            model: Rating,
+          },
+        ],
+      });
+
+      const calculateRating = lawyersByCategory.map((lawyer) => {
+        const { id } = lawyer;
+        let rating = lawyer.ratings.reduce((acc, val) => {
+          return acc + val.stars;
+        }, 0);
+        const length = lawyer.ratings.length || 1;
+        rating = rating / length;
+        // lawyer.stars = rating;
+        return { id, rating };
+      });
+      const filterLawyer = calculateRating.sort((a, b) => {
+        return b.rating - a.rating;
+      });
+
+      const finalData = await Promise.all(
+        filterLawyer.map(async (lawyer) => {
+          try {
+            const lawyers = await Lawyer.findOne({
+              include: [
+                {
+                  model: Category,
+                },
+              ],
+              include: [
+                {
+                  model: Rating,
+                },
+              ],
+              where: { id: lawyer.id },
+            });
+            return lawyers;
+          } catch (error) {
+            throw error;
+          }
+        }),
+      );
+
+      return res.status(200).send(finalData);
+    } catch (error) {
+      throw error;
     }
   },
 };

@@ -8,9 +8,14 @@ import { useNavigate } from "react-router-dom";
 import { Box } from "@mui/system"; 
 import { Button } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
+import NavbarDashboard from "../NavbarDashboard/NavbarDashboard";
+import { useLocation } from "react-router-dom";
 
 
 const CaseProfile = () => {
+  const location = useLocation()
+  const hisCase =location.state.case
+  console.log("case profile",hisCase);
   const [caseData, setCaseData] = useState({});
   const [documents, setDocuments] = useState([]);
   const [id, setId] = useState("");
@@ -21,10 +26,10 @@ const CaseProfile = () => {
     const fetchCaseDetails = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:1128/api/case/${id}`
+          `http://localhost:1128/api/case/${hisCase.id}`
         );
         const fetchedCaseData = response.data;
-        setId(fetchedCaseData._id);
+        setId(fetchedCaseData.id);
         setCaseData(fetchedCaseData);
         setDocuments(fetchedCaseData.documents || []);
         console.log("Case details:", fetchedCaseData);
@@ -37,10 +42,13 @@ const CaseProfile = () => {
   }, [id]);
 
   return (
-    <Box className="container">
+    <div style={{display:'flex'}}>
       <SidebarDash />
-      <Box className="main-content" sx={{ padding: "20px" }}>
-        <Box className="case-details" sx={{ flex: "1", marginLeft: "100px" }}>
+      <div  style={{ display: "flex", flexDirection: "column", width: "100%" }}>
+        <NavbarDashboard/>
+      <Box className="container">
+      <Box className="main-content" >
+        <Box className="case-details" >
           <Box
             className="case-info-box"
             sx={{
@@ -48,34 +56,36 @@ const CaseProfile = () => {
               display: "flex",
               border: "1px solid #ccc",
               borderRadius: "8px",
-              padding: "20px",
               marginBottom: "20px",
               backgroundColor: "#f5f5f5",
               boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
               justifyContent: "center",
-              marginLeft: "10%",
             }}
           >
             <Box className="case-info" sx={{ flex: "1" }}>
-              <h2>{caseData.title}</h2>
-              <p>Case Number: {caseData.number}</p>
-              <p>Client: {caseData.user?.fullName}</p>
-              <p>Created At: {caseData.createdAt}</p>
+              <h2>{hisCase.title}</h2>
+              <p>Case Number: {hisCase.number}</p>
+              <p>Client: {hisCase.user?.fullName}</p>
+              <p>Created At: {hisCase.createdAt}</p>
             </Box>
-            <Box className="profile-pic" sx={{ width: "80px", height: "80px", borderRadius: "50%", overflow: "hidden", marginLeft: "20px" }}>
+            <Box className="profile-pic" sx={{ width: "80px", height: "80px", borderRadius: "50%", overflow: "hidden" }}>
               <img src={photo} alt="Profile" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
             </Box>
           </Box>
-          <Button className="button" onClick={() => navigate("/Flow")}>
+          <Button className="button" onClick={() => navigate("/Flow",{state:{case:hisCase}})}>
             Check Steps
           </Button>
-          <Box className="additional-details" sx={{ marginTop: "20px", display: "flex", justifyContent: "center", marginLeft: "6%", top: "30px" }}>
+          <Box className="additional-details" sx={{ marginTop: "20px", display: "flex", justifyContent: "center", }}>
             <h3>Case Details</h3>
-            <p>{caseData.details}</p>
+            <p>{hisCase.details}</p>
           </Box>
         </Box>
       </Box>
     </Box>
+      </div>
+   
+    </div>
+    
   );
 };
 

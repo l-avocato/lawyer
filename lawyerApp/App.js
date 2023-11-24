@@ -22,7 +22,7 @@ import HelpCenter from "./screens/HelpCenter";
 import PrivacyPolicy from "./screens/PrivacyPolicy";
 import NavTab from "./screens/NavTab";
 import LawyerProfile from "./screens/LawyerProfile";
-import GoogleMapView from "./screens/GoogleMapView";
+// import GoogleMapView from "./screens/GoogleMapView";
 import Chat from "./screens/Chat";
 import SearchListings from "./screens/SearchListings";
 import { Provider } from "react-redux";
@@ -31,7 +31,6 @@ import ChatRooms from "./screens/ChatRooms";
 import MyCases from "./screens/MyCases";
 import CaseDetails from "./screens/CaseDetails";
 import PhaseDetails from "./screens/PhaseDetails";
-
 export default function App() {
   const Stack = createNativeStackNavigator();
   return (
@@ -65,13 +64,13 @@ export default function App() {
           }}
         />
 
-        <Stack.Screen 
+        {/* <Stack.Screen 
         name="Map" 
         component={GoogleMapView}
         options={{
           headerShown : false,
         }}
-        />
+        /> */}
 
         <Stack.Screen
           name="Chat"

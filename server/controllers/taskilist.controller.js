@@ -4,9 +4,9 @@ const {TaskList}= require('../models/index')
 
 module.exports = {
     
-    getAllTasks : async () => {
+    getAllTasks : async (req,res) => {
         try {
-            const allTasks= await TaskList.findAll()
+            const allTasks= await TaskList.findAll({})
             res.status(200).send(allTasks)
         } catch (error) {
             throw error
@@ -37,7 +37,7 @@ module.exports = {
             await TaskList.destroy({
           where:{  id:req.params.id }
             })
-            res.send('deleted')
+res.json(taskDeleted)
         } catch (error) {
             throw error
         }

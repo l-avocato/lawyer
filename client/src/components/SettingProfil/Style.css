@@ -1,4 +1,4 @@
-.modal-map {
+.modal-map2 {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -10,13 +10,14 @@
     background-color: rgba(0, 0, 0, 0.5);
   }
   
-  .modal-content {
-    background-color: white;
-    padding: 20px;
+  .modal-content1 {
+    width: 400px;
+    height: 400px;
+    background-color: rgb(255, 255, 255);
+    padding: 0px;
     border-radius: 8px;
     text-align: center;
-  }
-
+  } 
   .close-btn {
     margin-top: 2.5%;
   }

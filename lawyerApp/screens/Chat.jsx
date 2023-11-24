@@ -43,6 +43,7 @@ const Chat = ({ route }) => {
     }
   };
 
+
   const onSend = async (newMessages = []) => {
     const formattedMessages = newMessages.map((message) => ({
       ...message,

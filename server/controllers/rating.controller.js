@@ -1,5 +1,5 @@
 const sequalize =require('sequelize')
-const {Rating}= require('../models/index')
+const {Rating, User}= require('../models/index')
 
 
 module.exports = {
@@ -26,7 +26,8 @@ module.exports = {
     
     add: async (req,res)=>{
         try {
-            const newRating= await Rating.create(req.body)
+            const user = await User.findOne({where:{email:req.body.email}})
+            const newRating= await Rating.create({...req.body,userId:user.id})
             res.status(201).send(newRating)
         } catch (error) {
             throw error
@@ -45,7 +46,8 @@ module.exports = {
     getRatingByLawyer: async (req,res)=>{
         try {
             const ratingByLawyer= await Rating.findAll({
-                where:{lawyerId:req.params.id}
+                where:{lawyerId:req.params.id},
+                include : {model:User}
             })
             res.send(ratingByLawyer)
         } catch (error) {
