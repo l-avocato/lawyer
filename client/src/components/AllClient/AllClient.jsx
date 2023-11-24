@@ -62,21 +62,22 @@ const AllClient = () => {
       <div style={{display:'flex',flexDirection:'column',width:'100%'}}>
       <NavbarDashboard />
 
-      <div className="allPage">
-        <div className="firstDiv">
+      <div className="allPageUser">
+        <div className="firstDiv-user">
           <button
-            className="btnAdd"
+            className="btnAdd-client"
             data-bs-toggle="modal"
             data-bs-target="#staticBackdrop"
           >      
-            +New Client{" "}
+            +New Client
           </button>
-          <Modal lawyer={lawyer} refrech={refrech} setRefrech={setRefrech} />
         </div>
+          <Modal lawyer={lawyer} 
+          refrech={refrech} setRefrech={setRefrech} 
+          />
 
         <div
-          className="table-wrapper table1"
-          style={{ width: "70rem", display: "flex", flexDirection: "column"}}
+          style={{ width: "100%", alignItems:'center' , padding:"1rem"}}
         >
           <DataGrid user={users}
           

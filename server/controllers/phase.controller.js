@@ -32,11 +32,21 @@ module.exports = {
 
   add: async (req, res) => {
     try {
-      const newPhase = await Phase.create(req.body);
-      res.status(201).send(newPhase);
-    } catch (error) {
-      throw error;
-    }
+      if(req.body.price){
+        const result = await Phase.create({ IsPaid: false, ...req.body})
+       return    res.status(200).send(result)
+      }
+      else {
+       const result = await Phase.create(req.body) 
+     return    res.status(200).send(result)
+      }
+
+
+ } catch (error) {
+     res.status(500).send({
+         error: error.message
+     })
+ }
   },
   remove: async (req, res) => {
     console.log(req.params.id)
@@ -59,7 +69,7 @@ module.exports = {
              }
          })
         
-       return    res.status(200).send(result)
+       return res.status(200).send(result)
        }
        else {
         const result = await Phase.update(req.body, {

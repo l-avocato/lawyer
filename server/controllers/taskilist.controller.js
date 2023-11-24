@@ -34,10 +34,10 @@ module.exports = {
     },
     deleteTask: async (req,res)=>{
         try {
-            await TaskList.destroy({
+         const taskDeleted=   await TaskList.destroy({
           where:{  id:req.params.id }
             })
-res.json(taskDeleted)
+     res.json(taskDeleted)
         } catch (error) {
             throw error
         }

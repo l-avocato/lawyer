@@ -6,6 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import "./style.css";
 import SidebarDash from "../SidebarDash/SidebarDash";
 import Swal from "sweetalert2";
+import NavbarDashboard from "../NavbarDashboard/NavbarDashboard";
 
 const TaskList = () => {
   const [tasks, setTasks] = useState([]);
@@ -73,39 +74,18 @@ const TaskList = () => {
     }
   };
   return (
-    <div
+
+<div style={{display:'flex'}}>
+  <SidebarDash/>
+<div
       className="lawyers-task-list"
-      style={{ display: "flex", justifyContent: "space-between" }}>
+      style={{ display: "flex", flexDirection:'column',width:'100%'  }}>
       {/* <SidebarDash /> */}
 
-      <h1
-        style={{
-          height: "100vh",
-          color: "white",
-          backgroundColor: "black",
-          width: "30%",
-        }}>
-        Hello
-      </h1>
+     <NavbarDashboard/>
 
-      {/* <h1  style={{
-          height: "15vh",
-          color: "white",
-          backgroundColor: "black",
-          width: "250%",
-        }}>goodbye</h1> */}
+      
       <div className="cont">
-        <h1
-          style={{
-            width: "100%",
-            backgroundColor: "black",
-            color: "white",
-            textAlign: "center",
-            height: "10vh",
-            border: "solid 1px red",
-          }}>
-          World
-        </h1>
         <h1 className="task-list-title">Task List</h1>
         <div className="task-input-container">
           <input
@@ -149,7 +129,6 @@ const TaskList = () => {
                     onClick={() => {
                       Swal.fire({
                         title: "Are you sure?",
-                        text: "You won't be able to revert this!",
                         icon: "warning",
                         showCancelButton: true,
                         confirmButtonColor: "#3085d6",
@@ -160,7 +139,6 @@ const TaskList = () => {
                           handleDeleteTask(task.id)
                           Swal.fire({
                             title: "Deleted!",
-                            text: "Your file has been deleted.",
                             icon: "success"
                           });
                         }
@@ -177,6 +155,10 @@ const TaskList = () => {
         )}
       </div>
     </div>
+  
+</div>
+
+   
   );
 };
 
