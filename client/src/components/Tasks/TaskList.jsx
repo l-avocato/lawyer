@@ -6,12 +6,30 @@ import "react-datepicker/dist/react-datepicker.css";
 import "./style.css";
 import SidebarDash from "../SidebarDash/SidebarDash";
 import Swal from "sweetalert2";
+import { FIREBASE_AUTH, db } from "../../firebaseconfig";
 
 const TaskList = () => {
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState("");
   const [newDeadline, setNewDeadline] = useState("");
   const [refresh, setRefresh] = useState(false);
+
+  const [lawyer, setLawyer] = useState({});
+
+  const getLawyer = async () => {
+    try {
+      const loggedInLawyer = FIREBASE_AUTH.currentUser.email;
+      console.log(loggedInLawyer);
+      const res = await axios.get(
+        `http://localhost:1128/api/lawyer/getLawyerByEmail/${loggedInLawyer}`
+      );
+      console.log("this is lawyer", res.data);
+      setLawyer(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  console.log(lawyer);
 
   const handleAddTask = async () => {
     try {
@@ -20,17 +38,19 @@ const TaskList = () => {
         {
           description: newTask,
           deadline: newDeadline,
+          lawyerId : lawyer.id
         },
-        setRefresh(!refresh),
+        setRefresh(!refresh)
       );
     } catch (error) {
       console.log(error);
     }
   };
+
   const getTask = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:1128/api/task/allTasks",
+        "http://localhost:1128/api/task/allTasks"
       );
       setTasks(response.data);
     } catch (error) {
@@ -38,6 +58,7 @@ const TaskList = () => {
     }
   };
   useEffect(() => {
+    getLawyer()
     getTask();
   }, [refresh]);
 
@@ -45,7 +66,7 @@ const TaskList = () => {
     try {
       const response = await axios.post(
         "http://localhost:1128/api/task/addTask",
-        {},
+        {}
       );
       setTasks(response.data);
     } catch (error) {
@@ -75,7 +96,8 @@ const TaskList = () => {
   return (
     <div
       className="lawyers-task-list"
-      style={{ display: "flex", justifyContent: "space-between" }}>
+      style={{ display: "flex", justifyContent: "space-between" }}
+    >
       {/* <SidebarDash /> */}
 
       <h1
@@ -84,7 +106,8 @@ const TaskList = () => {
           color: "white",
           backgroundColor: "black",
           width: "30%",
-        }}>
+        }}
+      >
         Hello
       </h1>
 
@@ -103,7 +126,8 @@ const TaskList = () => {
             textAlign: "center",
             height: "10vh",
             border: "solid 1px red",
-          }}>
+          }}
+        >
           World
         </h1>
         <h1 className="task-list-title">Task List</h1>
@@ -130,7 +154,8 @@ const TaskList = () => {
             {tasks.map((task) => (
               <div
                 key={task.id}
-                className={classnames("task-card", { completed: task.done })}>
+                className={classnames("task-card", { completed: task.done })}
+              >
                 <div className="task-card-header">
                   <input
                     className="checkbox-task"
@@ -154,18 +179,19 @@ const TaskList = () => {
                         showCancelButton: true,
                         confirmButtonColor: "#3085d6",
                         cancelButtonColor: "#d33",
-                        confirmButtonText: "Yes, delete it!"
+                        confirmButtonText: "Yes, delete it!",
                       }).then((result) => {
                         if (result.isConfirmed) {
-                          handleDeleteTask(task.id)
+                          handleDeleteTask(task.id);
                           Swal.fire({
                             title: "Deleted!",
                             text: "Your file has been deleted.",
-                            icon: "success"
+                            icon: "success",
                           });
                         }
                       });
-                    }}>
+                    }}
+                  >
                     Delete
                   </button>
                 </div>

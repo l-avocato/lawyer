@@ -29,6 +29,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import "./style.css";
+import NavbarDashboard from "../NavbarDashboard/NavbarDashboard";
 
 const PREFIX = "Demo";
 
@@ -243,7 +244,7 @@ const Calendar = () => {
     endDate: "",
     ownerId: 3,
   });
-  console.log("im the tasks", tasks);
+  console.log("im the appointmentsiiiii", appointments);
 
   const commitChanges = ({ added, changed, deleted }) => {
     setData((state) => {
@@ -299,10 +300,10 @@ const Calendar = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(
+      const appointmentResponse = await axios.get(
         "http://127.0.0.1:1128/api/appointment/getAppointments"
       );
-      const ress = response.data.map((el) => {
+      const appointmentData = appointmentResponse.data.map((el) => {
         console.log("im the element", el);
         return {
           id: el.id,
@@ -322,42 +323,48 @@ const Calendar = () => {
             el.time.slice(3, 5) + 60
           ),
           ownerId: 2,
+          type: "appointment",
         };
       });
 
-      console.log("this are the res", ress);
-      setAppointments(ress);
+      console.log("Appointments:", appointmentData);
+
+      const taskResponse = await axios.get(
+        "http://127.0.0.1:1128/api/task/allTasks"
+      );
+      const taskData = taskResponse.data.map((el) => {
+        return {
+          title: el.description,
+          description: el.description,
+          isCompleted: el.isCompleted,
+          deadline: el.deadline,
+          startDate: new Date(
+            el.deadline.slice(0, 4),
+            el.deadline.slice(5, 7) - 1,
+            el.deadline.slice(8, 10)
+          ),
+          endDate: new Date(
+            el.deadline.slice(0, 4),
+            el.deadline.slice(5, 7) - 1,
+            el.deadline.slice(8, 10),
+            "13:00:00".slice(0, 2),
+            "13:00:00".slice(3, 5) + 60
+          ),
+          type: "task",
+        };
+      });
+
+      console.log("Tasks:", taskData);
+      const mergedData = [...appointmentData, ...taskData];
+      console.log("Merged Data:", mergedData);
+      setAppointments(mergedData);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
 
-  const getTasks = async () => {
-    try {
-      const response = await axios.get(
-        "http://127.0.0.1:1128/api/task/allTasks"
-      );
-      const reso = response.data.map((el) => {
-        return {
-          title: el.title,
-          description: el.description,
-          isCompleted: el.isCompleted,
-          deadline: el.deadline,
-        };
-      });
-
-      
-      console.log(reso, "this is the result");
-      setAppointments(reso);
-    } catch (error) {
-      console.error("Error fetching tasks:", error);
-
-      throw error;
-    }
-  };
-
   useEffect(() => {
-    getTasks();
+    // getTasks();
     console.log(tasks, "those are tasks");
     fetchData();
     console.log(appointments, "those are appointements");
@@ -365,8 +372,10 @@ const Calendar = () => {
 
   return (
     <Paper>
+       <NavbarDashboard/>
       <Grid container spacing={2}>
-        <Grid item xs={2.4}>
+        <Grid item xs={2.}>
+       
           <SidebarDash />
         </Grid>
         <Grid item xs={9}>
@@ -405,8 +414,7 @@ const Calendar = () => {
           <Typography id="modal-modal-title" variant="h6" component="h2">
             <div>
               <div>
-                <label for="datetimepickerInline" class="form-label">
-                  {" "}
+                <label htmlFor="datetimepickerInline" className="form-label">
                   Type a title
                 </label>
                 <input
@@ -417,12 +425,12 @@ const Calendar = () => {
                     })
                   }
                 />
-                <label for="datetimepickerInline" class="form-label">
+                <label htmlFor="datetimepickerInline" className="form-label">
                   Select Start Date and Time
                 </label>
                 <input
                   type="datetime-local"
-                  class="form-control"
+                  className="form-control"
                   id="datetimepickerInline"
                   onChange={(e) =>
                     setAddedAppo((prev) => {
@@ -430,12 +438,12 @@ const Calendar = () => {
                     })
                   }
                 />
-                <label for="datetimepickerInline" class="form-label">
+                <label htmlFor="datetimepickerInline" className="form-label">
                   Select End Date and Time
                 </label>
                 <input
                   type="datetime-local"
-                  class="form-control"
+                  className="form-control"
                   id="datetimepickerInline"
                   onChange={(e) =>
                     setAddedAppo((prev) => {
