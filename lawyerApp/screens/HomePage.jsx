@@ -19,8 +19,6 @@ import { collection, getDocs } from "firebase/firestore";
 import axios from "axios";
 import config from "./ipv";
 
-
-
 const { width, height } = Dimensions.get("window");
 
 const HomePage = ({ navigation }) => {
@@ -92,44 +90,33 @@ const HomePage = ({ navigation }) => {
     const lawyersCollectionRef = collection(FIREBASE_DB, "lawyers");
     const categoryCollectionRef = collection(FIREBASE_DB, "category");
 
-
-    console.log(lawyers,"this is lawyers");
-
-
+    console.log(lawyers, "this is lawyers");
 
     const loggedInUser = FIREBASE_AUTH.currentUser.email;
 
     const getUser = () => {
-       axios.get(`http://${config}:1128/api/user/getUserByEmail/${loggedInUser}`)
-      .then((res) => {
-          console.log("this is user",res.data);
+      axios
+        .get(`http://${config}:1128/api/user/getUserByEmail/${loggedInUser}`)
+        .then((res) => {
+          console.log("this is user", res.data);
           setUser(res.data);
-          /*
-          user is set correctly, inside an array because in the back you're using findAll instead of findone, it doesn't matter, u can set the
-          user from res.data[0] because the response.data will be an array that contains one object which is the active user's object's (the user that just logged in),
-           you have to work on a new redux slice that will hold the active user, so you can fetch it in any component, for example, for the reviews, when i'm creating
-           a new review i have to post the UserId: activeUser.id inside the body, so the review can have an owner in the data base, for now when you create
-           a new review, it will have UserId: null, till you create that slice and fetch the active user in ProfileDetails.jsx, and go there you'll find
-           another comment to explain more
-          
-          */
-        }).catch(err=>{
-          console.log(err);
         })
-      };
+        .catch((err) => {
+          console.log(err);
+        });
+    };
 
     const getLawyers = async () => {
-      try{
-         const response = await axios.get(
-        `http://${config}:1128/api/lawyer/allLawyers`
-      );
-      setLawyers(response.data);
-      console.log("this is lawyers", response.data);
-      return response.data;
+      try {
+        const response = await axios.get(
+          `http://${config}:1128/api/lawyer/allLawyers`
+        );
+        setLawyers(response.data);
+        console.log("this is lawyers", response.data);
+        return response.data;
+      } catch (err) {
+        console.log(err);
       }
-     catch(err) {
-console.log(err);
-     }
     };
     const getCategories = async () => {
       console.log("this is the config", config);
@@ -297,7 +284,10 @@ console.log(err);
                 renderItem={({ item }) => (
                   <TouchableOpacity onPress={() => handlePhotoClick(item)}>
                     <View style={styles.photoItem}>
-                      <Image source={{uri: item.ImageUrl}} style={styles.photoImage} />
+                      <Image
+                        source={{ uri: item.ImageUrl }}
+                        style={styles.photoImage}
+                      />
                     </View>
                     <Text
                       style={{
@@ -539,7 +529,7 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 20,
     flexDirection: "row",
-    alignItems: "center", 
+    alignItems: "center",
     top: 10,
     marginBottom: 20,
     marginRight: 10,
@@ -547,7 +537,6 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     flex: 1,
-    
   },
   buttonText1: {
     color: "#D5B278",
