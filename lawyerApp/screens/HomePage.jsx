@@ -58,28 +58,28 @@ const HomePage = ({ navigation }) => {
   //   },
   // ];
 
-  const photoData4 = [
-    {
-      id: 1,
-      source: require("../Photos/avocat6.jpeg"),
-    },
-    {
-      id: 2,
-      source: require("../Photos/avocat7.jpeg"),
-    },
-    {
-      id: 3,
-      source: require("../Photos/avocat8.jpeg"),
-    },
-    {
-      id: 4,
-      source: require("../Photos/avocat9.jpeg"),
-    },
-    {
-      id: 5,
-      source: require("../Photos/avocat10.jpeg"),
-    },
-  ];
+  // const photoData4 = [
+  //   {
+  //     id: 1,
+  //     source: require("../Photos/avocat6.jpeg"),
+  //   },
+  //   {
+  //     id: 2,
+  //     source: require("../Photos/avocat7.jpeg"),
+  //   },
+  //   {
+  //     id: 3,
+  //     source: require("../Photos/avocat8.jpeg"),
+  //   },
+  //   {
+  //     id: 4,
+  //     source: require("../Photos/avocat9.jpeg"),
+  //   },
+  //   {
+  //     id: 5,
+  //     source: require("../Photos/avocat10.jpeg"),
+  //   },
+  // ];
 
   const renderTabContent = () => {
     const [user, setUser] = useState([]);

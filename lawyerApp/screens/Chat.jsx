@@ -1,20 +1,19 @@
-import React, { useState, useEffect,useCallback } from 'react';
-import { GiftedChat,Send,Bubble } from 'react-native-gifted-chat';
-import { TouchableOpacity, View, StyleSheet, Alert ,Image,Text,Linking} from 'react-native'; 
+import React, { useState, useEffect } from 'react';
+import { GiftedChat, Send, Bubble } from 'react-native-gifted-chat';
+import { TouchableOpacity, View, StyleSheet, Alert, Image, Text, Linking } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { MaterialIcons } from '@expo/vector-icons';
-import { collection, addDoc, orderBy, query, onSnapshot,serverTimestamp,Timestamp,getDocs } from 'firebase/firestore';
-import { FIREBASE_DB , FIREBASE_AUTH } from '../firebaseConfig';
+import { collection, addDoc, orderBy, query, onSnapshot, serverTimestamp,where,getDocs } from 'firebase/firestore';
+import { FIREBASE_DB, FIREBASE_AUTH } from '../firebaseConfig';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { Icon } from 'react-native-elements';
 import * as DocumentPicker from 'expo-document-picker';
 
-
-const Chat = ({route}) => {
-  const {item}=route.params;
-  console.log(item);
-
+const Chat = ({ route }) => {
+  const { item } = route.params;
   const [messages, setMessages] = useState([]);
+  const [roomId, setRoomId] = useState('');
+  const [conversations, setConversations] = useState([]);
 
   const makePhoneCall = () => {
     if (item.phoneNumber) {
@@ -23,10 +22,7 @@ const Chat = ({route}) => {
       console.log('Phone number not available');
     }
   };
- 
 
-
-  console.log("this is the logged user",FIREBASE_AUTH?.currentUser.uid);
   const handleCameraIconPress = async () => {
     const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
 
@@ -47,7 +43,6 @@ const Chat = ({route}) => {
     }
   };
 
- 
 
   const onSend = async (newMessages = []) => {
     const formattedMessages = newMessages.map((message) => ({
@@ -57,24 +52,54 @@ const Chat = ({route}) => {
         _id: FIREBASE_AUTH?.currentUser?.email,
         avatar: 'https://i.pravatar.cc/300',
       },
+      roomId: roomId, // Use the current roomId
     }));
-  
-    const newConversation = {
-      lawyerName: item.fullName, // Add the lawyer's name
-      otherUserDetails: item,
-      lastMessage: newMessages[0].text,
-      createdAt: serverTimestamp(),
-    };
-  
+
     await Promise.all(formattedMessages.map((message) => addDoc(collection(FIREBASE_DB, 'chats'), message)));
-    await addDoc(collection(FIREBASE_DB, 'conversations'), newConversation);
+    // Do not add a new conversation entry for every message
   };
+
+  // const fetchRoomId = async () => {
+  //   try {
+  //     // Check if there is an existing conversation with the selected lawyer
+  //     const querySnapshot = await getDocs(
+  //       query(collection(FIREBASE_DB, 'conversations'), where('lawyerId', '==', item.id))
+  //     );
+
+  //     if (!querySnapshot.empty) {
+  //       // If a conversation exists, use its roomId
+  //       const existingConversation = querySnapshot.docs[0].data();
+  //       setRoomId(existingConversation.roomId);
+  //     } else {
+  //       // If no conversation exists, generate a new roomId
+  //       const newRoomId = generateUniqueId(); // Replace this with your logic to generate a unique ID
+  //       setRoomId(newRoomId);
+
+  //       // Save the new conversation in the 'conversations' collection
+  //       await addDoc(collection(FIREBASE_DB, 'conversations'), {
+  //         roomId: newRoomId,
+  //         lawyerId: item.id,
+  //       });
+  //     }
+  //   } catch (error) {
+  //     console.error('Error fetching/generating roomId:', error);
+  //   }
+  // };
+  // useEffect(() => {
+   
   
+  //   fetchRoomId();
+  // }, [item]);
   
 
   useEffect(() => {
-    const collectionRef = collection(FIREBASE_DB , 'chats');
-    const q = query(collectionRef, orderBy('createdAt', 'desc'));
+    if (!roomId) {
+      console.error('roomId is undefined');
+      return;
+    }
+
+    const collectionRef = collection(FIREBASE_DB, 'chats');
+    const q = query(collectionRef, orderBy('createdAt', 'desc'), where('roomId', '==', roomId));
 
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const updatedMessages = querySnapshot.docs.map((doc) => ({
@@ -85,7 +110,7 @@ const Chat = ({route}) => {
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [roomId]);
 
 
  
