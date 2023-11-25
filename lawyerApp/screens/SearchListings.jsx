@@ -46,9 +46,9 @@ const SearchListings = ({ navigation }) => {
       return (
         <View style={styles.lawyerView1}>
           <TouchableOpacity
-            onPress={navigation.navigate("ProfilDetails", { item })}
+          // onPress={navigation.navigate("ProfilDetails", { item })}
 
-            // onPress={navigation.navigate("ProfilDetails", { item })}
+          // onPress={navigation.navigate("ProfilDetails", { item })}
           >
             <Image source={{ uri: item.ImageUrl }} style={styles.lawyerImage} />
           </TouchableOpacity>
@@ -83,16 +83,18 @@ const SearchListings = ({ navigation }) => {
   };
 
   return (
-    <View>
-      <View style={styles.header}>
-        <TouchableOpacity style={styles.arrowIcon}>
-          <Icon name="arrow-left" size={20} color="white" />
-        </TouchableOpacity>
-        <Text style={styles.headerText}>Search Listings</Text>
-      </View>
+    <ScrollView style={styles.scrollView}>
+      <View>
+        <View style={styles.header}>
+          <TouchableOpacity style={styles.arrowIcon}>
+            <Icon name="arrow-left" size={20} color="white" />
+          </TouchableOpacity>
+          <Text style={styles.headerText}>Search Listings</Text>
+        </View>
 
-      {renderItem()}
-    </View>
+        {renderItem()}
+      </View>
+    </ScrollView>
   );
 };
 
@@ -115,7 +117,7 @@ const styles = StyleSheet.create({
   },
   body1: {
     // flexGrow: 1,
-    height: 1800,
+    // height: 1800,
   },
   lawyerView1: {
     backgroundColor: "white",
@@ -174,6 +176,9 @@ const styles = StyleSheet.create({
     // position: "absolute",
     top: -15, // Adjust the top position as needed
     right: -20, // Adjust the right position as needed
+  },
+  scrollView: {
+    flex: 1,
   },
 });
 
