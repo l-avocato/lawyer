@@ -151,7 +151,7 @@ Lawyer.hasMany(Case);
 Case.belongsTo(Lawyer);
 
 // connection
-//   .sync({ alter: true })
+//   .sync({ force: true })
 //   .then(() => console.log("tables are created"))
 //   .catch((err) => console.log(err));
 

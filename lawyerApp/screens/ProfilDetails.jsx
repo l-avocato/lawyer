@@ -18,7 +18,7 @@ import checkImage from "../assets/check.png";
 const ProfilDetails = ({ navigation, route }) => {
   const { item } = route.params;
   const { lawyer } = route.params;
-
+  console.log("thissss", item);
   const [user, setUser] = useState([]);
   const law = item ? item : lawyer;
 
@@ -45,7 +45,7 @@ const ProfilDetails = ({ navigation, route }) => {
   };
 
   const addRating = async () => {
-    const email =  FIREBASE_AUTH.currentUser.email
+    const email = FIREBASE_AUTH.currentUser.email;
     try {
       const response = await axios.post(
         `http://${config}:1128/api/rating/addRating`,
@@ -53,9 +53,8 @@ const ProfilDetails = ({ navigation, route }) => {
           lawyerId: law.id,
           stars,
           review,
-          email
-
-        }
+          email,
+        },
       );
 
       setReview("");

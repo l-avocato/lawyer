@@ -14,9 +14,15 @@ const {
   getLawyersByCategory,
   getLawyerByEmail,
   topRatedLawyer,
+  getLawyerByOneCategory,
+  getLawyerByNearby,
 } = require("../controllers/lawyer.controller");
 
 routerLawyer.get("/allLawyers", getAllLawyers);
+// /getCategory/${idCategory}
+routerLawyer.get("/getCategory/:id", getLawyerByOneCategory);
+
+routerLawyer.get("/getNearby/:email", getLawyerByNearby);
 
 routerLawyer.get("/getLawyerId/:id", getLawyerId);
 
