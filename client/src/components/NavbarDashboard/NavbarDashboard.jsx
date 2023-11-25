@@ -9,7 +9,7 @@
 
 
 
-import * as React from 'react';
+import  React ,{useState}from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -125,10 +125,14 @@ const NavbarDashboard = () => {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [user,setUser] = React.useState({})
   const [currentUser,setCurrentUser] = React.useState(JSON.parse(localStorage.getItem("connected")));
-  
+  const [searched,setSerached]=useState('')
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
+
+    const handleSearch=(search)=>{
+      setSerached(search)
+    }
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -294,6 +298,9 @@ React.useEffect(()=>{
   handleGetUser()
 },[])
 
+const handleButtonClick = () => {
+  navigate("/AllClient", { state: { "a": 123 } });
+};
 
 
   return (
@@ -373,11 +380,11 @@ React.useEffect(()=>{
           <Toolbar style={{display:"flex",flexDirection:"row",gap:"10rem"}} >
             
             <Search  >
-              <SearchIconWrapper >
-                <SearchIcon />
+              <SearchIconWrapper  onClick={handleButtonClick} >
+                <SearchIcon  />
               </SearchIconWrapper>
               <StyledInputBase
-              
+              onChange={(event)=>handleSearch(event)}
                 placeholder="Search…"
                 inputProps={{ 'aria-label': 'search' }}
                 sx={{width:"30rem" }}

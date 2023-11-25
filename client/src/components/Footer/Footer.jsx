@@ -35,10 +35,10 @@ function Footer() {
           </div>
           <div className="col-md-5">
             <div className="col-md-2">
-              <h5 className="text-md-right">Contact Us</h5>
+              <h5 className="text-md-right" style={{fontSize:'26px'}}>Contact Us</h5>
               <hr />
             </div>
-            <form>
+            <form style={{display:'flex', flexDirection:'column', gap:'2rem'}}>
               <fieldset className="form-group">
                 <input type="email" className="form-control" id="exampleInputEmail1" placeholder="Enter email" />
               </fieldset>
@@ -46,7 +46,7 @@ function Footer() {
                 <textarea className="form-control" id="exampleMessage" placeholder="Message"></textarea>
               </fieldset>
               <fieldset className="form-group text-xs-right">
-                <button type="button" className="btn btn-secondary-outline btn-lg">Send</button>
+                <button type="button" style={{backgroundColor:'white', width:'80px', height:'35px' , borderRadius:'1rem'}}>Send</button>
               </fieldset>
             </form>
           </div>

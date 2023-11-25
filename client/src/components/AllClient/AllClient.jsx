@@ -6,8 +6,14 @@ import NavbarDashboard from "../NavbarDashboard/NavbarDashboard.jsx";
 import DataGrid from "./DataGrid.jsx";
 import axios from "axios";
 import { FIREBASE_AUTH , db } from "../../firebaseconfig";
+import { useLocation } from "react-router-dom";
 
 const AllClient = () => {
+  const location = useLocation()
+  const state = location.state;
+
+  console.log("this is the state",state);
+  
   const [users, setUsers] = useState([]);
   const [refrech, setRefrech] = useState(false);
   const [lawyer,setLawyer]=useState({});

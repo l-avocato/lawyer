@@ -4,6 +4,7 @@ const {getAllLawyers,getLawyerId,add,deleteLawyer,update,searchLawyer,searchLawy
 
 routerLawyer.put("/updateLawyer/:emailUpdate", updateLawyer)
 
+routerLawyer.get("/allLawyers", getAllLawyers);
 routerLawyer.get("/getLawyerId/:id", getLawyerId);
 
 routerLawyer.get("/getLawyerByEmail/:email", getLawyerByEmail);

@@ -19,17 +19,17 @@ function Landing() {
   return (
     <div className="big-container">
       <Navbar />
-      <div className="yellow-background">
-        <div className="right-section" data-aos="fade-right">
-          <img className="client-image" src={client} alt="Client" />
-        </div>
-        <div className="left-section" data-aos="fade-left">
-          <h1 className="heading-text">Level up your law work with Avocato</h1>
-            <button className="btn2">Discover More</button>
-        </div>
-      </div>
+      <div className="yellow-background" data-aos="fade-up">
+  <div className="right-section" data-aos="fade-right">
+    <img className="client-image" src={client} alt="Client" />
+  </div>
+  <div className="left-section" data-aos="fade-left">
+    <h1 className="heading-text">Level up your law work with Avocato</h1>
+    <button className="btn2">Discover More</button>
+  </div>
+</div>
       <div className="services" id="services">
-        <h1>Our Services</h1>
+        <h1 >Our Services</h1>
       </div>
       <div className="services-container">
         <div style={{backgroundColor:'#f8f8f8' , width:"100%"}}>
@@ -54,22 +54,25 @@ function Landing() {
     <p className="service-paragraph3">Boost your productivity with our comprehensive task management features. From deadlines to documents, our platform ensures nothing slips through the cracks. Stay on top of your game, meet deadlines, and achieve success with ease. Your legal practice, supercharged.</p>
 </div>
 </div>
-      <div className="team-name">
+<div className="team-name">
         <h1>Clients Feedback</h1>
       </div>
-      <div>
-      <div className="picture1">
-        <img className="image1" src={do1}></img>
-        <div className="para1">Justice is not just a goal; it's a way of life. In the pursuit of truth, I stand as a beacon of hope, advocating for fairness and equality. Together, we navigate the complexities of law, ensuring righteousness prevails</div>
+      <div style={{display:'flex', marginTop:'2rem'}}>
+         
+         <div style={{display:'flex', flexDirection:'column', gap:'2rem', justifyContent:'center', alignItems:'center'}}> <img style={{width:'350px', height:'350px', }} src={do1}></img>
+         <p style={{fontSize:'20px'}}> Justice is not just a goal; it's a way of life. In the pursuit of truth, I stand as a beacon of hope, advocating for fairness and equality. Together, we navigate the complexities of law, ensuring righteousness prevails </p> 
       </div>
+       
+      
+    
+        <div style={{display:'flex', flexDirection:'column', gap:'2rem', justifyContent:'center', alignItems:'center'}}>
+          <img  style={{width:'350px', height:'350px'}} src={do2}></img>
+          <p style={{fontSize:'20px'}}>        In the courtroom, I am the voice of the voiceless, a defender of truth and fairness. Every case is a journey,and I walk it with unwavering dedication, seeking justice, one client at a time </p>
+        </div>
+        
       </div>
     
-      <div className="picture2">
-        <img className="image2" src={do2}></img>
-        <div className="para2">
-        In the courtroom, I am the voice of the voiceless, a defender of truth and fairness. Every case is a journey, and I walk it with unwavering dedication, seeking justice, one client at a time 
-        </div>
-      </div>
+      
       <Footer />
     </div>
   );
