@@ -51,15 +51,6 @@ const HomePage = ({ navigation }) => {
         .then((res) => {
           console.log("this is user", res.data);
           setUser(res.data);
-          /*
-          user is set correctly, inside an array because in the back you're using findAll instead of findone, it doesn't matter, u can set the
-          user from res.data[0] because the response.data will be an array that contains one object which is the active user's object's (the user that just logged in),
-           you have to work on a new redux slice that will hold the active user, so you can fetch it in any component, for example, for the reviews, when i'm creating
-           a new review i have to post the UserId: activeUser.id inside the body, so the review can have an owner in the data base, for now when you create
-           a new review, it will have UserId: null, till you create that slice and fetch the active user in ProfileDetails.jsx, and go there you'll find
-           another comment to explain more
-          
-          */
         })
         .catch((err) => {
           console.log(err);

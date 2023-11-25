@@ -84,9 +84,6 @@ Notification.belongsTo(User);
 Lawyer.hasMany(Availability);
 Availability.belongsTo(Lawyer);
 
-// Lawyer.hasOne(Lawyer);
-// Lawyer.belongsTo(Category);
-
 Lawyer.hasMany(Rating);
 Rating.belongsTo(Lawyer);
 
@@ -141,8 +138,17 @@ Media.belongsTo(Conversation);
 Conversation.hasMany(Notification);
 Notification.belongsTo(Conversation);
 
+Phase.hasMany(Edge);
+Edge.belongsTo(Phase);
+
+Folder.hasMany(Files);
+Files.belongsTo(Folder);
+
 Phase.hasMany(Folder);
 Folder.belongsTo(Phase);
+
+Lawyer.hasMany(Case);
+Case.belongsTo(Lawyer);
 
 // connection
 //   .sync({ force: true })

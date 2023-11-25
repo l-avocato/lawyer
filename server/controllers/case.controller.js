@@ -64,7 +64,7 @@ module.exports = {
                     id: req.params.id
                 }
             })
-            res.status(200).send(cases)
+            res.json(cases)
         } catch (error) {
             res.status(500).send({
                 error: error.message
