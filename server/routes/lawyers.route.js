@@ -5,6 +5,31 @@ const {getAllLawyers,getLawyerId,add,deleteLawyer,update,searchLawyer,searchLawy
 routerLawyer.put("/updateLawyer/:emailUpdate", updateLawyer)
 
 routerLawyer.get("/allLawyers", getAllLawyers);
+const express = require("express");
+const {
+  getAllLawyers,
+  getLawyerId,
+  add,
+  deleteLawyer,
+  update,
+  searchLawyer,
+  searchLawyerByfield,
+  verifyLawyer,
+  blockLawyer,
+  updateAvailability,
+  getLawyersByCategory,
+  getLawyerByEmail,
+  topRatedLawyer,
+  getLawyerByOneCategory,
+  getLawyerByNearby,
+} = require("../controllers/lawyer.controller");
+
+routerLawyer.get("/allLawyers", getAllLawyers);
+// /getCategory/${idCategory}
+routerLawyer.get("/getCategory/:id", getLawyerByOneCategory);
+
+routerLawyer.get("/getNearby/:email", getLawyerByNearby);
+
 routerLawyer.get("/getLawyerId/:id", getLawyerId);
 
 routerLawyer.get("/getLawyerByEmail/:email", getLawyerByEmail);
