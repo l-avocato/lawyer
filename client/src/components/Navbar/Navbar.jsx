@@ -142,9 +142,9 @@ useEffect(() => {
         <div className="rightSection">
           <div className="navBarLinks">
             <ul className="ul">
-              <li>Home</li>
-              <li>About us</li>
-              <li>
+              <li id="navbar_link">Home</li>
+              <li id="navbar_link">About us</li>
+              <li id="navbar_link">
                 <Link
                   activeClass="active"
                   to="services"
@@ -156,11 +156,11 @@ useEffect(() => {
                   Services
                 </Link>
               </li>
-              <li>
+              <li id="navbar_link">
                 Contact
                 <i className="fa fa-angle-down"></i>
               </li>
-              <li 
+              <li  id="navbar_link"
               onClick={handleShow}
               >Login</li>
               <Modal
@@ -240,7 +240,7 @@ useEffect(() => {
                 </Modal.Body>
               </Modal>
 
-           <li onClick={handleShowSignup}>Sign Up</li>
+           <li id="navbar_link" onClick={handleShowSignup}>Sign Up</li>
 
 
               <Modal

@@ -11,18 +11,24 @@ import Swal from "sweetalert2";
 
 
 const Settings = () => {
-  const [papers, setPapers] = useState("");
-  const [fullName, setFullName] = useState("");
-  const [adress, setAdress] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [latitude, setLatitude] = useState("");
-  const [longitude, setLongitude] = useState("");
-  const [isMenuOpen, setMenuOpen] = useState(false);
-  const [user,setUser] =  useState({});
+
+const imgUrl =JSON.parse(localStorage.getItem("connected"))
+
+
+const [fullName, setFullName] = useState("");
+const [adress, setAdress] = useState("");
+const [phoneNumber, setPhoneNumber] = useState("");
+const [latitude, setLatitude] = useState("");
+const [longitude, setLongitude] = useState("");
+const [isMenuOpen, setMenuOpen] = useState(false);
+const [user,setUser] =  useState({});
+const [papers, setPapers] = useState('https://cdn.icon-icons.com/icons2/564/PNG/512/Add_Image_icon-icons.com_54218.png') 
   const position = { lat: parseFloat(latitude) || 51.505, lng: parseFloat(longitude) || -0.09 };
   const menuRef = useRef(null);
 
-// //  const auth = getAuth();
+
+
+//  const auth = getAuth();
 //  const handleGetUser = async () =>{
 //   const email=FIREBASE_AUTH.currentUser.email
 
@@ -143,13 +149,13 @@ const Settings = () => {
           >
             Edit Profile
           </p>
-
-          <div className="flex">
+        <div style={{display:'flex', flexDirection:'row', gap:'5rem'}}>
+              <div className="flex" >
             <img
               src={papers}
               alt=""
               className="imageUrl"
-              style={{ width: "8rem", height: "8rem" }}
+              style={{ width: "22rem", height: "22rem", borderRadius: "8% 0  8% 0",}}
             />
             <input
               type="file"
@@ -159,15 +165,14 @@ const Settings = () => {
               }}
             />
           </div>
-
+          <div style={{marginTop:'2rem'}}>
           <div className="form-outline mb-2">
-            <label htmlFor="">Full Name</label>
             <input
               type="text"
               placeholder="Full name"
               id="form6Example3"
               className="form-control"
-              style={{ fontSize: "18px", }}
+              style={{ fontSize: "20px", width:'25rem' }}
               onChange={(e) => {
                 setFullName(e.target.value);
               }}
@@ -204,21 +209,17 @@ const Settings = () => {
             <label className="form-label" htmlFor="form6Example3"></label>
           </div>
          
+          </div>
+        </div>
+      
+
+       
           <div style={{display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center', gap:'1rem'}}>
           <button
             type="button"
-            style={{
-              backgroundColor: "gold",
-              color: "black",
-              fontSize: "1.3rem",
-              border: "none",
-              borderRadius: "8px",
-              cursor: "pointer",
-             width:'800px',
-             height: "40px"
+           
+            id="btnUpdate"
 
-
-            }}
             onClick={()=>{updateProfil()
               Swal.fire({
                 position: "top-end",
@@ -234,17 +235,8 @@ const Settings = () => {
           </button>
           <button
             type="button"
-            style={{
-              backgroundColor: "gold",
-              color: "black",
-              fontSize: "1.3rem", 
-              border: "none",
-              borderRadius: "8px",
-              cursor: "pointer",
-              width:'800px',
-              height: "40px"
-
-            }}
+            id="btnUpdate"
+       
             onClick={() => {
               showModal();
               getLocation();

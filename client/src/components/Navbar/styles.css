@@ -3,17 +3,18 @@
   display: flex;
   flex-direction: column;
   border-color: #2A2528;
-}
+font-size: 100px;}
 
 .topSection {
-  background-color: #ffffff;
-  padding: 12px 50px;
+  background: linear-gradient(to right, #b38728, #fbf5b7, #aa771c);
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
+
+  
   color: white;
-  height: 80px;
+  height: 100%;
 }
 
 .rightSection {
@@ -27,8 +28,9 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 60px;
+    font-size: 120px;
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
 }
 
 .navBarLink {
@@ -39,7 +41,24 @@
 .navBarLink:hover {
     color: rgba(255, 255, 255, 0.482);
 }
+ul #navbar_link{
+  /* background-color: white; */
+  color: white;
+  font-weight: 700;
 
+  transition: all 0.5s ease-in-out;
+}
+ul #navbar_link:nth-child(even):hover{
+background-color:black;
+
+
+
+}
+ul #navbar_link:nth-child(odd):hover{
+  background-color:black;
+
+  
+ }
 .navBarIcons {
     display: flex;
     flex-direction: row;
@@ -158,6 +177,9 @@
   .ul {
     font-size: 0;
     list-style-type: none;
+    padding: 0;
+    margin: 0;
+
   }
   
   .ul > li {
@@ -177,7 +199,7 @@
 
   ul > li:hover > ul {
     display: block;
-    margin-top: 1.5rem;
+
   }
   
   ul > li > ul {

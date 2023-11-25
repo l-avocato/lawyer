@@ -34,8 +34,7 @@ import SidebarDash from '../SidebarDash/SidebarDash';
 import { getAuth } from 'firebase/auth';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
-
-
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Setting Profil', 'Setting Security', 'Logout'];
 
@@ -400,7 +399,7 @@ React.useEffect(()=>{
                   <NotificationsIcon />
                 </Badge>
               </IconButton>
-              <span style={{width:"8rem" , backgroundColor:"white",color:"black",alignItems:"center",borderRadius:"5%",height:"6vh",display:"flex",justifyContent:"center",alignSelf:"center"}}>
+              <span style={{width:"9rem" ,fontSize:'16px', color:"white",alignItems:"center",height:"7vh",display:"flex",justifyContent:"center",alignSelf:"center", fontFamily:'monospace'}}>
            Hi,Maitre {currentUser.fullName}
           </span>
               {/* <IconButton  sx={{ p: 0 }} onClick={handleOpenUserMenu}>
@@ -408,9 +407,10 @@ React.useEffect(()=>{
                 </IconButton> */}
                  <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <IconButton  sx={{ p: 0 }}>
                   <Avatar alt="Remy Sharp" src={currentUser.ImageUrl} style={{width:'55px', height:'55px'}} />
                 </IconButton>
+                <ArrowDropDownIcon style={{fontSize:'32px'}} onClick={handleOpenUserMenu}/>
               </Tooltip>
               <Menu
                 sx={{ mt: '45px' }}

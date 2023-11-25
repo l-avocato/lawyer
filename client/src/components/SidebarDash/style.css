@@ -1,10 +1,7 @@
 .new-sidebar {
   width: 14rem;
   height: 100vh;
-
   background-color: black;
-  border-right: 0.03125rem solid rgb(0, 0, 0);
-  transition: width 0.3s ease;
 }
 
 
@@ -27,7 +24,7 @@
 .new-logo {
   width: 7rem;
   height: 6rem;
-
+  
 
 }
 
@@ -50,40 +47,58 @@
   align-items: center;
   padding: 1rem;
   cursor: pointer;
-  color: #ffffff;
+  color: #fffdfd;
   font-size: 20px;
-  transition: background-color 0.3s ease;
+  transition: black 0.6s ease;
   &:hover {
-    background-color: #ffffff;
+    background-color: #ddd5d5;
     color: #000000;
   }
 
-  .link:hover {
+  /* .link:hover {
     color: black;
-  }
-    .new-separator {
+  } */
+    /* .new-separator {
       height: 10rem;
       width: 12px;
       background-color: aliceblue;
-    }
-      .new-icon {
+    } */
+      /* .new-icon {
         font-size: 1.3rem;
         color: #d4af37;
-      }
+      } */
       .side-title{
         cursor: pointer;
         font-size: 17px;
       }
-      span {
+      /* span {
         font-size: 0.8125rem;
         font-weight: 600;
-        color: #ffffff;
+        color: #a49595;
         margin-left: 0.625rem;
         cursor: pointer;
         text-decoration: none     ;
-      }
+      } */
     }
 
+#btnUpdate  {
+      background-color: gold;
+      color: black;
+      font-size: 1.3rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+     width:500px;
+     height: 40px;
+     transform: scale(1);
+     transition: all 0.3s ease-in-out;
+      }
+      #btnUpdate:hover{
+     transform: scale(1.1);
+     background-color: black;
+     color: gold;
+
+      }
 
     .new-bottom {
       display: flex;
@@ -104,14 +119,14 @@
   .side-title {
     cursor: pointer;
   }
-  span {
+  /* span {
     font-size: 0.8125rem;
     font-weight: 600;
     color: #ffffff;
     margin-left: 0.625rem;
     cursor: pointer;
     text-decoration: none;
-  }
+  } */
 
 
 .new-bottom {
@@ -119,9 +134,10 @@
   align-items: center;
   margin: 0.625rem;
 }
-.new-color-option {
+
+/* .new-color-option {
   width: 1.25rem;
   height: 1.25rem;
   border-radius: 0.3125rem;
   margin-right: 0.3125rem;
-}
+} */
