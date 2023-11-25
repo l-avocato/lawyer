@@ -9,7 +9,6 @@ import {
   Modal,
   Linking,
   ActivityIndicator,
-  ScrollView,
 } from "react-native";
 import MapView, {
   PROVIDER_GOOGLE,
@@ -17,10 +16,9 @@ import MapView, {
   Polyline,
   Circle,
 } from "react-native-maps";
-import * as Location from "expo-location";
 import { MaterialIcons } from "@expo/vector-icons";
 import axios from "axios";
-import ProfilDetails from "./ProfilDetails";
+import * as Location from "expo-location";
 
 const GoogleMapView = ({ navigation }) => {
   const [userLocation, setUserLocation] = useState(null);
@@ -31,8 +29,7 @@ const GoogleMapView = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const [categoryModalVisible, setCategoryModalVisible] = useState(false);
+  const [searchText, setSearchText] = useState("");
   const mapRef = useRef(null);
 
   useEffect(() => {
@@ -85,15 +82,6 @@ const GoogleMapView = ({ navigation }) => {
       });
   }, []);
 
-  useEffect(() => {
-    if (selectedCategory) {
-      const filteredLawyers = lawyers.filter(
-        (lawyer) => lawyer.field === selectedCategory
-      );
-      setLawyers(filteredLawyers);
-    }
-  }, [selectedCategory]);
-
   const centerMapToUserLocation = () => {
     if (userLocation && mapRef.current) {
       mapRef.current.animateToRegion({
@@ -127,8 +115,14 @@ const GoogleMapView = ({ navigation }) => {
         ImageUrl: lawyer.ImageUrl,
         fullName: lawyer.fullName,
         field: lawyer.field,
+        latitude: parseFloat(lawyer.latitude) || 0,
+        longitude: parseFloat(lawyer.longitude) || 0,
       });
       setModalVisible(true);
+      setSelectedLocation({
+        latitude: parseFloat(lawyer.latitude) || 0,
+        longitude: parseFloat(lawyer.longitude) || 0,
+      });
     }
   };
 
@@ -136,39 +130,44 @@ const GoogleMapView = ({ navigation }) => {
     setModalVisible(false);
   };
 
-  const toggleCategoryModal = () => {
-    setCategoryModalVisible(!categoryModalVisible);
-  };
+  const handleSearch = () => {
+    // Handle search logic here
+    const foundLawyer = lawyers.find(
+      (lawyer) =>
+        lawyer.fullName.toLowerCase().includes(searchText.toLowerCase()) ||
+        lawyer.field.toLowerCase().includes(searchText.toLowerCase())
+    );
 
-  const handleCategoryPress = (categoryName) => {
-    setSelectedCategory(categoryName);
-    setCategoryModalVisible(false);
+    if (foundLawyer) {
+      setSelectedLawyer({
+        ImageUrl: foundLawyer.ImageUrl,
+        fullName: foundLawyer.fullName,
+        field: foundLawyer.field,
+        latitude: parseFloat(foundLawyer.latitude) || 0,
+        longitude: parseFloat(foundLawyer.longitude) || 0,
+      });
+      setModalVisible(true);
+      setSelectedLocation({
+        latitude: parseFloat(foundLawyer.latitude) || 0,
+        longitude: parseFloat(foundLawyer.longitude) || 0,
+      });
+      setShowRoute(false);
+    } else {
+      // Handle case when no matching lawyer is found
+    }
   };
 
   return (
     <View style={{ flex: 1 }}>
       <View style={styles.searchBarContainer}>
-        <TextInput placeholder="Search..." style={styles.searchInput} />
+        <TextInput
+          placeholder="Search..."
+          style={styles.searchInput}
+          value={searchText}
+          onChangeText={(text) => setSearchText(text)}
+          onSubmitEditing={handleSearch}
+        />
       </View>
-
-      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        <View style={styles.categoryButtonsContainer}>
-          {categories.map((category) => (
-            <TouchableOpacity
-              key={category.id}
-              style={[
-                styles.categoryButton,
-                selectedCategory === category.name && {
-                  backgroundColor: "gray",
-                },
-              ]}
-              onPress={() => handleCategoryPress(category.name)}
-            >
-              <Text style={styles.categoryButtonText}>{category.name}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-      </ScrollView>
 
       {loading ? (
         <ActivityIndicator size="large" style={{ flex: 1 }} />
@@ -234,21 +233,21 @@ const GoogleMapView = ({ navigation }) => {
                   strokeColor="rgba(0, 122, 255, 0.7)"
                 />
               )}
-              {lawyers.map((lawyer) => (
+              {lawyers.map((filteredLawyer) => (
                 <Marker
-                  key={lawyer.id}
+                  key={filteredLawyer.id}
                   coordinate={{
-                    latitude: parseFloat(lawyer.latitude) || 0,
-                    longitude: parseFloat(lawyer.longitude) || 0,
+                    latitude: parseFloat(filteredLawyer.latitude) || 0,
+                    longitude: parseFloat(filteredLawyer.longitude) || 0,
                   }}
-                  title={lawyer.fullName}
-                  description={lawyer.adress}
-                  onPress={() => openLawyerProfile(lawyer)}
+                  title={filteredLawyer.fullName}
+                  description={filteredLawyer.adress}
+                  onPress={() => openLawyerProfile(filteredLawyer)}
                 >
-                  {lawyer.ImageUrl && (
+                  {filteredLawyer.ImageUrl && (
                     <Image
-                      source={{ uri: lawyer.ImageUrl }}
-                      style={styles.markerImage}
+                      source={{ uri: filteredLawyer.ImageUrl }}
+                      style={{ width: 40, height: 40, borderRadius: 20 }}
                     />
                   )}
                 </Marker>
@@ -276,6 +275,7 @@ const GoogleMapView = ({ navigation }) => {
               )}
             </MapView>
           )}
+
           {selectedLawyer && (
             <Modal
               animationType="slide"
@@ -303,7 +303,10 @@ const GoogleMapView = ({ navigation }) => {
                   >
                     <Text style={styles.buttonText}>Go to Profile</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity style={styles.button} onPress={handleCall}>
+                  <TouchableOpacity
+                    style={styles.button}
+                    onPress={handleCall}
+                  >
                     <Text style={styles.buttonText}>Call</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
@@ -316,38 +319,7 @@ const GoogleMapView = ({ navigation }) => {
               </View>
             </Modal>
           )}
-          {selectedLocation && !showRoute && (
-            <View
-              style={{
-                position: "absolute",
-                bottom: 0,
-                width: "100%",
-                padding: 16,
-                backgroundColor: "black",
-              }}
-            >
-              <Text style={{ color: "gold", fontSize: 18 }}>Start</Text>
-              <TouchableOpacity
-                style={{
-                  marginTop: 8,
-                  backgroundColor: "gold",
-                  padding: 10,
-                  borderRadius: 5,
-                }}
-                onPress={startRoute}
-              >
-                <Text
-                  style={{
-                    color: "black",
-                    textAlign: "center",
-                    fontSize: 16,
-                  }}
-                >
-                  Start Navigation
-                </Text>
-              </TouchableOpacity>
-            </View>
-          )}
+          
           {userLocation && (
             <TouchableOpacity
               style={{
@@ -361,131 +333,107 @@ const GoogleMapView = ({ navigation }) => {
               onPress={centerMapToUserLocation}
             >
               <Text>
-                <MaterialIcons name="my-location" size={36} color="blue" />{" "}
+                <MaterialIcons
+                  name="my-location"
+                  size={36}
+                  color="blue"
+                />{" "}
               </Text>
             </TouchableOpacity>
           )}
-          <Modal
-            animationType="slide"
-            transparent={true}
-            visible={categoryModalVisible}
-            onRequestClose={toggleCategoryModal}
-          >
-            <View style={styles.popupContainer}>
-              <View style={styles.popupContent}>
-                <Text
-                  style={{ fontSize: 18, fontWeight: "bold", marginBottom: 10 }}
-                >
-                  All Categories
-                </Text>
-                {categories.map((category) => (
-                  <TouchableOpacity
-                    key={category.id}
-                    style={{
-                      backgroundColor: "lightgray",
-                      padding: 10,
-                      borderRadius: 5,
-                      marginBottom: 10,
-                      width: "10%",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                    onPress={() => handleCategoryPress(category.name)}
-                  >
-                    <Text style={{ color: "black", fontSize: 14 }}>
-                      {category.name}
-                    </Text>
-                  </TouchableOpacity>
-                ))}
-                <TouchableOpacity
-                  style={styles.closeButton}
-                  onPress={toggleCategoryModal}
-                >
-                  <Text style={styles.closeButtonText}>Close</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </Modal>
         </>
       )}
     </View>
   );
 };
+  const styles = StyleSheet.create({
+    searchBarContainer: {
+      position: "absolute",
+      top: 70,
+      left: 10,
+      right: 10,
+      backgroundColor: "white",
+      borderRadius: 20,
+      padding: 10,
+      elevation: 5,
+      zIndex: 1,
+    },
+    popupContainer: {
+      top: 210,
+      justifyContent: "center",
+      alignItems: "center",
+      alignSelf: "center",
+      backgroundColor: "white",
+      borderRadius: 10,
+      padding: 17,
+    },
+    searchInput: {
+      fontSize: 16,
+    },
+    categoryButtonsContainer: {
+      flexDirection: "row",
+      justifyContent: "space-around",
+      marginTop: 10,
+      height: 100,
+      backgroundColor: "red",
+      top: 120,
+      zIndex: 2,
+    },
+    categoryButton: {
+      backgroundColor: "lightgray",
+      paddingVertical: 5,
+      paddingHorizontal: 10,
+      borderRadius: 5,
+      marginRight: 10,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    categoryButtonText: {
+      color: "black",
+      fontSize: 14,
+    },
+    image: {
+      width: 150,
+      height: 150,
+      borderRadius: 75,
+      marginBottom: 10,
+    },
+    name: {
+      fontSize: 18,
+      fontWeight: "bold",
+      marginBottom: 10,
+    },
+    phoneNumber: {
+      fontSize: 16,
+      marginBottom: 10,
+    },
+    button: {
+      backgroundColor: "gold",
+      padding: 10,
+      borderRadius: 5,
+      marginBottom: 10,
+      width: 150,
+    },
+    buttonText: {
+      color: "black",
+      textAlign: "center",
+      fontSize: 14,
+    },
+    closeButton: {
+      position: "absolute",
+      top: 10,
+      right: 10,
+    },
+    closeButtonText: {
+      fontSize: 18,
+      color: "red",
+    },
+    markerImage: {
+      width: 40,
+      height: 40,
+      borderRadius: 20,
+    },
+  });
 
-const styles = StyleSheet.create({
-  searchBarContainer: {
-    position: "absolute",
-    top: 70,
-    left: 10,
-    right: 10,
-    backgroundColor: "white",
-    borderRadius: 20,
-    padding: 10,
-    elevation: 5,
-    zIndex: 1,
-  },
-  searchInput: {
-    fontSize: 16,
-  },
-  categoryButtonsContainer: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    marginTop: 10,
-  },
-  categoryButton: {
-    backgroundColor: "lightgray",
-    paddingVertical: 5, 
-    paddingHorizontal: 10, 
-    borderRadius: 5,
-    marginRight: 10,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  categoryButtonText: {
-    color: "black",
-    fontSize: 14,
-  },
-  image: {
-    width: 150,
-    height: 150,
-    borderRadius: 75,
-    marginBottom: 10,
-  },
-  name: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 10,
-  },
-  phoneNumber: {
-    fontSize: 16,
-    marginBottom: 10,
-  },
-  button: {
-    backgroundColor: "gold",
-    padding: 10,
-    borderRadius: 5,
-    marginBottom: 10,
-    width: 150,
-  },
-  buttonText: {
-    color: "black",
-    textAlign: "center",
-    fontSize: 14,
-  },
-  closeButton: {
-    position: "absolute",
-    top: 10,
-    right: 10,
-  },
-  closeButtonText: {
-    fontSize: 18,
-    color: "red",
-  },
-  markerImage: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-  },
-});
+  export default GoogleMapView;
 
-export default GoogleMapView;
