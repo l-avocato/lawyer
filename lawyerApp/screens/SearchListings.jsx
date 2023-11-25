@@ -151,6 +151,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 1,
     right: 200,
+    display: "flex",
+    flexDirection: "column",
   },
   starIcon: {
     position: "absolute",
@@ -173,7 +175,6 @@ const styles = StyleSheet.create({
     right: 20, // Adjust the right position as needed
   },
   textt: {
-    // position: "absolute",
     top: -15, // Adjust the top position as needed
     right: -20, // Adjust the right position as needed
   },
