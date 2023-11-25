@@ -4,21 +4,16 @@ const { Note,Phase,Lawyer,User} = require("../models/index");
 module.exports = {
   getAllNote: async (req, res) => {
     try {
-      const allNotes = await Phase.findOne({where:{id:req.params.id},
-        include:[{
-          model:Note,
-          order:[["createdAt","DESC"]],
-          include:{
-            model:Lawyer
-          
-          },
-          include:{
-            model:User
-          
-          },
-      
+      const allNotes = await Phase.findOne({
+        where: { id: req.params.id },
+        include: [{
+          model: Note,
+          order: [["createdAt", "DESC"]],
+          include: [
+            { model: Lawyer },
+            { model: User }
+          ]
         }]
-      
       });
       res.status(200).send(allNotes);
     } catch (error) {
@@ -40,6 +35,14 @@ module.exports = {
     try {
       const getLawyer = await Lawyer.findOne({where: { email:req.body.email}})
       const newNote = await Note.create({...req.body,lawyerId:getLawyer.id});
+      res.status(201).send(newNote);
+    } catch (error) {
+      throw error;
+    }
+  },
+  addNote: async (req, res) => {
+    try {
+      const newNote = await Note.create(req.body);
       res.status(201).send(newNote);
     } catch (error) {
       throw error;
