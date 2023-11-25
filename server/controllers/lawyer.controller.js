@@ -1,11 +1,43 @@
 const sequalize = require("sequelize");
-const { Lawyer, Category, Rating } = require("../models/index");
+const { Lawyer, Category, Rating, User } = require("../models/index");
 const { Op } = require("sequelize");
-
+const haversine = require("haversine");
 module.exports = {
   getAllLawyers: async (req, res) => {
     try {
-      const allLawyers = await Lawyer.findAll();
+      const allLawyers = await Lawyer.findAll({
+        include: [
+          {
+            model: Rating,
+          },
+          {
+            model: Category,
+          },
+        ],
+        // include: [
+
+        // ],
+      });
+      res.status(200).send(allLawyers);
+    } catch (error) {
+      throw error;
+    }
+  },
+  getLawyerByOneCategory: async (req, res) => {
+    try {
+      const allLawyers = await Lawyer.findAll({
+        include: [
+          {
+            model: Rating,
+          },
+          {
+            model: Category,
+          },
+        ],
+        // include: [
+        where: { categoryId: req.params.id },
+        // ],
+      });
       res.status(200).send(allLawyers);
     } catch (error) {
       throw error;
@@ -74,6 +106,44 @@ module.exports = {
       throw error;
     }
   },
+  getLawyerByNearby: async (req, res) => {
+    try {
+      const getUser = await User.findOne({
+        where: { email: req.params.email },
+      });
+      const searchLawyer = await Lawyer.findAll({
+        include: [
+          {
+            model: Rating,
+          },
+          {
+            model: Category,
+          },
+        ],
+      });
+      const filtred = searchLawyer.filter((lawyer) => {
+        const start = {
+          latitude: getUser.latitude,
+          longitude: getUser.langitude,
+        };
+        const end = {
+          latitude: lawyer.latitude,
+          longitude: lawyer.langitude,
+        };
+        return haversine(start, end) <= 3;
+      });
+      // 36.856139, 10.201317
+      //36.862963, 10.196272
+      //36.853387, 10.206075
+      //36.874649, 10.189052
+      // 35.800095, 10.409405 oued laya
+      // 36.891782, 10.188760
+
+      res.status(200).send(filtred);
+    } catch (error) {
+      throw error;
+    }
+  },
   searchLawyerByfield: async (req, res) => {
     try {
       const searchLawyer = await Lawyer.findAll({
@@ -136,12 +206,11 @@ module.exports = {
           {
             model: Category,
           },
-        ],
-        include: [
           {
             model: Rating,
           },
         ],
+
         where: { categoryId: req.params.id },
       });
 
@@ -168,6 +237,9 @@ module.exports = {
                   {
                     model: Category,
                   },
+                  {
+                    model: Rating,
+                  },
                 ],
 
                 where: { id: lawyer.id },
@@ -192,8 +264,6 @@ module.exports = {
           {
             model: Category,
           },
-        ],
-        include: [
           {
             model: Rating,
           },
@@ -222,12 +292,11 @@ module.exports = {
                 {
                   model: Category,
                 },
-              ],
-              include: [
                 {
                   model: Rating,
                 },
               ],
+
               where: { id: lawyer.id },
             });
             return lawyers;
