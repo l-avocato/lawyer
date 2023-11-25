@@ -125,7 +125,7 @@ const NavbarDashboard = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [user,setUser] = React.useState({})
-  const [currentUser,setCurrentUser] = React.useState({});
+  const [currentUser,setCurrentUser] = React.useState(JSON.parse(localStorage.getItem("connected")));
   
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -274,24 +274,26 @@ const NavbarDashboard = () => {
   );
 
 
-const handleGetUser = async (user) =>{
+  const email=FIREBASE_AUTH?.currentUser?.email
+  
+const handleGetUser = async () =>{
   // console.log(user.email);
-  const email=FIREBASE_AUTH.currentUser.email
 
-    setUser(user);
-  await axios.get(`http://localhost:1128/api/lawyer/getLawyerByEmail/${email}`)
+ if(email){await axios.get(`http://localhost:1128/api/lawyer/getLawyerByEmail/${email}`)
   .then((res)=>{
-    setCurrentUser(res.data);
+    localStorage.setItem("connected",JSON.stringify(res.data));
+    setCurrentUser(JSON.parse(localStorage.getItem("connected")));
   })
   .catch((err)=>{
     console.log(err)
-  })
+  })}
 }
+
+
 
 React.useEffect(()=>{
   handleGetUser()
 },[])
-
 
 
 

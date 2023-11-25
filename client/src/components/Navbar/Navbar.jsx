@@ -16,6 +16,8 @@ import EmailIcon from '@mui/icons-material/Email';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import PersonIcon from '@mui/icons-material/Person';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
+import Swal from "sweetalert2";
+
 
 function Navbar() {
   const navigate = useNavigate();
@@ -62,6 +64,14 @@ const fetchCategory = async ()=>{
           localStorage.setItem('userToken', res.user.accessToken);
         }
         navigate("/allClient");
+        Swal.fire({
+          position: "center",
+          // icon: "success",
+          title:  `welcome`,
+          showConfirmButton: false,
+          timer: 1500,
+          imageUrl: "https://media.tenor.com/dJAu3uWJNZQAAAAC/kais-said-kais-saied.gif"
+        });
       })
       .catch((error) => {
         console.error(error);
@@ -93,7 +103,7 @@ const fetchCategory = async ()=>{
 
         dispatch(signupLawyer(formData))
           .then((res) => {
-            navigate("/allClient");
+           
           })
           .catch((error) => {
             alert(error.message, "sign up failed");
@@ -161,7 +171,7 @@ useEffect(() => {
               >
                 <Modal.Header closeButton style={{  background: "linear-gradient(to right, #b38728, #fbf5b7, #aa771c)"}} >
                     <Modal.Title style={{fontSize:'30px', fontWeight:'bold', color:'white' , alignItems:'center'}}>
-                      Sigin
+                      Sign In
                     </Modal.Title>
                   </Modal.Header>
                 
@@ -268,7 +278,7 @@ useEffect(() => {
                         }}
                         style={{display: "flex", flexDirection:'column', width: "100%"}}
                       >
-                                            <img src={papers} alt="" style={{width:'90px', height:'90px', borderRadius:'5%', marginLeft:'9rem'}} />
+                                            <img src={papers} alt="" style={{width:'90px', height:'90px', borderRadius:'0 20% 0 20% ', marginLeft:'9rem'}} />
 
                         <Form.Group controlId="formImage">
                           
@@ -389,12 +399,26 @@ useEffect(() => {
   ))}
 </Form.Select>
                         </Form.Group>
-                         <div style={{display:'flex', justifyContent:'center', padding:'0.7rem'}}>
+                         <div style={{display:'flex', justifyContent:'center', padding:'0.5rem'}}>
                           
                         <Button
                           variant="primary"
                           type="submit"
                           style={{ fontSize: "1.6rem",background: "linear-gradient(to right, #b38728, #fbf5b7, #aa771c)", border: "none"}}
+                          onClick={
+                            ()=>{
+                              Swal.fire({
+                                position: "center",
+                                // icon: "success",
+                                title:  `Thank you ${fullName} your account has been created`,
+                                showConfirmButton: false,
+                                timer: 1500,
+                                imageUrl: `${papers}`
+                              });
+                            handleCloseSignup()
+
+                            }
+                          }
                         >
                           Submit
                         </Button>
