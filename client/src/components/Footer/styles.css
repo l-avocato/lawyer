@@ -17,7 +17,7 @@ body {
 .footer {
   position: relative;
   bottom: 0;
-  margin-top: 20%;
+  /* margin-top: 20%;s */
   width: 100%;
   /* Set the fixed height of the footer here */
   height: 12px;
@@ -37,9 +37,9 @@ body {
 -------------------------------------------------- */
 footer {
   padding-top: 30px;
-  background-color: #292c2f;
+  background-color: black;
   color: #bbb;
-  height: 25rem !important;
+  height: 18rem !important;
 }
 
 footer a {
@@ -73,4 +73,17 @@ footer ul > li {
 }
 footer ul > li:hover {
   color: black;
+  border-radius: 10px;
+}
+.col-md-2{
+  /* background-color: red; */
+  width: 100%;
+}
+.form-group{
+  width: 100%;
+}
+
+.submit:hover{
+ scale: (2);
+ color: black;
 }

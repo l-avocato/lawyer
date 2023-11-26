@@ -8,11 +8,11 @@ import "./Style.css";
 import SidebarDash from "../SidebarDash/SidebarDash";
 import { FIREBASE_AUTH  } from "../../firebaseconfig";
 import Swal from "sweetalert2";
+import EditNoteIcon from '@mui/icons-material/EditNote';
 
 
 const Settings = () => {
 
-const imgUrl =JSON.parse(localStorage.getItem("connected"))
 
 
 const [fullName, setFullName] = useState("");
@@ -27,20 +27,20 @@ const [papers, setPapers] = useState('https://cdn.icon-icons.com/icons2/564/PNG/
   const menuRef = useRef(null);
 
 
+  const email=FIREBASE_AUTH?.currentUser?.email
+  
+const handleGetUser = async () =>{
+  console.log(email);
 
-//  const auth = getAuth();
-//  const handleGetUser = async () =>{
-//   const email=FIREBASE_AUTH.currentUser.email
-
-//   await axios.get(`http://localhost:1128/api/lawyer/getLawyerByEmail/${email}`)
-//   .then((res)=>{
-//     setUser(res.data);
-//     console.log(res.data, 'this is data ');
-//   })
-//   .catch((err)=>{
-//     console.log(err)
-//   })
-// }
+ if(email){await axios.get(`http://localhost:1128/api/lawyer/getLawyerByEmail/${email}`)
+  .then((res)=>{
+    console.log(res.data)
+    setUser(res.data);
+  })
+  .catch((err)=>{
+    console.log(err)
+  })}
+}
 
 
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -116,8 +116,11 @@ const [papers, setPapers] = useState('https://cdn.icon-icons.com/icons2/564/PNG/
   // };
 
   useEffect(()=>{
-    // handleGetUser()
+    handleGetUser()
     setPapers(user.ImageUrl)
+    setFullName(user.fullName)
+    setAdress(user.adress)
+    setPhoneNumber(user.phoneNumber)
   },[])
   
 
@@ -129,14 +132,39 @@ const [papers, setPapers] = useState('https://cdn.icon-icons.com/icons2/564/PNG/
         <div style={{display:'flex',justifyContent:'center',alignItems:'center',width:'100%',height:'100%' }}>
         <form
           style={{
-            width: "50%",
+            // width: "50%",
             display: "flex",
-            flexDirection: "column",
+            flexDirection: "row",
             padding: "2rem",
-            gap: "1rem",
+            gap: "16rem",
             borderRadius: "8px",
+            backgroundColor:'#f8f8f8',
+            width:'90%',
+            alignItems: "center",
+            justifyContent: "center",
           }}
         >
+              <div style={{display:'flex',flexDirection:'column'}} >
+            <img
+              src={papers || 'https://cdn.icon-icons.com/icons2/564/PNG/512/Add_Image_icon-icons.com_54218.png'}
+              alt=""
+              className="imageUrl"
+              style={{ width: "22rem", height: "22rem", borderRadius: "8% 0  8% 0",}}
+            />
+            <EditNoteIcon style={{height:'3rem',width:'3rem',marginLeft:'45%',color:'goldenrod'}} />
+            <input
+              type="file"
+              className="inputImage"
+              onChange={(e) => {
+                handleFile(e);
+              }}
+              
+            />
+          
+          </div>
+        <div style={{display:'flex', flexDirection:'', gap:'5rem'}}>
+          
+          <div style={{marginTop:'2rem'}}>
           <p
             style={{
               fontSize: "2.5rem",
@@ -149,38 +177,21 @@ const [papers, setPapers] = useState('https://cdn.icon-icons.com/icons2/564/PNG/
           >
             Edit Profile
           </p>
-        <div style={{display:'flex', flexDirection:'row', gap:'5rem'}}>
-              <div className="flex" >
-            <img
-              src={papers}
-              alt=""
-              className="imageUrl"
-              style={{ width: "22rem", height: "22rem", borderRadius: "8% 0  8% 0",}}
-            />
-            <input
-              type="file"
-              className="inputImage"
-              onChange={(e) => {
-                handleFile(e);
-              }}
-            />
-          </div>
-          <div style={{marginTop:'2rem'}}>
           <div className="form-outline mb-2">
             <input
               type="text"
               placeholder="Full name"
               id="form6Example3"
               className="form-control"
-              style={{ fontSize: "20px", width:'25rem' }}
+              style={{ fontSize: "20px" }}
               onChange={(e) => {
                 setFullName(e.target.value);
               }}
+              value={fullName}
             />
             <label className="form-label" htmlFor="form6Example3"></label>
           </div>
           <div className="form-outline mb-2">
-            <label htmlFor=""> Adress </label>
             <input
               type="text"
               placeholder="Address"
@@ -190,12 +201,12 @@ const [papers, setPapers] = useState('https://cdn.icon-icons.com/icons2/564/PNG/
               onChange={(e) => {
                 setAdress(e.target.value);
               }}
+              value={adress}
             />
             <label className="form-label" htmlFor="form6Example3"></label>
           </div> 
         
           <div className="form-outline mb-2">
-            <label htmlFor="">Phone Number</label>
             <input
               type="number"
               placeholder="Phone number"
@@ -205,15 +216,11 @@ const [papers, setPapers] = useState('https://cdn.icon-icons.com/icons2/564/PNG/
               onChange={(e) => {
                 setPhoneNumber(e.target.value);
               }}
+              value={phoneNumber}
             />
             <label className="form-label" htmlFor="form6Example3"></label>
           </div>
          
-          </div>
-        </div>
-      
-
-       
           <div style={{display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center', gap:'1rem'}}>
           <button
             type="button"
@@ -245,6 +252,11 @@ const [papers, setPapers] = useState('https://cdn.icon-icons.com/icons2/564/PNG/
             Update Localisation
           </button>
 </div>     
+          </div>
+        </div>
+      
+
+       
           
           {isModalVisible && (
             <div className="modal-map2">
