@@ -7,12 +7,28 @@ import "./style.css";
 import SidebarDash from "../SidebarDash/SidebarDash";
 import Swal from "sweetalert2";
 import NavbarDashboard from "../NavbarDashboard/NavbarDashboard";
+import { FIREBASE_AUTH } from "../../firebaseconfig";
+
 
 const TaskList = () => {
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState("");
   const [newDeadline, setNewDeadline] = useState("");
   const [refresh, setRefresh] = useState(false);
+
+  const [lawyer,setLawyer]=useState({});
+  
+  const getLawyer = async () => {
+    try {
+      const loggedInLawyer = FIREBASE_AUTH?.currentUser?.email;
+      console.log(loggedInLawyer);
+      const res = await axios.get(`http://localhost:1128/api/lawyer/getLawyerByEmail/${loggedInLawyer}`);
+      console.log("this is lawyer",res.data);
+      setLawyer(res.data);
+    } catch(err) {
+      console.log(err);
+    }
+  };
 
   const handleAddTask = async () => {
     try {
@@ -21,6 +37,7 @@ const TaskList = () => {
         {
           description: newTask,
           deadline: newDeadline,
+          lawyerId: lawyer.id
         },
         setRefresh(!refresh),
       );
@@ -30,8 +47,9 @@ const TaskList = () => {
   };
   const getTask = async () => {
     try {
+
       const response = await axios.get(
-        "http://localhost:1128/api/task/allTasks",
+        `http://localhost:1128/api/task/allTasks/lawyerId/${lawyer.id}`,
       );
       setTasks(response.data);
     } catch (error) {
@@ -39,20 +57,19 @@ const TaskList = () => {
     }
   };
   useEffect(() => {
-    getTask();
-  }, [refresh]);
+    getLawyer()
 
-  const addTask = async () => {
-    try {
-      const response = await axios.post(
-        "http://localhost:1128/api/task/addTask",
-        {},
-      );
-      setTasks(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  }, []);
+
+  useEffect(() => {
+    getTask();
+
+  }, [lawyer,refresh]);
+  
+  
+
+
+
 
   const handleToggleDone = (taskId) => {
     const updatedTasks = tasks.map((task) => {
@@ -80,7 +97,6 @@ const TaskList = () => {
 <div
       className="lawyers-task-list"
       style={{ display: "flex", flexDirection:'column',width:'100%'  }}>
-      {/* <SidebarDash /> */}
 
      <NavbarDashboard/>
 

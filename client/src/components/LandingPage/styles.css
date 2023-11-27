@@ -1,7 +1,7 @@
 .yellow-background {
   width: 87rem;
   height: 38rem;
-  background-color:  #c89d53;
+  background: linear-gradient(to right, #000000, #6b6962, #000000);
   background-size: cover;
   background-position: top;
   z-index: 0;
@@ -52,7 +52,7 @@
   font-size: 35px;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   width: 50%;
-  color: rgb(41, 40, 40);
+  color: rgb(255, 255, 255);
   width: 100%;
 }
 

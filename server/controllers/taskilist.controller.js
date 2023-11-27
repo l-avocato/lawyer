@@ -1,5 +1,5 @@
 const sequalize =require('sequelize')
-const {TaskList}= require('../models/index')
+const {TaskList, Lawyer}= require('../models/index')
 
 
 module.exports = {
@@ -13,6 +13,18 @@ module.exports = {
         
         }
     },
+    getAllTaskbyLawyerId: async (req, res) => {
+    try {
+        const Task = await TaskList.findAll({
+            where : {lawyerId : req.params.id}
+        })
+        res.json(Task)
+    } catch (error) {
+        console.log(error);
+    }
+    },
+
+
     getTaskId: async (req,res)=>{
         try {
             const oneTask= await TaskList.findOne({

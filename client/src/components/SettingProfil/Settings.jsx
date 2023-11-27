@@ -15,26 +15,25 @@ const Settings = () => {
 
 
 
-const [fullName, setFullName] = useState("");
-const [adress, setAdress] = useState("");
-const [phoneNumber, setPhoneNumber] = useState("");
+const [user,setUser] =  useState({});
+const [fullName, setFullName] = useState(user.fullName);
+const [adress, setAdress] = useState(user.adress);
+const [phoneNumber, setPhoneNumber] = useState(user.phoneNumber);
 const [latitude, setLatitude] = useState("");
 const [longitude, setLongitude] = useState("");
 const [isMenuOpen, setMenuOpen] = useState(false);
-const [user,setUser] =  useState({});
-const [papers, setPapers] = useState('https://cdn.icon-icons.com/icons2/564/PNG/512/Add_Image_icon-icons.com_54218.png') 
-  const position = { lat: parseFloat(latitude) || 51.505, lng: parseFloat(longitude) || -0.09 };
-  const menuRef = useRef(null);
+const [papers, setPapers] = useState(user.ImageUrl); 
+const position = { lat: parseFloat(latitude) || 51.505, lng: parseFloat(longitude) || -0.09 };
+const menuRef = useRef(null);
 
 
-  const email=FIREBASE_AUTH?.currentUser?.email
+const email=FIREBASE_AUTH?.currentUser?.email
   
 const handleGetUser = async () =>{
   console.log(email);
 
  if(email){await axios.get(`http://localhost:1128/api/lawyer/getLawyerByEmail/${email}`)
   .then((res)=>{
-    console.log(res.data)
     setUser(res.data);
   })
   .catch((err)=>{
@@ -116,12 +115,16 @@ const handleGetUser = async () =>{
   // };
 
   useEffect(()=>{
-    handleGetUser()
     setPapers(user.ImageUrl)
     setFullName(user.fullName)
     setAdress(user.adress)
     setPhoneNumber(user.phoneNumber)
+  },[user])
+  useEffect(()=>{
+    handleGetUser()
+
   },[])
+
   
 
   return ( 
@@ -132,7 +135,6 @@ const handleGetUser = async () =>{
         <div style={{display:'flex',justifyContent:'center',alignItems:'center',width:'100%',height:'100%' }}>
         <form
           style={{
-            // width: "50%",
             display: "flex",
             flexDirection: "row",
             padding: "2rem",
@@ -146,7 +148,7 @@ const handleGetUser = async () =>{
         >
               <div style={{display:'flex',flexDirection:'column'}} >
             <img
-              src={papers || 'https://cdn.icon-icons.com/icons2/564/PNG/512/Add_Image_icon-icons.com_54218.png'}
+              src={papers}
               alt=""
               className="imageUrl"
               style={{ width: "22rem", height: "22rem", borderRadius: "8% 0  8% 0",}}
@@ -164,7 +166,7 @@ const handleGetUser = async () =>{
           </div>
         <div style={{display:'flex', flexDirection:'', gap:'5rem'}}>
           
-          <div style={{marginTop:'2rem'}}>
+          <div style={{}}>
           <p
             style={{
               fontSize: "2.5rem",
@@ -172,7 +174,6 @@ const handleGetUser = async () =>{
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              gap: "1rem",
             }}
           >
             Edit Profile

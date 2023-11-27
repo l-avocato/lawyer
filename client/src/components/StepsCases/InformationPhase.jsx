@@ -103,9 +103,7 @@ const InformationPhase = () => {
       const response = await axios.get(
         `http://localhost:1128/api/note/allNotes/${phase.id}`
       );
-      console.log("this is note", response.data);
       setNotes(response.data.notes);
-      console.log("this is notes ", setNotes);
     } catch (error) {
       console.log(error);
     }
@@ -240,21 +238,6 @@ const InformationPhase = () => {
       }}
     >
       <div style={{ display: "flex", width: "100%" }}>
-        {/* <div
-        style={{
-          display: "flex",
-          justifyContent: "flex-start",
-          marginLeft: "22rem",
-          color: "black",
-        }}
-      >
-
-        <p
-        style={{ fontSize: "25px", fontWeight: "bold", fontFamily: "serif" }}
-        >
-        Welcome Lawyer Name{" "}
-        </p>
-      </div> */}
         <SidebarDash />
         <div
           style={{ display: "flex", flexDirection: "column", width: "100%" }}
@@ -273,7 +256,7 @@ const InformationPhase = () => {
               <div
                 style={{
                   display: "flex",
-                  padding: "2rem",
+                  padding: "1rem",
                   flexDirection: "column",
                   gap: "1rem",
                 }}
@@ -281,25 +264,44 @@ const InformationPhase = () => {
                 <p
                   style={{
                     fontFamily: "revert",
-                    fontSize: "25px",
-                    fontWeight: 1000,
+                    fontSize: "22px",
                   }}
                 >
-                  Name of the Phase : {phase.data.label}
+                  Phase Name
+                  <label style={{ color: "goldenrod" }}>
+                    {" "}
+                    {phase.data.label}{" "}
+                  </label>
                 </p>
-                <p>
-                  {" "}
-                  description of this casee
-                  {phase.data.description}
+                <p
+                  style={{
+                    fontFamily: "revert",
+                    fontSize: "18px",
+                  }}
+                >
+                  Phase Description{" "}
+                  <label style={{ color: "goldenrod" }}>
+                    {phase.data.description}
+                    ahagdh 
+                    hjda jj 
+                    jdah aj hdna dbqns
+                    qdh bqdjb jq
+                    dhqdbn,,dbn 
+                  </label>
                 </p>
 
                 <img
-                  src={require("../../assets/images/progress case.png")}
+                  src={require("../../assets/progress.jpg")}
                   alt=""
-                  style={{ width: "185px", height: "210px" }}
+                  style={{
+                    width: "195px",
+                    height: "250px",
+                    borderRadius: "2rem 0 2rem 0",
+                    alignSelf: "center",
+                  
+                  }}
                 />
               </div>
-              <div></div>
             </div>
             <div className="dashboard_main_container_leith">
               <div
@@ -653,6 +655,7 @@ const InformationPhase = () => {
                   <div>
                     <Flickity options={{ initialIndex: 1 }}>
                       {notes.map((notes, i) => {
+                        console.log('this is note ', notes);
                         return (
                           <div
                             style={{
