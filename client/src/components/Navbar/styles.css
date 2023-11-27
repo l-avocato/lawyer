@@ -1,34 +1,36 @@
-
-#navBar {
-  display: flex;
-  flex-direction: column;
-  border-color: #2A2528;
-}
-
 .topSection {
-  background-color: #ffffff;
-  padding: 12px 50px;
+  background: linear-gradient(to right, #b38728, #dbd381, #aa771c);
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   color: white;
-  height: 80px;
+  width: 100%;
 }
-
+.ul{
+  display: flex;
+  gap: 3rem;
+}
 .rightSection {
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: space-between;
     gap: 50px;
+    width: 100%;
 }
 
 .navBarLinks {
     display: flex;
+    /* background-color: red; */
     flex-direction: row;
+    justify-content: space-between;
     align-items: center;
-    gap: 60px;
+
+    width: 100%;
+    font-size: 120px;
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
 }
 
 .navBarLink {
@@ -39,7 +41,24 @@
 .navBarLink:hover {
     color: rgba(255, 255, 255, 0.482);
 }
+ul #navbar_link{
+  /* background-color: white; */
+  color: white;
+  font-weight: 700;
 
+  transition: all 0.5s ease-in-out;
+}
+ul #navbar_link:nth-child(even):hover{
+background-color:black;
+
+
+
+}
+ul #navbar_link:nth-child(odd):hover{
+  background-color:black;
+
+  
+ }
 .navBarIcons {
     display: flex;
     flex-direction: row;
@@ -158,6 +177,9 @@
   .ul {
     font-size: 0;
     list-style-type: none;
+    padding: 0;
+    margin: 0;
+
   }
   
   .ul > li {
@@ -177,7 +199,7 @@
 
   ul > li:hover > ul {
     display: block;
-    margin-top: 1.5rem;
+
   }
   
   ul > li > ul {
@@ -238,4 +260,67 @@
     }
   }
 
-  
+
+
+  	.user_card {
+			height: 400px;
+			width: 350px;
+			margin-top: auto;
+			margin-bottom: auto;
+			background: #f39c12;
+			position: relative;
+			display: flex;
+			justify-content: center;
+			flex-direction: column;
+			padding: 10px;
+			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			-webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			-moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			border-radius: 5px;
+
+		}
+		.brand_logo_container {
+			position: absolute;
+			height: 170px;
+			width: 170px;
+			top: -75px;
+			border-radius: 50%;
+			background: #60a3bc;
+			padding: 10px;
+			text-align: center;
+		}
+		.brand_logo {
+			height: 150px;
+			width: 150px;
+			border-radius: 50%;
+			border: 2px solid white;
+		}
+		.form_container {
+			margin-top: 100px;
+		}
+		.login_btn {
+			width: 100%;
+			background: #c0392b !important;
+			color: white !important;
+		}
+		.login_btn:focus {
+			box-shadow: none !important;
+			outline: 0px !important;
+		}
+		.login_container {
+			padding: 0 2rem;
+		}
+		.input-group-text {
+			background: #c0392b !important;
+			color: white !important;
+			border: 0 !important;
+			border-radius: 0.25rem 0 0 0.25rem !important;
+		}
+		.input_user,
+		.input_pass:focus {
+			box-shadow: none !important;
+			outline: 0px !important;
+		}
+		.custom-checkbox .custom-control-input:checked~.custom-control-label::before {
+			background-color: #c0392b !important;
+		}

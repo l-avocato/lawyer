@@ -1,8 +1,10 @@
 const express = require('express')
 const routerTaskList = express.Router()
-const {getAllTasks,getTaskId,add,deleteTask,update,searchTask,searchTaskByClient,searchTaskByUser,searchTaskByPhase,searchTaskByCase,completeTask,updateTaskDeadline}= require('../controllers/taskilist.controller')
+const {getAllTasks,getTaskId,add,deleteTask,update,searchTask,searchTaskByClient,searchTaskByUser,searchTaskByPhase,searchTaskByCase,completeTask,updateTaskDeadline, getAllTaskbyLawyerId}= require('../controllers/taskilist.controller')
 
 routerTaskList.get('/allTasks',getAllTasks)
+
+routerTaskList.get('/allTasks/lawyerId/:id',getAllTaskbyLawyerId) 
 
 routerTaskList.get('/getTaskId/:id',getTaskId)
 

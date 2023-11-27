@@ -50,7 +50,6 @@ const CaseHistory = () => {
         `http://localhost:1128/api/case/case/lawyer/${loggedInLawyer}`
       );
       setCases(response.data.reverse());
-
       const data2 = response.data.map((data) => ({
         id: data.id,
         fullName: data.user?.fullName,
@@ -196,7 +195,8 @@ const CaseHistory = () => {
               console.log(userId);
               setUser(selectedUser.fullName);
             }}
-            defaultValue={user}
+            value={user}
+           
           >
             {props.users.map((user) => (
               <Select.Option key={user.id} value={user.id}>
@@ -251,7 +251,7 @@ const CaseHistory = () => {
       field: "actions",
       headerName: "Actions",
       sortable: false,
-      width: 200,
+      width: 300,
       renderCell: (params) => (
         <Space size="middle">
           <Button
@@ -265,7 +265,11 @@ const CaseHistory = () => {
           </Button>
           <Button
             type="danger"
-            style={{ backgroundColor: "red", color: "white", fontSize: "12px" }}
+            style={{ fontSize: "12px",backgroundColor: "red" ,width:"8rem"}}
+            
+
+
+
             onClick={() => {
               Swal.fire({
                 title: "Are you sure?",
@@ -303,18 +307,21 @@ const CaseHistory = () => {
         <div
           style={{
             display: "flex",
-            justifyContent: "space-between",
+            justifyContent: "flex-end",
             alignItems: "center",
             marginBottom: "16px",
+            padding:"15px"
           }}
-        >
-          <Button
-            type="primary"
-            onClick={showModal}
-            style={{ width: 150, height: 50, left: 1020, marginTop: 50 }}
           >
-            Open New Case
-          </Button>
+        
+          <button
+            className="btnAdd-client"
+            onClick={showModal}
+         
+          >      
+             + New Case
+          </button>
+          
           <Modal
             title="New Case"
             visible={isModalVisible}
@@ -339,8 +346,9 @@ const CaseHistory = () => {
         </div>
         <Box
           sx={{
-            width: "90%",
-            height: "60%",
+            width: "98%",
+            height: "70%",
+            mx:"1%",
           }}
         >
           <DataGrid

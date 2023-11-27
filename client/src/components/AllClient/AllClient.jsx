@@ -6,15 +6,21 @@ import NavbarDashboard from "../NavbarDashboard/NavbarDashboard.jsx";
 import DataGrid from "./DataGrid.jsx";
 import axios from "axios";
 import { FIREBASE_AUTH , db } from "../../firebaseconfig";
+import { useLocation } from "react-router-dom";
 
 const AllClient = () => {
+  const location = useLocation()
+  const state = location.state;
+
+  console.log("this is the state",state);
+  
   const [users, setUsers] = useState([]);
   const [refrech, setRefrech] = useState(false);
   const [lawyer,setLawyer]=useState({});
   
   const getLawyer = async () => {
     try {
-      const loggedInLawyer = FIREBASE_AUTH.currentUser.email;
+      const loggedInLawyer = FIREBASE_AUTH?.currentUser?.email;
       console.log(loggedInLawyer);
       const res = await axios.get(`http://localhost:1128/api/lawyer/getLawyerByEmail/${loggedInLawyer}`);
       console.log("this is lawyer",res.data);
@@ -28,6 +34,7 @@ const AllClient = () => {
   const deleteUser = async (id) => {
     try {
       await axios.delete(`http://localhost:1128/api/user/deleteUser/${id}`);
+      setRefrech(!refrech);
       
     } catch (error) {
       console.error("Error deleting user:", error);
@@ -38,8 +45,8 @@ const AllClient = () => {
 
   const getLawyerClients= async()=>{
     try{
-      const response= await axios.get(`http://localhost:1128/api/user_lawyer/getClientsByLawyerId/${lawyer.id}`)
-      setUsers(response.data[0].users.reverse())
+      const response= await axios.get(`http://localhost:1128/api/user_lawyer/getClientsByLawyerId/${lawyer?.id}`)
+      setUsers(response.data[0]?.users?.reverse())
       console.log("this is clients",response.data);
     }catch(error){
       console.error("Error fetching clients", error);
@@ -54,7 +61,7 @@ const AllClient = () => {
 
   useEffect(() => {
     getLawyerClients()
-  }, [lawyer]);
+  }, [lawyer,refrech]);
 
   return (
      <div style={{display:'flex', }}>
@@ -62,21 +69,22 @@ const AllClient = () => {
       <div style={{display:'flex',flexDirection:'column',width:'100%'}}>
       <NavbarDashboard />
 
-      <div className="allPage">
-        <div className="firstDiv">
+      <div className="allPageUser">
+        <div className="firstDiv-user">
           <button
-            className="btnAdd"
+            className="btnAdd-client"
             data-bs-toggle="modal"
             data-bs-target="#staticBackdrop"
           >      
-            +New Client{" "}
+            +New Client
           </button>
-          <Modal lawyer={lawyer} refrech={refrech} setRefrech={setRefrech} />
         </div>
+          <Modal lawyer={lawyer} 
+          refrech={refrech} setRefrech={setRefrech} 
+          />
 
         <div
-          className="table-wrapper table1"
-          style={{ width: "70rem", display: "flex", flexDirection: "column"}}
+          style={{ width: "100%", alignItems:'center' , padding:"1rem"}}
         >
           <DataGrid user={users}
           
