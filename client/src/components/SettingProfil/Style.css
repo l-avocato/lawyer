@@ -24,5 +24,11 @@
   }
   
 
+  .inputImage{
+    position: absolute;
+    margin-top: 23.7%;
+    opacity: 0;
+  }
+
   
   

@@ -1,7 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Signin from "./components/Signin/Signin";
-import Signup from "./components/Signin/Signup";
+
 import ClientDetails from "./components/clientDetails/ClientDetails";
 import NavbarDashboard from "./components/NavbarDashboard/NavbarDashboard";
 import SidebarDash from "./components/SidebarDash/SidebarDash";
@@ -39,8 +38,7 @@ const App = () => {
           <Route path="/PaymentHistory" element={<PaymentHistory />} />
           <Route path="/" element={<Landing />} />
           <Route path="/nav" element={<Navbar />} />
-          <Route path="/Signin" element={<Signin />} />
-          <Route path="/Signup" element={<Signup />} />
+   
           <Route path="/clientDetails" element={<ClientDetails />} />
           <Route path="/PaymentReceipt" element={<PaymentReceipt />} />
           <Route path="/allClient" element={<AllClient />} />

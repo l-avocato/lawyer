@@ -18,7 +18,7 @@ import { FIREBASE_AUTH, FIREBASE_DB } from "../firebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
 import axios from "axios";
 import config from "./ipv";
-
+// import { Lawyer } from "../../server/models";
 const { width, height } = Dimensions.get("window");
 
 const HomePage = ({ navigation }) => {
@@ -26,60 +26,13 @@ const HomePage = ({ navigation }) => {
 
   // Function to handle photo click
   const handlePhotoClick = (item) => {
+    console.log("is clicked handlePhotoClick ssssssssssssssssssssssssssssss");
     navigation.navigate("ProfilDetails", { item });
-
-    console.log("Photo clicked:", item.id);
   };
   const handleFilterClick = (item) => {
     navigation.navigate("ManageFilters");
     // console.log("Photo clicked:", item.id);
   };
-
-  // const photoData2 = [
-  //   {
-  //     id: 1,
-  //     source: require("../Photos/avocat1.jpg"),
-  //   },
-  //   {
-  //     id: 2,
-  //     source: require("../Photos/avocat2.jpeg"),
-  //   },
-  //   {
-  //     id: 3,
-  //     source: require("../Photos/avocat3.jpeg"),
-  //   },
-  //   {
-  //     id: 4,
-  //     source: require("../Photos/avocat4.jpeg"),
-  //   },
-  //   {
-  //     id: 5,
-  //     source: require("../Photos/avocat5.jpeg"),
-  //   },
-  // ];
-
-  // const photoData4 = [
-  //   {
-  //     id: 1,
-  //     source: require("../Photos/avocat6.jpeg"),
-  //   },
-  //   {
-  //     id: 2,
-  //     source: require("../Photos/avocat7.jpeg"),
-  //   },
-  //   {
-  //     id: 3,
-  //     source: require("../Photos/avocat8.jpeg"),
-  //   },
-  //   {
-  //     id: 4,
-  //     source: require("../Photos/avocat9.jpeg"),
-  //   },
-  //   {
-  //     id: 5,
-  //     source: require("../Photos/avocat10.jpeg"),
-  //   },
-  // ];
 
   const renderTabContent = () => {
     const [user, setUser] = useState([]);
@@ -90,8 +43,6 @@ const HomePage = ({ navigation }) => {
     const lawyersCollectionRef = collection(FIREBASE_DB, "lawyers");
     const categoryCollectionRef = collection(FIREBASE_DB, "category");
 
-    console.log(lawyers, "this is lawyers");
-
     const loggedInUser = FIREBASE_AUTH.currentUser.email;
 
     const getUser = () => {
@@ -100,15 +51,6 @@ const HomePage = ({ navigation }) => {
         .then((res) => {
           console.log("this is user", res.data);
           setUser(res.data);
-          /*
-          user is set correctly, inside an array because in the back you're using findAll instead of findone, it doesn't matter, u can set the
-          user from res.data[0] because the response.data will be an array that contains one object which is the active user's object's (the user that just logged in),
-           you have to work on a new redux slice that will hold the active user, so you can fetch it in any component, for example, for the reviews, when i'm creating
-           a new review i have to post the UserId: activeUser.id inside the body, so the review can have an owner in the data base, for now when you create
-           a new review, it will have UserId: null, till you create that slice and fetch the active user in ProfileDetails.jsx, and go there you'll find
-           another comment to explain more
-          
-          */
         })
         .catch((err) => {
           console.log(err);
@@ -121,8 +63,7 @@ const HomePage = ({ navigation }) => {
           `http://${config}:1128/api/lawyer/allLawyers`,
         );
         setLawyers(response.data);
-        console.log("this is lawyers", response.data);
-        return response.data;
+        console.log("this is lawyers from the backed", response.data);
       } catch (err) {
         console.log(err);
       }
@@ -136,8 +77,52 @@ const HomePage = ({ navigation }) => {
       console.log("this is lawyers", categories);
       return response.data;
     };
+    const navigateSearch = () => {
+      console.log("this is lawyers from the navigateSearch", lawyers);
+
+      navigation.navigate("SearchListings", {
+        filteredLawyers: lawyers,
+      });
+    };
+    const filterByCategorie = async (idCategory) => {
+      console.log("this is the idCategory", idCategory);
+      const response = await axios.get(
+        `http://${config}:1128/api/lawyer/getCategory/${idCategory}`,
+      );
+      console.log("this is lawyers from the filterByCategorie", lawyers);
+
+      navigation.navigate("SearchListings", {
+        filteredLawyers: response.data,
+      });
+    };
+    const filterByNearby = async (location) => {
+      console.log(
+        "is clicked filterByNearbyffffffffffffffffffffffffffffffffffffffffffff",
+      );
+
+      const email = FIREBASE_AUTH.currentUser.email;
+      console.log("this is the location", location);
+      const response = await axios.get(
+        `http://${config}:1128/api/lawyer/getNearby/${email}`,
+      );
+      console.log("this is lawyers from the filterByNearby", response.data);
+
+      navigation.navigate("SearchListings", {
+        filteredLawyers: response.data,
+      });
+    };
+    const topRatedLawyer = async () => {
+      const response = await axios.get(
+        `http://${config}:1128/api/lawyer/topRated`,
+      );
+      console.log("this is lawyers from the filterByNearby", response.data);
+
+      navigation.navigate("SearchListings", {
+        filteredLawyers: response.data,
+      });
+    };
     useEffect(() => {
-      getUser();
+      // getUser();
       getLawyers();
       getCategories();
     }, []);
@@ -202,7 +187,7 @@ const HomePage = ({ navigation }) => {
                   renderItem={({ item }) => (
                     <TouchableOpacity
                       style={[styles.button2, styles.buttonWithSpace]}
-                      onPress={() => handleButtonClick(2)}>
+                      onPress={() => filterByCategorie(item.id)}>
                       <Text style={styles.buttonText}>{item.name}</Text>
                     </TouchableOpacity>
                   )}
@@ -211,7 +196,9 @@ const HomePage = ({ navigation }) => {
               </ScrollView>
               <TouchableOpacity
                 style={styles.topRightButton}
-                onPress={() => handleTopRightButtonClick()}>
+                onPress={() => {
+                  navigateSearch();
+                }}>
                 <Text style={styles.topRightButtonText}>See All</Text>
               </TouchableOpacity>
             </View>
@@ -247,7 +234,7 @@ const HomePage = ({ navigation }) => {
               />
               <TouchableOpacity
                 style={styles.topRightButton}
-                onPress={() => handleTopRightButtonClick()}>
+                onPress={() => filterByNearby()}>
                 <Text style={styles.topRightButtonText}>See All</Text>
               </TouchableOpacity>
             </View>
@@ -304,7 +291,7 @@ const HomePage = ({ navigation }) => {
               />
               <TouchableOpacity
                 style={styles.topRightButton}
-                onPress={() => handleTopRightButtonClick()}>
+                onPress={() => topRatedLawyer()}>
                 <Text style={styles.topRightButtonText}>See All</Text>
               </TouchableOpacity>
             </View>

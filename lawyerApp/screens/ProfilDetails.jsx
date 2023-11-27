@@ -18,7 +18,7 @@ import checkImage from "../assets/check.png";
 const ProfilDetails = ({ navigation, route }) => {
   const { item } = route.params;
   const { lawyer } = route.params;
-
+  console.log("thissss", item);
   const [user, setUser] = useState([]);
   const law = item ? item : lawyer;
 

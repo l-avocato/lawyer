@@ -30,7 +30,6 @@ const rfStyle = {
 function Flow() {
   const location = useLocation()
   const caseHistory =location?.state?.case
-  console.log("caseHistory flow components",caseHistory);
   const [nodes, setNodes] = useState([]);
   const [edges, setEdges] = useState([]);
   const [selectedEdge, setSelectedEdge] = useState(null);
@@ -44,6 +43,7 @@ function Flow() {
   const [description, setDescription] = useState("");
    console.log("this is nodes", nodes);
 
+   
   const navigate = useNavigate();
 
   const onConnect = useCallback(
@@ -95,7 +95,7 @@ function Flow() {
         const newNodes = result.map((data) => {
           return {
             id: String(data.id),
-            data: { label: data.label },
+            data: { label: data.label, description: data.description},
             position: {
               x: data.positionX,
               y: data.positionY,
@@ -111,7 +111,7 @@ function Flow() {
             
           };
         });
-        setNodes((prev) => [...prev, ...newNodes]);
+        setNodes(newNodes);
         
       }
     } catch (error) {
@@ -143,10 +143,7 @@ function Flow() {
     }
   };
 
-  useEffect(() => {
-    fetchData(1);
-    fetchEdge();
-  }, [refresh]);
+ 
 
   const AddEdge = async () => {
     const NewEdge = {
@@ -188,13 +185,12 @@ function Flow() {
   };
 
   const deleteNode = async (id) => {
-    try {
-      await axios.delete(`http://localhost:1128/api/phase/remove/${id}`);
-      console.log(`Node with ID ${id} deleted successfully.`);
-      setRefresh((prev) => !prev);
-    } catch (error) {
+    
+      await axios.delete(`http://localhost:1128/api/phase/remove/${id}`).then(res=> setRefresh(!refresh)
+
+     ).catch((error)=>{
       console.error("Error deleting node:", error);
-    }
+    })
   };
 
   const updateNodeName = async (id) => {
@@ -225,6 +221,12 @@ function Flow() {
       });
   };
 
+
+  useEffect(() => {
+    fetchData();
+    fetchEdge();
+  }, [refresh]);
+
   return (
     <div style={{ display: "flex" }}>
       <SidebarDash />
@@ -234,7 +236,7 @@ function Flow() {
         <div
           style={{
             height: "85%",
-            width: "78%",
+            width: "87%",
             position: "absolute",
             top: "12%",
             display: "flex",
@@ -246,8 +248,9 @@ function Flow() {
             onNodesChange={onNodesChange}
             onNodeClick={(event, edge) => {
               setSelectedEdge(edge);
+
               setShowEdgeModal(true);
-              // console.log(selectedEdge?.id)
+              console.log("this is selectededge" ,edge);
             }}
             // nodeTypes={{ special: NodeWithIcon }} 
             onNodeMouseEnter={() => {}}
@@ -378,7 +381,6 @@ function Flow() {
                           cursor: "pointer",
                         }}
                         onClick={() => {
-                          deleteNode(selectedEdge.id);
                           setShowEdgeModal(false);
                           Swal.fire({
                             title: "Are you sure to delete this phase ?",
@@ -389,6 +391,8 @@ function Flow() {
                             confirmButtonText: "Yes, delete it!",
                           }).then((result) => {
                             if (result.isConfirmed) {
+                              deleteNode(selectedEdge.id);
+
                               Swal.fire({
                                 title: "Deleted!",
                                 text: "Your Phase has been deleted.",
@@ -466,22 +470,31 @@ function Flow() {
             right: 10,
             display: "flex",
             flexDirection: "column",
-            top: "20rem",
+            top: "25rem",
           }}
         >
           <button
             onClick={addNode}
             style={{
-              width: "7rem",
+              width: "4rem",
               height: "4rem",
+              fontSize: "3rem",
+              textAlign: "center",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
               background:
                 "linear-gradient(to right, #b38728, #fbf5b7, #aa771c)",
               border: "none",
               borderRadius: "1rem",
               transition: "0.5s",
+              borderRadius: "50%",
+            
+              fontWeight:"600"
             }}
+            className="plusbutton"
           >
-            Create Step{" "}
+            +
           </button>
           {/* <button data-bs-toggle="modal" data-bs-target="#staticBackdrops">
     Edge

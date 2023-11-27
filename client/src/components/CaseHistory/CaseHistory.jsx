@@ -7,6 +7,7 @@ import SidebarDash from "../SidebarDash/SidebarDash";
 import { DataGrid } from "@mui/x-data-grid";
 import NavbarDashboard from "../NavbarDashboard/NavbarDashboard";
 import { FIREBASE_AUTH } from "../../firebaseconfig";
+import Swal from "sweetalert2";
 
 const CaseHistory = () => {
   const [cases, setCases] = useState([]);
@@ -48,8 +49,7 @@ const CaseHistory = () => {
       const response = await axios.get(
         `http://localhost:1128/api/case/case/lawyer/${loggedInLawyer}`
       );
-      setCases(response.data);
-
+      setCases(response.data.reverse());
       const data2 = response.data.map((data) => ({
         id: data.id,
         fullName: data.user?.fullName,
@@ -83,8 +83,9 @@ const CaseHistory = () => {
     try {
       console.log("Deleting case with ID:", id);
       await axios.delete(`http://localhost:1128/api/case/deleteCase/${id}`);
+      setRefrech(!refrech);
       console.log("Successfully deleted case with ID:", id);
-      setData((prevData) => prevData.filter((item) => item.id !== id));
+      // setData((prevData) => prevData.filter((item) => item.id !== id));
     } catch (error) {
       console.error("Error deleting case:", error.message);
     }
@@ -132,6 +133,7 @@ const CaseHistory = () => {
       <Form
         onFinish={(e) => {
           handleSubmit(e);
+          setIsModalVisible(false);
         }}
         layout="vertical"
       >
@@ -185,13 +187,16 @@ const CaseHistory = () => {
         >
           <Select
             name="client"
+            style={{ color: "black" }}
             onChange={(value) => {
               const selectedUser = users.find((user) => user.id === value);
               console.log(selectedUser.id);
               setUserId(selectedUser.id);
+              console.log(userId);
               setUser(selectedUser.fullName);
             }}
-            defaultValue={user}
+            value={user}
+           
           >
             {props.users.map((user) => (
               <Select.Option key={user.id} value={user.id}>
@@ -246,7 +251,7 @@ const CaseHistory = () => {
       field: "actions",
       headerName: "Actions",
       sortable: false,
-      width: 200,
+      width: 300,
       renderCell: (params) => (
         <Space size="middle">
           <Button
@@ -260,8 +265,32 @@ const CaseHistory = () => {
           </Button>
           <Button
             type="danger"
-            style={{ backgroundColor: "red", color: "white", fontSize: "12px" }}
-            onClick={() => handleDelete(params.row.id)}
+            style={{ fontSize: "12px",backgroundColor: "red" ,width:"8rem"}}
+            
+
+
+
+            onClick={() => {
+              Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!",
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  handleDelete(params.row.id); // Call your delete function here
+                  Swal.fire({
+                    title: "Deleted!",
+                    text: "Your file has been deleted.",
+                    icon: "success",
+                  });
+                }
+              });
+            }}
+            // style={{ fontSize: "12px" }}
           >
             Delete
           </Button>
@@ -278,18 +307,21 @@ const CaseHistory = () => {
         <div
           style={{
             display: "flex",
-            justifyContent: "space-between",
+            justifyContent: "flex-end",
             alignItems: "center",
             marginBottom: "16px",
+            padding:"15px"
           }}
-        >
-          <Button
-            type="primary"
-            onClick={showModal}
-            style={{ width: 150, height: 50, left: 1020, marginTop: 50 }}
           >
-            Open New Case
-          </Button>
+        
+          <button
+            className="btnAdd-client"
+            onClick={showModal}
+         
+          >      
+             + New Case
+          </button>
+          
           <Modal
             title="New Case"
             visible={isModalVisible}
@@ -314,8 +346,9 @@ const CaseHistory = () => {
         </div>
         <Box
           sx={{
-            width: "90%",
-            height: "60%",
+            width: "98%",
+            height: "70%",
+            mx:"1%",
           }}
         >
           <DataGrid
