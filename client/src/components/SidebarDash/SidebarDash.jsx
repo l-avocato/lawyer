@@ -21,6 +21,7 @@ import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import CaseHistory from "../CaseHistory/CaseHistory";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import Calendar from "../Calander/Calender";
 
 const SidebarDash = () => {
   const navigate = useNavigate();
@@ -68,7 +69,7 @@ const SidebarDash = () => {
               Stats
             </span>
           </li>
-          <li className="g-1">
+          <li className="g-1" onClick={()=> navigate("/Calender")}>
             <CalendarMonthIcon className="new-icon" />
             <span className="side-title">Calendar</span>
           </li>

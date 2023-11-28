@@ -407,7 +407,7 @@ const handleButtonClick = () => {
                 </Badge>
               </IconButton>
               <span style={{width:"9rem" ,fontSize:'16px', color:"white",alignItems:"center",height:"7vh",display:"flex",justifyContent:"center",alignSelf:"center", fontFamily:'monospace'}}>
-           Hi,Maitre {currentUser.fullName}
+           Hi,Maitre {currentUser?.fullName}
           </span>
               {/* <IconButton  sx={{ p: 0 }} onClick={handleOpenUserMenu}>
                   <Avatar alt="Remy Sharp" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIdnbpLPcyWkaN4kk6F6rvvgHxBJkDnxjQ9UnabCIPmA&s" />
@@ -415,7 +415,7 @@ const handleButtonClick = () => {
                  <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton  sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src={currentUser.ImageUrl} style={{width:'55px', height:'55px'}} />
+                  <Avatar alt="Remy Sharp" src={currentUser?.ImageUrl} style={{width:'55px', height:'55px'}} />
                 </IconButton>
                 <ArrowDropDownIcon style={{fontSize:'32px'}} onClick={handleOpenUserMenu}/>
               </Tooltip>
