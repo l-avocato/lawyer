@@ -9,7 +9,7 @@ import SidebarDash from "../SidebarDash/SidebarDash";
 import { FIREBASE_AUTH  } from "../../firebaseconfig";
 import Swal from "sweetalert2";
 import EditNoteIcon from '@mui/icons-material/EditNote';
-
+ 
 
 const Settings = () => {
 

@@ -177,7 +177,7 @@ const App = ({ user, deleteUser }) => {
         </div>
         <div>
           <Table
-            pagination={{ pageSize: 7 }}
+            pagination={{ pageSize: 6}}
             columns={columns}
             dataSource={user}
             size="small"

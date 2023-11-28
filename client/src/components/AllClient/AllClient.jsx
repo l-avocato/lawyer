@@ -11,8 +11,6 @@ import { useLocation } from "react-router-dom";
 const AllClient = () => {
   const location = useLocation()
   const state = location.state;
-
-  console.log("this is the state",state);
   
   const [users, setUsers] = useState([]);
   const [refrech, setRefrech] = useState(false);
@@ -21,10 +19,8 @@ const AllClient = () => {
   const getLawyer = async () => {
     try {
       const loggedInLawyer = FIREBASE_AUTH?.currentUser?.email;
-      console.log(loggedInLawyer);
       const res = await axios.get(`http://localhost:1128/api/lawyer/getLawyerByEmail/${loggedInLawyer}`);
-      console.log("this is lawyer",res.data);
-      setLawyer(res.data);
+      setLawyer(res.data)
     } catch(err) {
       console.log(err);
     }
@@ -57,7 +53,7 @@ const AllClient = () => {
   useEffect(() => {
     getLawyer() 
     
-  }, [refrech]);
+  }, []);
 
   useEffect(() => {
     getLawyerClients()
