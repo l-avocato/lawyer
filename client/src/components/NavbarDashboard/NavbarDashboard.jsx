@@ -9,7 +9,7 @@
 
 
 
-import * as React from 'react';
+import  React ,{useState}from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -19,6 +19,8 @@ import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
+import { FIREBASE_AUTH  } from "../../firebaseconfig";
+
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
@@ -32,8 +34,7 @@ import SidebarDash from '../SidebarDash/SidebarDash';
 import { getAuth } from 'firebase/auth';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
-
-
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Setting Profil', 'Setting Security', 'Logout'];
 
@@ -120,15 +121,18 @@ const NavbarDashboard = () => {
   //   };
   // }, []); 
 
-  const auth = getAuth();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [user,setUser] = React.useState({})
-  const [currentUser,setCurrentUser] = React.useState({});
-  
+  const [currentUser,setCurrentUser] = React.useState(JSON.parse(localStorage.getItem("connected")));
+  const [searched,setSerached]=useState('')
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
+
+    const handleSearch=(search)=>{
+      setSerached(search)
+    }
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -273,23 +277,30 @@ const NavbarDashboard = () => {
   );
 
 
-const handleGetUser = async (user) =>{
+  const email=FIREBASE_AUTH?.currentUser?.email
+  
+const handleGetUser = async () =>{
   // console.log(user.email);
-    setUser(user);
-  await axios.get(`http://localhost:1128/api/lawyer/getLawyerByEmail/${user.email}`)
+
+ if(email){await axios.get(`http://localhost:1128/api/lawyer/getLawyerByEmail/${email}`)
   .then((res)=>{
-    setCurrentUser(res.data);
+    localStorage.setItem("connected",JSON.stringify(res.data));
+    setCurrentUser(JSON.parse(localStorage.getItem("connected")));
   })
   .catch((err)=>{
     console.log(err)
-  })
+  })}
 }
 
+
+
 React.useEffect(()=>{
-  handleGetUser(auth.currentUser)
+  handleGetUser()
 },[])
 
-
+const handleButtonClick = () => {
+  navigate("/AllClient", { state: { "a": 123 } });
+};
 
 
   return (
@@ -365,15 +376,15 @@ React.useEffect(()=>{
         
 
 
-        <AppBar position="static" style={{backgroundColor:"black",display:"flex",justifyContent:"flex-end",gap:"3rem",width:"100%",flexDirection:"row"}}>
+        <AppBar position="static" style={{backgroundColor:" black",display:"flex",justifyContent:"flex-end",gap:"3rem",width:"100%",flexDirection:"row"}}>
           <Toolbar style={{display:"flex",flexDirection:"row",gap:"10rem"}} >
             
             <Search  >
-              <SearchIconWrapper >
-                <SearchIcon />
+              <SearchIconWrapper  onClick={handleButtonClick} >
+                <SearchIcon  />
               </SearchIconWrapper>
               <StyledInputBase
-              
+              onChange={(event)=>handleSearch(event)}
                 placeholder="Search…"
                 inputProps={{ 'aria-label': 'search' }}
                 sx={{width:"30rem" }}
@@ -395,7 +406,7 @@ React.useEffect(()=>{
                   <NotificationsIcon />
                 </Badge>
               </IconButton>
-              <span style={{width:"8rem" , backgroundColor:"white",color:"black",alignItems:"center",borderRadius:"5%",height:"6vh",display:"flex",justifyContent:"center",alignSelf:"center"}}>
+              <span style={{width:"9rem" ,fontSize:'16px', color:"white",alignItems:"center",height:"7vh",display:"flex",justifyContent:"center",alignSelf:"center", fontFamily:'monospace'}}>
            Hi,Maitre {currentUser.fullName}
           </span>
               {/* <IconButton  sx={{ p: 0 }} onClick={handleOpenUserMenu}>
@@ -403,9 +414,10 @@ React.useEffect(()=>{
                 </IconButton> */}
                  <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <IconButton  sx={{ p: 0 }}>
                   <Avatar alt="Remy Sharp" src={currentUser.ImageUrl} style={{width:'55px', height:'55px'}} />
                 </IconButton>
+                <ArrowDropDownIcon style={{fontSize:'32px'}} onClick={handleOpenUserMenu}/>
               </Tooltip>
               <Menu
                 sx={{ mt: '45px' }}

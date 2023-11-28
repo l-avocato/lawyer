@@ -120,7 +120,8 @@ const App = ({ user, deleteUser }) => {
             mask={false}
             style={{ boxShadow: "none" }}
             footer={[
-              <Button key="back" onClick={handleCancel}>
+              <Button   key="cancel"
+              type="primary" onClick={handleCancel}>
                 Cancel
               </Button>,
               <Button

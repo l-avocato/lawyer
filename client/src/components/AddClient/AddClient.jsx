@@ -68,18 +68,24 @@ const AddClient = ({ lawyer, refrech, setRefrech }) => {
   };
 
   return (
-    <div>
-      <div
-        className="modal fade"
-        id="staticBackdrop"
-        data-bs-backdrop="static"
-        data-bs-keyboard="false"
-        tabindex="-1"
-        aria-labelledby="staticBackdropLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog">
-          <div className="modal-content-add">
+   
+
+
+
+
+
+<div>
+<div
+  className="modal fade"
+  id="staticBackdrop"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+<div className="modal-dialog">
+          <div className="modal-content" >
             <div className="modal-header">
               <h1 className="modal-title fs-5" id="staticBackdropLabel">
                 Create a new clients
@@ -266,8 +272,9 @@ const AddClient = ({ lawyer, refrech, setRefrech }) => {
             </div>
           </div>
         </div>
-      </div>
-    </div>
+</div>
+</div>
+
   );
 };
 

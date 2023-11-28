@@ -3,7 +3,11 @@
   justify-content: center;
   align-items: center;
   gap: 2rem;
-  width: 100%
+  width: 100%;
+  padding : 2rem;
+}
+.scrollable-content{
+  height: 250px !important;
 }
 .table {
   width: 120vh;
@@ -36,12 +40,11 @@
   width: 50vh;
   height: 40vh;
   background-color: rgb(243, 241, 238);
-  border-radius: 2rem;
+  border-radius: 1rem;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 .scrollable-content {
   overflow-y: auto;
-  height: 400px;
   padding: 10px;
 }
 .upcoming-title {
@@ -118,6 +121,7 @@
 
 .flex {
   display: flex;
+  flex-direction: column;
 }
 .jcc {
   justify-content: center;

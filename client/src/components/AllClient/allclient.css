@@ -1,4 +1,4 @@
-.btnAdd {
+.btnAdd-client {
     background-color: black ;
     transition: 0.3s;
     color: aliceblue;
@@ -16,27 +16,23 @@
 }
 
 
-
-.titleClient {
-    font-size: 1.5rem;
-    font-family: "inherit";
-    text-align: center;
-    width: 8rem;
-    margin-left: 2rem;
-}
-/* .firstDiv {
+.firstDiv-user {
     display: flex;
     align-items: center; 
-    justify-content: "flex-end"  
+ justify-content: flex-end;
+ padding: 1rem;
 
-} */
-/* .table-wrapper {
-    margin-left: 5rem;
-    margin-right: 5rem;
-} */
-/* .allPage {
-    height: 100%;
+}
+.table-wrapper {
+ height: 200px;
+ width: 400px;
+}
+.allPageUser {
+display: flex;
+justify-content: center;
+flex-direction: column;
+width: 100%;
 
-} */
+}
 
 
