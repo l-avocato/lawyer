@@ -150,8 +150,11 @@ Folder.belongsTo(Phase);
 Lawyer.hasMany(Case);
 Case.belongsTo(Lawyer);
 
+Lawyer.hasMany(Phase);
+Phase.belongsTo(Lawyer);
+
 // connection
-//   .sync({ force: true })
+//   .sync({ alter: true })
 //   .then(() => console.log("tables are created"))
 //   .catch((err) => console.log(err));
 
