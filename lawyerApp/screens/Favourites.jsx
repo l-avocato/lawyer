@@ -53,7 +53,7 @@ const Favourites = () => {
               key={index}
               item={item}
               distance={distance}
-              rating={(Math.random() * 4 + 1).toFixed(0)}
+              rating={(Math.random() * 4 + 1).toFixed(1)}
               canClikLike={false}
             />
           );
