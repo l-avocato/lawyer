@@ -10,80 +10,81 @@ import {
   TextInput,
 } from "react-native";
 import { FIREBASE_AUTH, FIREBASE_DB } from "../firebaseConfig";
-import config from './ipv'
+import config from "./ipv";
 import axios from "axios";
 import { getAuth } from "firebase/auth";
 
-const ReviewSummary = ({route}) => {
+const ReviewSummary = ({ route }) => {
   const [category, setCategory] = useState("Category Type");
   const [lawyerName, setLawyerName] = useState("Lawyer Name");
   const [dateTime, setDateTime] = useState("Date & Time");
   const [total, setTotal] = useState(100);
   const [isConfirmed, setIsConfirmed] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [message, setMessage] = useState("Can we schedule a consultation to discuss the details further?");
-  const {item}=route.params;
-  const {selected}=route.params;
-  const {selectedTime}=route.params;
-  
-console.log(selectedTime.split(" ")[0],"item");
+  const [message, setMessage] = useState(
+    "Can we schedule a consultation to discuss the details further?"
+  );
+  const { item } = route.params;
+  const { selected } = route.params;
+  const { selectedTime } = route.params;
 
-  console.log(item,"item appointment");
+  console.log(selectedTime.split(" ")[0], "item");
+
+  console.log(item, "item appointment");
   const handleConfirmPayment = () => {
     setIsConfirmed(false);
     setIsModalVisible(true);
   };
 
-  const getUserId = getAuth()
+  const getUserId = getAuth();
 
-   
   const addAvailebility = async () => {
     try {
       const response = await axios.post(
-        `http://${config}:1128/api/availability/addAvailability`,{
+        `http://${config}:1128/api/availability/addAvailability`,
+        {
           lawyerId: item.id,
           date: selected,
           time: selectedTime,
-          reason:message,
-          email : getUserId.currentUser.email
-
+          reason: message,
+          email: getUserId.currentUser.email,
         }
-      
       );
       console.log(response.data);
-    return response.data
+      return response.data;
     } catch (error) {
-      console.error( error);
+      console.error(error);
     }
   };
-
 
   const closeModal = () => {
     setIsModalVisible(false);
   };
   const setAppointmentHandler = async () => {
     const email = FIREBASE_AUTH.currentUser.email;
-    const obj= {email,lawyerId:item.id,time:selectedTime.split(" ")[0],date:selected,reason:message}
-    console.log(obj,"this is the obj")
+    const obj = {
+      email,
+      lawyerId: item.id,
+      time: selectedTime.split(" ")[0],
+      date: selected,
+      reason: message,
+    };
+    console.log(obj, "this is the obj");
     try {
-      // Use Axios instead of fetch
-      const response = await axios.post(`http://${config}:1128/api/appointment/addAppointment`,obj);
-      console.log(response.data,"this is the response")
-      // setAppointments(response.data)
-
-     
+      const response = await axios.post(
+        `http://${config}:1128/api/appointment/addAppointment`,
+        obj
+      );
+      console.log(response.data, "this is the response");
     } catch (error) {
-      console.error('Error setting appointment:', error);
+      console.error("Error setting appointment:", error);
     }
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.profileSection}>
-        <Image
-          source={{uri: item.ImageUrl}}
-          style={styles.profileImage}
-        />
+        <Image source={{ uri: item.ImageUrl }} style={styles.profileImage} />
         <View style={styles.profileInfo}>
           <Text style={styles.profileName}>{item.fullName}</Text>
           <Text style={styles.profileLocation}>
@@ -105,9 +106,8 @@ console.log(selectedTime.split(" ")[0],"item");
       <TextInput
         style={styles.messageInput}
         value={message}
-        onChangeText={(text) => setMessage(text)} 
+        onChangeText={(text) => setMessage(text)}
         multiline={true}
-       
       />
       <ScrollView style={styles.whiteBackground}>
         <Text style={styles.title}>Online consultation</Text>
@@ -138,9 +138,9 @@ console.log(selectedTime.split(" ")[0],"item");
             styles.confirmButton,
             { backgroundColor: isConfirmed ? "black" : "black" },
           ]}
-          onPress={()=>{
-            addAvailebility()
-            setAppointmentHandler()
+          onPress={() => {
+            addAvailebility();
+            setAppointmentHandler();
           }}
         >
           <Text style={styles.confirmButtonText}>
@@ -148,7 +148,7 @@ console.log(selectedTime.split(" ")[0],"item");
           </Text>
         </TouchableOpacity>
       )}
-    <Modal
+      <Modal
         animationType="slide"
         transparent={true}
         visible={isModalVisible}
@@ -161,11 +161,12 @@ console.log(selectedTime.split(" ")[0],"item");
               style={styles.checkMarkImage}
             />
             <Text style={styles.modalHeader}>Booking confirmed</Text>
-            <Text style={styles.modalText}>
-              You have successfully Booked ! 
-            </Text>
+            <Text style={styles.modalText}>You have successfully Booked !</Text>
             <View style={styles.modalButtons}>
-              <TouchableOpacity style={[styles.modalButtons, { backgroundColor: "#D5B278" }]} onPress={closeModal}>
+              <TouchableOpacity
+                style={[styles.modalButtons, { backgroundColor: "#D5B278" }]}
+                onPress={closeModal}
+              >
                 <Text style={styles.modalButtonText}>Back home</Text>
               </TouchableOpacity>
             </View>
@@ -180,7 +181,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
   },
-  
+
   whiteBackground: {
     backgroundColor: "#FFFFFF",
     borderRadius: 8,
@@ -195,7 +196,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#D5B278",
   },
   fullScreenModalContent: {
-    backgroundColor: "#D5B278", // Gold background color
+    backgroundColor: "#D5B278",
     flex: 1,
     width: "100%",
     padding: 30,
@@ -215,20 +216,20 @@ const styles = StyleSheet.create({
     backgroundColor: "#D3D3D3",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: -20, 
+    marginTop: -20,
   },
   profileSection: {
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 10,
     backgroundColor: "#D3D3D3",
-    padding: 30, 
-    borderRadius: 8, 
+    padding: 30,
+    borderRadius: 8,
   },
   profileImage: {
-    width: 80, 
-    height: 80, 
-    borderRadius: 40, 
+    width: 80,
+    height: 80,
+    borderRadius: 40,
     marginRight: 15,
   },
   profileInfo: {
@@ -260,15 +261,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 20,
   },
-   fileInput: {
+  fileInput: {
     flex: 1,
     backgroundColor: "#FFFFFF",
     padding: 15,
-    
+
     marginRight: 10,
     justifyContent: "center",
     alignItems: "center",
- 
   },
   uploadButton: {
     backgroundColor: "#000000",
@@ -303,7 +303,6 @@ const styles = StyleSheet.create({
   info: {
     fontSize: 17,
     right: 10,
-    
   },
   totalContainer: {
     flexDirection: "row",
@@ -346,7 +345,7 @@ const styles = StyleSheet.create({
   totalPrice: {
     fontSize: 24,
     fontWeight: "bold",
-    color: "#D5B278", 
+    color: "#D5B278",
   },
   enlargedModalContent: {
     backgroundColor: "#FFFFFF",
@@ -385,7 +384,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   closeButton: {
-    backgroundColor: "#000000", // Black background color
+    backgroundColor: "#000000",
     paddingVertical: 15,
     paddingHorizontal: 30,
     borderRadius: 10,

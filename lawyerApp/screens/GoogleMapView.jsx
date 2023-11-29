@@ -131,11 +131,10 @@ const GoogleMapView = ({ navigation }) => {
   };
 
   const handleSearch = () => {
-    // Handle search logic here
     const foundLawyer = lawyers.find(
       (lawyer) =>
-        lawyer.fullName.toLowerCase().includes(searchText.toLowerCase()) ||
-        lawyer.field.toLowerCase().includes(searchText.toLowerCase())
+        lawyer.fullName?.toLowerCase().includes(searchText?.toLowerCase()) ||
+        lawyer.field?.toLowerCase().includes(searchText?.toLowerCase())
     );
 
     if (foundLawyer) {
@@ -153,7 +152,6 @@ const GoogleMapView = ({ navigation }) => {
       });
       setShowRoute(false);
     } else {
-      // Handle case when no matching lawyer is found
     }
   };
 
@@ -303,10 +301,7 @@ const GoogleMapView = ({ navigation }) => {
                   >
                     <Text style={styles.buttonText}>Go to Profile</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity
-                    style={styles.button}
-                    onPress={handleCall}
-                  >
+                  <TouchableOpacity style={styles.button} onPress={handleCall}>
                     <Text style={styles.buttonText}>Call</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
@@ -319,7 +314,7 @@ const GoogleMapView = ({ navigation }) => {
               </View>
             </Modal>
           )}
-          
+
           {userLocation && (
             <TouchableOpacity
               style={{
@@ -333,11 +328,7 @@ const GoogleMapView = ({ navigation }) => {
               onPress={centerMapToUserLocation}
             >
               <Text>
-                <MaterialIcons
-                  name="my-location"
-                  size={36}
-                  color="blue"
-                />{" "}
+                <MaterialIcons name="my-location" size={36} color="blue" />{" "}
               </Text>
             </TouchableOpacity>
           )}
@@ -346,94 +337,93 @@ const GoogleMapView = ({ navigation }) => {
     </View>
   );
 };
-  const styles = StyleSheet.create({
-    searchBarContainer: {
-      position: "absolute",
-      top: 70,
-      left: 10,
-      right: 10,
-      backgroundColor: "white",
-      borderRadius: 20,
-      padding: 10,
-      elevation: 5,
-      zIndex: 1,
-    },
-    popupContainer: {
-      top: 210,
-      justifyContent: "center",
-      alignItems: "center",
-      alignSelf: "center",
-      backgroundColor: "white",
-      borderRadius: 10,
-      padding: 17,
-    },
-    searchInput: {
-      fontSize: 16,
-    },
-    categoryButtonsContainer: {
-      flexDirection: "row",
-      justifyContent: "space-around",
-      marginTop: 10,
-      height: 100,
-      backgroundColor: "red",
-      top: 120,
-      zIndex: 2,
-    },
-    categoryButton: {
-      backgroundColor: "lightgray",
-      paddingVertical: 5,
-      paddingHorizontal: 10,
-      borderRadius: 5,
-      marginRight: 10,
-      justifyContent: "center",
-      alignItems: "center",
-    },
-    categoryButtonText: {
-      color: "black",
-      fontSize: 14,
-    },
-    image: {
-      width: 150,
-      height: 150,
-      borderRadius: 75,
-      marginBottom: 10,
-    },
-    name: {
-      fontSize: 18,
-      fontWeight: "bold",
-      marginBottom: 10,
-    },
-    phoneNumber: {
-      fontSize: 16,
-      marginBottom: 10,
-    },
-    button: {
-      backgroundColor: "gold",
-      padding: 10,
-      borderRadius: 5,
-      marginBottom: 10,
-      width: 150,
-    },
-    buttonText: {
-      color: "black",
-      textAlign: "center",
-      fontSize: 14,
-    },
-    closeButton: {
-      position: "absolute",
-      top: 10,
-      right: 10,
-    },
-    closeButtonText: {
-      fontSize: 18,
-      color: "red",
-    },
-    markerImage: {
-      width: 40,
-      height: 40,
-      borderRadius: 20,
-    },
-  });
+const styles = StyleSheet.create({
+  searchBarContainer: {
+    position: "absolute",
+    top: 70,
+    left: 10,
+    right: 10,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 10,
+    elevation: 5,
+    zIndex: 1,
+  },
+  popupContainer: {
+    top: 210,
+    justifyContent: "center",
+    alignItems: "center",
+    alignSelf: "center",
+    backgroundColor: "white",
+    borderRadius: 10,
+    padding: 17,
+  },
+  searchInput: {
+    fontSize: 16,
+  },
+  categoryButtonsContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    marginTop: 10,
+    height: 100,
+    backgroundColor: "red",
+    top: 120,
+    zIndex: 2,
+  },
+  categoryButton: {
+    backgroundColor: "lightgray",
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+    marginRight: 10,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  categoryButtonText: {
+    color: "black",
+    fontSize: 14,
+  },
+  image: {
+    width: 150,
+    height: 150,
+    borderRadius: 75,
+    marginBottom: 10,
+  },
+  name: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  phoneNumber: {
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  button: {
+    backgroundColor: "gold",
+    padding: 10,
+    borderRadius: 5,
+    marginBottom: 10,
+    width: 150,
+  },
+  buttonText: {
+    color: "black",
+    textAlign: "center",
+    fontSize: 14,
+  },
+  closeButton: {
+    position: "absolute",
+    top: 10,
+    right: 10,
+  },
+  closeButtonText: {
+    fontSize: 18,
+    color: "red",
+  },
+  markerImage: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+  },
+});
 
-  export default GoogleMapView;
-
+export default GoogleMapView;
