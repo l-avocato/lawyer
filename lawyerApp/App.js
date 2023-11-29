@@ -68,13 +68,13 @@ export default function App() {
             }}
           />
 
-          <Stack.Screen
-            name="Map"
-            component={GoogleMapView}
-            options={{
-              headerShown: false,
-            }}
-          />
+         <Stack.Screen 
+        name="Map" 
+        component={GoogleMapView}
+        options={{
+          headerShown : true,  
+        }}
+        />
 
           <Stack.Screen
             name="Chat"
