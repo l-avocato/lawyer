@@ -41,7 +41,7 @@ const App = () => {
    
           <Route path="/clientDetails" element={<ClientDetails />} />
           <Route path="/PaymentReceipt" element={<PaymentReceipt />} />
-          <Route path="/allClient" element={<AllClient />} />
+          <Route path="/allClient" element={<AllClient />} />v
           <Route path="/sidebar" element={<SidebarDash />} />
           <Route path="/navbar" element={<NavbarDashboard />} />
           <Route path="/settingSecurity" element={<SettingSecurity />} />

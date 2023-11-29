@@ -13,6 +13,9 @@ import EditNoteIcon from '@mui/icons-material/EditNote';
 import { getAuth } from "firebase/auth";
 import GpsFixedIcon from "@mui/icons-material/GpsFixed";
 import RoomIcon from "@mui/icons-material/Room";
+import EditNoteIcon from '@mui/icons-material/EditNote';
+import Swal from "sweetalert2";
+
 
 const Settings = () => {
   const [user, setUser] = useState({});
@@ -25,6 +28,7 @@ const Settings = () => {
   
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
+  const [phoneNumber,setPhoneNumber] = useState("")
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [markerClicked, setMarkerClicked] = useState(true);
   const position = {
@@ -443,7 +447,8 @@ const Settings = () => {
                   </button>
                   <button
                     type="button"
-                    id="btnUpdate"
+                    id="btnUpda
+                    te" 
                     onClick={() => {
                       showModal();
                       getLocation();
@@ -460,7 +465,7 @@ const Settings = () => {
                 <div className="modal-content1">
                   <GoogleMap
                     center={center}
-                    zoom={16}
+                    zoom={18}
                     mapContainerStyle={{
                       height: "600px",
                       width: "100%",

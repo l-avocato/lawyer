@@ -9,7 +9,7 @@ import {
   TextInput,
   Modal,
 } from "react-native";
-import { FontAwesome } from "react-native-vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
 import { FIREBASE_AUTH, FIREBASE_DB } from "../firebaseConfig";
 import axios from "axios";
 
@@ -62,6 +62,11 @@ const ProfilDetails = ({ navigation, route }) => {
       setStars("");
 
       setShowReviewsModal(true);
+      
+      setTimeout(() => {
+        setShowReviewsModal(false);
+      }, 2000);
+
     } catch (error) {
       console.log(error);
     }
@@ -96,6 +101,12 @@ const ProfilDetails = ({ navigation, route }) => {
   useEffect(() => {
     getLawyerRating();
     getUser();
+
+    const timer = setTimeout(() => {
+      setShowReviewsModal(false);
+    }, 2000);
+
+    return () => clearTimeout(timer);
   }, []);
 
   const toggleReviewsModal = () => {
@@ -284,7 +295,7 @@ const ProfilDetails = ({ navigation, route }) => {
       >
         <Text style={styles.bookButtonText}>Book Appointment</Text>
       </TouchableOpacity>
-      
+
       <Modal
         animationType="slide"
         transparent={true}
