@@ -186,7 +186,7 @@ const NavbarDashboard = () => {
 
   const clearToken = () => {
     try {
-      localStorage.removeItem("userToken"); //clearing token when you sign out
+      localStorage.removeItem("userToken");
       console.log("Token cleared");
     } catch (error) {
       console.error("Error clearing token:", error);
@@ -280,7 +280,6 @@ const NavbarDashboard = () => {
   const email=FIREBASE_AUTH?.currentUser?.email
   
 const handleGetUser = async () =>{
-  // console.log(user.email);
 
  if(email){await axios.get(`http://localhost:1128/api/lawyer/getLawyerByEmail/${email}`)
   .then((res)=>{

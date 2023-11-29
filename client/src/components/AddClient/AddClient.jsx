@@ -3,7 +3,7 @@ import "./AddClient.css";
 import axios from "axios";
 
 const AddClient = ({ lawyer, refrech, setRefrech }) => {
-  const [papers, setPapers] = useState("");
+  const [papers, setPapers] = useState("https://cdn-icons-png.flaticon.com/512/3135/3135715.png");
   const [fullName, setfullName] = useState("");
   const [email, setEmail] = useState("");
   const [cin, setCin] = useState(0);
@@ -86,9 +86,11 @@ const AddClient = ({ lawyer, refrech, setRefrech }) => {
 >
 <div className="modal-dialog">
           <div className="modal-content" >
-            <div className="modal-header">
-              <h1 className="modal-title fs-5" id="staticBackdropLabel">
-                Create a new clients
+            <div className="modal-header"style={{
+  background: 'linear-gradient(to right, #b38728, #dbd381, #aa771c)', display:'flex', justifyContent: 'center'
+}}>
+              <h1 className="modal-title fs-5" id="staticBackdropLabel" >
+                Create a New clients
               </h1>
             </div>
             <div
@@ -252,13 +254,16 @@ const AddClient = ({ lawyer, refrech, setRefrech }) => {
                 </div>
               </div>
             </div>
-            <div className="modal-footer">
+            <div className="modal-footer" style={{
+  background: 'linear-gradient(to right, #b38728, #dbd381, #aa771c)',
+}}>
               <button
                 className="btn btn-outline-secondary"
                 type="button"
                 id="inputGroupFileAddon04"
                 data-bs-dismiss="modal"
                 onClick={creacteUser}
+                style={{border: "1px solid black", backgroundColor:'white'}}
               >
                 Add New Client
               </button>
@@ -266,6 +271,7 @@ const AddClient = ({ lawyer, refrech, setRefrech }) => {
                 type="button"
                 className="btn btn-outline-secondary"
                 data-bs-dismiss="modal"
+                style={{border: "1px solid black", backgroundColor:'white'}}
               >
                 Close
               </button>
