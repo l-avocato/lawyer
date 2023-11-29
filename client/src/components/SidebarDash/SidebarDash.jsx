@@ -69,7 +69,7 @@ const SidebarDash = () => {
               Stats
             </span>
           </li>
-          <li className="g-1" onClick={()=> navigate("/Calender")}>
+          <li className="g-1" onClick={()=> navigate("/Calender")}> 
             <CalendarMonthIcon className="new-icon" />
             <span className="side-title">Calendar</span>
           </li>
