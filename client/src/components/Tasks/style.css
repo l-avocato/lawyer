@@ -25,7 +25,6 @@
 .deadline-input {
   flex: 1;
   padding: 10px;
-  /* margin-right: 10px;s */
   border: none;
   border-radius: 4px;
   background-color: #f2f2f2; 
@@ -45,8 +44,9 @@
 .task-cards-container {
   display: flex;
   flex-wrap: wrap;
-  width: 70%;
-  padding: 3rem;
+  width: 100%;
+  padding: 2rem;
+  gap: 1rem;
 }
 
 .task-card {
@@ -69,11 +69,11 @@
   align-items: center;
 }
 
-.checkbox-task {
+/* .checkbox-task {
   margin-right: 15px;
   width: 20px;
   height: 20px;
-}
+} */
 
 .task-description {
   font-size: 20px;
@@ -85,12 +85,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 10px;
+  /* margin-top: 10px; */
 }
 
 .task-deadline {
   color: #888;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .completed {
@@ -108,7 +108,8 @@
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  margin-left: 10px;
+  /* margin-left: 10px; */
+
 }
 
 .no-tasks-message {
