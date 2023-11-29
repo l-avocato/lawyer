@@ -31,6 +31,7 @@ import ChatRooms from "./screens/ChatRooms";
 import MyCases from "./screens/MyCases";
 import CaseDetails from "./screens/CaseDetails";
 import PhaseDetails from "./screens/PhaseDetails";
+import Favourites from "./screens/Favourites";
 export default function App() {
   const Stack = createNativeStackNavigator();
   return (
@@ -67,7 +68,7 @@ export default function App() {
         name="Map" 
         component={GoogleMapView}
         options={{
-          headerShown : false,
+          headerShown : true,  
         }}
         />
 
@@ -76,6 +77,15 @@ export default function App() {
             component={Chat}
             options={{
               headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="Favourites"
+            component={Favourites}
+            options={{
+              headerShown: true,
+              headerTitleAlign: "center",
+              title: "My Favourites",
             }}
           />
           <Stack.Screen
@@ -108,13 +118,13 @@ export default function App() {
               headerShown: true,
             }}
           />
-           <Stack.Screen
+          <Stack.Screen
             name="searchResults"
             component={ProfilDetails}
             options={{
               headerShown: true,
             }}
-          /> 
+          />
           <Stack.Screen
             name="SearchListings"
             component={SearchListings}

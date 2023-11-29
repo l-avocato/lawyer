@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#D5B278",
   },
   fullScreenModalContent: {
-    backgroundColor: "#D5B278", // Gold background color
+    backgroundColor: "#D5B278",
     flex: 1,
     width: "100%",
     padding: 30,
@@ -387,7 +387,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   closeButton: {
-    backgroundColor: "#000000", // Black background color
+    backgroundColor: "#000000",
     paddingVertical: 15,
     paddingHorizontal: 30,
     borderRadius: 10,

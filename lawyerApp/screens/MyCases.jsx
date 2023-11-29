@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   cardBody: {
-    backgroundColor: "white", // Black color for the bottom section
+    backgroundColor: "white", 
     flex: 1,
     borderRadius: 15,
     justifyContent: "center",
@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     bottom: 12,
     fontWeight: "600",
-    color: "black", // Black text color
+    color: "black", 
   },
   caseNumberContainer: {
     flexDirection: "row",
@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
   },
   caseDetails: {
     fontSize: 18,
-    color: "black", // Light blue gray text color
+    color: "black", 
     textAlign: "center",
   },
   noCasesMessage: {
