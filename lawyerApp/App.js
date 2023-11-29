@@ -67,7 +67,7 @@ export default function App() {
         name="Map" 
         component={GoogleMapView}
         options={{
-          headerShown : false,  
+          headerShown : true,  
         }}
         />
 
