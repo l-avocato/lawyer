@@ -18,8 +18,9 @@ const {
   topRatedLawyer,
   getLawyerByOneCategory,
   getLawyerByNearby,
+  updateLawyer
 } = require("../controllers/lawyer.controller");
-// routerLawyer.put("/updateLawyer/:emailUpdate", updateLawyer)
+routerLawyer.put("/updateLawyer/:emailUpdate", updateLawyer)
 
 routerLawyer.get("/allLawyers", getAllLawyers);
 
