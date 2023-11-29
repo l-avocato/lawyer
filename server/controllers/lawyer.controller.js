@@ -84,13 +84,26 @@ module.exports = {
   },
   update: async (req, res) => {
     try {
-      await User.update(req.body, {
+      await Lawyer.update(req.body, {
         where: { id: req.params.id },
       });
 
       const updatedLawyer = await Lawyer.findByPk(req.params.id);
 
       res.send(updatedLawyer);
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  updateLawyer: async (req, res) => {
+    try {
+      const lawyerEmail = await Lawyer.findOne({where: { email: req.params.emailUpdate}});
+        const result= await Lawyer.update(req.body, {
+        where: { id: lawyerEmail.id},
+      });
+
+      res.send(result);
     } catch (error) {
       throw error;
     }
@@ -305,4 +318,5 @@ module.exports = {
       throw error;
     }
   },
+  
 };

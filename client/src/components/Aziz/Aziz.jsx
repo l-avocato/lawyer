@@ -18,7 +18,7 @@ const App = ({
   const openNotification = (placement, userName) => {
     notification.success({
       message: ``,
-      description: `User ${userName} has been deleted successfully.`,
+      description: `Appointment ${userName} has been rejected successfully.`,
       placement,
     });
   };

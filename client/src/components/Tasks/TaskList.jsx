@@ -6,12 +6,29 @@ import "react-datepicker/dist/react-datepicker.css";
 import "./style.css";
 import SidebarDash from "../SidebarDash/SidebarDash";
 import Swal from "sweetalert2";
+import NavbarDashboard from "../NavbarDashboard/NavbarDashboard";
+import { FIREBASE_AUTH } from "../../firebaseconfig";
+
 
 const TaskList = () => {
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState("");
   const [newDeadline, setNewDeadline] = useState("");
   const [refresh, setRefresh] = useState(false);
+
+  const [lawyer,setLawyer]=useState({});
+  
+  
+  const getLawyer = async () => {
+    try {
+      const loggedInLawyer = FIREBASE_AUTH?.currentUser?.email;
+      console.log(loggedInLawyer);
+      const res = await axios.get(`http://localhost:1128/api/lawyer/getLawyerByEmail/${loggedInLawyer}`);
+      setLawyer(res.data);
+    } catch(err) {
+      console.log(err);
+    }
+  };
 
   const handleAddTask = async () => {
     try {
@@ -20,17 +37,20 @@ const TaskList = () => {
         {
           description: newTask,
           deadline: newDeadline,
+          lawyerId: lawyer.id
         },
-        setRefresh(!refresh),
+        setRefresh(!refresh)
       );
     } catch (error) {
       console.log(error);
     }
   };
+
   const getTask = async () => {
     try {
+
       const response = await axios.get(
-        "http://localhost:1128/api/task/allTasks",
+        `http://localhost:1128/api/task/allTasks/lawyerId/${lawyer.id}`,
       );
       setTasks(response.data);
     } catch (error) {
@@ -38,20 +58,16 @@ const TaskList = () => {
     }
   };
   useEffect(() => {
-    getTask();
-  }, [refresh]);
+    getLawyer()
 
-  const addTask = async () => {
-    try {
-      const response = await axios.post(
-        "http://localhost:1128/api/task/addTask",
-        {},
-      );
-      setTasks(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  }, []);
+
+  useEffect(() => {
+    getTask();
+
+  }, [lawyer,refresh]);
+  
+  
 
   const handleToggleDone = (taskId) => {
     const updatedTasks = tasks.map((task) => {
@@ -73,39 +89,17 @@ const TaskList = () => {
     }
   };
   return (
-    <div
+
+<div style={{display:'flex'}}>
+  <SidebarDash/>
+<div
       className="lawyers-task-list"
-      style={{ display: "flex", justifyContent: "space-between" }}>
-      {/* <SidebarDash /> */}
+      style={{ display: "flex", flexDirection:'column',width:'100%'  }}>
 
-      <h1
-        style={{
-          height: "100vh",
-          color: "white",
-          backgroundColor: "black",
-          width: "30%",
-        }}>
-        Hello
-      </h1>
+     <NavbarDashboard/>
 
-      {/* <h1  style={{
-          height: "15vh",
-          color: "white",
-          backgroundColor: "black",
-          width: "250%",
-        }}>goodbye</h1> */}
+      
       <div className="cont">
-        <h1
-          style={{
-            width: "100%",
-            backgroundColor: "black",
-            color: "white",
-            textAlign: "center",
-            height: "10vh",
-            border: "solid 1px red",
-          }}>
-          World
-        </h1>
         <h1 className="task-list-title">Task List</h1>
         <div className="task-input-container">
           <input
@@ -130,7 +124,8 @@ const TaskList = () => {
             {tasks.map((task) => (
               <div
                 key={task.id}
-                className={classnames("task-card", { completed: task.done })}>
+                className={classnames("task-card", { completed: task.done })}
+              >
                 <div className="task-card-header">
                   <input
                     className="checkbox-task"
@@ -149,23 +144,22 @@ const TaskList = () => {
                     onClick={() => {
                       Swal.fire({
                         title: "Are you sure?",
-                        text: "You won't be able to revert this!",
                         icon: "warning",
                         showCancelButton: true,
                         confirmButtonColor: "#3085d6",
                         cancelButtonColor: "#d33",
-                        confirmButtonText: "Yes, delete it!"
+                        confirmButtonText: "Yes, delete it!",
                       }).then((result) => {
                         if (result.isConfirmed) {
-                          handleDeleteTask(task.id)
+                          handleDeleteTask(task.id);
                           Swal.fire({
                             title: "Deleted!",
-                            text: "Your file has been deleted.",
                             icon: "success"
                           });
                         }
                       });
-                    }}>
+                    }}
+                  >
                     Delete
                   </button>
                 </div>
@@ -175,9 +169,16 @@ const TaskList = () => {
         ) : (
           <p className="no-tasks-message">No tasks found.</p>
         )}
+       
       </div>
     </div>
+  
+</div>
+
+   
   );
 };
 
 export default TaskList;
+
+              <th>Task Name</th>

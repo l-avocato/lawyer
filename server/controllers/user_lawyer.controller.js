@@ -12,6 +12,8 @@ getUserLawyerId:async (req,res)=>{
         res.json(error)
     }
 },
+
+
 getClientsByLawyerId: async (req, res) => {
     console.log("balkis said you are the ONE");
     try {

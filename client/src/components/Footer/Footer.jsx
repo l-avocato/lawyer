@@ -10,7 +10,7 @@ function Footer() {
     <footer className="footer">
       <div className="container">
         <div className="row d-flex justify-content-between">
-          <div className="col-md-5">
+          <div className="col-md-5" style={{display:'flex',alignItems:'center',justifyContent:'center'}} >
             <div className="row">
               <div className="col-6">
                 <ul className="list-unstyled">
@@ -33,22 +33,22 @@ function Footer() {
            
             <br />
           </div>
-          <div className="col-md-5">
+          <div className="col-md-5" >
             <div className="col-md-2">
-              <h5 className="text-md-right">Contact Us</h5>
+              <h5 className="text-md-right" style={{fontSize:'26px',color:'white'}}>Contact Us</h5>
               <hr />
             </div>
-            <form>
+            <div style={{display:'flex', flexDirection:'column', gap:'1rem',width:'100%',alignItems:'center',justifyContent:'center' }}>
               <fieldset className="form-group">
-                <input type="email" className="form-control" id="exampleInputEmail1" placeholder="Enter email" />
+                <input type="email" className="form-control" id="exampleInputEmail1" placeholder="Enter email" style={{width:'100%'}} />
               </fieldset>
               <fieldset className="form-group">
-                <textarea className="form-control" id="exampleMessage" placeholder="Message"></textarea>
+                <textarea className="form-control" id="exampleMessage" placeholder="Message" style={{width:'100%'}}></textarea>
               </fieldset>
               <fieldset className="form-group text-xs-right">
-                <button type="button" className="btn btn-secondary-outline btn-lg">Send</button>
+                <button className="submit"  type="button" style={{backgroundColor:'white', width:'80px', height:'35px' , borderRadius:'1rem'}}>Send</button>
               </fieldset>
-            </form>
+            </div>
           </div>
         </div>
       </div>

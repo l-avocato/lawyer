@@ -1,50 +1,70 @@
 .yellow-background {
-  top: -9rem;
-  width: 90rem;
-  height: 40rem;
-  background-color: rgb(212,175,55)!important;
+  width: 87rem;
+  height: 38rem;
+  background: linear-gradient(to right, #000000, #6b6962, #000000);
   background-size: cover;
   background-position: top;
-  border: 1px solid #b06e6e;
   z-index: 0;
   transform: translate(3%, -70%);
   border: none;
-  margin-top: 10%;
-  position: relative;
-  border-top-left-radius: 0px;
-  border-top-right-radius: 10px;
+ border-radius: 15% 0 15% 0 ;
   transform: skewY(-5deg);
-  margin-left: 3%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
 }
-
+.big-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  background-color: white;
+  height: fit-content;
+}
 .client-image {
-  margin-left: 59%;
-  margin-top: 6%;
   z-index: 0;
+  width: 44vh;
+  height: 44vh;
+  border: none ;
+  border-radius: 50%;
+}
+.left-section{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 10vh;
+}
+.right-section{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100%;
+  padding: 1rem;
+  height: 100%;
 }
 
 .heading-text {
-  position: relative;
   z-index: 2;
-  margin-top: -22%;
-  margin-left: 7%;
-  font-size: 5rem;
-  font-weight: 700;
+  font-size: 35px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   width: 50%;
+  color: rgb(255, 255, 255);
+  width: 100%;
 }
 
 .section-container {
-  margin-top: 6%;
   display: flex;
   flex-direction: row;
   justify-content: center;
-  margin-left: 1%;
   transition: background-color 0.3s ease;
 }
 
 .section-one{
   z-index: 2;
-  margin-right: 0.4%;
   width: 20rem;
   height: 30rem;
   background-color: #211b1d;
@@ -53,7 +73,6 @@
 }
 
 .section-two {
-  margin-right: 0.4%;
   z-index: 2;
   width: 20rem;
   height: 30rem;
@@ -62,7 +81,6 @@
 }
 
 .section-three  {
-  margin-right: 0.4%;
   z-index: 2;
   width: 20rem;
   height: 30rem;
@@ -70,7 +88,6 @@
 }
 
 .section-fore {
-  margin-right: 0.4%;
   z-index: 2;
   width: 20rem;
   height: 30rem;
@@ -78,9 +95,7 @@
 }
 
 .btn1 {
-  margin-top: -85%;
   width: 90%;
-  margin-left: 10%;
   transition: all 0.4s ease;
   cursor: pointer;
   font-size:2rem;
@@ -98,15 +113,15 @@
 }
 
 .btn2 {
-  margin-top: 2%;
-  width: 10%;
-  margin-left: 25%;
-  transition: all 0.4s ease;
+  font-size: 20px;
+  width: 15%;
+  height: 15%;
+  transition: all 0.6s ease;
   color: white;
   border: none;
   cursor: pointer;
   background-color: rgb(212,175,55);
-  border: solid 1px grey;
+  border-radius: 1rem;
 }
 .btn1:hover {
   transform: scale(1.1);
@@ -119,9 +134,7 @@ button:hover {
   width: "90%";
 }
 .button4{
-  /* width: 90%; */
   padding: 10px;
-  margin-left: -5%;
   background-color: black;
   color: rgb(255, 255, 255);
   border: none;
@@ -140,8 +153,7 @@ button:hover {
   transform: translate(3%, -70%);
   border: black;
   background-image: url("../../assets/images/lawicon.png");
-  margin-top: 71%;
-  margin-left: 24%;
+
 }
 .law-icon2 {
   width: 10rem;
@@ -154,8 +166,7 @@ button:hover {
   transform: translate(3%, -70%);
   border: black;
   background-image: url("../../assets/images/mtar.png");
-  margin-top: 71%;
-  margin-left: 24%;
+
 }
 .law-icon3 {
   width: 10rem;
@@ -168,8 +179,7 @@ button:hover {
   transform: translate(3%, -70%);
   border: black;
   background-image: url("../../assets/images/buidling.png");
-  margin-top: 71%;
-  margin-left: 24%;
+
 }
 .law-icon4 {
   width: 10rem;
@@ -182,413 +192,78 @@ button:hover {
   transform: translate(3%, -70%);
   border: black;
   background-image: url("../../assets/images/labour.png");
-  margin-top: 71%;
-  margin-left: 24%;
+
 }
 
 .services {
   font-size: 20rem;
-  margin-bottom: 3rem;
-}
-.team-name {
-  margin-left: 43%;
-  margin-top: 7%; 
+  width: 100%;
+  background-color: white;
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
-.picture1 {
-  margin-left: 60%;
-  margin-top: 2%;
-}
 
-.picture2 {
-  margin-top: -38%;
-  margin-left: 15%;
-}
-
-.para1 {
-  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  font-size: larger;
-  width: 50%;
-  margin-left: 9%;
-  margin-top: 7%;
-}
-
-.para2 {
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  font-size: larger;
-  width: 20%;
-  margin-left: 4%;
-  margin-top: 3%;
-}
 .services-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
+  gap: 3rem;
 }
 
 .service-section {
   display: flex;
   align-items: center;
-  margin: 20px 0;
+  justify-content: center;
   transition: all 0.5s ease;
+  width: 30%;
 }
 
 .service-section.reverse {
-  flex-direction: row-reverse;
+  display: flex;
+  width: 100%;
+  background-color: white;
 }
 
 .service-image {
-  width: 20%;
+  width: 70%;
   background-size: cover;
   border-radius: 25rem;
   background-position: center;
   background-repeat: no-repeat;
   transition: all 0.5s ease;
-  margin-left: 250px;
-  margin-right: 250px; 
+
+  box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px; 
 }
 
 .service-text {
   transition: all 0.5s ease;
-  margin-left: 90px; 
-  margin-top: -14rem;
-  font-size: 2.5rem;
+
+  font-size: 2rem;
   font-weight: 700;
   white-space: nowrap; 
+  color:  #c39545,
+
 }
 
 .service-paragraph1 {
-  width: 40%;
-  text-align: center;
-  transition: all 0.5s ease;
-  /* margin-right: -420px; */
-  margin-left: 800px;
-  margin-bottom: 12rem;
-  margin-top: -17rem;
-  font-size: 1rem;
-  font-weight: 700;
+  font-size: 1.5rem;
+  padding: 50px;
 }
 .service-paragraph2 {
-  width: 40%;
-  text-align: center;
-  transition: all 0.5s ease;
-  margin-right: -720px;
-  margin-bottom: 10rem;
-  margin-top: 6.5rem;
-  font-size: 1rem;
-  font-weight: 700;
+  font-size: 1.5rem;
 }
 .service-paragraph3 {
   width: 40%;
   text-align: center;
   transition: all 0.5s ease;
-  margin-left: 860px;
-  margin-bottom: 12rem;
-  margin-top: -17rem;
-  font-size: 1rem;
-  font-weight: 700;
+  font-size: 1.5rem;
 }
-.service-section:hover .service-text {
+.header:hover .service-text {
   transform: scale(1.1);
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* ------------------------------------------------------------ */
-
-/* .company {
-  width: 90rem;
-  height: 36rem;
-  background-color: #211b1d;
-  background-size: cover;
-  background-position: top;
-  border: 1px solid #b06e6e;
-  z-index: 1;
-  transform: translate(3%, -70%);
-  border: black;
-  margin-top: -3%;
-}
-
-.law-image {
-  width: 24rem;
-  height: 40rem;
-  background-image: url("../../Assets/images/law.png");
-  background-size: cover;
-  background-position: top;
-  border: 1px solid #b06e6e;
-  z-index: 2;
-  position: absolute;
-  left: 70%;
-  top: 100%;
-  transform: translateX(-50%);
-  border: none;
-}
-.Profile-pic {
-  display: flex;
-  width: 19rem;
-  height: 19rem;
-  background-image: url("../../Assets/images/profile.png");
-  background-size: cover;
-  background-position: top;
-  border: 1px solid #b06e6e;
-  z-index: 1;
-  transform: translate(3%, -70%);
-  margin-left: 22%;
-  margin-top: -5rem;
-  border: none;
-}
-
-.Profile-desc {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-top: 125%;
-  font-family: "Pacifico", cursive; 
-  margin-left: 1%;
-}
-
-.grey-background {
-  width: 90rem;
-  height: 40rem;
-  background-image: url("../../Assets/images/grey.png");
-  background-size: cover;
-  background-position: top;
-  border: 1px solid #b06e6e;
-  z-index: 1;
-  transform: translate(3%, -70%);
-  border: none;
-  margin-top: 10%;
-  position: relative;
-  border-top-left-radius: 0px; 
-  border-top-right-radius: 10px; 
-  transform: skewY(-5deg); 
-  margin-left: 3%;
-}
-.grey-background-two {
-  width: 90rem;
-  height: 40rem;
-  background-image: url("../../Assets/images/grey.png");
-  border-color: red;
-  background-size: cover;
-  background-position: top;
-  border: 1px solid #b06e6e;
-  z-index: 1;
-  transform: translate(3%, -70%) skewY(5deg); 
-  border: none;
-  margin-top: 10%;
-  position: relative;
-  border-top-left-radius: 10px; 
-  border-top-right-radius: 0; 
-  margin-left: 0%;
-  margin-top: 50%;
-}
-
-.big-title {
-  display: flex;
-  justify-content: center;
-  color: white;
-  margin-left: 360%;
-  margin-top: 1%;
-  font-size: 100px; 
-}
-
-.section-one {
-  z-index: 2;
-  margin-right: 0.4%;
-  width: 20rem;
-  height: 30rem;
-  background-color: #211b1d;
-  backdrop-filter: blur(10rem);
-}
-
-.section-two {
-  margin-right: 0.4%;
-  z-index: 2;
-  width: 20rem;
-  height: 30rem;
-  background-color: #211b1d;
-  backdrop-filter: blur(10rem);
-}
-
-.section-three {
-  margin-right: 0.4%;
-  z-index: 2;
-  width: 20rem;
-  height: 30rem;
-  background-color: #211b1d;
-}
-
-.section-fore {
-  margin-right: 0.4%;
-  z-index: 2;
-  width: 20rem;
-  height: 30rem;
-  background-color: #211b1d;
-}
-.section-container {
-  margin-top: -23%;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  margin-left: 1.5%;
-}
-
-.btn1 {
-  margin-top: -10%;
-  width: 50%;
-  margin-left: 25%;
-  transition: all 0.4s ease;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-
-.btn1:hover {
-  transform: scale(1.1);
-}
-
-.law-icon1 {
-  width: 10rem;
-  height: 10rem;
-  background-color: url("../../Assets/images/prem.png");
-  background-size: cover;
-  background-position: top;
-  border: 1px solid #b06e6e;
-  z-index: 1;
-  transform: translate(3%, -70%);
-  border: black;
-  background-image: url("../../Assets/images/lawicon.png");
-  margin-top: 71%;
-  margin-left: 24%;
-}
-.law-icon2 {
-  width: 10rem;
-  height: 10rem;
-  background-color: url("../../Assets/images/prem.png");
-  background-size: cover;
-  background-position: top;
-  border: 1px solid #b06e6e;
-  z-index: 1;
-  transform: translate(3%, -70%);
-  border: black;
-  background-image: url("../../Assets/images/mtar.png");
-  margin-top: 71%;
-  margin-left: 24%;
-}
-.law-icon3 {
-  width: 10rem;
-  height: 10rem;
-  background-color: url("../../Assets/images/prem.png");
-  background-size: cover;
-  background-position: top;
-  border: 1px solid #b06e6e;
-  z-index: 1;
-  transform: translate(3%, -70%);
-  border: black;
-  background-image: url("../../Assets/images/buidling.png");
-  margin-top: 71%;
-  margin-left: 24%;
-}
-.law-icon4 {
-  width: 10rem;
-  height: 10rem;
-  background-color: url("../../Assets/images/prem.png");
-  background-size: cover;
-  background-position: top;
-  border: 1px solid #b06e6e;
-  z-index: 1;
-  transform: translate(3%, -70%);
-  border: black;
-  background-image: url("../../Assets/images/labour.png");
-  margin-top: 71%;
-  margin-left: 24%;
-}
-
-.photo {
-  width: 28rem;
-  height: 33rem;
-  background-image: url("../../Assets/images/dev.png");
-  background-size: cover;
-  background-position: top;
-  border: 1px solid #b06e6e;
-  z-index: 2;
-  position: absolute;
-  left: 79%;
-  top: 13.1%;
-  transform: translateX(-50%);
-  border: none;
-  margin-top: -2%;
-}
-
-.avocato-logo {
-  width: 9cqw;
-  height: 9rem;
-  background-color: #211B1D;
-  background-image: url("../../Assets/images/Avocato.png");
-  background-size: cover;
-  background-position: top;
-  border: 1px solid #b06e6e;
-  z-index: 2;
-  position: absolute;
-  left: 10%;
-  top: 32%;
-  transform: translateX(-50%);
-  border: none;
-}
-
-.expert-team {
-  font-size: 100px; 
-  margin-left: 34%;
-  margin-top: 5%;
-}
-
-.prof1 {
-  width: 23rem;
-  height: 23rem;
-  display: flex;
-  margin-left: 12%;
-  margin-top: 1%;
-  z-index: 2;
-  background-image: url('../../Assets/images/expert2.png');
-}
-
-.prof2 {
-  width: 23rem;
-  height: 23rem;
-  display: flex;
-  margin-left: 60%;
-  margin-top: -16%;
-  z-index: 2;
-  background-image: url('../../Assets/images/expert1.png'); 
-}
-
-.prof1-desc,
-.prof2-desc {
-  font-family: "Pacifico", cursive;
-}
-
-.prof1-desc {
-  margin-top: 108%;
-}
-
-.prof2-desc {
-  margin-top: 110%;
-  margin-left: 13%;
-} */

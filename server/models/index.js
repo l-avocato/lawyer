@@ -153,6 +153,9 @@ Case.belongsTo(Lawyer);
 
 User.belongsToMany(Lawyer, { through: Fave });
 Lawyer.belongsToMany(User, { through: Fave });
+Lawyer.hasMany(Phase);
+Phase.belongsTo(Lawyer);
+
 // connection
 //   .sync({ alter: true })
 //   .then(() => console.log("tables are created"))

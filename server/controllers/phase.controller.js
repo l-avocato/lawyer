@@ -32,11 +32,21 @@ module.exports = {
 
   add: async (req, res) => {
     try {
-      const newPhase = await Phase.create(req.body);
-      res.status(201).send(newPhase);
-    } catch (error) {
-      throw error;
-    }
+      if(req.body.price){
+        const result = await Phase.create({ IsPaid: false, ...req.body})
+       return    res.status(200).send(result)
+      }
+      else {
+       const result = await Phase.create(req.body) 
+     return    res.status(200).send(result)
+      }
+
+
+ } catch (error) {
+     res.status(500).send({
+         error: error.message
+     })
+ }
   },
   remove: async (req, res) => {
     console.log(req.params.id)
@@ -59,7 +69,7 @@ module.exports = {
              }
          })
         
-       return    res.status(200).send(result)
+       return res.status(200).send(result)
        }
        else {
         const result = await Phase.update(req.body, {
@@ -76,5 +86,29 @@ module.exports = {
           error: error.message
       })
   }
+  },
+  updatePhase: async (req,res)=>{
+    try {
+      await Phase.update(req.body, {
+        where: { id: req.params.id }
+      });
+  
+      const updatedPhase = await Phase.findByPk(req.params.id);
+  
+      res.send(updatedPhase);
+    } catch (error) {
+      throw error;
+    }
+
+  } ,
+  getPhasesByLawyerId: async (req, res) => {
+    try {
+      const phases = await Phase.findAll({
+        where: { lawyerId: req.params.id },
+      });
+      res.status(200).send(phases);
+    } catch (error) {
+      throw error;
+    }
   }
 }

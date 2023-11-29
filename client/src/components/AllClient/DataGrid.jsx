@@ -120,7 +120,8 @@ const App = ({ user, deleteUser }) => {
             mask={false}
             style={{ boxShadow: "none" }}
             footer={[
-              <Button key="back" onClick={handleCancel}>
+              <Button   key="cancel"
+              type="primary" onClick={handleCancel}>
                 Cancel
               </Button>,
               <Button
@@ -176,7 +177,7 @@ const App = ({ user, deleteUser }) => {
         </div>
         <div>
           <Table
-            pagination={{ pageSize: 7 }}
+            pagination={{ pageSize: 6}}
             columns={columns}
             dataSource={user}
             size="small"

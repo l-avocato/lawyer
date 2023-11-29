@@ -59,13 +59,32 @@ const CaseProfile = () => {
                   backgroundColor: "#f5f5f5",
                   boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
                   justifyContent: "center",
+                  backgroundColor:'black'
                 }}
               >
-                <Box className="case-info" sx={{ flex: "1" }}>
-                  <h2>{hisCase.title}</h2>
-                  <p>Case Number: {hisCase.number}</p>
-                  <p>Client: {hisCase.fullName}</p>
-                  <p>Created At: {hisCase.createdAt}</p>
+                <Box className="case-info" sx={{ flex: "1"}}>
+                  <div style={{display:'flex', gap:'7rem', justifyContent:'center'}}>
+                  <div style={{display:'flex',flexDirection:'column' ,  gap:'2rem'}}> 
+                    <p style={{color:'grey', fontSize:'23px'}}>TITLE CASE </p>
+                  <h2 style={{fontSize:'20px', fontFamily:'inherit', color:'white'}}>{hisCase.title}</h2>
+
+                  </div>
+                  <div style={{display:'flex',flexDirection:'column',  gap:'2rem'}}> 
+                  <p style={{color:'grey', fontSize:'23px'}} >CASE NUMBER</p>
+ <h2 style={{fontSize:'20px', fontFamily:'inherit', color:'white'}}>
+                  {hisCase.number}</h2>
+                  </div>
+                  <div style={{display:'flex',flexDirection:'column',  gap:'2rem'}}>
+                    <p style={{color:'grey', fontSize:'23px'}}>CLIENT NAME</p>
+                  <h2  style={{fontSize:'20px', fontFamily:'inherit',color:'white'}}>{hisCase.fullName}</h2>
+                  </div>
+                  <div style={{display:'flex',flexDirection:'column',  gap:'2rem'}}>
+                    <p style={{color:'grey', fontSize:'23px'}}>OPNED AT </p>
+                  <h2  style={{fontSize:'20px', fontFamily:'inherit',color:'white'}}> {hisCase.createdAt}</h2>
+
+                  </div>
+                  </div>
+                  
                 </Box>
                 <Box
                   className="profile-pic"
@@ -90,6 +109,7 @@ const CaseProfile = () => {
               <Button
                 className="button"
                 onClick={() => navigate("/Flow", { state: { case: hisCase } })}
+                style={{border: "none", color:'BLACK', width:'300px',  background: 'linear-gradient(to right, #b38728, #dbd381, #aa771c)'}}
               >
                 Check Steps
               </Button>
@@ -101,12 +121,14 @@ const CaseProfile = () => {
                   justifyContent: "center",
                 }}
               >
-                <Card sx={{ minWidth: "100%", minHeight: 300 }}>
+                <Card sx={{ minWidth: "100%", minHeight: 300 , backgroundColor:'white' }}>
                   <CardContent>
                     <Typography variant="h5" component="div">
-                      Case Details
+                     <p style={{color:'grey', fontSize:'23px'}}>
+                     Case Details
+                      </p>   
                     </Typography>
-                    <Typography variant="body2">{hisCase.details}</Typography>
+                    <Typography variant="body2" style={{fontSize:'20px', fontFamily:'inherit',color:'black'}}>{hisCase.details}</Typography>
                   </CardContent>
                 </Card>
               </Box>

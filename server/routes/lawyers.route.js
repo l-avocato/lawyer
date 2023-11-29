@@ -1,5 +1,7 @@
 const express = require("express");
-const routerLawyer = express.Router();
+const routerLawyer = express.Router()
+// const {getAllLawyers,getLawyerId,add,deleteLawyer,update,searchLawyer,searchLawyerByfield,verifyLawyer,blockLawyer,updateAvailability, filterLawyers,getLawyerByEmail, updateLawyer,getLawyersByCategory,topRatedLawyer}= require('../controllers/lawyer.controller')
+
 const {
   getAllLawyers,
   getLawyerId,
@@ -16,7 +18,12 @@ const {
   topRatedLawyer,
   getLawyerByOneCategory,
   getLawyerByNearby,
+  updateLawyer
 } = require("../controllers/lawyer.controller");
+routerLawyer.put("/updateLawyer/:emailUpdate", updateLawyer)
+
+routerLawyer.get("/allLawyers", getAllLawyers);
+
 
 routerLawyer.get("/allLawyers", getAllLawyers);
 // /getCategory/${idCategory}
