@@ -86,5 +86,29 @@ module.exports = {
           error: error.message
       })
   }
+  },
+  updatePhase: async (req,res)=>{
+    try {
+      await Phase.update(req.body, {
+        where: { id: req.params.id }
+      });
+  
+      const updatedPhase = await Phase.findByPk(req.params.id);
+  
+      res.send(updatedPhase);
+    } catch (error) {
+      throw error;
+    }
+
+  } ,
+  getPhasesByLawyerId: async (req, res) => {
+    try {
+      const phases = await Phase.findAll({
+        where: { lawyerId: req.params.id },
+      });
+      res.status(200).send(phases);
+    } catch (error) {
+      throw error;
+    }
   }
 }

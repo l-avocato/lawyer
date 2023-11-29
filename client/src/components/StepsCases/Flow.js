@@ -41,6 +41,8 @@ function Flow() {
   const [target, setTarget] = useState("");
   const [price, setPrice] = useState(0);
   const [description, setDescription] = useState("");
+  const [lawyer, setLawyer] = useState({});
+
    console.log("this is nodes", nodes);
 
    
@@ -70,7 +72,19 @@ function Flow() {
     [refresh]
   );
 
-
+  const getLawyer = async () => {
+    try {
+      const loggedInLawyer = FIREBASE_AUTH.currentUser.email;
+      console.log(loggedInLawyer);
+      const res = await axios.get(
+        `http://localhost:1128/api/lawyer/getLawyerByEmail/${loggedInLawyer}`
+      );
+      console.log("this is lawyer", res.data);
+      setLawyer(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const onNodesChange = useCallback(
     (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
     [setNodes]
@@ -142,8 +156,14 @@ function Flow() {
       console.log(error);
     }
   };
+  useEffect(() => {
+    getLawyer()
+  }, []);
 
- 
+  useEffect(() => {
+    fetchData(1);
+    fetchEdge();
+  }, [lawyer,refresh]);
 
   const AddEdge = async () => {
     const NewEdge = {
@@ -170,7 +190,8 @@ function Flow() {
       border: "1px solid #222138",
       width: 180,
       borderRadius: "100px",
-      caseId:caseHistory.id
+      caseId:caseHistory.id,
+      lawyerId: lawyer.id
     };
 
     axios
