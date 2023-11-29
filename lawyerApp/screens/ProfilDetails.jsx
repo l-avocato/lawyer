@@ -29,6 +29,7 @@ const ProfilDetails = ({ navigation, route }) => {
 
   const [showReviewsModal, setShowReviewsModal] = useState(false);
   const [showOtherModal, setShowOtherModal] = useState(false);
+  const [selectedReview, setSelectedReview] = useState("");
 
   const loggedInUser = FIREBASE_AUTH.currentUser.email;
 
@@ -37,7 +38,7 @@ const ProfilDetails = ({ navigation, route }) => {
       .get(`http://${config}:1128/api/user/getUserByEmail/${loggedInUser}`)
       .then((res) => {
         console.log("this is user", res.data[0]);
-        setUser(res.data);
+        // setUser(res.data[0]);
       })
       .catch((err) => {
         console.log(err);
@@ -54,7 +55,7 @@ const ProfilDetails = ({ navigation, route }) => {
           stars,
           review,
           email,
-        },
+        }
       );
 
       setReview("");
@@ -73,15 +74,18 @@ const ProfilDetails = ({ navigation, route }) => {
   const getLawyerRating = async () => {
     try {
       const response = await axios.get(
-        `http://${config}:1128/api/rating/getRatingByLawyer/${law?.id}`,
+        `http://${config}:1128/api/rating/getRatingByLawyer/${law?.id}`
       );
-      console.log(response.data.map((item) => item.review));
+      console.log("this is it", response.data);
       const extractedReviews = response.data.map((item) => item.review);
-      setReviews(extractedReviews);
-      console.log(
-        "rating: ",
-        response.data.map((item) => item.stars),
-      );
+      setReviews(response.data);
+      console.log("======>", item);
+      // console.log(
+      //   "rating: ",
+      //   response.data.map((item) => item.stars)
+      // );
+      console.log("this is reviewssss", reviews);
+      console.log(response.data);
       const extractedReviews2 = response.data.map((item) => item.stars);
       setRating(extractedReviews2);
     } catch (error) {
@@ -100,6 +104,7 @@ const ProfilDetails = ({ navigation, route }) => {
 
   const toggleOtherModal = () => {
     setShowOtherModal(!showOtherModal);
+    setSelectedReview("");
   };
 
   const test = () => {
@@ -150,7 +155,8 @@ const ProfilDetails = ({ navigation, route }) => {
               onPress={() => {
                 navigation.navigate("Chat", { item });
                 test();
-              }}>
+              }}
+            >
               <FontAwesome
                 name="comment"
                 style={{
@@ -173,7 +179,8 @@ const ProfilDetails = ({ navigation, route }) => {
             flexDirection: "row",
             justifyContent: "space-between",
             top: 5,
-          }}>
+          }}
+        >
           <View style={styles.infoBlock}>
             <FontAwesome
               name="briefcase"
@@ -185,7 +192,8 @@ const ProfilDetails = ({ navigation, route }) => {
               }}
             />
             <Text
-              style={{ fontSize: 16, fontFamily: "normal", marginLeft: 20 }}>
+              style={{ fontSize: 16, fontFamily: "normal", marginLeft: 20 }}
+            >
               Number of Cases: 100
             </Text>
           </View>
@@ -200,7 +208,8 @@ const ProfilDetails = ({ navigation, route }) => {
               }}
             />
             <Text
-              style={{ fontSize: 16, fontFamily: "normal", marginRight: 20 }}>
+              style={{ fontSize: 16, fontFamily: "normal", marginRight: 20 }}
+            >
               Success Rate: 85%
             </Text>
           </View>
@@ -213,7 +222,8 @@ const ProfilDetails = ({ navigation, route }) => {
           {[1, 2, 3, 4, 5].map((index) => (
             <TouchableOpacity
               key={index}
-              onPress={() => handleStarPress(index)}>
+              onPress={() => handleStarPress(index)}
+            >
               <FontAwesome
                 name={index <= stars ? "star" : "star-o"}
                 style={styles.starIcon}
@@ -238,7 +248,8 @@ const ProfilDetails = ({ navigation, route }) => {
             animationType="slide"
             transparent={true}
             visible={showReviewsModal}
-            onRequestClose={() => setShowReviewsModal(!showReviewsModal)}>
+            onRequestClose={() => setShowReviewsModal(!showReviewsModal)}
+          >
             <View style={styles.centeredView}>
               <View style={styles.modalView}>
                 <Image
@@ -261,36 +272,68 @@ const ProfilDetails = ({ navigation, route }) => {
         </View>
         <TouchableOpacity
           style={styles.viewAllButton}
-          onPress={toggleOtherModal}>
+          onPress={toggleOtherModal}
+        >
           <Text style={styles.viewAllButtonText}>View All Reviews</Text>
         </TouchableOpacity>
       </View>
 
       <TouchableOpacity
         style={styles.bookButton}
-        onPress={() =>
-          navigation.navigate("Appintment", { lawyer: law, item })
-        }>
+        onPress={() => navigation.navigate("Appintment", { lawyer: law, item })}
+      >
         <Text style={styles.bookButtonText}>Book Appointment</Text>
       </TouchableOpacity>
-
+      
       <Modal
         animationType="slide"
         transparent={true}
         visible={showOtherModal}
-        onRequestClose={() => setShowOtherModal(!showOtherModal)}>
+        onRequestClose={() => setShowOtherModal(!showOtherModal)}
+      >
         <ScrollView style={styles.scrollView}>
           <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <ScrollView
-                contentContainerStyle={styles.scrollContent}></ScrollView>
-              {reviews.map((e, index) => (
-                <Text key={index}>{e}</Text>
-              ))}
+            <View
+              style={[styles.modalView, { backgroundColor: "white", top: 240 }]}
+            >
+              <TouchableOpacity
+                style={styles.closeButton}
+                onPress={() => setShowOtherModal(!showOtherModal)}
+              >
+                <Text style={styles.closeButtonText}>close</Text>
+              </TouchableOpacity>
+              <ScrollView contentContainerStyle={styles.scrollContent}>
+                {reviews.map((review, index) => (
+                  <TouchableOpacity
+                    key={index}
+                    style={styles.reviewCard}
+                    onPress={() => setSelectedReview(review)}
+                  >
+                    <Image
+                      source={{ uri: review.user?.ImageUrl }}
+                      style={styles.userPhoto}
+                    />
+                    <View style={styles.reviewDetails}>
+                      <View
+                        style={{ flexDirection: "row", alignItems: "center" }}
+                      >
+                        <Text style={styles.userName}>
+                          {review.user?.fullName}
+                        </Text>
+                        <Text style={styles.rating}>
+                          {` (${review.stars}/5)`}
+                        </Text>
+                      </View>
+                      <Text style={styles.userReview}>{review.review}</Text>
+                    </View>
+                  </TouchableOpacity>
+                ))}
+              </ScrollView>
               <TouchableOpacity
                 style={styles.modalButton}
-                onPress={toggleOtherModal}>
-                <Text style={{ color: "#fff" }}>Close Second Modal</Text>
+                onPress={toggleOtherModal}
+              >
+                {/* <Text style={{ color: "#fff" }}>Close Second Modal</Text> */}
               </TouchableOpacity>
             </View>
           </View>
@@ -304,6 +347,59 @@ const styles = StyleSheet.create({
   body: {
     backgroundColor: "#E5E4E2",
     height: 800,
+  },
+
+  reviewCard: {
+    backgroundColor: "#D5B278",
+    // opacity:0.6,
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 10,
+    padding: 5,
+    width: 255,
+    borderWidth: 1,
+    borderRadius: 10,
+    gap: 12,
+    alignSelf: "center",
+    left: -3,
+  },
+  closeButton: {
+    position: "absolute",
+    top: 10,
+    right: 10,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 5,
+    zIndex: 1,
+  },
+
+  closeButtonText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "black",
+  },
+
+  userPhoto: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    marginRight: 10,
+  },
+
+  reviewDetails: {
+    flex: 1,
+  },
+  userName: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginBottom: 5,
+  },
+  scrollView: {
+    flex: 1,
+  },
+  userReview: {
+    fontSize: 14,
+    color: "black",
   },
   scrollView: {
     flex: 1,

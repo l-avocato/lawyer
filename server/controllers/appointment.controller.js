@@ -31,6 +31,7 @@ module.exports = {
         }
     },  
     addAppointment: async function (req, res) {
+        console.log("this is the bodi",req.body);
 
         try {
             const findUser = await User.findOne({where:{email:req.body.email}})

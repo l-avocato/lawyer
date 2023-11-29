@@ -2,25 +2,27 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    position: absolute;
+    top: -5rem;
+    left: -1rem;
+    width: 101%;
+    height: 110.9%;
     background-color: rgba(0, 0, 0, 0.5);
   }
   
   .modal-content1 {
-    width: 400px;
-    height: 400px;
+    width: 35rem;
+    height: 35rem;
     background-color: rgb(255, 255, 255);
     padding: 0px;
     border-radius: 8px;
     text-align: center;
+    position: absolute;
   } 
   .close-btn {
     margin-top: 2.5%;
   }
+  
 
   .inputImage{
     position: absolute;
