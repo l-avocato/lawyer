@@ -129,10 +129,9 @@ const NavbarDashboard = () => {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
-
-    const handleSearch=(search)=>{
-      setSerached(search)
-    }
+    const handleSearch = (event) => {
+      setSearched(event.target.value);
+    };
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };

@@ -434,7 +434,8 @@ const Settings = () => {
                   </button>
                   <button
                     type="button"
-                    id="btnUpdate"
+                    id="btnUpda
+                    te" 
                     onClick={() => {
                       showModal();
                       getLocation();
@@ -451,7 +452,7 @@ const Settings = () => {
                 <div className="modal-content1">
                   <GoogleMap
                     center={center}
-                    zoom={16}
+                    zoom={18}
                     mapContainerStyle={{
                       height: "600px",
                       width: "100%",
