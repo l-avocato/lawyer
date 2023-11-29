@@ -30,6 +30,7 @@ import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import "./style.css";
 import NavbarDashboard from "../NavbarDashboard/NavbarDashboard";
+import { height, width } from "@mui/system";
 
 const PREFIX = "Demo";
 
@@ -371,14 +372,17 @@ const Calendar = () => {
   }, [update]);
 
   return (
-    <Paper>
-       <NavbarDashboard/>
-      <Grid container spacing={2}>
-        <Grid item xs={2.}>
+    <div style={{display:'flex'}}>
+                <SidebarDash />
+  <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
+  <NavbarDashboard/>
+
+     <Paper >
+      <Grid container >
+        <Grid item xs={5}>
        
-          <SidebarDash />
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={12} sx={{height:640,scrollBehavior:"none"}} >
           <Scheduler data={appointments} onClick={(date) => console.log(date)}>
             <EditingState onCommitChanges={commitChanges} />
             <ViewState defaultCurrentDate={today} />
@@ -470,6 +474,11 @@ const Calendar = () => {
         </Box>
       </Modal>
     </Paper>
+  </div>
+
+
+    </div>
+   
   );
 };
 

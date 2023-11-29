@@ -18,12 +18,12 @@ const TaskList = () => {
 
   const [lawyer,setLawyer]=useState({});
   
+  
   const getLawyer = async () => {
     try {
       const loggedInLawyer = FIREBASE_AUTH?.currentUser?.email;
       console.log(loggedInLawyer);
       const res = await axios.get(`http://localhost:1128/api/lawyer/getLawyerByEmail/${loggedInLawyer}`);
-      console.log("this is lawyer",res.data);
       setLawyer(res.data);
     } catch(err) {
       console.log(err);
@@ -68,9 +68,6 @@ const TaskList = () => {
   }, [lawyer,refresh]);
   
   
-
-
-
 
   const handleToggleDone = (taskId) => {
     const updatedTasks = tasks.map((task) => {
@@ -172,6 +169,7 @@ const TaskList = () => {
         ) : (
           <p className="no-tasks-message">No tasks found.</p>
         )}
+       
       </div>
     </div>
   
@@ -182,3 +180,5 @@ const TaskList = () => {
 };
 
 export default TaskList;
+
+              <th>Task Name</th>

@@ -1,29 +1,40 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import NavbarDashboard from "../NavbarDashboard/NavbarDashboard";
-import { FIREBASE_AUTH, db } from "../../firebaseconfig";
+// import { FIREBASE_AUTH, db } from "../../firebaseconfig";
 import { updateDoc, doc } from "firebase/firestore";
 import { GoogleMap, Marker } from "@react-google-maps/api";
 import "./Style.css";
 import SidebarDash from "../SidebarDash/SidebarDash";
+import { FIREBASE_AUTH  } from "../../firebaseconfig";
+import Swal from "sweetalert2";
+import EditNoteIcon from '@mui/icons-material/EditNote';
+ 
 import { getAuth } from "firebase/auth";
 import GpsFixedIcon from "@mui/icons-material/GpsFixed";
 import RoomIcon from "@mui/icons-material/Room";
 
 const Settings = () => {
-  const [papers, setPapers] = useState("");
-  const [fullName, setFullName] = useState("");
-  const [adress, setAdress] = useState("");
+  const [user, setUser] = useState({});
+
+  const [papers, setPapers] = useState("https://sm.ign.com/ign_fr/cover/a/avatar-gen/avatar-generations_bssq.jpg");
+  const [fullName, setFullName] = useState(user.fullName);
+  const [adress, setAdress] = useState(user.adress);
+  const [phoneNumber, setPhoneNumber] = useState(user.phoneNumber);
+  
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [markerClicked, setMarkerClicked] = useState(true);
-  const [user, setUser] = useState({});
   const position = {
     lat: parseFloat(latitude) || 51.505,
     lng: parseFloat(longitude) || -0.09,
   };
   const menuRef = useRef(null);
+
+
+console.log("this is papers",papers)
+
 
   let mapping = [
     {
@@ -194,9 +205,9 @@ const Settings = () => {
   ];
 
   const auth = getAuth();
-  const handleGetUser = async (user) => {
+  const handleGetUser = async () => {
     await axios
-      .get(`http://localhost:1128/api/lawyer/getLawyerByEmail/${user}`)
+      .get(`http://localhost:1128/api/lawyer/getLawyerByEmail/${FIREBASE_AUTH.currentUser.email}`)
       .then((res) => {
         setUser(res.data);
       })
@@ -229,7 +240,7 @@ const Settings = () => {
     lng: longitude,
   };
 
-  console.log(latitude, longitude, "those are lang lat ");
+  // console.log(latitude, longitude, "those are lang lat ");
 
   const getLocation = () => {
     if (navigator.geolocation) {
@@ -289,6 +300,8 @@ const Settings = () => {
     setAdress(user.adress);
     setPhoneNumber(user.phoneNumber);
   }, [user]);
+
+
   useEffect(() => {
     handleGetUser();
   }, []);
