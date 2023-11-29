@@ -13,12 +13,12 @@ import { FIREBASE_DB } from "../firebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
 import { useRoute } from "@react-navigation/native";
 import haversine from "haversine";
+import OneItem from "./OneItem";
 const SearchListings = ({ navigation }) => {
   const route = useRoute();
 
   const filteredLawyers = route.params.filteredLawyers || [];
 
-  const [isHeartPressed, setIsHeartPressed] = useState(false);
   const lawyersCollectionRef = collection(FIREBASE_DB, "lawyers");
   const [lawyers, setLawyers] = useState([]);
 
@@ -44,40 +44,12 @@ const SearchListings = ({ navigation }) => {
       ).toFixed(1);
       console.log("distance", distance);
       return (
-        <View style={styles.lawyerView1}>
-          <TouchableOpacity
-          // onPress={navigation.navigate("ProfilDetails", { item })}
-
-          // onPress={navigation.navigate("ProfilDetails", { item })}
-          >
-            <Image source={{ uri: item.ImageUrl }} style={styles.lawyerImage} />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>{item.fullName}</Text>
-          </TouchableOpacity>
-          <Text style={styles.additionalText}>{item.category.name}</Text>
-          <View style={styles.starIcon}>
-            <Icon name="star" size={18} color="#D5B278" />
-            <Text style={styles.textt}>{rating}</Text>
-          </View>
-          <View style={styles.locationIcon}>
-            <Icon name="map-marker" size={20} color="blue" />
-            <Text style={styles.textt}>{distance} Km</Text>
-          </View>
-          <View style={styles.priceIcon}>
-            <Icon name="dollar" size={18} color="green" />
-            <Text style={styles.textt}>{item.Price}</Text>
-          </View>
-          {/* <TouchableOpacity
-            onPress={() => setIsHeartPressed(!isHeartPressed)}
-            style={styles.heartIcon}>
-            {isHeartPressed ? (
-              <Icon name="heart" size={20} color="red" />
-            ) : (
-              <Icon name="heart-o" size={20} color="red" />
-            )}
-          </TouchableOpacity> */}
-        </View>
+        <OneItem
+          item={item}
+          distance={distance}
+          rating={rating}
+          canClikLike={true}
+        />
       );
     });
   };
@@ -151,6 +123,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 1,
     right: 200,
+    display: "flex",
+    flexDirection: "column",
   },
   starIcon: {
     position: "absolute",
@@ -173,7 +147,6 @@ const styles = StyleSheet.create({
     right: 20, // Adjust the right position as needed
   },
   textt: {
-    // position: "absolute",
     top: -15, // Adjust the top position as needed
     right: -20, // Adjust the right position as needed
   },

@@ -35,6 +35,7 @@ const Process = require("./process.model")(connection, DataTypes);
 const Note = require("./note.model")(connection, DataTypes);
 const Files = require("./Files.model")(connection, DataTypes);
 const Folder = require("./Folder.model")(connection, DataTypes);
+const Fave = require("./favorites.model")(connection, DataTypes);
 
 User.belongsToMany(Lawyer, { through: User_Lawyer });
 Lawyer.belongsToMany(User, { through: User_Lawyer });
@@ -150,6 +151,8 @@ Folder.belongsTo(Phase);
 Lawyer.hasMany(Case);
 Case.belongsTo(Lawyer);
 
+User.belongsToMany(Lawyer, { through: Fave });
+Lawyer.belongsToMany(User, { through: Fave });
 Lawyer.hasMany(Phase);
 Phase.belongsTo(Lawyer);
 
@@ -159,6 +162,7 @@ Phase.belongsTo(Lawyer);
 //   .catch((err) => console.log(err));
 
 const db = {};
+db.Fave = Fave;
 db.User = User;
 db.Lawyer = Lawyer;
 db.Report = Report;
