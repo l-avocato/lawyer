@@ -21,6 +21,7 @@ const Settings = () => {
   const [fullName, setFullName] = useState(user.fullName);
   const [adress, setAdress] = useState(user.adress);
   const [phoneNumber, setPhoneNumber] = useState(user.phoneNumber);
+  const [price , setPrice]= useState(user.price);
   
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
@@ -33,7 +34,6 @@ const Settings = () => {
   const menuRef = useRef(null);
 
 
-console.log("this is papers",papers)
 
 
   let mapping = [
@@ -240,7 +240,6 @@ console.log("this is papers",papers)
     lng: longitude,
   };
 
-  // console.log(latitude, longitude, "those are lang lat ");
 
   const getLocation = () => {
     if (navigator.geolocation) {
@@ -269,6 +268,7 @@ console.log("this is papers",papers)
         ImageUrl: papers,
         adress: adress,
         phoneNumber: phoneNumber,
+        price: price,
         longitude: parseFloat(longitude),
         latitude: parseFloat(latitude),
       });
@@ -277,28 +277,14 @@ console.log("this is papers",papers)
     }
   };
 
-  // const lawyersCollectionRef = doc(db, "lawyers", "EIKiyaY44S1xWenxPxVh");
 
-  // const updateLawyerData = async () => {
-  //   try {
-  //     await updateDoc(lawyersCollectionRef, {
-  //       fullName: fullName,
-  //       adress: adress,
-  //       imageUrl: papers,
-  //       latitude: parseFloat(latitude),
-  //       longitude: parseFloat(longitude),
-  //     });
-  //     hideModal();
-  //   } catch (error) {
-  //     console.error("Error updating lawyer", error);
-  //   }
-  // };
 
   useEffect(() => {
     setPapers(user.ImageUrl);
     setFullName(user.fullName);
     setAdress(user.adress);
     setPhoneNumber(user.phoneNumber);
+    setPrice(user.price)
   }, [user]);
 
 
@@ -412,6 +398,20 @@ console.log("this is papers",papers)
                       setPhoneNumber(e.target.value);
                     }}
                     value={phoneNumber}
+                  />
+                  <label className="form-label" htmlFor="form6Example3"></label>
+                </div>
+                <div className="form-outline mb-2">
+                  <input
+                    type="number"
+                    placeholder="Price"
+                    id="form6Example3"
+                    className="form-control"
+                    style={{ fontSize: "18px" }}
+                    onChange={(e) => {
+                      setPrice(e.target.value);
+                    }}
+                    value={price}
                   />
                   <label className="form-label" htmlFor="form6Example3"></label>
                 </div>
