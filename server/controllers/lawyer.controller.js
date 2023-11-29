@@ -84,7 +84,7 @@ module.exports = {
   },
   update: async (req, res) => {
     try {
-      await User.update(req.body, {
+      await Lawyer.update(req.body, {
         where: { id: req.params.id },
       });
 

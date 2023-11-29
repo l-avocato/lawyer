@@ -12,6 +12,7 @@ import {
 import { FIREBASE_AUTH, FIREBASE_DB } from "../firebaseConfig";
 import config from './ipv'
 import axios from "axios";
+import { getAuth } from "firebase/auth";
 
 const ReviewSummary = ({route}) => {
   const [category, setCategory] = useState("Category Type");
@@ -27,11 +28,13 @@ const ReviewSummary = ({route}) => {
   
 console.log(selectedTime.split(" ")[0],"item");
 
-  console.log(item.id,"item appointment");
+  console.log(item,"item appointment");
   const handleConfirmPayment = () => {
     setIsConfirmed(false);
     setIsModalVisible(true);
   };
+
+  const getUserId = getAuth()
 
    
   const addAvailebility = async () => {
@@ -41,7 +44,9 @@ console.log(selectedTime.split(" ")[0],"item");
           lawyerId: item.id,
           date: selected,
           time: selectedTime,
-          reason:message
+          reason:message,
+          email : getUserId.currentUser.email
+
         }
       
       );
