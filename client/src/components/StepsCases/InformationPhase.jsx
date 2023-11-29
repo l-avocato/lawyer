@@ -26,7 +26,6 @@ import { FIREBASE_AUTH } from "../../firebaseconfig";
 const InformationPhase = () => {
   const location = useLocation();
   const phase = location?.state?.phase;
-  console.log("this is phase", phase);
 
   const [path, setPath] = useState("document");
   const [folders, setFolders] = useState([]);
@@ -68,7 +67,6 @@ const InformationPhase = () => {
       const response = await axios.get(
         `http://localhost:1128/api/folder/getAll/${phase.id}`
       );
-      console.log("this is folder", response.data);
       setFolders(response.data.folders);
     } catch (error) {}
   };
@@ -144,7 +142,6 @@ const InformationPhase = () => {
         "https://api.cloudinary.com/v1_1/dgztaxbvi/upload",
         formData
       );
-      console.log(data.data);
 
       await axios.post("http://localhost:1128/api/file/add", {
         name: data.data.original_filename + ".pdf",
@@ -170,7 +167,7 @@ const InformationPhase = () => {
   const auth = getAuth();
 
   const handleGetUser = async () => {
-    const email = FIREBASE_AUTH.currentUser.email;
+    const email = FIREBASE_AUTH?.currentUser?.email;
 
     await axios
       .get(`http://localhost:1128/api/lawyer/getLawyerByEmail/${email}`)

@@ -333,6 +333,7 @@ const Calendar = () => {
       const taskResponse = await axios.get(
         "http://127.0.0.1:1128/api/task/allTasks"
       );
+      console.log(taskResponse,"taaaaaaaaaask");
       const taskData = taskResponse.data.map((el) => {
         return {
           title: el.description,
