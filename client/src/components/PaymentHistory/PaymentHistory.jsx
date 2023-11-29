@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import SidebarDash from "../SidebarDash/SidebarDash.jsx";
 import NavbarDashboard from "../NavbarDashboard/NavbarDashboard.jsx";
 import { FIREBASE_AUTH, db } from "../../firebaseconfig";
@@ -53,12 +53,12 @@ const PaymentHistory = () => {
   };
 
   const columns = [
-    { field: "phaseName", headerName: "Phase Name", width: 150 },
-    { field: "price", headerName: "Price", width: 110 },
+    { field: "phaseName", headerName: "Phase Name", width: 250 },
+    { field: "price", headerName: "Price", width: 250 },
     {
       field: "payment",
       headerName: "Payment",
-      width: 130,
+      width: 250,
       renderCell: (params) => (
         <div style={{ display: "flex", alignItems: "center" }}>
           <div
@@ -77,7 +77,7 @@ const PaymentHistory = () => {
     {
       field: "updatePayment",
       headerName: "Update Payment",
-      width: 160,
+      width: 250,
       renderCell: (params) => (
         <button
           style={{
@@ -88,7 +88,10 @@ const PaymentHistory = () => {
             borderRadius: "4px",
             cursor: "pointer",
           }}
-          onClick={() => handleUpdatePayment(params.row.id)}
+          onClick={(event) => {
+            handleUpdatePayment(params.row.id);
+            event.preventDefault();
+          }}
         >
           Update Payment
         </button>
@@ -123,14 +126,42 @@ const PaymentHistory = () => {
       <SidebarDash />
       <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
         <NavbarDashboard />
-        <div style={{ flexGrow: 1, overflow: "hidden", padding: "80px" }}>
-          <DataGrid
-            rows={rows}
-            columns={columns}
-            pageSize={5}
-            rowsPerPageOptions={[5]}
-            pagination
-          />
+        <div
+          style={{
+            flexGrow: 1,
+            overflow: "hidden",
+            padding: "4rem",
+            width: "100%",
+            alignItems: "center",
+          }}
+        >
+          <div
+            style={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "space-between",
+              flexDirection: "column",
+            }}
+          >
+            <DataGrid
+              sx={{
+                display: "flex",
+                gap: "10rem",
+                justifyContent: "center",
+                alignItems: "center",
+                flexDirection: "column",
+                flexWrap: "wrap",
+              }}
+              rows={rows}
+              columns={columns}
+              pageSize={5}
+              rowsPerPageOptions={[5]}
+              pagination
+              autoHeight
+              disableExtendRowFullWidth
+              columnBuffer={30}
+            />
+          </div>
         </div>
       </div>
     </div>
