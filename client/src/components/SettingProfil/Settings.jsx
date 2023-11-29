@@ -9,6 +9,9 @@ import SidebarDash from "../SidebarDash/SidebarDash";
 import { getAuth } from "firebase/auth";
 import GpsFixedIcon from "@mui/icons-material/GpsFixed";
 import RoomIcon from "@mui/icons-material/Room";
+import EditNoteIcon from '@mui/icons-material/EditNote';
+import Swal from "sweetalert2";
+
 
 const Settings = () => {
   const [papers, setPapers] = useState("");
@@ -16,6 +19,7 @@ const Settings = () => {
   const [adress, setAdress] = useState("");
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
+  const [phoneNumber,setPhoneNumber] = useState("")
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [markerClicked, setMarkerClicked] = useState(true);
   const [user, setUser] = useState({});
