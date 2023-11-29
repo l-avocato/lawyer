@@ -15,7 +15,6 @@ import { Card, CardContent, Typography } from "@mui/material";
 const CaseProfile = () => {
   const location = useLocation();
   const hisCase = location.state.case;
-  console.log("case profile", hisCase);
   const [caseData, setCaseData] = useState({});
   const [documents, setDocuments] = useState([]);
   const [id, setId] = useState("");
@@ -31,7 +30,6 @@ const CaseProfile = () => {
         setId(fetchedCaseData.id);
         setCaseData(fetchedCaseData);
         setDocuments(fetchedCaseData.documents || []);
-        console.log("Case details:", fetchedCaseData);
       } catch (error) {
         console.error("Error fetching case details", error);
       }
@@ -125,8 +123,7 @@ const CaseProfile = () => {
                   <CardContent>
                     <Typography variant="h5" component="div">
                      <p style={{color:'grey', fontSize:'23px'}}>
-                     Case Details
-                      </p>   
+CASE DETAILS                      </p>   
                     </Typography>
                     <Typography variant="body2" style={{fontSize:'20px', fontFamily:'inherit',color:'black'}}>{hisCase.details}</Typography>
                   </CardContent>

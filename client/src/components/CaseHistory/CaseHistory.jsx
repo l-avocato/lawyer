@@ -196,7 +196,6 @@ const CaseHistory = () => {
               setUser(selectedUser.fullName);
             }}
             value={user}
-           
           >
             {props.users.map((user) => (
               <Select.Option key={user.id} value={user.id}>
@@ -265,11 +264,7 @@ const CaseHistory = () => {
           </Button>
           <Button
             type="danger"
-            style={{ fontSize: "12px",backgroundColor: "red" ,width:"8rem"}}
-            
-
-
-
+            style={{ fontSize: "12px", backgroundColor: "red", width: "8rem" }}
             onClick={() => {
               Swal.fire({
                 title: "Are you sure?",
@@ -281,7 +276,7 @@ const CaseHistory = () => {
                 confirmButtonText: "Yes, delete it!",
               }).then((result) => {
                 if (result.isConfirmed) {
-                  handleDelete(params.row.id); // Call your delete function here
+                  handleDelete(params.row.id);
                   Swal.fire({
                     title: "Deleted!",
                     text: "Your file has been deleted.",
@@ -290,7 +285,6 @@ const CaseHistory = () => {
                 }
               });
             }}
-            // style={{ fontSize: "12px" }}
           >
             Delete
           </Button>
@@ -310,18 +304,13 @@ const CaseHistory = () => {
             justifyContent: "flex-end",
             alignItems: "center",
             marginBottom: "16px",
-            padding:"15px"
+            padding: "15px",
           }}
-          >
-        
-          <button
-            className="btnAdd-client"
-            onClick={showModal}
-         
-          >      
-             + New Case
+        >
+          <button className="btnAdd-client" onClick={showModal}>
+            + New Case
           </button>
-          
+
           <Modal
             title="New Case"
             visible={isModalVisible}
@@ -348,7 +337,7 @@ const CaseHistory = () => {
           sx={{
             width: "98%",
             height: "70%",
-            mx:"1%",
+            mx: "1%",
           }}
         >
           <DataGrid
