@@ -60,7 +60,7 @@ const HomePage = ({ navigation }) => {
     const getLawyers = async () => {
       try {
         const response = await axios.get(
-          `http://${config}:1128/api/lawyer/allLawyers`,
+          `http://${config}:1128/api/lawyer/allLawyers`
         );
         setLawyers(response.data);
         console.log("this is lawyers from the backed", response.data);
@@ -71,7 +71,7 @@ const HomePage = ({ navigation }) => {
     const getCategories = async () => {
       console.log("this is the config", config);
       const response = await axios.get(
-        `http://${config}:1128/api/category/allCategories`,
+        `http://${config}:1128/api/category/allCategories`
       );
       setCategories(response.data);
       console.log("this is lawyers", categories);
@@ -87,7 +87,7 @@ const HomePage = ({ navigation }) => {
     const filterByCategorie = async (idCategory) => {
       console.log("this is the idCategory", idCategory);
       const response = await axios.get(
-        `http://${config}:1128/api/lawyer/getCategory/${idCategory}`,
+        `http://${config}:1128/api/lawyer/getCategory/${idCategory}`
       );
       console.log("this is lawyers from the filterByCategorie", lawyers);
 
@@ -97,13 +97,13 @@ const HomePage = ({ navigation }) => {
     };
     const filterByNearby = async (location) => {
       console.log(
-        "is clicked filterByNearbyffffffffffffffffffffffffffffffffffffffffffff",
+        "is clicked filterByNearbyffffffffffffffffffffffffffffffffffffffffffff"
       );
 
       const email = FIREBASE_AUTH.currentUser.email;
       console.log("this is the location", location);
       const response = await axios.get(
-        `http://${config}:1128/api/lawyer/getNearby/${email}`,
+        `http://${config}:1128/api/lawyer/getNearby/${email}`
       );
       console.log("this is lawyers from the filterByNearby", response.data);
 
@@ -113,7 +113,7 @@ const HomePage = ({ navigation }) => {
     };
     const topRatedLawyer = async () => {
       const response = await axios.get(
-        `http://${config}:1128/api/lawyer/topRated`,
+        `http://${config}:1128/api/lawyer/topRated`
       );
       console.log("this is lawyers from the filterByNearby", response.data);
 
@@ -122,7 +122,7 @@ const HomePage = ({ navigation }) => {
       });
     };
     useEffect(() => {
-      // getUser();
+      getUser();
       getLawyers();
       getCategories();
     }, []);
@@ -140,7 +140,8 @@ const HomePage = ({ navigation }) => {
                 marginBottom: 7,
                 left: -5,
                 color: "#D5B278",
-              }}>
+              }}
+            >
               {" "}
               Hi,{user[0]?.fullName}
             </Text>
@@ -151,12 +152,14 @@ const HomePage = ({ navigation }) => {
             <View style={styles.notificationContainer}>
               <TouchableOpacity
                 onPress={() => navigation.navigate("notifications")}
-                style={styles.notificationButton}>
+                style={styles.notificationButton}
+              >
                 <MaterialIcons name="notifications" size={24} color="white" />
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => handleFilterClick()}
-                style={styles.filterButton}>
+                style={styles.filterButton}
+              >
                 <Ionicons name="options" size={24} color="white" />
               </TouchableOpacity>
             </View>
@@ -179,7 +182,8 @@ const HomePage = ({ navigation }) => {
               <ScrollView
                 horizontal
                 showsHorizontalScrollIndicator={false}
-                contentContainerStyle={styles.buttonContainer1}>
+                contentContainerStyle={styles.buttonContainer1}
+              >
                 <FlatList
                   data={categories}
                   horizontal
@@ -187,7 +191,8 @@ const HomePage = ({ navigation }) => {
                   renderItem={({ item }) => (
                     <TouchableOpacity
                       style={[styles.button2, styles.buttonWithSpace]}
-                      onPress={() => filterByCategorie(item.id)}>
+                      onPress={() => filterByCategorie(item.id)}
+                    >
                       <Text style={styles.buttonText}>{item.name}</Text>
                     </TouchableOpacity>
                   )}
@@ -198,7 +203,8 @@ const HomePage = ({ navigation }) => {
                 style={styles.topRightButton}
                 onPress={() => {
                   navigateSearch();
-                }}>
+                }}
+              >
                 <Text style={styles.topRightButtonText}>See All</Text>
               </TouchableOpacity>
             </View>
@@ -225,7 +231,8 @@ const HomePage = ({ navigation }) => {
                         fontSize: 15,
                         fontWeight: "500",
                         alignSelf: "center",
-                      }}>
+                      }}
+                    >
                       {item.fullName}
                     </Text>
                   </TouchableOpacity>
@@ -234,7 +241,8 @@ const HomePage = ({ navigation }) => {
               />
               <TouchableOpacity
                 style={styles.topRightButton}
-                onPress={() => filterByNearby()}>
+                onPress={() => filterByNearby()}
+              >
                 <Text style={styles.topRightButtonText}>See All</Text>
               </TouchableOpacity>
             </View>
@@ -242,7 +250,8 @@ const HomePage = ({ navigation }) => {
               <View style={styles.buttonContainer}>
                 <TouchableOpacity
                   style={styles.singleButton}
-                  onPress={() => handleButtonClick(7)}>
+                  onPress={() => handleButtonClick(7)}
+                >
                   <View style={styles.textContainer}>
                     <Text style={styles.buttonText1}>
                       Can't find need help?
@@ -254,7 +263,8 @@ const HomePage = ({ navigation }) => {
                   <View style={styles.arrowContainer}>
                     <TouchableOpacity
                       style={styles.arrowButton}
-                      onPress={() => handleArrowClick()}>
+                      onPress={() => handleArrowClick()}
+                    >
                       <FontAwesome name="angle-right" size={24} color="white" />
                     </TouchableOpacity>
                   </View>
@@ -282,7 +292,8 @@ const HomePage = ({ navigation }) => {
                         fontSize: 15,
                         fontWeight: "500",
                         alignSelf: "center",
-                      }}>
+                      }}
+                    >
                       {item.fullName}
                     </Text>
                   </TouchableOpacity>
@@ -291,7 +302,8 @@ const HomePage = ({ navigation }) => {
               />
               <TouchableOpacity
                 style={styles.topRightButton}
-                onPress={() => topRatedLawyer()}>
+                onPress={() => topRatedLawyer()}
+              >
                 <Text style={styles.topRightButtonText}>See All</Text>
               </TouchableOpacity>
             </View>

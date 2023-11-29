@@ -13,6 +13,7 @@ import { Bar } from "react-native-progress";
 import NavTab from "./NavTab";
 import axios from "axios";
 import config from "./ipv";
+import PhaseDetails from "./PhaseDetails";
 
 const GradientProgressBar = ({ progress }) => {
   return (
@@ -45,12 +46,9 @@ const CaseDetails = ({ navigation, route }) => {
     }
   };
 
-  const handleCardPress = () => {
-    Animated.spring(animatedValue, {
-      toValue: 0.95,
-      useNativeDriver: false,
-    }).start(() => navigation.navigate("phaseDetails"));
-  };
+  // const handleCardPress = (phase) => {
+  //   navigation.navigate("phaseDetails", { phase })
+  // };
 
   const handleCardRelease = () => {
     // Add animation logic here
@@ -139,7 +137,10 @@ const CaseDetails = ({ navigation, route }) => {
           {casePhases.map((phase) => (
             <TouchableWithoutFeedback
               key={phase.id}
-              onPressIn={handleCardPress}
+              onPress={() =>
+                navigation.navigate("phaseDetails", { phase: phase })
+              }
+              // onPressIn={navigation.navigate("PhaseDetails", { phase })}
               onPressOut={handleCardRelease}
             >
               <Animated.View

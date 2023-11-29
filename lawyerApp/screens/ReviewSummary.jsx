@@ -71,11 +71,14 @@ const ReviewSummary = ({ route }) => {
     };
     console.log(obj, "this is the obj");
     try {
+      // Use Axios instead of fetch
       const response = await axios.post(
         `http://${config}:1128/api/appointment/addAppointment`,
         obj
       );
       console.log(response.data, "this is the response");
+      handleConfirmPayment();
+      // setAppointments(response.data)
     } catch (error) {
       console.error("Error setting appointment:", error);
     }

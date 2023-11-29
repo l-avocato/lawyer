@@ -1,64 +1,167 @@
 import React, { useEffect, useState } from "react";
-import "./PaymentHistory.css";
-import Modal from "./addPayment";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import SidebarDash from "../SidebarDash/SidebarDash.jsx";
 import NavbarDashboard from "../NavbarDashboard/NavbarDashboard.jsx";
-import DataGrid from "./datagrid.jsx";
+import { FIREBASE_AUTH, db } from "../../firebaseconfig";
 import axios from "axios";
 
-
 const PaymentHistory = () => {
-  
-  const [payments, setPayments] = useState([]);
-  console.log("this is user", payments);
+  const [phases, setPhases] = useState([]);
+  const [lawyer, setLawyer] = useState({});
   const [refrech, setRefrech] = useState(false);
-  const [id,setId]=useState("")
+  const [isLoading, setIsLoading] = useState(true);
 
-  const deleteUser = async () => {
-    console.log(id,"this is the id")
+  const getLawyer = async () => {
     try {
-      await axios.delete(`http://localhost:1128/api/payment/deletePayment/${id}`);
+      const loggedInLawyer = FIREBASE_AUTH?.currentUser?.email;
+      console.log(loggedInLawyer);
+      const res = await axios.get(
+        `http://localhost:1128/api/lawyer/getLawyerByEmail/${loggedInLawyer}`
+      );
+      console.log("this is lawyer", res.data);
+      setLawyer(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const getPhases = async () => {
+    try {
+      setIsLoading(true);
+      const response = await axios.get(
+        `http://localhost:1128/api/phase/getPhasesByLawyerId/${lawyer?.id}`
+      );
+      setPhases(response.data);
+      console.log("this is phases", response.data);
+      setIsLoading(false);
+    } catch (error) {
+      console.error("Error fetching phases", error);
+      setIsLoading(false);
+    }
+  };
+
+  const handleUpdatePayment = async (id) => {
+    const phaseToUpdate = phases.find((phase) => phase.id === id);
+    try {
+      await axios.put(`http://localhost:1128/api/phase/updatePhase/${id}`, {
+        IsPaid: !phaseToUpdate.IsPaid,
+      });
       setRefrech(!refrech);
-    } catch (error) {
-      console.error("Error deleting user:", error);
+    } catch (err) {
+      console.log(err);
     }
   };
 
-  const getPayments = async () => {
-    try {
-      const response = await axios.get("http://localhost:1128/api/payment/allPayments");
-      setPayments(response.data);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
-  
+  const columns = [
+    { field: "phaseName", headerName: "Phase Name", width: 250 },
+    { field: "price", headerName: "Price", width: 250 },
+    {
+      field: "payment",
+      headerName: "Payment",
+      width: 250,
+      renderCell: (params) => (
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <div
+            style={{
+              padding: "8px",
+              borderRadius: "4px",
+              backgroundColor: params.row.IsPaid ? "#4CAF50" : "#ff4d4f",
+              color: "#fff",
+            }}
+          >
+            {params.row.IsPaid ? "Paid" : "Not Paid"}
+          </div>
+        </div>
+      ),
+    },
+    {
+      field: "updatePayment",
+      headerName: "Update Payment",
+      width: 250,
+      renderCell: (params) => (
+        <button
+          style={{
+            backgroundColor: "#2196F3",
+            color: "#fff",
+            border: "none",
+            padding: "8px 16px",
+            borderRadius: "4px",
+            cursor: "pointer",
+          }}
+          onClick={(event) => {
+            handleUpdatePayment(params.row.id);
+            event.preventDefault();
+          }}
+        >
+          Update Payment
+        </button>
+      ),
+    },
+  ];
 
   useEffect(() => {
-    getPayments();
-  }, [refrech]);
+    getLawyer();
+  }, []);
+
+  useEffect(() => {
+    getPhases();
+  }, [refrech, lawyer]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  const rows =
+    phases && phases.length > 0
+      ? phases.map((phase) => ({
+          id: phase.id,
+          phaseName: phase.label,
+          price: phase.price,
+          IsPaid: phase.IsPaid,
+        }))
+      : [];
 
   return (
-    <div>
-      <NavbarDashboard />
-      <div className="allPage">
-        <div className="firstDiv">
-          <button
-            className="buttonAdd"
-            data-bs-toggle="modal"
-            data-bs-target="#staticBackdrop"
-          >
-            Add Payment{" "}
-          </button>
-          <Modal refrech={refrech} setRefrech={setRefrech} />
-          <hr />
-        </div>
-
+    <div style={{ display: "flex" }}>
+      <SidebarDash />
+      <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
+        <NavbarDashboard />
         <div
-          className="table-wrapper table1"
-          style={{ width: "70rem", display: "flex", flexDirection: "column", marginLeft: "21rem" }}
+          style={{
+            flexGrow: 1,
+            overflow: "hidden",
+            padding: "4rem",
+            width: "100%",
+            alignItems: "center",
+          }}
         >
-          <DataGrid payment={payments} deleteUser={deleteUser} setId={setId}    />
+          <div
+            style={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "space-between",
+              flexDirection: "column",
+            }}
+          >
+            <DataGrid
+              sx={{
+                display: "flex",
+                gap: "10rem",
+                justifyContent: "center",
+                alignItems: "center",
+                flexDirection: "column",
+                flexWrap: "wrap",
+              }}
+              rows={rows}
+              columns={columns}
+              pageSize={5}
+              rowsPerPageOptions={[5]}
+              pagination
+              autoHeight
+              disableExtendRowFullWidth
+              columnBuffer={30}
+            />
+          </div>
         </div>
       </div>
     </div>

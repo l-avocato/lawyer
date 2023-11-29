@@ -83,10 +83,14 @@ const App = ({ user, deleteUser }) => {
       key: "address",
     },
     {
-      title: "Action",
+      title:(<div style={{ textAlign: 'center' }}>
+ Action
+      </div>),
       key: "action",
+    
+      
       render: (_, record) => (
-        <Space size="middle">
+        <Space size="middle" style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
           <button
             style={{
               backgroundColor: "grey",
@@ -151,11 +155,7 @@ const App = ({ user, deleteUser }) => {
     setSelectedRowKeys(newSelectedRowKeys);
   };
 
-  // const rowSelection = {
-  //   selectedRowKeys,
-  //   onChange: onSelectChange,
-  // };
-
+ 
   const hasSelected = selectedRowKeys.length > 0;
 
   return (
@@ -164,12 +164,10 @@ const App = ({ user, deleteUser }) => {
         {contextHolder}
         <div
           style={{
-            // marginBottom: 16,
           }}
         >
           <span
             style={{
-              // marginLeft: 8,
             }}
           >
             {hasSelected ? `Selected ${selectedRowKeys.length} items` : ""}
@@ -177,7 +175,7 @@ const App = ({ user, deleteUser }) => {
         </div>
         <div>
           <Table
-            pagination={{ pageSize: 7 }}
+            pagination={{ pageSize: 6}}
             columns={columns}
             dataSource={user}
             size="small"

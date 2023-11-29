@@ -30,6 +30,7 @@ import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import "./style.css";
 import NavbarDashboard from "../NavbarDashboard/NavbarDashboard";
+import { height, width } from "@mui/system";
 
 const PREFIX = "Demo";
 
@@ -371,106 +372,126 @@ const Calendar = () => {
   }, [update]);
 
   return (
-    <Paper>
-       <NavbarDashboard/>
-      <Grid container spacing={2}>
-        <Grid item xs={2.}>
-       
-          <SidebarDash />
-        </Grid>
-        <Grid item xs={9}>
-          <Scheduler data={appointments} onClick={(date) => console.log(date)}>
-            <EditingState onCommitChanges={commitChanges} />
-            <ViewState defaultCurrentDate={today} />
-            <MonthView
-              timeTableCellComponent={TimeTableCell}
-              dayScaleCellComponent={DayScaleCell}
-            />
-            <Appointments
-              appointmentComponent={AppointmentComponent}
-              appointmentContentComponent={AppointmentContentComponent}
-            />
-            <Resources data={resources} />
-            <Toolbar flexibleSpaceComponent={FlexibleSpaceComponent} />
-            <DateNavigator />
-            <EditRecurrenceMenu />
-            <AppointmentTooltip
-              showCloseButton
-              showDeleteButton
-              showOpenButton
-            />
-            <AppointmentForm />
-            <DragDropProvider />
-          </Scheduler>
-        </Grid>
-      </Grid>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            <div>
-              <div>
-                <label htmlFor="datetimepickerInline" className="form-label">
-                  Type a title
-                </label>
-                <input
-                  type="text"
-                  onChange={(e) =>
-                    setAddedAppo((prev) => {
-                      return { ...prev, title: e.target.value };
-                    })
-                  }
-                />
-                <label htmlFor="datetimepickerInline" className="form-label">
-                  Select Start Date and Time
-                </label>
-                <input
-                  type="datetime-local"
-                  className="form-control"
-                  id="datetimepickerInline"
-                  onChange={(e) =>
-                    setAddedAppo((prev) => {
-                      return { ...prev, startDate: new Date(e.target.value) };
-                    })
-                  }
-                />
-                <label htmlFor="datetimepickerInline" className="form-label">
-                  Select End Date and Time
-                </label>
-                <input
-                  type="datetime-local"
-                  className="form-control"
-                  id="datetimepickerInline"
-                  onChange={(e) =>
-                    setAddedAppo((prev) => {
-                      return { ...prev, endDate: new Date(e.target.value) };
-                    })
-                  }
-                />
-              </div>
-              <button
-                className="confirm-button"
-                style={{ textAlign: "center", alignSelf: "center" }}
-                onClick={() => {
-                  setAppointments((prev) => {
-                    return [...prev, addedAppo];
-                  });
-                  handleClose();
-                }}
+    <div style={{ display: "flex" }}>
+      <SidebarDash />
+      <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
+        <NavbarDashboard />
+
+        <Paper>
+          <Grid container>
+            <Grid item xs={5}></Grid>
+            <Grid item xs={12} sx={{ height: 640, scrollBehavior: "none" }}>
+              <Scheduler
+                data={appointments}
+                onClick={(date) => console.log(date)}
               >
-                Confirm
-              </button>
-            </div>
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}></Typography>
-        </Box>
-      </Modal>
-    </Paper>
+                <EditingState onCommitChanges={commitChanges} />
+                <ViewState defaultCurrentDate={today} />
+                <MonthView
+                  timeTableCellComponent={TimeTableCell}
+                  dayScaleCellComponent={DayScaleCell}
+                />
+                <Appointments
+                  appointmentComponent={AppointmentComponent}
+                  appointmentContentComponent={AppointmentContentComponent}
+                />
+                <Resources data={resources} />
+                <Toolbar flexibleSpaceComponent={FlexibleSpaceComponent} />
+                <DateNavigator />
+                <EditRecurrenceMenu />
+                <AppointmentTooltip
+                  showCloseButton
+                  showDeleteButton
+                  showOpenButton
+                />
+                <AppointmentForm />
+                <DragDropProvider />
+              </Scheduler>
+            </Grid>
+          </Grid>
+          <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box sx={style}>
+              <Typography id="modal-modal-title" variant="h6" component="h2">
+                <div>
+                  <div>
+                    <label
+                      htmlFor="datetimepickerInline"
+                      className="form-label"
+                    >
+                      Type a title
+                    </label>
+                    <input
+                      type="text"
+                      onChange={(e) =>
+                        setAddedAppo((prev) => {
+                          return { ...prev, title: e.target.value };
+                        })
+                      }
+                    />
+                    <label
+                      htmlFor="datetimepickerInline"
+                      className="form-label"
+                    >
+                      Select Start Date and Time
+                    </label>
+                    <input
+                      type="datetime-local"
+                      className="form-control"
+                      id="datetimepickerInline"
+                      onChange={(e) =>
+                        setAddedAppo((prev) => {
+                          return {
+                            ...prev,
+                            startDate: new Date(e.target.value),
+                          };
+                        })
+                      }
+                    />
+                    <label
+                      htmlFor="datetimepickerInline"
+                      className="form-label"
+                    >
+                      Select End Date and Time
+                    </label>
+                    <input
+                      type="datetime-local"
+                      className="form-control"
+                      id="datetimepickerInline"
+                      onChange={(e) =>
+                        setAddedAppo((prev) => {
+                          return { ...prev, endDate: new Date(e.target.value) };
+                        })
+                      }
+                    />
+                  </div>
+                  <button
+                    className="confirm-button"
+                    style={{ textAlign: "center", alignSelf: "center" }}
+                    onClick={() => {
+                      setAppointments((prev) => {
+                        return [...prev, addedAppo];
+                      });
+                      handleClose();
+                    }}
+                  >
+                    Confirm
+                  </button>
+                </div>
+              </Typography>
+              <Typography
+                id="modal-modal-description"
+                sx={{ mt: 2 }}
+              ></Typography>
+            </Box>
+          </Modal>
+        </Paper>
+      </div>
+    </div>
   );
 };
-
 export default Calendar;

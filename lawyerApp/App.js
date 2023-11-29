@@ -63,11 +63,11 @@ export default function App() {
             }}
           />
 
-           <Stack.Screen 
+         <Stack.Screen 
         name="Map" 
         component={GoogleMapView}
         options={{
-          headerShown : false,
+          headerShown : false,  
         }}
         />
 
@@ -113,7 +113,7 @@ export default function App() {
             component={ProfilDetails}
             options={{
               headerShown: true,
-              
+
             }}
           /> 
           <Stack.Screen
