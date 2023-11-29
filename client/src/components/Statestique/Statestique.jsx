@@ -238,22 +238,69 @@ const Statestique = () => {
                   data={pieData}
                   cx={200}
                   cy={200}
-                  outerRadius={80}
+                  outerRadius={150}
                   fill="#8884d8"
                   label
                 >
                   {pieData.map((entry, index) => (
                     <Cell
                       key={`cell-${index}`}
-                      fill={["#ff4d4f", "#00C49F", "#ff4d4f"][index % 3]}
+                      fill={["#4caf50", "#ff6347"][index % 3]}
                     />
                   ))}
                 </Pie>
                 <Tooltip />
               </PieChart>
-              <div>
-                <p>Total Paid Price: {totalPaidPrice}</p>
-                <p>Total Not Paid Price: {totalNotPaidPrice}</p>
+              <div style={{ textAlign: "center", marginTop: "2rem" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "2rem",
+                    justifyContent: "center",
+                  }}
+                >
+                  <div
+                    style={{
+                      backgroundColor: "#4CAF50",
+                      width: "170px",
+                      borderRadius: "20px",
+                      padding: "20px",
+                      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+                    }}
+                  >
+                    <p
+                      style={{
+                        margin: 0,
+                        color: "white",
+                        fontSize: "18px",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Total Paid ${totalPaidPrice}
+                    </p>
+                  </div>
+
+                  <div
+                    style={{
+                      backgroundColor: "#FF6347",
+                      width: "170px",
+                      borderRadius: "20px",
+                      padding: "20px",
+                      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+                    }}
+                  >
+                    <p
+                      style={{
+                        margin: 0,
+                        color: "white",
+                        fontSize: "18px",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Total Not Paid ${totalNotPaidPrice}
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
