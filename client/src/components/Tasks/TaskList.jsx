@@ -39,12 +39,13 @@ const TaskList = () => {
           deadline: newDeadline,
           lawyerId: lawyer.id
         },
-        setRefresh(!refresh),
+        setRefresh(!refresh)
       );
     } catch (error) {
       console.log(error);
     }
   };
+
   const getTask = async () => {
     try {
 
@@ -126,7 +127,8 @@ const TaskList = () => {
             {tasks.map((task) => (
               <div
                 key={task.id}
-                className={classnames("task-card", { completed: task.done })}>
+                className={classnames("task-card", { completed: task.done })}
+              >
                 <div className="task-card-header">
                   <input
                     className="checkbox-task"
@@ -149,17 +151,18 @@ const TaskList = () => {
                         showCancelButton: true,
                         confirmButtonColor: "#3085d6",
                         cancelButtonColor: "#d33",
-                        confirmButtonText: "Yes, delete it!"
+                        confirmButtonText: "Yes, delete it!",
                       }).then((result) => {
                         if (result.isConfirmed) {
-                          handleDeleteTask(task.id)
+                          handleDeleteTask(task.id);
                           Swal.fire({
                             title: "Deleted!",
                             icon: "success"
                           });
                         }
                       });
-                    }}>
+                    }}
+                  >
                     Delete
                   </button>
                 </div>

@@ -6,7 +6,9 @@ module.exports = {
 
     getAllRatings: async (req,res)=>{
         try {
-            const allRatings= await Rating.findAll()
+            const allRatings= await Rating.findAll({
+                include : User
+            })
             res.status(200).send(allRatings)
         } catch (error) {
             throw error
