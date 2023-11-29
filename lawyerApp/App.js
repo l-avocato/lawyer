@@ -31,6 +31,7 @@ import ChatRooms from "./screens/ChatRooms";
 import MyCases from "./screens/MyCases";
 import CaseDetails from "./screens/CaseDetails";
 import PhaseDetails from "./screens/PhaseDetails";
+import Favourites from "./screens/Favourites";
 export default function App() {
   const Stack = createNativeStackNavigator();
   return (
@@ -76,6 +77,15 @@ export default function App() {
             component={Chat}
             options={{
               headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="Favourites"
+            component={Favourites}
+            options={{
+              headerShown: true,
+              headerTitleAlign: "center",
+              title: "My Favourites",
             }}
           />
           <Stack.Screen

@@ -7,7 +7,7 @@ module.exports = {
     try {
       const getUser = await User.findOne({ email: req.params.email });
 
-      const userLawyerRelations = await User.findAll({
+      const userLawyerRelations = await User.findOne({
         where: { id: getUser.id },
         include: [
           {
@@ -16,7 +16,7 @@ module.exports = {
           },
         ],
       });
-      res.json(userLawyerRelations);
+      res.json(userLawyerRelations.lawyers);
     } catch (error) {
       console.log(error);
       res.json(error);
@@ -35,11 +35,36 @@ module.exports = {
     try {
       const getUser = await User.findOne({ email: req.params.email });
       const deleteFave = await Fave.destroy({
-        where: { userId: getUser.id, lawyerId: req.body.lawyerId },
+        where: { userId: getUser.id, lawyerId: req.params.lawyerId },
       });
       res.json(deleteFave);
     } catch (error) {
-      throw error;
+      console.log(error);
+    }
+  },
+  checkHeart: async (req, res) => {
+    try {
+      const getUser = await User.findOne({ email: req.params.email });
+      console.log({ userId: getUser.id, lawyerId: req.params.lawyerId });
+      const response = await Fave.findOne({
+        where: {
+          userId: getUser.id,
+          lawyerId: req.params.lawyerId,
+        },
+      });
+
+      // console.log("the response", response);
+
+      // const deleteFave = await Fave.destroy({
+      //   where: { userId: getUser.id, lawyerId: req.params.lawyerId },
+      // });
+      if (response?.userId) {
+        res.json(true);
+      } else {
+        res.json(false);
+      }
+    } catch (error) {
+      console.log(error);
     }
   },
 };

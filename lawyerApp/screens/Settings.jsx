@@ -84,7 +84,7 @@ const Settings = ({ navigation }) => {
     try {
       const response = await axios.post(
         "https://api.cloudinary.com/v1_1/dl4qexes8/upload",
-        formData
+        formData,
       );
       console.log("Cloudinary response:", response.data); // Add this line
 
@@ -115,6 +115,7 @@ const Settings = ({ navigation }) => {
   const list = [
     { title: "Edit Profile", page: "editProfile" },
     { title: "Notifications", page: "notifications" },
+    { title: "Favourites", page: "Favourites" },
     { title: "Reset Password", page: "resetPassword" },
     { title: "Privacy Policy", page: "privacyPolicy" },
     { title: "Help Center", page: "helpCenter" },
@@ -173,7 +174,7 @@ const Settings = ({ navigation }) => {
     getUser();
   }, []);
   return (
-    <View style={{ backgroundColor: "white" }}>
+    <View style={{ backgroundColor: "white", height: "100%", gap: 10 }}>
       <View>
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           <Image
@@ -187,18 +188,19 @@ const Settings = ({ navigation }) => {
               fontWeight: "700",
               marginLeft: 1,
               marginTop: 90,
-            }}
-          >
+            }}>
             Profile
           </Text>
         </View>
         <View
-          style={{ borderRadius: 200, overflow: "hidden", alignSelf: "center" }}
-        >
+          style={{
+            borderRadius: 200,
+            overflow: "hidden",
+            alignSelf: "center",
+          }}>
           <ImageBackground
             source={{ uri: user.ImageUrl }}
-            style={{ width: 200, height: 200 }}
-          ></ImageBackground>
+            style={{ width: 200, height: 200 }}></ImageBackground>
         </View>
         <View>
           <TouchableOpacity onPress={pickImage}>
@@ -210,8 +212,7 @@ const Settings = ({ navigation }) => {
             />
           </TouchableOpacity>
           <Text
-            style={{ alignSelf: "center", fontSize: 26, fontWeight: "500" }}
-          >
+            style={{ alignSelf: "center", fontSize: 26, fontWeight: "500" }}>
             {user.fullName}
           </Text>
           <Text
@@ -220,8 +221,7 @@ const Settings = ({ navigation }) => {
               fontSize: 19,
               fontWeight: "400",
               marginBottom: 30,
-            }}
-          >
+            }}>
             {user.email}
           </Text>
         </View>
@@ -235,8 +235,7 @@ const Settings = ({ navigation }) => {
             } else {
               navigation.navigate(item.page);
             }
-          }}
-        >
+          }}>
           <ListItem>
             {item.title === "Edit Profile" && (
               <FontAwesome5 name="user" size={24} color="black" />
@@ -256,6 +255,9 @@ const Settings = ({ navigation }) => {
             {item.title === "Logout" && (
               <FontAwesome5 name="sign-out-alt" size={24} color="black" />
             )}
+            {item.title === "Favourites" && (
+              <FontAwesome5 name="heart" size={24} />
+            )}
             <ListItem.Content>
               <ListItem.Title>{item.title}</ListItem.Title>
             </ListItem.Content>
@@ -265,8 +267,7 @@ const Settings = ({ navigation }) => {
       ))}
       <Modal
         isVisible={isModalVisible}
-        style={{ margin: 0, justifyContent: "flex-end" }}
-      >
+        style={{ margin: 0, justifyContent: "flex-end" }}>
         <View
           style={{
             backgroundColor: "white",
@@ -276,8 +277,7 @@ const Settings = ({ navigation }) => {
             justifyContent: "flex-start",
             alignItems: "center",
             height: 240,
-          }}
-        >
+          }}>
           <Line
             style={{ width: 40, height: 2, marginTop: -12, marginBottom: 28 }}
           />
@@ -288,13 +288,11 @@ const Settings = ({ navigation }) => {
               color: "gray",
               fontWeight: "500",
               marginTop: 40,
-            }}
-          >
+            }}>
             Are you sure you want to logout?
           </Text>
           <View
-            style={{ flexDirection: "row", justifyContent: "space-between" }}
-          >
+            style={{ flexDirection: "row", justifyContent: "space-between" }}>
             <TouchableOpacity
               style={{
                 backgroundColor: "#EADAA5",
@@ -305,16 +303,14 @@ const Settings = ({ navigation }) => {
                 marginRight: 10,
                 marginTop: 20,
               }}
-              onPress={toggleModal}
-            >
+              onPress={toggleModal}>
               <Text
                 style={{
                   color: "#634D05",
                   fontWeight: "600",
                   fontSize: "20",
                   marginTop: 5,
-                }}
-              >
+                }}>
                 Cancel
               </Text>
             </TouchableOpacity>
@@ -329,8 +325,7 @@ const Settings = ({ navigation }) => {
                 marginLeft: 10,
                 marginTop: 20,
               }}
-              onPress={() => navigation.navigate("Logout")}
-            >
+              onPress={() => navigation.navigate("Logout")}>
               <Text
                 style={{
                   color: "white",
@@ -338,8 +333,7 @@ const Settings = ({ navigation }) => {
                   fontSize: "20",
                   marginTop: 5,
                 }}
-                onPress={logOut}
-              >
+                onPress={logOut}>
                 Yes. Logout
               </Text>
             </TouchableOpacity>
