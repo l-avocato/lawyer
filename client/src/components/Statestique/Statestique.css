@@ -1,0 +1,41 @@
+/* Statestique.css */
+
+.statestique-container {
+    display: flex;
+  }
+  
+  .statestique-content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100vh;
+    overflow: auto;
+  }
+  
+  .charts-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex: 1;
+    overflow: auto;
+    max-height: calc(100vh - 60px); /* Adjust this value based on your Navbar's height */
+    scrollbar-width: thin; /* For Firefox */
+    scrollbar-color: transparent transparent; /* For Firefox */
+  }
+  
+  .chart-card {
+    border: 1px solid #ccc;
+    padding: 20px;
+    overflow: auto;
+    max-height: calc(100vh - 60px);
+    margin-bottom: 20px;
+  }
+  
+  .payment-chart-container {
+    display: flex;
+  }
+  
+  .payment-totals {
+    margin-top: 20px;
+  }
+  

@@ -26,6 +26,12 @@ const Statestique = () => {
   const [cases, setCases] = useState([]);
   const [clientCount, setClientCount] = useState(0);
   const [caseCount, setCaseCount] = useState(0);
+  const [phases, setPhases] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [paidCount, setPaidCount] = useState(0);
+  const [notPaidCount, setNotPaidCount] = useState(0);
+  const [totalPaidPrice, setTotalPaidPrice] = useState(0);
+  const [totalNotPaidPrice, setTotalNotPaidPrice] = useState(0);
 
   const getLawyer = async () => {
     try {
@@ -77,6 +83,39 @@ const Statestique = () => {
     }
   };
 
+  const getPhases = async () => {
+    try {
+      setIsLoading(true);
+      const response = await axios.get(
+        `http://localhost:1128/api/phase/getPhasesByLawyerId/${lawyer?.id}`
+      );
+      setPhases(response.data);
+      console.log("this is phases", response.data);
+      setIsLoading(false);
+
+      // Calculate the paid and not paid counts
+      const paidCount = response.data.filter((phase) => phase.IsPaid).length;
+      const notPaidCount = response.data.length - paidCount;
+      setPaidCount(paidCount);
+      setNotPaidCount(notPaidCount);
+
+      // Calculate the total price for paid and not paid phases
+      const totalPaidPrice = response.data
+        .filter((phase) => phase.IsPaid)
+        .reduce((sum, phase) => sum + phase.price, 0);
+
+      const totalNotPaidPrice = response.data
+        .filter((phase) => !phase.IsPaid)
+        .reduce((sum, phase) => sum + phase.price, 0);
+
+      setTotalPaidPrice(totalPaidPrice);
+      setTotalNotPaidPrice(totalNotPaidPrice);
+    } catch (error) {
+      console.error("Error fetching phases", error);
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
     getLawyer();
   }, [refrech]);
@@ -84,19 +123,14 @@ const Statestique = () => {
   useEffect(() => {
     getLawyerClients();
     fetchCasesData();
+    getPhases();
   }, [lawyer]);
   const barData = [{ name: "All Clients", count: clientCount }];
   const barData2 = [{ name: "All Cases", count: caseCount }];
 
-  const lineData = [
-    { name: "Page A", uv: 2, pv: 5.5, amt: 2 },
-    { name: "Page B", uv: 8.5, pv: 1.5, amt: 5 },
-  ];
-
   const pieData = [
-    { name: "series A", value: 10 },
-    { name: "series B", value: 15 },
-    { name: "series C", value: 20 },
+    { name: "Paid", value: paidCount },
+    { name: "Not Paid", value: notPaidCount },
   ];
 
   return (
@@ -136,7 +170,7 @@ const Statestique = () => {
             <p> All clients </p>
             <BarChart
               width={500}
-              height={300}
+              height={250}
               data={barData}
               margin={{
                 top: 5,
@@ -162,7 +196,7 @@ const Statestique = () => {
             <p>All cases </p>
             <BarChart
               width={500}
-              height={300}
+              height={250}
               data={barData2}
               margin={{
                 top: 5,
@@ -195,36 +229,8 @@ const Statestique = () => {
               maxHeight: "calc(100vh - 60px)",
             }}
           >
-            <div>
-              <p> All Phases </p>
-              <LineChart
-                width={500}
-                height={300}
-                data={lineData}
-                margin={{
-                  top: 5,
-                  right: 30,
-                  left: 20,
-                  bottom: 5,
-                }}
-              >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Line
-                  type="monotone"
-                  dataKey="pv"
-                  stroke="#FF8042"
-                  activeDot={{ r: 8 }}
-                />
-                <Line type="monotone" dataKey="uv" stroke="#00C49F" />
-              </LineChart>
-            </div>
-
             <div style={{ border: "1px solid #ccc", padding: "20px" }}>
-              <p> All lawyers</p>
+              <p>All Payments</p>
               <PieChart width={400} height={400}>
                 <Pie
                   dataKey="value"
@@ -239,12 +245,16 @@ const Statestique = () => {
                   {pieData.map((entry, index) => (
                     <Cell
                       key={`cell-${index}`}
-                      fill={["#0088FE", "#00C49F", "#FFBB28"][index % 3]}
+                      fill={["#ff4d4f", "#00C49F", "#ff4d4f"][index % 3]}
                     />
                   ))}
                 </Pie>
                 <Tooltip />
               </PieChart>
+              <div>
+                <p>Total Paid Price: {totalPaidPrice}</p>
+                <p>Total Not Paid Price: {totalNotPaidPrice}</p>
+              </div>
             </div>
           </div>
         </div>

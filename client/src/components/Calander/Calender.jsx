@@ -330,7 +330,7 @@ const resources = [
   // },
 ];
 
-const Calendar = () => {
+const Calendar = ()=> {
   const [data, setData] = useState([]);
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -509,5 +509,4 @@ const [addedAppo,setAddedAppo]=useState({
     </Paper>
   );
 };
-
-export default Calendar;
+export  {Calendar}
