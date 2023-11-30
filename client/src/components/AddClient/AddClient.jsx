@@ -128,7 +128,10 @@ const AddClient = ({ lawyer, refrech, setRefrech }) => {
                   }}
                 >
                   <div className="form-floating">
-                    <label for="formFile" className="form-label"></label>
+                    <label for="formFile" className="form-label">
+                  
+                      
+                    </label>
                     <input
                       className="form-control"
                       type="file"

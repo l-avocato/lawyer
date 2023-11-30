@@ -15,7 +15,6 @@ getUserLawyerId:async (req,res)=>{
 
 
 getClientsByLawyerId: async (req, res) => {
-    console.log("balkis said you are the ONE");
     try {
       const userLawyerRelations = await Lawyer.findAll({ where: { id: req.params.lawyerId },
         include: [{

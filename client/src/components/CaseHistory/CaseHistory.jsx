@@ -244,7 +244,6 @@ const CaseHistory = () => {
     { field: "title", headerName: "Title", width: 150 },
     { field: "number", headerName: "Number", width: 150 },
     { field: "createdAt", headerName: "Opened At", width: 150 },
-    { field: "details", headerName: "Details", width: 150 },
 
     {
       field: "actions",

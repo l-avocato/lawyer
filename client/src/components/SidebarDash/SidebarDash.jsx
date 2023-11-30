@@ -81,7 +81,7 @@ const SidebarDash = () => {
             <span className="side-title">Tasks</span>
           </li>
 
-          <li className="g-1" onClick={() => navigate("/PaymentHistory")}>
+          <li className="g-1" onClick={() => navigate("/Pay")}>
             <AssignmentTurnedInIcon className="new-icon" />
             <span className="side-title">Payment </span>
           </li>

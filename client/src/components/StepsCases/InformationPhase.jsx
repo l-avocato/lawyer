@@ -279,25 +279,24 @@ const InformationPhase = () => {
                   Phase Description{" "}
                   <label style={{ color: "goldenrod" }}>
                     {phase.data.description}
-                    ahagdh 
-                    hjda jj 
-                    jdah aj hdna dbqns
-                    qdh bqdjb jq
-                    dhqdbn,,dbn 
+                  
+                  
+                    
                   </label>
                 </p>
 
                 <img
-                  src={require("../../assets/progress.jpg")}
-                  alt=""
-                  style={{
-                    width: "195px",
-                    height: "250px",
-                    borderRadius: "2rem 0 2rem 0",
-                    alignSelf: "center",
-                  
-                  }}
-                />
+    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQ5UTSF1Ev0HVDSi3Z6lJMRk8CSB550yY5zQ&usqp=CAU"
+    alt=""
+    style={{
+        width: "195px",
+        height: "190px",
+        borderRadius: "2rem 0 2rem 0",
+        alignSelf: "center",
+        opacity: 0.7,
+    }}
+/>
+
               </div>
             </div>
             <div className="dashboard_main_container_leith">
