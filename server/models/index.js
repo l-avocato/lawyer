@@ -151,8 +151,8 @@ Folder.belongsTo(Phase);
 Lawyer.hasMany(Case);
 Case.belongsTo(Lawyer);
 
-User.belongsToMany(Lawyer, { through: Fave });
-Lawyer.belongsToMany(User, { through: Fave });
+// User.belongsToMany(Lawyer, { through: Fave });
+// Lawyer.belongsToMany(User, { through: Fave });
 Lawyer.hasMany(Phase);
 Phase.belongsTo(Lawyer);
 

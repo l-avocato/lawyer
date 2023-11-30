@@ -33,13 +33,13 @@ function Flow() {
   const [selectedEdge, setSelectedEdge] = useState(null);
   const [showEdgeModal, setShowEdgeModal] = useState(false);
   const [refresh, setRefresh] = useState(false);
-  // const [clicked, setClicked] = useState(false);
   const [newLabel, setNewLabel] = useState("");
   const [source, setSource] = useState("");
   const [target, setTarget] = useState("");
   const [price, setPrice] = useState(0);
   const [description, setDescription] = useState("");
   const [lawyer, setLawyer] = useState({});
+  const [phaseDetails, setPhaseDetails] = useState({});
 
   console.log("this is nodes", nodes);
 
@@ -105,7 +105,11 @@ function Flow() {
         const newNodes = result.map((data) => {
           return {
             id: String(data.id),
-            data: { label: data.label, description: data.description },
+            data: {
+              label: data.label,
+              description: data.description,
+              price: data.price,
+            },
             position: {
               x: data.positionX,
               y: data.positionY,
@@ -308,12 +312,11 @@ function Flow() {
                         alignItems: "center",
                         gap: "2rem",
                       }}>
-                      {/* <h6>Edge ID: {selectedEdge.id}</h6> */}
-
                       <input
                         name="text"
                         class="input"
-                        placeholder="Update Edge Name"
+                        placeholder={"Update Edge Name"}
+                        defaultValue={selectedEdge.data.label}
                         style={{
                           width: "140px",
                           fontSize: "12px",
@@ -332,6 +335,7 @@ function Flow() {
                         name="payment"
                         class="input"
                         placeholder="Payment (optional)"
+                        defaultValue={selectedEdge.data.price}
                         style={{
                           width: "140px",
                           fontSize: "12px",
@@ -354,6 +358,7 @@ function Flow() {
                         name="text"
                         className="input"
                         placeholder="Add description of the phase"
+                        defaultValue={selectedEdge.data.description}
                         style={{
                           width: "380px",
                           height: "100px",

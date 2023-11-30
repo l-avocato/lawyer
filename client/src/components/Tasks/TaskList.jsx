@@ -51,7 +51,7 @@ const TaskList = () => {
       const response = await axios.get(
         `http://localhost:1128/api/task/allTasks/lawyerId/${lawyer.id}`
       );
-      setTasks(response.data);
+      setTasks(response.data.reverse());
     } catch (error) {
       console.log(error);
     }
@@ -117,7 +117,7 @@ const TaskList = () => {
               {tasks.map((task) => (
                 <div
                   key={task.id}
-                  className={classnames("task-card", { completed: task.done })}
+                  className={classnames("task-card")}
                 >
                   <div className="task-card-header">
                     <input
@@ -126,7 +126,7 @@ const TaskList = () => {
                       checked={task.done}
                       onChange={() => handleToggleDone(task.id)}
                     />
-                    <span className="task-description">{task.description}</span>
+                    <span className={classnames("task-description",{taskIsDone:task.done})}>{task.description}</span>
                   </div>
                   <div className="task-card-body">
                     <span className="task-deadline">
