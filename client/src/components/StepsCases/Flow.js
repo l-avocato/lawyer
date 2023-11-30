@@ -18,18 +18,16 @@ import AddIcon from "@mui/icons-material/Add";
 import { useNavigate } from "react-router-dom";
 import SidebarDash from "../SidebarDash/SidebarDash.jsx";
 import Swal from "sweetalert2";
-import { FIREBASE_AUTH , db } from "../../firebaseconfig";
+import { FIREBASE_AUTH, db } from "../../firebaseconfig";
 import { useLocation } from "react-router-dom";
 
 const rfStyle = {
   backgroundColor: "white",
 };
 
-
-
 function Flow() {
-  const location = useLocation()
-  const caseHistory =location?.state?.case
+  const location = useLocation();
+  const caseHistory = location?.state?.case;
   const [nodes, setNodes] = useState([]);
   const [edges, setEdges] = useState([]);
   const [selectedEdge, setSelectedEdge] = useState(null);
@@ -41,11 +39,10 @@ function Flow() {
   const [price, setPrice] = useState(0);
   const [description, setDescription] = useState("");
   const [lawyer, setLawyer] = useState({});
-  const [phaseDetails,setPhaseDetails] = useState({})
+  const [phaseDetails, setPhaseDetails] = useState({});
 
-   
+  console.log("this is nodes", nodes);
 
-   
   const navigate = useNavigate();
 
   const onConnect = useCallback(
@@ -69,7 +66,7 @@ function Flow() {
         return updatedEdges;
       });
     },
-    [refresh]
+    [refresh],
   );
 
   const getLawyer = async () => {
@@ -77,7 +74,7 @@ function Flow() {
       const loggedInLawyer = FIREBASE_AUTH.currentUser.email;
       console.log(loggedInLawyer);
       const res = await axios.get(
-        `http://localhost:1128/api/lawyer/getLawyerByEmail/${loggedInLawyer}`
+        `http://localhost:1128/api/lawyer/getLawyerByEmail/${loggedInLawyer}`,
       );
       console.log("this is lawyer", res.data);
       setLawyer(res.data);
@@ -87,29 +84,32 @@ function Flow() {
   };
   const onNodesChange = useCallback(
     (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
-    [setNodes]
+    [setNodes],
   );
   const onEdgesChange = useCallback(
     (changes) =>
       setEdges((eds) => {
         applyEdgeChanges(changes, eds);
       }),
-    [setEdges]
+    [setEdges],
   );
-  
+
   const fetchData = async () => {
     try {
-   
       const res = await axios.get(
-        `http://localhost:1128/api/phase/allPhase/${caseHistory.id}`
+        `http://localhost:1128/api/phase/allPhase/${caseHistory.id}`,
       );
- const result = res.data.phases
- console.log( "this is res", result);
+      const result = res.data.phases;
+      console.log("this is res", result);
       if (result.length) {
         const newNodes = result.map((data) => {
           return {
             id: String(data.id),
-            data: { label: data.label, description: data.description,price:data.price},
+            data: {
+              label: data.label,
+              description: data.description,
+              price: data.price,
+            },
             position: {
               x: data.positionX,
               y: data.positionY,
@@ -122,11 +122,9 @@ function Flow() {
               width: 200,
               borderRadius: "10px",
             },
-            
           };
         });
         setNodes(newNodes);
-        
       }
     } catch (error) {
       console.log(error);
@@ -136,7 +134,7 @@ function Flow() {
   const fetchEdge = async () => {
     try {
       const result = await axios.get(
-        "http://localhost:1128/api/edge/getAll/edge"
+        "http://localhost:1128/api/edge/getAll/edge",
       );
 
       if (result.data.length) {
@@ -146,7 +144,7 @@ function Flow() {
             source: String(data.source),
             target: String(data.target),
             label: data.label,
-            description:data.description,
+            description: data.description,
             type: "step",
           };
         });
@@ -157,13 +155,13 @@ function Flow() {
     }
   };
   useEffect(() => {
-    getLawyer()
+    getLawyer();
   }, []);
 
   useEffect(() => {
     fetchData(1);
     fetchEdge();
-  }, [lawyer,refresh]);
+  }, [lawyer, refresh]);
 
   const AddEdge = async () => {
     const NewEdge = {
@@ -190,8 +188,8 @@ function Flow() {
       border: "1px solid #222138",
       width: 180,
       borderRadius: "100px",
-      caseId:caseHistory.id,
-      lawyerId: lawyer.id
+      caseId: caseHistory.id,
+      lawyerId: lawyer.id,
     };
 
     axios
@@ -206,12 +204,12 @@ function Flow() {
   };
 
   const deleteNode = async (id) => {
-    
-      await axios.delete(`http://localhost:1128/api/phase/remove/${id}`).then(res=> setRefresh(!refresh)
-
-     ).catch((error)=>{
-      console.error("Error deleting node:", error);
-    })
+    await axios
+      .delete(`http://localhost:1128/api/phase/remove/${id}`)
+      .then((res) => setRefresh(!refresh))
+      .catch((error) => {
+        console.error("Error deleting node:", error);
+      });
   };
 
   const updateNodeName = async (id) => {
@@ -242,7 +240,6 @@ function Flow() {
       });
   };
 
-
   useEffect(() => {
     fetchData();
     fetchEdge();
@@ -262,31 +259,30 @@ function Flow() {
             top: "12%",
             display: "flex",
             padding: "1rem",
-          }}
-        >
+          }}>
           <ReactFlow
             nodes={nodes}
             onNodesChange={onNodesChange}
             onNodeClick={(event, edge) => {
               setSelectedEdge(edge);
-              
+
               setShowEdgeModal(true);
+              console.log("this is selectededge", edge);
             }}
+            // nodeTypes={{ special: NodeWithIcon }}
             onNodeMouseEnter={() => {}}
             edges={edges}
             onEdgesChange={onEdgesChange}
             onConnect={onConnect}
             onNodeDragStop={onNodeDragStop}
             fitView
-            style={rfStyle}
-          >
+            style={rfStyle}>
             <Background />
 
             {showEdgeModal && (
               <div
                 className="modal fade show"
-                style={{ display: "block", position: "relative" }}
-              >
+                style={{ display: "block", position: "relative" }}>
                 <div className="modal-dialog">
                   <div className="modal-content">
                     <div
@@ -299,15 +295,13 @@ function Flow() {
                           display: "flex",
                           justifyContent: "center",
                           alignItems: "center",
-                        }}
-                      >
+                        }}>
                         Phase Details
                       </h5>
                       <button
                         type="button"
                         className="btn-close"
-                        onClick={() => setShowEdgeModal(false)}
-                      ></button>
+                        onClick={() => setShowEdgeModal(false)}></button>
                     </div>
 
                     <div
@@ -317,10 +311,7 @@ function Flow() {
                         justifyContent: "center",
                         alignItems: "center",
                         gap: "2rem",
-                      }}
-                    >
-                   
-
+                      }}>
                       <input
                         name="text"
                         class="input"
@@ -329,17 +320,16 @@ function Flow() {
                         style={{
                           width: "140px",
                           fontSize: "12px",
-                          
+
                           borderRadius: "0.75rem",
                           padding: "0.5rem",
-                          
+
                           border: "2px solid #f0f0f0",
                           transition: " all 0.2s ease-in-out",
                         }}
                         onChange={(e) => {
                           setNewLabel(e.target.value);
-                        }}
-                      ></input>
+                        }}></input>
                       <input
                         type="number"
                         name="payment"
@@ -351,50 +341,46 @@ function Flow() {
                           fontSize: "12px",
                           borderRadius: "0.75rem",
                           padding: "0.5rem",
-                          
+
                           border: "2px solid #f0f0f0",
                           transition: " all 0.2s ease-in-out",
                         }}
-                        onChange={(e) => setPrice(e.target.value)}
-                      ></input>
+                        onChange={(e) => setPrice(e.target.value)}></input>
                     </div>
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            marginTop: "1rem",
-                          }}
-                        >
-                          <input
-                            name="text"
-                            className="input"
-                            placeholder="Add description of the phase"
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        marginTop: "1rem",
+                      }}>
+                      <input
+                        name="text"
+                        className="input"
+                        placeholder="Add description of the phase"
                         defaultValue={selectedEdge.data.description}
-
-                            style={{
-                              width: "380px",
-                              height: "100px",
-                              fontSize: "14px",
-                              borderRadius: "0.5rem",
-                              padding: "2rem",
-                              overflowY: "auto",
-                              // border: "1px solid grey",
-                              transition: "all 0.2s ease-in-out",
-                            }}
-                            onChange={(e) => {
-                              setDescription(e.target.value);
-                            }}
-                          />
-                        </div>
+                        style={{
+                          width: "380px",
+                          height: "100px",
+                          fontSize: "14px",
+                          borderRadius: "0.5rem",
+                          padding: "2rem",
+                          overflowY: "auto",
+                          // border: "1px solid grey",
+                          transition: "all 0.2s ease-in-out",
+                        }}
+                        onChange={(e) => {
+                          setDescription(e.target.value);
+                        }}
+                      />
+                    </div>
                     <div
                       className="modal-footer"
                       style={{
                         display: "flex",
                         justifyContent: "space-between",
                         marginLeft: "0.5rem",
-                      }}
-                    >
+                      }}>
                       <DeleteForeverIcon
                         style={{
                           color: "goldenrod",
@@ -459,8 +445,11 @@ function Flow() {
                           color: "black",
                           background: "goldenrod",
                         }}
-                        onClick={() => navigate("/informations", {state:  {phase:selectedEdge}})}
-                      >
+                        onClick={() =>
+                          navigate("/informations", {
+                            state: { phase: selectedEdge },
+                          })
+                        }>
                         See All details
                       </button>
                     </div>
@@ -494,8 +483,7 @@ function Flow() {
             display: "flex",
             flexDirection: "column",
             top: "25rem",
-          }}
-        >
+          }}>
           <button
             onClick={addNode}
             style={{
@@ -512,11 +500,10 @@ function Flow() {
               borderRadius: "1rem",
               transition: "0.5s",
               borderRadius: "50%",
-            
-              fontWeight:"600"
+
+              fontWeight: "600",
             }}
-            className="plusbutton"
-          >
+            className="plusbutton">
             +
           </button>
           {/* <button data-bs-toggle="modal" data-bs-target="#staticBackdrops">
@@ -531,8 +518,7 @@ function Flow() {
             data-bs-keyboard="false"
             tabindex="-1"
             aria-labelledby="staticBackdropLabel"
-            aria-hidden="true"
-          >
+            aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
@@ -544,8 +530,7 @@ function Flow() {
                     type="button"
                     class="btn-close"
                     data-bs-dismiss="modal"
-                    aria-label="Close"
-                  ></button>
+                    aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                   <div
@@ -553,8 +538,7 @@ function Flow() {
                       display: "flex",
                       flexDirection: "column",
                       gap: "1rem",
-                    }}
-                  >
+                    }}>
                     <label for="name">Source:</label>
 
                     <input
@@ -606,8 +590,7 @@ function Flow() {
                   <button
                     type="button"
                     class="btn btn-secondary"
-                    data-bs-dismiss="modal"
-                  >
+                    data-bs-dismiss="modal">
                     Close
                   </button>
                   <button
@@ -615,8 +598,7 @@ function Flow() {
                     class="btn btn-primary"
                     onClick={() => {
                       AddEdge();
-                    }}
-                  >
+                    }}>
                     Insert
                   </button>
                 </div>

@@ -32,6 +32,10 @@ import MyCases from "./screens/MyCases";
 import CaseDetails from "./screens/CaseDetails";
 import PhaseDetails from "./screens/PhaseDetails";
 import Favourites from "./screens/Favourites";
+
+import { LogBox } from "react-native";
+LogBox.ignoreLogs(["Warning: ..."]); // Ignore log notification by message
+LogBox.ignoreAllLogs();
 export default function App() {
   const Stack = createNativeStackNavigator();
   return (
