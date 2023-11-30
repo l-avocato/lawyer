@@ -6,29 +6,30 @@ import { updateDoc, doc } from "firebase/firestore";
 import { GoogleMap, Marker } from "@react-google-maps/api";
 import "./Style.css";
 import SidebarDash from "../SidebarDash/SidebarDash";
-import { FIREBASE_AUTH  } from "../../firebaseconfig";
+import { FIREBASE_AUTH } from "../../firebaseconfig";
 import Swal from "sweetalert2";
-import EditNoteIcon from '@mui/icons-material/EditNote';
- 
+import EditNoteIcon from "@mui/icons-material/EditNote";
+
 import { getAuth } from "firebase/auth";
 import GpsFixedIcon from "@mui/icons-material/GpsFixed";
 import RoomIcon from "@mui/icons-material/Room";
-import EditNoteIcon from '@mui/icons-material/EditNote';
-import Swal from "sweetalert2";
-
+// import EditNoteIcon from '@mui/icons-material/EditNote';
+// import Swal from "sweetalert2";
 
 const Settings = () => {
   const [user, setUser] = useState({});
 
-  const [papers, setPapers] = useState("https://sm.ign.com/ign_fr/cover/a/avatar-gen/avatar-generations_bssq.jpg");
+  const [papers, setPapers] = useState(
+    "https://sm.ign.com/ign_fr/cover/a/avatar-gen/avatar-generations_bssq.jpg"
+  );
   const [fullName, setFullName] = useState(user.fullName);
   const [adress, setAdress] = useState(user.adress);
   const [phoneNumber, setPhoneNumber] = useState(user.phoneNumber);
-  const [price , setPrice]= useState(user.price);
-  
+  const [price, setPrice] = useState(user.price);
+
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
-  const [phoneNumber,setPhoneNumber] = useState("")
+  // const [phoneNumber, setPhoneNumber] = useState("");
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [markerClicked, setMarkerClicked] = useState(true);
   const position = {
@@ -36,9 +37,6 @@ const Settings = () => {
     lng: parseFloat(longitude) || -0.09,
   };
   const menuRef = useRef(null);
-
-
-
 
   let mapping = [
     {
@@ -211,7 +209,9 @@ const Settings = () => {
   const auth = getAuth();
   const handleGetUser = async () => {
     await axios
-      .get(`http://localhost:1128/api/lawyer/getLawyerByEmail/${FIREBASE_AUTH.currentUser.email}`)
+      .get(
+        `http://localhost:1128/api/lawyer/getLawyerByEmail/${FIREBASE_AUTH.currentUser.email}`
+      )
       .then((res) => {
         setUser(res.data);
       })
@@ -243,7 +243,6 @@ const Settings = () => {
     lat: latitude,
     lng: longitude,
   };
-
 
   const getLocation = () => {
     if (navigator.geolocation) {
@@ -281,16 +280,13 @@ const Settings = () => {
     }
   };
 
-
-
   useEffect(() => {
     setPapers(user.ImageUrl);
     setFullName(user.fullName);
     setAdress(user.adress);
     setPhoneNumber(user.phoneNumber);
-    setPrice(user.price)
+    setPrice(user.price);
   }, [user]);
-
 
   useEffect(() => {
     handleGetUser();
@@ -448,7 +444,7 @@ const Settings = () => {
                   <button
                     type="button"
                     id="btnUpda
-                    te" 
+                    te"
                     onClick={() => {
                       showModal();
                       getLocation();
