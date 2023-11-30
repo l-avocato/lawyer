@@ -26,7 +26,6 @@ import { FIREBASE_AUTH } from "../../firebaseconfig";
 const InformationPhase = () => {
   const location = useLocation();
   const phase = location?.state?.phase;
-  console.log("this is phase", phase);
 
   const [path, setPath] = useState("document");
   const [folders, setFolders] = useState([]);
@@ -68,7 +67,6 @@ const InformationPhase = () => {
       const response = await axios.get(
         `http://localhost:1128/api/folder/getAll/${phase.id}`
       );
-      console.log("this is folder", response.data);
       setFolders(response.data.folders);
     } catch (error) {}
   };
@@ -144,7 +142,6 @@ const InformationPhase = () => {
         "https://api.cloudinary.com/v1_1/dgztaxbvi/upload",
         formData
       );
-      console.log(data.data);
 
       await axios.post("http://localhost:1128/api/file/add", {
         name: data.data.original_filename + ".pdf",
@@ -170,7 +167,7 @@ const InformationPhase = () => {
   const auth = getAuth();
 
   const handleGetUser = async () => {
-    const email = FIREBASE_AUTH.currentUser.email;
+    const email = FIREBASE_AUTH?.currentUser?.email;
 
     await axios
       .get(`http://localhost:1128/api/lawyer/getLawyerByEmail/${email}`)
@@ -282,25 +279,24 @@ const InformationPhase = () => {
                   Phase Description{" "}
                   <label style={{ color: "goldenrod" }}>
                     {phase.data.description}
-                    ahagdh 
-                    hjda jj 
-                    jdah aj hdna dbqns
-                    qdh bqdjb jq
-                    dhqdbn,,dbn 
+                  
+                  
+                    
                   </label>
                 </p>
 
                 <img
-                  src={require("../../assets/progress.jpg")}
-                  alt=""
-                  style={{
-                    width: "195px",
-                    height: "250px",
-                    borderRadius: "2rem 0 2rem 0",
-                    alignSelf: "center",
-                  
-                  }}
-                />
+    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQ5UTSF1Ev0HVDSi3Z6lJMRk8CSB550yY5zQ&usqp=CAU"
+    alt=""
+    style={{
+        width: "195px",
+        height: "190px",
+        borderRadius: "2rem 0 2rem 0",
+        alignSelf: "center",
+        opacity: 0.7,
+    }}
+/>
+
               </div>
             </div>
             <div className="dashboard_main_container_leith">

@@ -10,6 +10,8 @@ import {
 import { useNavigate } from "react-router-dom";
 
 const App = ({ user, deleteUser }) => {
+
+  console.log(user,"this  is the user")
   const navigate = useNavigate();
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);

@@ -9,7 +9,7 @@ const PaymentHistory = () => {
   const [phases, setPhases] = useState([]);
   const [lawyer, setLawyer] = useState({});
   const [refrech, setRefrech] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+
 
   const getLawyer = async () => {
     try {
@@ -27,16 +27,15 @@ const PaymentHistory = () => {
 
   const getPhases = async () => {
     try {
-      setIsLoading(true);
+      
       const response = await axios.get(
         `http://localhost:1128/api/phase/getPhasesByLawyerId/${lawyer?.id}`
       );
       setPhases(response.data);
       console.log("this is phases", response.data);
-      setIsLoading(false);
+    
     } catch (error) {
       console.error("Error fetching phases", error);
-      setIsLoading(false);
     }
   };
 
@@ -67,6 +66,8 @@ const PaymentHistory = () => {
               borderRadius: "4px",
               backgroundColor: params.row.IsPaid ? "#4CAF50" : "#ff4d4f",
               color: "#fff",
+              width:"7rem",
+              fontSize: "1.1rem"
             }}
           >
             {params.row.IsPaid ? "Paid" : "Not Paid"}
@@ -105,11 +106,9 @@ const PaymentHistory = () => {
 
   useEffect(() => {
     getPhases();
-  }, [refrech, lawyer]);
+  }, [refrech,lawyer]);
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+
 
   const rows =
     phases && phases.length > 0
