@@ -151,10 +151,14 @@ Folder.belongsTo(Phase);
 Lawyer.hasMany(Case);
 Case.belongsTo(Lawyer);
 
-User.belongsToMany(Lawyer, { through: Fave });
-Lawyer.belongsToMany(User, { through: Fave });
+// User.belongsToMany(Lawyer, { through: Fave });
+// Lawyer.belongsToMany(User, { through: Fave });
 Lawyer.hasMany(Phase);
 Phase.belongsTo(Lawyer);
+User.hasMany(Fave);
+Lawyer.hasMany(Fave);
+Fave.belongsTo(User);
+Fave.belongsTo(Lawyer);
 
 // connection
 //   .sync({ alter: true })

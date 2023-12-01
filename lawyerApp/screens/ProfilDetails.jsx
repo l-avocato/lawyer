@@ -62,11 +62,10 @@ const ProfilDetails = ({ navigation, route }) => {
       setStars("");
 
       setShowReviewsModal(true);
-      
+
       setTimeout(() => {
         setShowReviewsModal(false);
       }, 2000);
-
     } catch (error) {
       console.log(error);
     }
@@ -157,7 +156,7 @@ const ProfilDetails = ({ navigation, route }) => {
 
               <View style={{ display: "flex", flexDirection: "row" }}>
                 <FontAwesome name="dollar" style={styles.icon} />
-                <Text style={styles.infoText}>${law.Price}/H</Text>
+                <Text style={styles.infoText}>{law.Price}</Text>
                 <Text style={styles.infoText}>{item.price}/H</Text>
               </View>
             </View>

@@ -1,22 +1,25 @@
 const sequalize = require("sequelize");
-const { User_Lawyer, User, Lawyer, Fave } = require("../models/index");
+const { User, Lawyer, Fave } = require("../models/index");
 
 module.exports = {
   getFaveByUserId: async (req, res) => {
     console.log("balkis said you are the ONE");
     try {
-      const getUser = await User.findOne({ email: req.params.email });
+      const getUser = await User.findOne({ where:
+        
+        { email: req.params.email }});
 
-      const userLawyerRelations = await User.findOne({
-        where: { id: getUser.id },
+      const userLawyerRelations = await Fave.findAll( {
+        where: { userId: getUser.id },
         include: [
           {
             model: Lawyer,
             order: [["id", "ASC"]],
           },
         ],
-      });
-      res.json(userLawyerRelations.lawyers);
+      }
+      );
+      res.json(userLawyerRelations);
     } catch (error) {
       console.log(error);
       res.json(error);

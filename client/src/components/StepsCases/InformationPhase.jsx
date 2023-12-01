@@ -282,11 +282,7 @@ const InformationPhase = () => {
                   Phase Description{" "}
                   <label style={{ color: "goldenrod" }}>
                     {phase.data.description}
-                    ahagdh 
-                    hjda jj 
-                    jdah aj hdna dbqns
-                    qdh bqdjb jq
-                    dhqdbn,,dbn 
+                    ahagdh hjda jj jdah aj hdna dbqns qdh bqdjb jq dhqdbn,,dbn
                   </label>
                 </p>
 
@@ -298,7 +294,6 @@ const InformationPhase = () => {
                     height: "250px",
                     borderRadius: "2rem 0 2rem 0",
                     alignSelf: "center",
-                  
                   }}
                 />
               </div>
@@ -655,7 +650,7 @@ const InformationPhase = () => {
                   <div>
                     <Flickity options={{ initialIndex: 1 }}>
                       {notes.map((notes, i) => {
-                        console.log('this is note ', notes);
+                        console.log("this is note ", notes);
                         return (
                           <div
                             style={{
