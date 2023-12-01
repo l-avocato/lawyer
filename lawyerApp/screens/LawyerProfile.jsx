@@ -46,13 +46,13 @@ const LawyerProfile = ({ navigation }) => {
   const fetchAppointments = async () => {
     try {
       const response = await axios.get(
-        `http://${config}:1128/api/appointment/appointment/user/${user.id}`
+        `http://${config}:1128/api/appointment/appointment/user/${user.id}`,
       );
       const completed = response.data.filter(
-        (appointment) => new Date(appointment.date) < new Date()
+        (appointment) => new Date(appointment.date) < new Date(),
       );
       const upcoming = response.data.filter(
-        (appointment) => new Date(appointment.date) >= new Date()
+        (appointment) => new Date(appointment.date) >= new Date(),
       );
       setAppointments({ completed, upcoming });
     } catch (error) {
@@ -63,7 +63,7 @@ const LawyerProfile = ({ navigation }) => {
   const fetchProfiles = async () => {
     try {
       const response = await axios.get(
-        `http://${config}:1128/api/lawyer/allLawyers`
+        `http://${config}:1128/api/lawyer/allLawyers`,
       );
       console.log("thisis data", response.data);
       setProfiles(response.data);
@@ -94,11 +94,10 @@ const LawyerProfile = ({ navigation }) => {
   const renderScene = SceneMap({
     first: () => (
       <ScrollView>
-        {appointments.upcoming.map((appointment, index) => (
+        {appointments?.upcoming.map((appointment, index) => (
           <TouchableOpacity
             key={index}
-            onPress={() => handleProfilePress(appointment)}
-          >
+            onPress={() => handleProfilePress(appointment)}>
             <View
               style={{
                 margin: 10,
@@ -106,11 +105,10 @@ const LawyerProfile = ({ navigation }) => {
                 borderRadius: 15,
                 backgroundColor: "#ffffff",
                 elevation: 3, // Add elevation for a shadow effect
-              }}
-            >
+              }}>
               <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <Image
-                  source={{ uri: appointment.lawyer.ImageUrl }}
+                  source={{ uri: appointment?.lawyer.ImageUrl }}
                   style={{
                     width: 70,
                     height: 70,
@@ -120,15 +118,14 @@ const LawyerProfile = ({ navigation }) => {
                 />
                 <View>
                   <Text
-                    style={{ fontSize: 18, fontWeight: "600", color: "#333" }}
-                  >
-                    {appointment.lawyer.fullName}
+                    style={{ fontSize: 18, fontWeight: "600", color: "#333" }}>
+                    {appointment?.lawyer?.fullName}
                   </Text>
                   <Text style={{ fontSize: 16, color: "#555" }}>
-                    Date: {appointment.date.slice(0, 10)}
+                    Date: {appointment?.date.slice(0, 10)}
                   </Text>
                   <Text style={{ fontSize: 16, color: "#555" }}>
-                    Time: {appointment.time.slice(0, 5)}
+                    Time: {appointment?.time.slice(0, 5)}
                   </Text>
                 </View>
               </View>
@@ -146,8 +143,7 @@ const LawyerProfile = ({ navigation }) => {
                   padding: 12,
                   alignItems: "center",
                 }}
-                onPress={() => handleProfilePress(appointment)}
-              >
+                onPress={() => handleProfilePress(appointment)}>
                 <Text style={{ color: "#fff", fontSize: 16 }}>
                   See Lawyer Details
                 </Text>
@@ -162,8 +158,7 @@ const LawyerProfile = ({ navigation }) => {
         {appointments.completed.map((appointment, index) => (
           <TouchableOpacity
             key={index}
-            onPress={() => handleProfilePress(appointment)}
-          >
+            onPress={() => handleProfilePress(appointment)}>
             <View
               style={{
                 margin: 10,
@@ -171,11 +166,10 @@ const LawyerProfile = ({ navigation }) => {
                 borderRadius: 15,
                 backgroundColor: "#ffffff",
                 elevation: 3, // Add elevation for a shadow effect
-              }}
-            >
+              }}>
               <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <Image
-                  source={{ uri: appointment.lawyer.ImageUrl }}
+                  source={{ uri: appointment?.lawyer?.ImageUrl }}
                   style={{
                     width: 70,
                     height: 70,
@@ -185,15 +179,14 @@ const LawyerProfile = ({ navigation }) => {
                 />
                 <View>
                   <Text
-                    style={{ fontSize: 18, fontWeight: "600", color: "#333" }}
-                  >
-                    {appointment.lawyer.fullName}
+                    style={{ fontSize: 18, fontWeight: "600", color: "#333" }}>
+                    {appointment?.lawyer?.fullName}
                   </Text>
                   <Text style={{ fontSize: 16, color: "#555" }}>
-                    Date: {appointment.date.slice(0, 10)}
+                    Date: {appointment?.date.slice(0, 10)}
                   </Text>
                   <Text style={{ fontSize: 16, color: "#555" }}>
-                    Time: {appointment.time.slice(0, 5)}
+                    Time: {appointment?.time.slice(0, 5)}
                   </Text>
                 </View>
               </View>
@@ -211,8 +204,7 @@ const LawyerProfile = ({ navigation }) => {
                   padding: 12,
                   alignItems: "center",
                 }}
-                onPress={() => handleProfilePress(appointment)}
-              >
+                onPress={() => handleProfilePress(appointment)}>
                 <Text style={{ color: "#fff", fontSize: 16 }}>
                   See Lawyer Details
                 </Text>
